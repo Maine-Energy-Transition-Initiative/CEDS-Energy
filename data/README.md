@@ -11,7 +11,7 @@ This data set includes information about the schools owned buildings and their e
 
 - `Month`: The month in which the bill was received. The month periods not always align with calendar month, meaning it could be ~28-33 days. 
 - `Year`: The year in which the electricity bill was received.
-- `Dollars`: The amount of US Dollars that the bill totaled to.
+- `Dollars`: The amount of US Dollars that the bill totaled to. The numbers are not representing the true value in a lot of warm months as COA receive the solar credits.
 - `KWH`: The amount of the Electricity in Kilowatt hours billed for in that month.
 - `Building`: The building for witch COA received the bill.
 

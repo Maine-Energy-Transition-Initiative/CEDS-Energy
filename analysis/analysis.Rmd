@@ -14,6 +14,49 @@ library(broom)
 
 
 ## 2. Data
+```{r Unite_Electricity_Dates, eval=FALSE}
+
+#table_electricity_case_study <- table_electricity_case_study |>
+ # mutate(Month = recode(month,
+#January = 1, February = 2, March = 3, April = 4, May = 5, June = 6, July = 7, August = 8, September = 9, October = 10, November = 11, December = 12))
+
+table_electricity_case_study <- table_electricity_case_study|>
+  unite( "Date", c(Year, Month), sep = "_")
+
+  #table_electricity_case_study$Date <- as.Date(as.character(table_electricity_case_study$Date))
+
+```
+
+Data presentation.
+
+```{r Filtering Data for Carriage}
+Carriage_heating_oil <- table_heating_oil_case_study |>
+  filter(Building == "Carriage") |>
+  mutate()
+
+Carriage_electricity <- table_electricity_case_study |>
+  filter(Building == "Carriage  House") |>
+  mutate()
+  
+```
+
+```{r}
+Carriage_heating_oil |>
+  ggplot()+
+  geom_line(aes(x = `Delivery Date`, y = Gallons))
+
+Carriage_electricity |>
+  ggplot()+
+  geom_line(aes(x = Date, y = KWH))
+  
+```
+
+
+```{r, eval=FALSE}
+  ggplot() +
+  geom_line(Carriage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons)) + 
+  geom_line(Carriage_electricity, mapping = aes(x = Date, y = KWH))
+```
 
 
 
