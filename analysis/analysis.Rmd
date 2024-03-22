@@ -7,6 +7,8 @@ output: github_document
 ```{r load-packages, message = FALSE}
 library(tidyverse)
 library(broom)
+#install.packages("rwunderground")
+library(rwunderground)
 ```
 
 ## 1. Introduction
@@ -67,10 +69,30 @@ Cottage_heating_oil |>
 
 ```
 
-```{r}
+```{r Humidity}
+Humidity_ambient |>
+  ggplot()+
+  geom_line(aes(x = time, y = value))
 
 ```
 
+```{r Temperature}
+Temperature_ambient |>
+  ggplot()+
+  geom_line(aes(x = time, y = value))
+```
+
+```{r VocIndex}
+vocIndex |>
+  ggplot()+
+  geom_line(aes(x = time, y = value))
+```
+
+```{r massConcentration}
+massConcentrationPm2p5 |>
+  ggplot()+
+  geom_line(aes(x = time, y = value))
+```
 
 ## 3. Data analysis plan
 
