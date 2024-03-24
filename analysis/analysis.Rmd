@@ -27,16 +27,19 @@ Carriage_heating_oil <- table_heating_oil_case_study |>
 Carriage_electricity <- table_electricity_case_study |>
   filter(Building == "Carriage  House") |>
   mutate()
-  
 ```
 
-```{r, Dual Plot for Carriage, eval=FALSE}
+```{r Dual Plot for Carriage, eval=FALSE}
   ggplot() +
   geom_line(Carriage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
   geom_line(Carriage_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
   scale_y_continuous(
     name = "Gallons filled",
-    sec.axis = sec_axis(trans = ~.*1, name="KWH billed for"))
+    sec.axis = sec_axis(trans = ~.*1, name="KWH billed for"))+
+  geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
+                linetype=3, colour="black")#+
+   #annotate("text", x=1, y=500, label="David started as the Director of Energy", angle=90)
+  
 ```
 
 ```{r Cottage_heating_oil}
@@ -44,10 +47,18 @@ Cottage_heating_oil <- table_heating_oil_case_study |>
   filter(Building == "Cottage") |>
   mutate()
 
-Cottage_heating_oil |>
-  ggplot()+
-  geom_line(aes(x = `Delivery Date`, y = Gallons))
+Cottage_electricity <- table_electricity_case_study |>
+  filter(Building == "Cotttage House") |>
+  mutate()
+```
 
+```{r Dual Plot for Carriage, eval=FALSE}
+  ggplot() +
+  geom_line(Cottage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
+  geom_line(Cottage_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
+  scale_y_continuous(
+    name = "Gallons filled",
+    sec.axis = sec_axis(trans = ~.*1, name="KWH billed for"))
 ```
 
 ```{r Humidity}
@@ -75,7 +86,7 @@ massConcentrationPm2p5 |>
   geom_line(aes(x = time, y = value))
 ```
 
-```{r, eval=FALSE}
+```{r Downloading wunderground data, eval=FALSE}
 
 history(set_location(zip_code = 04609), date = 20240321)
 
