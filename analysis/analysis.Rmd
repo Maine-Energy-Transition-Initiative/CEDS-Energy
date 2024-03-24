@@ -16,19 +16,10 @@ library(rwunderground)
 
 
 ## 2. Data
-```{r Unite_Electricity_Dates, eval=FALSE}
-test_date <- c(12)
-table_electricity_case_study$test_date <- test_date
-
-#table_electricity_case_study_test <- table_electricity_case_study|>
- # unite( "Date", c(Year, Month, `test_date`), sep = "") ##could be separator the problem?
-
-#table_electricity_case_study_test$Date <- as.Date(as.numeric(table_electricity_case_study_test2),"%Y%m%d")
-```
 
 Data presentation.
 
-```{r Filtering Data for Carriage}
+```{r Filtering Data for Carriage, eval=FALSE}
 Carriage_heating_oil <- table_heating_oil_case_study |>
   filter(Building == "Carriage") |>
   mutate()
@@ -39,23 +30,13 @@ Carriage_electricity <- table_electricity_case_study |>
   
 ```
 
-```{r}
-Carriage_heating_oil |>
-  ggplot()+
-  geom_line(aes(x = `Delivery Date`, y = Gallons))
-
-Carriage_electricity |>
-  ggplot()+
-  geom_point(aes(x = Date, y = KWH))
-  
-```
-
-
-
-```{r, eval=FALSE}
+```{r, Dual Plot for Carriage, eval=FALSE}
   ggplot() +
-  geom_line(Carriage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons)) + 
-  geom_line(Carriage_electricity, mapping = aes(x = Date, y = KWH))
+  geom_line(Carriage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
+  geom_line(Carriage_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
+  scale_y_continuous(
+    name = "Gallons filled",
+    sec.axis = sec_axis(trans = ~.*1, name="KWH billed for"))
 ```
 
 ```{r Cottage_heating_oil}
@@ -94,7 +75,7 @@ massConcentrationPm2p5 |>
   geom_line(aes(x = time, y = value))
 ```
 
-```{r}
+```{r, eval=FALSE}
 
 history(set_location(zip_code = 04609), date = 20240321)
 
