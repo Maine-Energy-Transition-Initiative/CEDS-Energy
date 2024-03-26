@@ -7,6 +7,7 @@ output: github_document
 ```{r load-packages, message = FALSE}
 library(tidyverse)
 library(broom)
+library(readxl)
 #install.packages("rwunderground")
 library(rwunderground)
 ```
@@ -20,6 +21,11 @@ library(rwunderground)
 Data presentation.
 
 ```{r Filtering Data for Carriage, eval=FALSE}
+
+table_heating_oil_case_study <- read_excel("../data/table_heating_oil_case_study.xlsx")
+
+table_electricity_case_study <- read_excel("../data/table_electricity_case_study.xlsx")
+
 Carriage_heating_oil <- table_heating_oil_case_study |>
   filter(Building == "Carriage") |>
   mutate()
@@ -37,8 +43,8 @@ Carriage_electricity <- table_electricity_case_study |>
     name = "Gallons filled",
     sec.axis = sec_axis(trans = ~.*1, name="KWH billed for"))+
   geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
-                linetype=3, colour="black")#+
-   #annotate("text", x=1, y=500, label="David started as the Director of Energy", angle=90)
+                linetype=3, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2021-08-01")), y=500, label="David started as the Director of Energy", angle=90)
   
 ```
 
@@ -110,12 +116,14 @@ colnames(my_dates)<-c("year","month","day")
 
 station <- "KMECRANB5"
 
+myurl <- vector()
+myfile <- vector()
 
 for(i in 1:nrow(my_dates)) {
-
-  myurl[i] <- paste("https://www.wunderground.com/weatherstation/WXDailyHistory.asp?ID=",station,"&day=",my_dates$day[i],"&month=",my_dates$month[i],"&year=",my_dates$year[i],"&graphspan=day&format=1", sep = "") #I think the website changed so there is no URL that has just history it's now incorporated in dashboard. Can't see history table only by individula day,week, month.
-  folder <- "D:\\WeatherData"
-  myfile[i] <- paste("CrandberryWeather",i,".csv")
+  i = 1
+  myurl[i] <- paste("https://www.wunderground.com/weatherstation/WXDailyHistory.asp?ID=",station,"&day=",my_dates$day[i],"&month=",my_dates$month[i],"&year=",my_dates$year[i],"&graphspan=day&format=1", sep = "") #I think the website changed so there is no URL that has just history it's now incorporated in dashboard. Can't see history table only by individual day,week, month.
+  folder <- "data"
+  myfile[i] <- paste("CranberryWeather",i,".csv", sep = "")
   download.file(url = myurl[i], file.path(folder, myfile[i], fsep = "\\" ))
 }
 ```
