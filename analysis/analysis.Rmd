@@ -147,36 +147,45 @@ Carters_house_electricity <- table_electricity_case_study |>
 #ggsave(filename = "Carter's house energy history.png", device = "png", width = 7, height = 7)
 
 ```
+```{r HDD calculator}
+table_weather_2023_BHB <- table_weather_2023_BHB |>
+  mutate(Heating_Degree_Day = case_when(`Avg Temperature (°C)` <= 18 ~ TRUE, `Avg Temperature (°C)` > 18 ~ FALSE))
+```
 
-```{r Humidity}
+```{r BHB Temperature 2023}
+ggplot() +
+  geom_line(table_weather_2023_BHB, mapping = aes(x = `Date`, y = `Avg Temperature (°C)`))
+```
+
+```{r Humidity Nicolo}
 Humidity_ambient |>
   ggplot()+
   geom_line(aes(x = time, y = value))
 
 ```
 
-```{r Temperature}
+```{r Temperature Nicolo}
 Temperature_ambient |>
   ggplot()+
   geom_line(aes(x = time, y = value))
 ```
 
-```{r VocIndex}
+```{r VocIndex Nicolo}
 vocIndex |>
   ggplot()+
   geom_line(aes(x = time, y = value))
 ```
 
-```{r massConcentration}
+```{r massConcentration Nicolo}
 massConcentrationPm2p5 |>
   ggplot()+
   geom_line(aes(x = time, y = value))
 ```
 
 ```{r Scrapping data from wunderground, eval=FALSE}
-url <- 'https://www.wunderground.com/history/monthly/us/me/trenton/KBHB/date/2024-1'
+url <- 'https://www.wunderground.com/dashboard/pws/KMECRANB5/table/2023-01-29/2023-01-29/monthly'
 weather <- read_html(url) |>
-  html_nodes("div.row")|>
+  html_nodes("div.tabel-wrapper.ng-star-inserted")|>
   html_table()
 ```
 
