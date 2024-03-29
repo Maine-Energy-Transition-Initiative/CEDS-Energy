@@ -20,12 +20,16 @@ library(rwunderground)
 
 Data presentation.
 
-```{r Filtering Data for Carriage, eval=FALSE}
-
+```{r Reading data}
 table_heating_oil_case_study <- read_excel("../data/table_heating_oil_case_study.xlsx")
 
 table_electricity_case_study <- read_excel("../data/table_electricity_case_study.xlsx")
 
+table_weather_2023_BHB <-
+  read_excel("/cloud/project/data/BHBairport_2023.xlsx")
+```
+
+```{r Carriage data filter}
 Carriage_heating_oil <- table_heating_oil_case_study |>
   filter(Building == "Carriage") |>
   mutate()
@@ -51,11 +55,10 @@ Carriage_electricity <- table_electricity_case_study |>
   theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
   labs(title = "Carriage's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
 
-ggsave(filename = "Carriage's house energy history.png", device = "png", width = 7, height = 7)
-  
+#ggsave(filename = "Carriage's house energy history.png", device = "png", width = 7, height = 7)
 ```
 
-```{r Cottage_heating_oil}
+```{r Cottage data filter}
 Cottage_heating_oil <- table_heating_oil_case_study |>
   filter(Building == "Cottage") |>
   mutate()
@@ -65,7 +68,7 @@ Cottage_electricity <- table_electricity_case_study |>
   mutate()
 ```
 
-```{r Dual Plot for Cottage, eval=FALSE}
+```{r Dual Plot for Cottage}
   ggplot() +
   geom_line(Cottage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
   geom_line(Cottage_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
@@ -81,7 +84,67 @@ Cottage_electricity <- table_electricity_case_study |>
   theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
   labs(title = "Cottage's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
 
-ggsave(filename = "Cottage's house energy history.png", device = "png", width = 7, height = 7)
+#ggsave(filename = "Cottage's house energy history.png", device = "png", width = 7, height = 7)
+
+```
+
+```{r Witchcliff Appartments data filter}
+Witchcliff_apt_heating_oil <- table_heating_oil_case_study |>
+  filter(Building == "Witchcliff Apartments") |>
+  mutate()
+
+Witchcliff_apt_electricity <- table_electricity_case_study |>
+  filter(Building == "Witchcliff Appartments") |>
+  mutate()
+```
+
+```{r Dual Plot for Witchcliff Appartments}
+  ggplot() +
+  geom_line(Cottage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
+  geom_line(Cottage_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
+  scale_y_continuous(
+    name = "Gallons",
+    sec.axis = sec_axis(trans = ~.*1, name="kWh"))+
+  geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
+                linetype=3, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y=1500, label="David started as the Director of Energy", angle=90) +
+  geom_vline(xintercept=as.POSIXct(as.Date("2019-07-01")),
+                linetype=3, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2019-05-01")), y=1200, label="Electricity Data collection sarted", angle=90)+
+  theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
+  labs(title = "Witchcliff Appartments energy history", subtitle = "Gallons of heating oil and kWh of electricity")
+
+#ggsave(filename = "Witchcliff Appartments energy history.png", device = "png", width = 7, height = 7)
+
+```
+
+```{r Carter's House data filter}
+Carters_house_heating_oil <- table_heating_oil_case_study |>
+  filter(Building == "BHF Farm House") |>
+  mutate()
+
+Carters_house_electricity <- table_electricity_case_study |>
+  filter(Building == "BHF Carter House") |>
+  mutate()
+```
+
+```{r Dual Plot for Carter's house}
+  ggplot() +
+  geom_line(Cottage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
+  geom_line(Cottage_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
+  scale_y_continuous(
+    name = "Gallons",
+    sec.axis = sec_axis(trans = ~.*1, name="kWh"))+
+  geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
+                linetype=3, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y=1500, label="David started as the Director of Energy", angle=90) +
+  geom_vline(xintercept=as.POSIXct(as.Date("2019-07-01")),
+                linetype=3, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2019-05-01")), y=1200, label="Electricity Data collection sarted", angle=90)+
+  theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
+  labs(title = "Carter's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
+
+#ggsave(filename = "Carter's house energy history.png", device = "png", width = 7, height = 7)
 
 ```
 
