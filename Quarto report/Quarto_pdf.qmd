@@ -4,17 +4,13 @@ format: pdf
 editor: visual
 ---
 
-## Pre-Improvements report 105 Eden Street 
+## Pre-Improvements report 105 Eden Street
 
-Made by:
-Date: 
+Made by: Date:
 
 ## Building general info
 
-Build:
-Area:
-Heating type:
-etc.
+Build: Area: Heating type: etc.
 
 ##Buildings Electricy use
 
@@ -32,6 +28,7 @@ table_heating_oil_case_study <- read_excel("../data/table_heating_oil_case_study
 
 table_electricity_case_study <- read_excel("../data/table_electricity_case_study.xlsx")
 ```
+
 ```{r}
 #| echo: false
 Carriage_heating_oil <- table_heating_oil_case_study |>
