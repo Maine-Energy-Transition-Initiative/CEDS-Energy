@@ -114,7 +114,7 @@ Witchcliff_apt_electricity <- table_electricity_case_study |>
   theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
   labs(title = "Witchcliff Appartments energy history", subtitle = "Gallons of heating oil and kWh of electricity")
 
-ggsave(filename = "Witchcliff Appartments energy history.png", device = "png", width = 7, height = 7)
+#ggsave(filename = "Witchcliff Appartments energy history.png", device = "png", width = 7, height = 7)
 
 ```
 
@@ -144,12 +144,15 @@ Carters_house_electricity <- table_electricity_case_study |>
   theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
   labs(title = "Carter's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
 
-ggsave(filename = "Carter's house energy history.png", device = "png", width = 7, height = 7)
+#ggsave(filename = "Carter's house energy history.png", device = "png", width = 7, height = 7)
 
 ```
+
 ```{r Heating Degree Days 2023}
 table_weather_2023_BHB <- table_weather_2023_BHB |>
   mutate(Heating_Degree_Day = case_when(`Avg Temperature (°C)` <= 18 ~ TRUE, `Avg Temperature (°C)` > 18 ~ FALSE))
+
+
 ```
 
 ```{r BHB Temperature 2023}
