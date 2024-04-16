@@ -233,23 +233,21 @@ for(i in 1:nrow(my_dates)) {
 # Cranberry2023 <- read_excel("../data/KMECRANB5-2023-Weather.xlsx")
 
 Cranberry2023Clean <- Cranberry2023 %>%
-  mutate(High_Temp = gsub(" °F", "", High_Temp)) %>%
-  mutate(Avg_Temp = gsub(" °F", "", Avg_Temp)) %>%
-  mutate(Low_Temp = gsub(" °F", "", Low_Temp)) %>%
-  mutate(High_DP = gsub(" °F", "", High_DP)) %>%
-  mutate(Avg_DP = gsub(" °F", "", Avg_DP)) %>%
-  mutate(Low_DP = gsub(" °F", "", Low_DP)) %>%
-  mutate(High_Humid = gsub(" %", "", High_Humid)) %>%
-  mutate(Avg_Humid = gsub(" %", "", Avg_Humid)) %>%
-  mutate(Low_Humid = gsub(" %", "", Low_Humid)) %>%
-  mutate(High_Speed = gsub(" mph", "", High_Speed)) %>%
-  mutate(Avg_Speed = gsub(" mph", "", Avg_Speed)) %>%
-  mutate(Low_Speed = gsub(" mph", "", Low_Speed)) %>%
-  mutate(High_Pressure = gsub(" in", "", High_Pressure)) %>%
-  mutate(Low_Pressure = gsub(" in", "", Low_Pressure)) %>%
-  mutate(Precip_Accum = gsub(" in", "", Precip_Accum)) 
-  # mutate_at(c(Cranberry2023$High_Temp:Cranberry2023$Precip_Accum), as.numeric)
-  
+  mutate(High_Temp = as.numeric(gsub(" °F", "", High_Temp))) %>%
+  mutate(Avg_Temp = as.numeric(gsub(" °F", "", Avg_Temp))) %>%
+  mutate(Low_Temp = as.numeric(gsub(" °F", "", Low_Temp))) %>%
+  mutate(High_DP = as.numeric(gsub(" °F", "", High_DP))) %>%
+  mutate(Avg_DP = as.numeric(gsub(" °F", "", Avg_DP))) %>%
+  mutate(Low_DP = as.numeric(gsub(" °F", "", Low_DP))) %>%
+  mutate(High_Humid = as.numeric(gsub(" %", "", High_Humid))) %>%
+  mutate(Avg_Humid = as.numeric(gsub(" %", "", Avg_Humid))) %>%
+  mutate(Low_Humid = as.numeric(gsub(" %", "", Low_Humid))) %>%
+  mutate(High_Speed = as.numeric(gsub(" mph", "", High_Speed))) %>%
+  mutate(Avg_Speed = as.numeric(gsub(" mph", "", Avg_Speed))) %>%
+  mutate(Low_Speed = as.numeric(gsub(" mph", "", Low_Speed))) %>%
+  mutate(High_Pressure = as.numeric(gsub(" in", "", High_Pressure))) %>%
+  mutate(Low_Pressure = as.numeric(gsub(" in", "", Low_Pressure))) %>%
+  mutate(Precip_Accum = as.numeric(gsub(" in", "", Precip_Accum))) 
 ```
 
 
