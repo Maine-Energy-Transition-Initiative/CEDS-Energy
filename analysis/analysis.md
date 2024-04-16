@@ -1,10 +1,7 @@
----
-title: "Analysis"
-author: ""
-output: github_document
----
+Analysis
+================
 
-```{r load-packages, message = FALSE}
+``` r
 library(tidyverse)
 library(broom)
 library(readxl)
@@ -14,22 +11,27 @@ library(rwunderground)
 
 ## 1. Introduction
 
-
-
 ## 2. Data
 
 Data presentation.
 
-```{r Reading data}
+``` r
 table_heating_oil_case_study <- read_excel("../data/table_heating_oil_case_study.xlsx")
+```
 
+    ## New names:
+    ## • `` -> `...8`
+    ## • `` -> `...9`
+    ## • `` -> `...10`
+
+``` r
 table_electricity_case_study <- read_excel("../data/table_electricity_case_study.xlsx")
 
 table_weather_2023_BHB <-
   read_excel("/cloud/project/data/BHBairport_2023.xlsx")
 ```
 
-```{r Carriage data filter}
+``` r
 Carriage_heating_oil <- table_heating_oil_case_study |>
   filter(Building == "Carriage") |>
   mutate()
@@ -39,7 +41,7 @@ Carriage_electricity <- table_electricity_case_study |>
   mutate()
 ```
 
-```{r Dual Plot for Carriage, eval=FALSE}
+``` r
   ggplot() +
   geom_line(Carriage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
   geom_line(Carriage_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
@@ -58,7 +60,7 @@ Carriage_electricity <- table_electricity_case_study |>
 ggsave(filename = "Carriage's house energy history.png", device = "png", width = 7, height = 7)
 ```
 
-```{r Cottage data filter}
+``` r
 Cottage_heating_oil <- table_heating_oil_case_study |>
   filter(Building == "Cottage") |>
   mutate()
@@ -68,7 +70,7 @@ Cottage_electricity <- table_electricity_case_study |>
   mutate()
 ```
 
-```{r Dual Plot for Cottage}
+``` r
   ggplot() +
   geom_line(Cottage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
   geom_line(Cottage_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
@@ -83,12 +85,21 @@ Cottage_electricity <- table_electricity_case_study |>
    annotate("text", x=as.POSIXct(as.Date("2019-07-01")), y=1200, label="Electricity Data collection sarted", angle=90)+
   theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
   labs(title = "Cottage's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
-
-#ggsave(filename = "Cottage's house energy history.png", device = "png", width = 7, height = 7)
-
 ```
 
-```{r Witchcliff Appartments data filter}
+    ## Warning: The `trans` argument of `sec_axis()` is deprecated as of ggplot2 3.5.0.
+    ## ℹ Please use the `transform` argument instead.
+    ## This warning is displayed once every 8 hours.
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+![](analysis_files/figure-gfm/Dual%20Plot%20for%20Cottage-1.png)<!-- -->
+
+``` r
+#ggsave(filename = "Cottage's house energy history.png", device = "png", width = 7, height = 7)
+```
+
+``` r
 Witchcliff_apt_heating_oil <- table_heating_oil_case_study |>
   filter(Building == "Witchcliff Apartments") |>
   mutate()
@@ -98,7 +109,7 @@ Witchcliff_apt_electricity <- table_electricity_case_study |>
   mutate()
 ```
 
-```{r Dual Plot for Witchcliff Appartments}
+``` r
   ggplot() +
   geom_line(Witchcliff_apt_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
   geom_line(Witchcliff_apt_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
@@ -113,12 +124,15 @@ Witchcliff_apt_electricity <- table_electricity_case_study |>
    annotate("text", x=as.POSIXct(as.Date("2019-05-01")), y=500, label="Electricity Data collection sarted", angle=90)+
   theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
   labs(title = "Witchcliff Appartments energy history", subtitle = "Gallons of heating oil and kWh of electricity")
-
-#ggsave(filename = "Witchcliff Appartments energy history.png", device = "png", width = 7, height = 7)
-
 ```
 
-```{r Carters House data filter}
+![](analysis_files/figure-gfm/Dual%20Plot%20for%20Witchcliff%20Appartments-1.png)<!-- -->
+
+``` r
+#ggsave(filename = "Witchcliff Appartments energy history.png", device = "png", width = 7, height = 7)
+```
+
+``` r
 Carters_house_heating_oil <- table_heating_oil_case_study |>
   filter(Building == "BHF Farm House") |>
   mutate()
@@ -128,7 +142,7 @@ Carters_house_electricity <- table_electricity_case_study |>
   mutate()
 ```
 
-```{r Dual Plot for Carters house}
+``` r
   ggplot() +
   geom_line(Carters_house_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
   geom_line(Carters_house_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
@@ -143,63 +157,62 @@ Carters_house_electricity <- table_electricity_case_study |>
    annotate("text", x=as.POSIXct(as.Date("2019-05-01")), y=500, label="Electricity Data collection sarted", angle=90)+
   theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
   labs(title = "Carter's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
-
-#ggsave(filename = "Carter's house energy history.png", device = "png", width = 7, height = 7)
-
 ```
 
-```{r Heating Degree Days 2023}
+![](analysis_files/figure-gfm/Dual%20Plot%20for%20Carters%20house-1.png)<!-- -->
+
+``` r
+#ggsave(filename = "Carter's house energy history.png", device = "png", width = 7, height = 7)
+```
+
+``` r
 table_weather_2023_BHB <- table_weather_2023_BHB |>
   mutate(Heating_Degree_Day = case_when(`Avg Temperature (°C)` <= 18 ~ TRUE, `Avg Temperature (°C)` > 18 ~ FALSE))
-
-
 ```
 
-```{r BHB Temperature 2023}
+``` r
 ggplot() +
   geom_line(table_weather_2023_BHB, mapping = aes(x = `Date`, y = `Avg Temperature (°C)`))
 ```
 
-```{r Humidity Nicolo, eval=FALSE}
+![](analysis_files/figure-gfm/BHB%20Temperature%202023-1.png)<!-- -->
+
+``` r
 Humidity_ambient |>
   ggplot()+
   geom_line(aes(x = time, y = value))
-
 ```
 
-```{r Temperature Nicolo, eval=FALSE}
+``` r
 Temperature_ambient |>
   ggplot()+
   geom_line(aes(x = time, y = value))
 ```
 
-```{r VocIndex Nicolo, eval=FALSE}
+``` r
 vocIndex |>
   ggplot()+
   geom_line(aes(x = time, y = value))
 ```
 
-```{r massConcentration Nicolo, eval=FALSE}
+``` r
 massConcentrationPm2p5 |>
   ggplot()+
   geom_line(aes(x = time, y = value))
 ```
 
-```{r Scrapping data from wunderground, eval=FALSE}
+``` r
 url <- 'https://www.wunderground.com/dashboard/pws/KMECRANB5/table/2023-01-29/2023-01-29/monthly'
 weather <- read_html(url) |>
   html_nodes("div.tabel-wrapper.ng-star-inserted")|>
   html_table()
 ```
 
-
-```{r Downloading wunderground data, eval=FALSE}
-
+``` r
 history(set_location(zip_code = 04609), date = 20240321) #testided with multiplelocation calls (stationID, Town Name etc.)
-
 ```
 
-```{r test Downloading wunderground data, eval=FALSE}
+``` r
 #Found in Stackoverflow but cant figure the (i) part. https://stackoverflow.com/questions/58342525/how-to-extract-data-from-weather-underground-wunderground-into-csv-files
 
 start_date <- as.POSIXct("2019-09-01",tz="est")
@@ -229,7 +242,7 @@ for(i in 1:nrow(my_dates)) {
 }
 ```
 
-```{r Clean up Great Cranberry data, eval=FALSE}
+``` r
 # Cranberry2023 <- read_excel("../data/KMECRANB5-2023-Weather.xlsx")
 
 Cranberry2023Clean <- Cranberry2023 %>%
@@ -250,8 +263,4 @@ Cranberry2023Clean <- Cranberry2023 %>%
   mutate(Precip_Accum = as.numeric(gsub(" in", "", Precip_Accum))) 
 ```
 
-
 ## 3. Data analysis plan
-
-
-
