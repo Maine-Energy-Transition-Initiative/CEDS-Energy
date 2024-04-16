@@ -1,29 +1,36 @@
 ---
-title: "Pre-Improvements Report"
-format: pdf
+title: "Energy Report"
+format: html
 editor: visual
 ---
 
 ## Pre-Improvements report 105 Eden Street
 
-Made by: Date:
+Made by:
+
+Date:
 
 ## Building general info
 
-Build: Area: Heating type: etc.
+Build:
 
-##Buildings Electricy use
+Area:
+
+Heating type:
+
+etc. :
+
+## Buildings Electricy use
 
 ```{r}
+#| echo: false
+#| warning: false
 library(readxl)
 library(tidyverse)
-#install.packages("tinytex")
-library(tinytex)
 ```
 
 ```{r}
-#|echo: false
-#|eval: false
+#| echo: false
 table_heating_oil_case_study <- read_excel("../data/table_heating_oil_case_study.xlsx")
 
 table_electricity_case_study <- read_excel("../data/table_electricity_case_study.xlsx")
@@ -57,12 +64,3 @@ ggplot() +
   theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
   labs(title = "Carriage's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
 ```
-
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).
