@@ -10,6 +10,8 @@ library(broom)
 library(readxl)
 #install.packages("rwunderground")
 library(rwunderground)
+#install.packages("gganimate")
+library(gganimate)
 ```
 
 ## 1. Introduction
@@ -248,6 +250,12 @@ Cranberry2023Clean <- Cranberry2023 %>%
   mutate(High_Pressure = as.numeric(gsub(" in", "", High_Pressure))) %>%
   mutate(Low_Pressure = as.numeric(gsub(" in", "", Low_Pressure))) %>%
   mutate(Precip_Accum = as.numeric(gsub(" in", "", Precip_Accum))) 
+```
+```{r Energy usage animation for carriage}
+
+ggplot() +
+geom_point(Carriage_electricity, mapping = aes(x = Month, y = KWH, color = "red", group = seq_along(Month))) +
+  transition_reveal(Month)
 ```
 
 
