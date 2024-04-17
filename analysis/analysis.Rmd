@@ -251,6 +251,14 @@ Cranberry2023Clean <- Cranberry2023 %>%
   mutate(Low_Pressure = as.numeric(gsub(" in", "", Low_Pressure))) %>%
   mutate(Precip_Accum = as.numeric(gsub(" in", "", Precip_Accum))) 
 ```
+
+
+```{r Cranberry-heating-degree-days, eval=FALSE}
+Cranberry2023Clean <- Cranberry2023Clean |>
+  mutate(Heating_Degree_Day = case_when(Avg_Temp <= 65 ~ TRUE, Avg_Temp > 65 ~ FALSE))
+```
+
+
 ```{r Energy usage animation for carriage}
 
 ggplot() +

@@ -7,6 +7,8 @@ library(broom)
 library(readxl)
 #install.packages("rwunderground")
 library(rwunderground)
+#install.packages("gganimate")
+library(gganimate)
 ```
 
 ## 1. Introduction
@@ -262,5 +264,21 @@ Cranberry2023Clean <- Cranberry2023 %>%
   mutate(Low_Pressure = as.numeric(gsub(" in", "", Low_Pressure))) %>%
   mutate(Precip_Accum = as.numeric(gsub(" in", "", Precip_Accum))) 
 ```
+
+``` r
+Cranberry2023Clean <- Cranberry2023Clean |>
+  mutate(Heating_Degree_Day = case_when(Avg_Temp <= 65 ~ TRUE, Avg_Temp > 65 ~ FALSE))
+```
+
+``` r
+ggplot() +
+geom_point(Carriage_electricity, mapping = aes(x = Month, y = KWH, color = "red", group = seq_along(Month))) +
+  transition_reveal(Month)
+```
+
+    ## Warning: No renderer available. Please install the gifski, av, or magick package to
+    ## create animated output
+
+    ## NULL
 
 ## 3. Data analysis plan
