@@ -27,8 +27,8 @@ table_heating_oil_case_study <- read_excel("../data/table_heating_oil_case_study
 
 table_electricity_case_study <- read_excel("../data/table_electricity_case_study.xlsx")
 
-table_weather_2023_BHB <-
-  read_excel("/cloud/project/data/BHBairport_2023.xlsx")
+# table_weather_2023_BHB <-
+  # read_excel("/cloud/project/data/BHBairport_2023.xlsx")
 ```
 
 ```{r Carriage data filter}
@@ -151,15 +151,15 @@ Carters_house_electricity <- table_electricity_case_study |>
 ```
 
 ```{r Heating Degree Days 2023}
-table_weather_2023_BHB <- table_weather_2023_BHB |>
-  mutate(Heating_Degree_Day = case_when(`Avg Temperature (°C)` <= 18 ~ TRUE, `Avg Temperature (°C)` > 18 ~ FALSE))
+# table_weather_2023_BHB <- table_weather_2023_BHB |>
+  # mutate(Heating_Degree_Day = case_when(`Avg Temperature (°C)` <= 18 ~ TRUE, `Avg Temperature (°C)` > 18 ~ FALSE))
 
 
 ```
 
 ```{r BHB Temperature 2023}
-ggplot() +
-  geom_line(table_weather_2023_BHB, mapping = aes(x = `Date`, y = `Avg Temperature (°C)`))
+# ggplot() +
+  # geom_line(table_weather_2023_BHB, mapping = aes(x = `Date`, y = `Avg Temperature (°C)`))
 ```
 
 ```{r Humidity Nicolo, eval=FALSE}
@@ -231,8 +231,12 @@ for(i in 1:nrow(my_dates)) {
 }
 ```
 
-```{r Clean up Great Cranberry data, eval=FALSE}
+```{r Import Datasets, eval=FALSE}
 # Cranberry2023 <- read_excel("../data/KMECRANB5-2023-Weather.xlsx")
+# BHB2124 <- read_csv("../data/BHBairport-21-24.csv")
+```
+
+```{r Clean up Great Cranberry data, eval=FALSE}
 
 Cranberry2023Clean <- Cranberry2023 %>%
   mutate(High_Temp = as.numeric(gsub(" °F", "", High_Temp))) %>%
@@ -260,6 +264,13 @@ Cranberry2023Clean <- Cranberry2023 %>%
 Cranberry2023Clean |>
   ggplot(aes(x = Date, y = Heating_Degree_Day)) +
   geom_col()
+```
+
+```{r Clean BHB data, eval=FALSE}
+BHB_Clean <- BHB2124 |>
+  filter(!row_number() %in% c(1, 2, 3, 4, 5)) |>
+  separate_wider_delim(cols = `Fahrenheit-based heating degree days with a base temperature of 65 F`, delim = ",", names = c("HDDs", "Percent_Uncertainty")) |>
+  rename("Date" = `Description:`)
 ```
 
 
