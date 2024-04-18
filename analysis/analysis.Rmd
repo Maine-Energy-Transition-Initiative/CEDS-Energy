@@ -260,10 +260,15 @@ Cranberry2023Clean <- Cranberry2023Clean |>
 
 
 ```{r Energy usage animation for carriage}
+Animation1 <- ggplot(Carriage_electricity, mapping = aes(x = Month, y = KWH, color = "red")) +
+  geom_line() +
+  transition_reveal(Month) 
 
-ggplot() +
-geom_point(Carriage_electricity, mapping = aes(x = Month, y = KWH, color = "red", group = seq_along(Month))) +
-  transition_reveal(Month)
+animation = animate(Animation1,
+                    renderer = av_renderer())
+animation
+
+anim_save("Animation1MVP.gif", Animation1)
 ```
 
 
