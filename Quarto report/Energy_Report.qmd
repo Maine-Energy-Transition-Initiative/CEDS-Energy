@@ -31,6 +31,7 @@ library(tidyverse)
 
 ```{r}
 #| echo: false
+#| warning: false
 table_heating_oil_case_study <- read_excel("../data/table_heating_oil_case_study.xlsx")
 
 table_electricity_case_study <- read_excel("../data/table_electricity_case_study.xlsx")
@@ -38,6 +39,7 @@ table_electricity_case_study <- read_excel("../data/table_electricity_case_study
 
 ```{r}
 #| echo: false
+
 Carriage_heating_oil <- table_heating_oil_case_study |>
   filter(Building == "Carriage") |>
   mutate()
@@ -49,6 +51,7 @@ Carriage_electricity <- table_electricity_case_study |>
 
 ```{r}
 #| echo: false
+#| warning: false
 ggplot() +
   geom_line(Carriage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
   geom_line(Carriage_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
