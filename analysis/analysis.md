@@ -29,8 +29,8 @@ table_heating_oil_case_study <- read_excel("../data/table_heating_oil_case_study
 ``` r
 table_electricity_case_study <- read_excel("../data/table_electricity_case_study.xlsx")
 
-table_weather_2023_BHB <-
-  read_excel("/cloud/project/data/BHBairport_2023.xlsx")
+# table_weather_2023_BHB <-
+  # read_excel("/cloud/project/data/BHBairport_2023.xlsx")
 ```
 
 ``` r
@@ -168,16 +168,14 @@ Carters_house_electricity <- table_electricity_case_study |>
 ```
 
 ``` r
-table_weather_2023_BHB <- table_weather_2023_BHB |>
-  mutate(Heating_Degree_Day = case_when(`Avg Temperature (°C)` <= 18 ~ TRUE, `Avg Temperature (°C)` > 18 ~ FALSE))
+# table_weather_2023_BHB <- table_weather_2023_BHB |>
+  # mutate(Heating_Degree_Day = case_when(`Avg Temperature (°C)` <= 18 ~ TRUE, `Avg Temperature (°C)` > 18 ~ FALSE))
 ```
 
 ``` r
-ggplot() +
-  geom_line(table_weather_2023_BHB, mapping = aes(x = `Date`, y = `Avg Temperature (°C)`))
+# ggplot() +
+  # geom_line(table_weather_2023_BHB, mapping = aes(x = `Date`, y = `Avg Temperature (°C)`))
 ```
-
-![](analysis_files/figure-gfm/BHB%20Temperature%202023-1.png)<!-- -->
 
 ``` r
 Humidity_ambient |>
@@ -246,7 +244,10 @@ for(i in 1:nrow(my_dates)) {
 
 ``` r
 # Cranberry2023 <- read_excel("../data/KMECRANB5-2023-Weather.xlsx")
+# BHB2124 <- read_csv("../data/BHBairport-21-24.csv")
+```
 
+``` r
 Cranberry2023Clean <- Cranberry2023 %>%
   mutate(High_Temp = as.numeric(gsub(" °F", "", High_Temp))) %>%
   mutate(Avg_Temp = as.numeric(gsub(" °F", "", Avg_Temp))) %>%
@@ -266,8 +267,22 @@ Cranberry2023Clean <- Cranberry2023 %>%
 ```
 
 ``` r
-Cranberry2023Clean <- Cranberry2023Clean |>
-  mutate(Heating_Degree_Day = case_when(Avg_Temp <= 65 ~ TRUE, Avg_Temp > 65 ~ FALSE))
+# Cranberry2023Clean <- Cranberry2023Clean |>
+  # mutate(Heating_Degree_Day = 65 - Avg_Temp)
+
+Cranberry2023Clean |>
+  ggplot(aes(x = Date, y = Heating_Degree_Day)) +
+  geom_col()
+```
+
+``` r
+BHB_Clean <- BHB2124 |>
+  filter(!row_number() %in% c(1, 2, 3, 4, 5)) |>
+  separate_wider_delim(cols = `Fahrenheit-based heating degree days with a base temperature of 65 F`, delim = ",", names = c("HDDs", "Percent_Uncertainty")) |>
+  rename("Date" = `Description:`) |>
+  mutate(`Date` = as.Date(`Date`)) |>
+  mutate(`HDDs` = as.numeric(`HDDs`)) |>
+  mutate(`Percent_Uncertainty` = as.numeric(`Percent_Uncertainty`))
 ```
 
 ``` r
