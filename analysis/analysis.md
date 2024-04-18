@@ -266,8 +266,12 @@ Cranberry2023Clean <- Cranberry2023 %>%
 ```
 
 ``` r
-Cranberry2023Clean <- Cranberry2023Clean |>
-  mutate(Heating_Degree_Day = case_when(Avg_Temp <= 65 ~ TRUE, Avg_Temp > 65 ~ FALSE))
+# Cranberry2023Clean <- Cranberry2023Clean |>
+  # mutate(Heating_Degree_Day = 65 - Avg_Temp)
+
+Cranberry2023Clean |>
+  ggplot(aes(x = Date, y = Heating_Degree_Day)) +
+  geom_col()
 ```
 
 ``` r
