@@ -270,7 +270,10 @@ Cranberry2023Clean |>
 BHB_Clean <- BHB2124 |>
   filter(!row_number() %in% c(1, 2, 3, 4, 5)) |>
   separate_wider_delim(cols = `Fahrenheit-based heating degree days with a base temperature of 65 F`, delim = ",", names = c("HDDs", "Percent_Uncertainty")) |>
-  rename("Date" = `Description:`)
+  rename("Date" = `Description:`) |>
+  mutate(`Date` = as.Date(`Date`)) |>
+  mutate(`HDDs` = as.numeric(`HDDs`)) |>
+  mutate(`Percent_Uncertainty` = as.numeric(`Percent_Uncertainty`))
 ```
 
 
