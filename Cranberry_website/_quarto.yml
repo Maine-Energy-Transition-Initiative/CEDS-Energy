@@ -1,0 +1,34 @@
+project:
+  type: website
+
+website:
+  title: "Home Energy Imrovements project"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+      - href: com.qmd
+        text: Communities
+      
+      
+      #- sidebar:More
+
+  ##sidebar: 
+    #  - id: ""
+    #  - id: More
+    #  title: "More"
+    #  style: "docked"
+      #collapse-level: 2
+      #contents:
+       # - com.qmd
+#
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+editor: visual
+
