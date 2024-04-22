@@ -2,7 +2,7 @@
 title: A Sample Title - The SocioEconomic Aspects of Stock Assessments
 subtitle: with non-English diacritics in the author names. See documentation.
 author:
-  - name: Jane Doe
+  - name: Jane Doe and more
     affiliations:
       - name: Minnesota Department of Natural Resources
         address: 500 Lafayette Road Saint Paul, MN 55155
