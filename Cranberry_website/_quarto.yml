@@ -6,12 +6,14 @@ website:
   navbar:
     tools:
       - icon: github
-        href: https://github.com/LaurieLBaker/CEDS-Energy
+        href: https://github.com/LaurieLBaker/CEDS-Energy #Does not displays
     left:
       - href: index.qmd
         text: Home
       - about.qmd
       - communities.qmd
+      - more.qmd #seems like non of the chanhes work like icon and more.qmd
+       
     
       
     

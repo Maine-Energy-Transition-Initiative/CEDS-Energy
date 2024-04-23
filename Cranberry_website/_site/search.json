@@ -54,5 +54,19 @@
     "title": "Cranberry Energy Project Monitoring",
     "section": "What skills you can expect to learn and employ:",
     "text": "What skills you can expect to learn and employ:\n\nResearch energy devices and develop a pilot monitoring program to estimate the efficiency of energy upgrades.\nDevelop a tracking system for energy upgrades\nData wrangling and visualization.\nCreation of automated reports in Quarto.\n\n\nReferences:\n\nEIA. https://www.eia.gov/state/data.php?sid=ME#ConsumptionExpenditures. Accessed on Feb 6, 2024.\n\n\n\nResources:\n\nhttps://www.wunderground.com/dashboard/pws/KMECRANB6 Details of two weather monitoring stations on Great Cranberry.\nIn panel monitoring system that might be useful for heat pumps: https://shop.emporiaenergy.com/collections/in-panel-energy-monitors\n\nThis is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "website docs/More _info.html",
+    "href": "website docs/More _info.html",
+    "title": "Home Energy Imrovements project",
+    "section": "",
+    "text": "Here we can write more information"
+  },
+  {
+    "objectID": "website docs/more.html",
+    "href": "website docs/more.html",
+    "title": "Home Energy Imrovements project",
+    "section": "",
+    "text": "Here we can write more information"
   }
 ]
