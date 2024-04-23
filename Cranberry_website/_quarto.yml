@@ -4,26 +4,21 @@ project:
 website:
   title: "Home Energy Imrovements project"
   navbar:
+    tools:
+      - icon: github
+        href: https://github.com/LaurieLBaker/CEDS-Energy
     left:
       - href: index.qmd
         text: Home
       - about.qmd
-      - href: com.qmd
-        text: Communities
+      - communities.qmd
+    
       
+    
       
-      #- sidebar:More
 
-  ##sidebar: 
-    #  - id: ""
-    #  - id: More
-    #  title: "More"
-    #  style: "docked"
-      #collapse-level: 2
-      #contents:
-       # - com.qmd
-#
 
+        
 format:
   html:
     theme: cosmo
