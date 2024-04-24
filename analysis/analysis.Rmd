@@ -286,7 +286,7 @@ animation = animate(Animation1,
                     renderer = av_renderer())
 animation
 
-anim_save("Animation1MVP.gif", Animation1)
+#anim_save("Animation1MVP.gif", Animation1)
 ```
 
 
