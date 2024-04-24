@@ -1,5 +1,5 @@
 ---
-title: "Cranberry Energy Project Monitoring"
+title: ""
 ---
 
 #                             Local background
