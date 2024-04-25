@@ -289,7 +289,7 @@ Carriage_heating_oil <- Carriage_heating_oil %>%
 ```{r energy_usage_animation_for_carriage}
 Animation1 <- ggplot(Carriage_electricity, mapping = aes(x = Month, y = BTU, color = "red")) +
   geom_line() + 
-  geom_line(Carriage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
+  geom_line(Carriage_heating_oil, mapping = aes(x = `Delivery Date`, y = BTU), color = "blue") + 
   geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
                 linetype=1, colour="black") +
    annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y = 1e+06, label="David started as the Director of Energy", angle=90) +
