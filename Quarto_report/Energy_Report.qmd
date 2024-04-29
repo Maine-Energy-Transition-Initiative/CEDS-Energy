@@ -4,8 +4,6 @@ author: "Need the df & column name"
 date: '`{r} Sys.Date()`'
 format: html
 editor: visual
-params:
-  adress: "Need the df & column name"
 ---
 
 ## \[Enter address and/or family name here\] Pre-Improvements report 
@@ -23,10 +21,11 @@ etc. :
 ## Buildings Electricy use
 
 ```{r}
-#| echo: false
+#| echo: true
 #| warning: false
 library(readxl)
 library(tidyverse)
+Sys.Date()
 ```
 
 ```{r}
