@@ -276,17 +276,31 @@ BHB_Clean <- BHB2124 |>
   mutate(`Percent_Uncertainty` = as.numeric(`Percent_Uncertainty`))
 ```
 
+```{r KWH/heating_oil_to_BTU_calculation}
+Carriage_electricity <- Carriage_electricity %>% 
+  mutate(BTU = KWH) %>% 
+  mutate(BTU = BTU * 3412)
 
-```{r Energy usage animation for carriage}
-Animation1 <- ggplot(Carriage_electricity, mapping = aes(x = Month, y = KWH, color = "red")) +
-  geom_line() +
-  transition_reveal(Month) 
+Carriage_heating_oil <- Carriage_heating_oil %>% 
+  mutate(BTU = Gallons) %>% 
+  mutate(BTU = BTU * 138,690) #this is the math for heating oil the other fuel types of other calculations but is unnecessary to separate and do at this point
+```
+
+```{r energy_usage_animation_for_carriage}
+Animation1 <- ggplot(Carriage_electricity, mapping = aes(x = Month, y = BTU, color = "red")) +
+  geom_line() + 
+  geom_line(Carriage_heating_oil, mapping = aes(x = `Delivery Date`, y = BTU), color = "blue") + 
+  geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
+                linetype=1, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y = 1e+06, label="David started as the Director of Energy", angle=90) +
+  transition_reveal(Month)+
+  enter_fade() + exit_fade() 
 
 animation = animate(Animation1,
                     renderer = av_renderer())
 animation
 
-anim_save("Animation1MVP.gif", Animation1)
+#anim_save("Animation1MVP.gif", Animation1)
 ```
 
 ```{r setup-arduino-api-packages, eval = FALSE}
