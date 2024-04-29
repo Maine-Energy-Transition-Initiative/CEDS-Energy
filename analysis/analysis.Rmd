@@ -301,11 +301,16 @@ Sys.setenv(ARDUINO_API_CLIENT_ID = '8BO2NX9eLMFJWOq44d3HwvTLM1x27ekr')
 Sys.setenv(ARDUINO_API_CLIENT_SECRET = 'JeE2jMJlnsYgUr98LrbqFIoHyH4qbOHZtNIJfgQn2ubaLkmWRApcDo7dU3NiBAHA')
 
 create_auth_token()
-tl = things_list()
+# tl = things_list()
 ```
 
-```{r}
-
+```{r import-arduino-data}
+AQ01_Temperature = things_properties_timeseries(thing_id = "1c7d23e8-526c-435f-9514-43100c634a3d",
+                                                property_id = "a7aa4f36-e201-49ad-9aa7-5e89d861e04d",
+                                                desc = FALSE)
+AQ01_Temperature = AQ01_Temperature %>% separate_wider_delim(cols = time, delim = " ", 
+                                                            names = c("Date", "Time")) %>%
+                                        rename("temperature" = "value")
 ```
 
 
