@@ -7,16 +7,22 @@ website:
     tools:
       - icon: github
         href: https://github.com/LaurieLBaker/CEDS-Energy
+      - icon: Community Energy Center
+        href: https://www.coa.edu/cec/
     left:
       - href: index.qmd
         text: About
       - communities.qmd
-      - more.qmd
+      - text: "More"
+        menu:
+          - talks.qmd
+          - about.qmd 
+          - more.qmd
          #worked before, stopped working
       
 format:
   html:
-    theme: cosmo
+    theme: sketchy
     css: styles.css
     toc: true
 
