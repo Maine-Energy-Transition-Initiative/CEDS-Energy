@@ -1,0 +1,81 @@
+---
+title: "goals"
+format: html
+editor: visual
+---
+
+## Goals of the Program 
+
+The goals of the program is to improve 10 buildings on the Great Cranberry Island
+
+# 10 Steps to home improvements   
+
+**1. EPA WaterSense showerheads**  Energy savings of 5-10%
+
+-   A 1.5GPM showerhead uses 40% less water and thus 40% less energy to heat the water.
+
+-   A typical family will save 10,000 gallons/year of hot water with low-flow showerheads. 
+
+**2. LED light bulbs** Energy savings of 5-10%
+
+-   LEDs use 85% less energy than incandescent bulbs, and reduce monthly energy costs by \$20-30 for an average home. 
+
+**3. Window Dressers** Energy savings of 5-10%
+
+-   Insulated window inserts improve indoor comfort and energy efficiency for less than 1/10th the cost of replacing windows. [www.windowdressers.org](http://www.windowdressers.org) 
+
+**4. Heat pump water heater** **(HPWH)** Energy savings of 10-20%
+
+-   Use 70% less energy than a standard electric water heater.
+
+-   Significant rebates available through Efficiency Maine that increase their affordability.
+
+-   Side benefit of helping dehumidify the space they’re in, like a damp basement.
+
+**5. Electric appliances** Energy savings of up to 10%
+
+-   Measure your refrigerator’s energy use and upgrade to an EnergyStar model as needed. 
+
+-   Replace gas cooking equipment with induction or electric for health and safety.
+
+**6. Energy audit** Health and Safety
+
+-   Have a comprehensive audit to assess air leakage and insulation needs for your home.
+
+-   Measures energy use, identifies opportunities for improvements, and identifies moisture problems or health and safety needs like ventilation and mold remediation. 
+
+**7a. Basement/crawl space** Energy savings of 10-30%
+
+-   Sealing the basement or crawlspace blocks rodents and heat loss.
+
+-   Vapor barrier prevents ground moisture from getting into the house - reducing mold.
+
+-   We recommend 3” of spray foam (R-21) from floor up over the rim joist to air seal and retain heat. This is an incredible improvement for fieldstone foundations. 
+
+-   Make sure the contractor uses HFO/5th generation/low-Global Warming Potential spray foam. Older HFC blowing agents have 500x the carbon emissions!
+
+**7b. Attic and wall air sealing and insulation** Energy savings of 10-25%
+
+-   Because warm air rises, a significant portion of heat loss is through the attic. 
+
+-   Air sealing first ensures that insulation works properly.
+
+-   We recommend 18-24” of cellulose insulation to achieve R60-R80 in attics.
+
+**8. Air source heat pumps** Energy savings of 10-40%
+
+-   Provide winter heating and summer cooling and dehumidification for your home.
+
+-   Work in temperatures as low as -15F, and can be the sole source of heat if your home is well insulated.
+
+**9. Electric Vehicle**
+
+-   A 2020 study by Consumer Reports found that the lifetime ownership costs were significantly lower for EVs. Most EVs saved between \$6,000 - \$10,000 over their lifetimes.
+
+**10. Solar** Energy production up to 100%
+
+-   Install rooftop solar to supply all your electricity needs.
+
+-   30% federal tax credit and financing options are available.
+
+-   Battery backup is needed for solar to work during a power outage
