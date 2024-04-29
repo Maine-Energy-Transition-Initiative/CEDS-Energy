@@ -1,7 +1,7 @@
 ---
 title: "Energy Report"
 author: "Need the df & column name"
-date: '`{r} Sys.Date()`'
+date: "`r format(Sys.time(), '%e %B %Y')`"
 format: html
 editor: visual
 ---
