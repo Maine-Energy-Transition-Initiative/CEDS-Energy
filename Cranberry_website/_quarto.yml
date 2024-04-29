@@ -7,7 +7,8 @@ website:
     tools:
       - icon: github
         href: https://github.com/LaurieLBaker/CEDS-Energy
-      - icon: Community Energy Center
+      - icon: globe2
+        text: Community Energy Center
         href: https://www.coa.edu/cec/
     left:
       - href: index.qmd
