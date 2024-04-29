@@ -4,8 +4,6 @@ author: "Need the df & column name"
 date: '`{r} Sys.Date()`'
 format: html
 editor: visual
-params:
-  adress: "Need the df & column name"
 ---
 
 ## \[Enter address and/or family name here\] Pre-Improvements report
@@ -23,15 +21,17 @@ etc. :
 ## Buildings Electricy use
 
 ```{r}
-#| echo: false
+#| echo: true
 #| warning: false
 library(readxl)
 library(tidyverse)
+Sys.Date()
 ```
 
 ```{r}
 #| echo: false
 #| warning: false
+#Need to have correct df
 table_heating_oil_case_study <- read_excel("../data/table_heating_oil_case_study.xlsx")
 
 table_electricity_case_study <- read_excel("../data/table_electricity_case_study.xlsx")
@@ -39,9 +39,9 @@ table_electricity_case_study <- read_excel("../data/table_electricity_case_study
 
 ```{r}
 #| echo: false
-
+# need ton have correct df
 Carriage_heating_oil <- table_heating_oil_case_study |>
-  filter(Building == "Carriage") |>
+  filter(Building == "Carriage") |> #need correct filter 
   mutate()
 
 Carriage_electricity <- table_electricity_case_study |>
