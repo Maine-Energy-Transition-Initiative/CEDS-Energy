@@ -1,22 +1,22 @@
 ---
 title: "Energy Report"
+author: "Need the df & column name"
+date: '`{r} Sys.Date()`'
 format: html
 editor: visual
+params:
+  adress: "Need the df & column name"
 ---
 
-## Pre-Improvements report 105 Eden Street
-
-Made by:
-
-Date:
+## \[Enter address and/or family name here\] Pre-Improvements report 
 
 ## Building general info
 
-Build:
+Build: #Need the df & column name
 
-Area:
+Area: #Need the df & column name
 
-Heating type:
+Heating type: #Need the df & column name
 
 etc. :
 
