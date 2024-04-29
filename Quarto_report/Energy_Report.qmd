@@ -6,7 +6,7 @@ format: html
 editor: visual
 ---
 
-## \[Enter address and/or family name here\] Pre-Improvements report 
+## \[Enter address and/or family name here\] Pre-Improvements report
 
 ## Building general info
 
