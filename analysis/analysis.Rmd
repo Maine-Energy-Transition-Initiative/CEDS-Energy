@@ -363,21 +363,17 @@ vocInd5 = "fb4627fa-1d1f-4906-ac97-8c166fbc04ed"
 ```
 
 ```{r import-AQ01-data}
-AQ01_Temperature = things_properties_timeseries(thing_id = "1c7d23e8-526c-435f-9514-43100c634a3d",
-                                                property_id = "a7aa4f36-e201-49ad-9aa7-5e89d861e04d",
-                                                desc = FALSE) %>% rename("Temperature" = "value")
+AQ01_Temperature = things_properties_timeseries(thing_id = AQ01, property_id = Temp1, desc = FALSE) %>% 
+  rename("Temperature" = "value")
 
-AQ01_Humidity = things_properties_timeseries(thing_id = AQ01,
-                                                property_id = Humidity1,
-                                                desc = FALSE) %>% rename("Humidity" = "value")
+AQ01_Humidity = things_properties_timeseries(thing_id = AQ01, property_id = Humidity1, desc = FALSE) %>% 
+  rename("Humidity" = "value")
 
-AQ01_noxIndex = things_properties_timeseries(thing_id = AQ01,
-                                                property_id = noxInd1,
-                                                desc = FALSE) %>% rename("nox_Index" = "value")
+AQ01_noxIndex = things_properties_timeseries(thing_id = AQ01, property_id = noxInd1, desc = FALSE) %>% 
+  rename("nox_Index" = "value")
 
-AQ01_vocIndex = things_properties_timeseries(thing_id = AQ01,
-                                                property_id = vocInd1,
-                                                desc = FALSE) %>% rename("voc_Index" = "value")
+AQ01_vocIndex = things_properties_timeseries(thing_id = AQ01, property_id = vocInd1, desc = FALSE) %>% 
+  rename("voc_Index" = "value")
 
 AQ01_Full = AQ01_Temperature %>% left_join(AQ01_Humidity) %>% left_join(AQ01_noxIndex) %>% left_join(AQ01_vocIndex) %>%
   mutate(time = as_datetime(time)) %>% rename("Date" = "time")

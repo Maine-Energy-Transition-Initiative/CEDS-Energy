@@ -4,11 +4,11 @@ format: html
 editor: visual
 ---
 
-## Goals of the Program 
+## Goals of the Program
 
 The goals of the program is to improve 10 buildings on the Great Cranberry Island
 
-# 10 Steps to home improvements   
+# 10 Steps to home improvements
 
 **1. EPA WaterSense showerheads**  Energy savings of 5-10%
 
