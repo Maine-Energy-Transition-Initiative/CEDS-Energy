@@ -1,0 +1,14 @@
+---
+title: "Tax Commitment Cleaning"
+author: ""
+output: github_document
+---
+
+```{r load-packages, message = FALSE}
+library(tidyverse)
+```
+
+```{r Reading data}
+tax_commitment_GCI <- read_excel("/cloud/project/extra/tax_commitment_GCI.xlsx")
+```
+
