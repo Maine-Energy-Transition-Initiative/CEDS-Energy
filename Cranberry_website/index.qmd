@@ -4,4 +4,6 @@ title: ""
 
 # Landing page
 
-Here will be the landing page and the information
+Here will be the landing page and the information.
+
+![](Images/IMG_0294.jpg){fig-align="center"}
