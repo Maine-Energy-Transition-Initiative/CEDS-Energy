@@ -1,27 +1,120 @@
 ---
 title: "Energy Report"
-author: "Need the df & column name"
-date: "`r format(Sys.time(), '%e %B %Y')`"
 format: html
 editor: visual
 params:
-  
-
 ---
 
-## \[Enter address and/or family name here\] Pre-Improvements report
+```{r}
+#| label: setup
+#| include: false
 
-## Building general info
+#Attach Packages
+library(readr)
+library(here)
+library(dplyr)
+library(ggplot2)
+library(stringr)
+library(readxl)
 
-Build: #Need the df & column name
+#Load Data
+Data <- read_excel("../data/Energy_Audit_template.xlsx")
+```
 
-Area: #Need the df & column name
+## Home Energy Audit Report
 
-Heating type: #Need the df & column name
+Photo here of the house SUBMITTED TO: `{r} reference to df.`
+
+SUBMITTED BY: `{r} reference to df.` DATE: `r format(Sys.time(), '%e %B %Y')`
+
+## The Energy Audit
+
+Energy Audit of your property was conducted on `{r} reference to df.` We looked into insulation, mechanical equipment, conducted test like blower door test to quantify the energy efficiency of your home. By analyzing collected and all the data that you provided your home energy cost your approximately `{r} reference to df.` (This report also shows the list of improvements that could lower energy consumption and improve comfort and health)
+
+## Home's current condition
+
+Build: `{r} reference to df.`
+
+Area: `{r} reference to df.`
+
+Heating type: `{r} reference to df.`
 
 etc. :
 
-## Buildings Electricy use
+## Health and safety
+
+Combustion Gas Spillage Test – `{r} reference to df.` (Emissions Spilled for `{r} reference to df.` seconds) (#or maybe I can set if the emissions spilled for \>60 seconds than it set's automatic to FAILED)
+
+(This can be optional in a longer report)The Combustion Gas Spillage Test examines your current combustion appliances for spillage of emissions into your home. Most combustion appliances spill for a short period of time, especially when they are first starting. An appliance that spills emissions for more than 60 seconds fails the test and corrective action is needed. This is often due to a clogged or restricted chimney.
+
+Appliance Carbon Monoxide (CO) Test – PASSED (`{r} reference to df.` parts per million) (#or maybe I can set if the emissions spilled for \>26 parts per million than it set's automatic to FAILED)
+
+(This can be optional in a longer report) The Appliance Carbon Monoxide test examines the concentration of CO inside of the chimney/flue that is designed to vent the emissions of the combustion process out of your home. If levels of CO in the emissions of your combustion appliance exceeds 26 parts per million, correction action is highly recommended. If they exceed 100 parts per million corrective action is needed. CO is produced from incomplete combustion, so often times a clean and tune of your appliance is the best fix.
+
+Ambient Carbon Monoxide (CO) Test – PASSED (`{r} reference to df.` parts per million) (#or maybe I can set if the emissions spilled for \>35 parts per million than it set's automatic to FAILED)
+
+(This can be optional in a longer report) The Ambient Carbon Monoxide test examines the inside of your home for the presence of CO. All homes with combustion appliances and/or attached garages must to have UL2034 listed carbon monoxide detectors installed in the appropriate locations. If levels of CO in your home reach 35 parts per million the appliance creating the problem should be disabled and the home should be evacuated and ventilated until levels fall below 35 PPM. The appliance should then be repaired or replaced.
+
+Combustion Appliance Draft Test – `{r} reference to df.` (Sufficient Draft Pressure)
+
+(This can be optional in a longer report) The Combustion Appliance Draft Test evaluates the risk that the combustion gases in your home’s flue(s) will be drawn back into your home by a source of negative pressure (e.g. clothes dryer, bathroom fans, etc…) If a combustion appliance does not have sufficient draft pressure corrective action is required.
+
+Other Health & Safety Concerns: `{r} reference to df.` if there is some comment if not default to this - (There were no health and safety concerns that were identified at the time of your energy audit.)
+
+## Insulation levels
+
+|                    |                        |                |
+|--------------------|------------------------|----------------|
+| HOME COMPONENT     | YOUR HOME’S            
+                      R-VALUES                | US D.O.E.      
+                                               RECOMMENDED     
+                                               R-VALUES        |
+| Attics/Ceilings    | `{r} reference to df.` | 49             |
+| Above Ground Walls | `{r} reference to df.` | 20             |
+| Basement Walls     | `{r} reference to df.` | 15             |
+| Basement Ceilings  | `{r} reference to df.` | 25             |
+
+link to US D.O.E. RECOMMENDED R-VALUES
+
+Images of the insulation pictures.
+
+## Air Leakage Test 
+
+The blower door test, determined that your homes air leakage rate is `{r} reference to df.`Natural Air Changes per Hour(ACHn) (Should I explain what ACHn is?)
+
+```{r}
+#| label: air_leakage_test
+#| warning: false
+
+#Here will be a singular bar plat with air leak visualization
+```
+
+The blower door test and visual inspection detected the following areas for moderate to severe air
+leakage:
+
+`{r} reference to df.{r} reference to df.`
+
+`{r} reference to df.`
+
+`{r} reference to df.`
+
+## 
+Heating and Cooling Systems
+
+(Image of heating system) Your home is currently heated with an `{r} reference to df.` Your current heating system has the following efficiency and output ratings:
+• Heating efficiency = `{r} reference to df.` Annual Fuel Utilization Efficiency (AFUE)
+• Heating output = `{r} reference to df.`Btu/hr
+Your home is cooled with `{r} reference to df.`. (I need conditional rendering here) The size, construction, and energy consuming features
+of your home have all been factored into the calculation of the heating and cooling loads for your
+home:
+• Heating load = `{r} reference to df.` Btu/hr
+• Cooling load = `{r} reference to df.`Btu/hr
+It is important to make sure that a new heating/cooling system is designed to meet the heating and
+cooling loads of your home. And please keep in mind that any changes to your home (i.e. – air sealing,
+insulating, etc…) will ultimately decrease your heating load and can lead to saving money on a new
+heating system by enabling you to purchase a system with a lower energy output.
+
+\## Buildings Electricy use
 
 ```{r}
 #| echo: true

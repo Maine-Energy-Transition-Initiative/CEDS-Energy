@@ -1,0 +1,11 @@
+---
+title: "SQL"
+format: html
+editor: visual
+---
+
+```{r}
+#| echo: false
+library(DBI)
+library(dbplyr)
+```
