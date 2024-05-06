@@ -9,6 +9,7 @@ website:
         text: Community Energy Center
         href: https://www.coa.edu/cec/
       - icon: github
+        text: Project Github Repo
         href: https://github.com/LaurieLBaker/CEDS-Energy
       
     left:
@@ -29,7 +30,7 @@ website:
     background: gray
     left: "Copyright 2024, Someone" 
     center: "Made with quarto"
-    right: "Build during Community Engaged Data Science Class"
+    right: "Built during Community Engaged Data Science 2024"
     
 format:
   html:
@@ -37,7 +38,7 @@ format:
       light: [flatly, theme-light.scss]
       dark: [darkly, theme-dark.scss]
     css: styles.css
-    toc: true
+    toc: false
 
 editor: visual
 
