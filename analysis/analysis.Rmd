@@ -283,17 +283,29 @@ Carriage_electricity <- Carriage_electricity %>%
 
 Carriage_heating_oil <- Carriage_heating_oil %>% 
   mutate(BTU = Gallons) %>% 
-  mutate(BTU = BTU * 138,690) #this is the math for heating oil the other fuel types of other calculations but is unnecessary to separate and do at this point
+  mutate(BTU = BTU * 138690) #this is the math for heating oil the other fuel types of other calculations but is unnecessary to separate and do at this point
+
+Carriage_electricity_sub <- Carriage_electricity %>%
+  select(Month, Building, BTU) %>%
+  rename(Date = Month) %>%
+  mutate(Fuel_Type = "electricity")
+
+Carriage_heating_oil_sub <- Carriage_heating_oil %>%
+  select(`Delivery Date`, Building, BTU) %>%
+  rename(Date = `Delivery Date`) %>%
+  mutate(Fuel_Type = "heating oil")
+
+Carriage_heating_and_electricity<- rbind(Carriage_heating_oil_sub, Carriage_electricity_sub)
 ```
 
 ```{r energy_usage_animation_for_carriage}
-Animation1 <- ggplot(Carriage_electricity, mapping = aes(x = Month, y = BTU, color = "red")) +
+Animation1 <- ggplot(Carriage_heating_and_electricity, mapping = aes(x = Date, y = BTU, color = Fuel_Type, group = Fuel_Type)) +
   geom_line() + 
-  geom_line(Carriage_heating_oil, mapping = aes(x = `Delivery Date`, y = BTU), color = "blue") + 
+ # geom_line(Carriage_heating_oil, mapping = aes(x = `Delivery Date`, y = BTU), color = "blue") + 
   geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
                 linetype=1, colour="black") +
-   annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y = 1e+06, label="David started as the Director of Energy", angle=90) +
-  transition_reveal(Month)+
+   annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y = 5e+06, label="David started as the Director of Energy", angle=90) +
+  transition_reveal(Date)+
   enter_fade() + exit_fade() 
 
 animation = animate(Animation1,
