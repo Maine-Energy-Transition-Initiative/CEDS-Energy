@@ -2,8 +2,8 @@
 title: ""
 ---
 
-# Landing page
+# Maine Energy Retrofits for Community Improvements (MERCI)
 
 Here will be the landing page and the information.
 
-![](Images/IMG_0294.jpg){fig-align="center"}
+![](Images/heat-pump-cat.jpg){fig-align="center" width="451"}
