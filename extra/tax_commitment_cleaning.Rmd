@@ -9,6 +9,29 @@ library(tidyverse)
 ```
 
 ```{r Reading data}
-tax_commitment_GCI <- read_excel("/cloud/project/extra/tax_commitment_GCI.xlsx")
+tax_commitment_GCI <- read_excel("/cloud/project/extra/tax_commitment_GCI.xlsx", skip = 2)
+```
+
+```{r}
+tax_commitment_GCI_clean <- tax_commitment_GCI %>%
+  fill(Account, .direction = "down") %>%
+  mutate(Account = as.numeric(Account)) %>%
+  drop_na(Account) %>%
+  mutate(Account = as.factor(Account)) %>%
+  rename(Acres = `...6`) %>%
+  mutate(Land = str_replace(Land, pattern = "Acres", replacement = "")) %>%
+  mutate(Tax = str_replace(Tax, pattern = "Tax", replacement = "")) %>%
+  mutate(Assessment = str_replace(Assessment, pattern = "Total", replacement = "")) %>%
+  rename(Address = `Name & Address`) %>%
+  select(Account, "Address", "Land", "Acres", "Building", "Exemption", "Assessment", "Tax") %>%
+  filter(is.na(Account) == FALSE) %>%
+  group_by(Account) %>%
+  summarize(Address_Clean = str_c(Address, collapse = ", "),
+            Land = sum(as.numeric(Land), na.rm = TRUE),
+            Acres = sum(as.numeric(Acres), na.rm = TRUE),
+            Building = sum(as.numeric(Building), na.rm = TRUE),
+            Exemption = sum(as.numeric(Exemption), na.rm = TRUE),
+            Assessment = sum(as.numeric(Assessment), na.rm = TRUE),
+            Tax = sum(as.numeric(Tax), na.rm = TRUE))
 ```
 
