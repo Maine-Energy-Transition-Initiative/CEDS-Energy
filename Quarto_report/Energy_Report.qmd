@@ -63,22 +63,26 @@ Other Health & Safety Concerns: `{r} reference to df.` if there is some comment 
 
 ## Insulation levels
 
-|                    |                        |                |
-|--------------------|------------------------|----------------|
-| HOME COMPONENT     | YOUR HOME’S            
-                      R-VALUES                | US D.O.E.      
-                                               RECOMMENDED     
-                                               R-VALUES        |
-| Attics/Ceilings    | `{r} reference to df.` | 49             |
-| Above Ground Walls | `{r} reference to df.` | 20             |
-| Basement Walls     | `{r} reference to df.` | 15             |
-| Basement Ceilings  | `{r} reference to df.` | 25             |
+|                |             |     |
+|----------------|-------------|-----|
+| HOME COMPONENT | YOUR HOME’S |     |
+| R-VALUES       | US D.O.E.   |     |
+
+```         
+                                           RECOMMENDED     
+                                           R-VALUES        |
+```
+
+| Attics/Ceilings \| `{r} reference to df.` \| 49 \|
+| Above Ground Walls \| `{r} reference to df.` \| 20 \|
+| Basement Walls \| `{r} reference to df.` \| 15 \|
+| Basement Ceilings \| `{r} reference to df.` \| 25 \|
 
 link to US D.O.E. RECOMMENDED R-VALUES
 
 Images of the insulation pictures.
 
-## Air Leakage Test 
+## Air Leakage Test
 
 The blower door test, determined that your homes air leakage rate is `{r} reference to df.`Natural Air Changes per Hour(ACHn) (Should I explain what ACHn is?)
 
@@ -89,8 +93,7 @@ The blower door test, determined that your homes air leakage rate is `{r} refere
 #Here will be a singular bar plat with air leak visualization
 ```
 
-The blower door test and visual inspection detected the following areas for moderate to severe air
-leakage:
+The blower door test and visual inspection detected the following areas for moderate to severe air leakage:
 
 `{r} reference to df.{r} reference to df.`
 
@@ -99,20 +102,10 @@ leakage:
 `{r} reference to df.`
 
 ## 
+
 Heating and Cooling Systems
 
-(Image of heating system) Your home is currently heated with an `{r} reference to df.` Your current heating system has the following efficiency and output ratings:
-• Heating efficiency = `{r} reference to df.` Annual Fuel Utilization Efficiency (AFUE)
-• Heating output = `{r} reference to df.`Btu/hr
-Your home is cooled with `{r} reference to df.`. (I need conditional rendering here) The size, construction, and energy consuming features
-of your home have all been factored into the calculation of the heating and cooling loads for your
-home:
-• Heating load = `{r} reference to df.` Btu/hr
-• Cooling load = `{r} reference to df.`Btu/hr
-It is important to make sure that a new heating/cooling system is designed to meet the heating and
-cooling loads of your home. And please keep in mind that any changes to your home (i.e. – air sealing,
-insulating, etc…) will ultimately decrease your heating load and can lead to saving money on a new
-heating system by enabling you to purchase a system with a lower energy output.
+(Image of heating system) Your home is currently heated with an `{r} reference to df.` Your current heating system has the following efficiency and output ratings: • Heating efficiency = `{r} reference to df.` Annual Fuel Utilization Efficiency (AFUE) • Heating output = `{r} reference to df.`Btu/hr Your home is cooled with `{r} reference to df.`. (I need conditional rendering here) The size, construction, and energy consuming features of your home have all been factored into the calculation of the heating and cooling loads for your home: • Heating load = `{r} reference to df.` Btu/hr • Cooling load = `{r} reference to df.`Btu/hr It is important to make sure that a new heating/cooling system is designed to meet the heating and cooling loads of your home. And please keep in mind that any changes to your home (i.e. – air sealing, insulating, etc…) will ultimately decrease your heating load and can lead to saving money on a new heating system by enabling you to purchase a system with a lower energy output.
 
 \## Buildings Electricy use
 

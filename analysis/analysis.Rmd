@@ -317,22 +317,22 @@ animation = animate(Animation1,
                     renderer = av_renderer())
 animation
 
-#anim_save("Animation1MVP.gif", Animation1)
+anim_save("Animation1MVP.gif", Animation1)
 ```
 
 ```{r setup-arduino-api-packages, eval = FALSE}
-# install.packages("Rduinoiot")
+install.packages("Rduinoiot")
 library(Rduinoiot)
 
-# install.packages("devtools")
-# devtools::install_github("FlavioLeccese92/Rduinoiot")
+install.packages("devtools")
+devtools::install_github("FlavioLeccese92/Rduinoiot")
 ```
 ```{r set-api-credentials}
 Sys.setenv(ARDUINO_API_CLIENT_ID = '8BO2NX9eLMFJWOq44d3HwvTLM1x27ekr')
 Sys.setenv(ARDUINO_API_CLIENT_SECRET = 'JeE2jMJlnsYgUr98LrbqFIoHyH4qbOHZtNIJfgQn2ubaLkmWRApcDo7dU3NiBAHA')
 
 create_auth_token()
-# tl = things_list()
+tl = things_list()
 ```
 
 ```{r import-arduino-data-test}
