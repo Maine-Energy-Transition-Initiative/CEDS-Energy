@@ -3,11 +3,13 @@ title: "Energy Report"
 format: html
 editor: visual
 params:
+  adress: "Energy_Audit_template$adress"
 ---
 
 ```{r}
 #| label: setup
-#| include: false
+#| echo: false
+#| warning: false
 
 #Attach Packages
 library(readr)
@@ -18,28 +20,42 @@ library(stringr)
 library(readxl)
 
 #Load Data
-Data <- read_excel("../data/Energy_Audit_template.xlsx")
+Energy_Audits <- read_excel("../data/Energy_Audit_template.xlsx")
 ```
 
 ## Home Energy Audit Report
 
-Photo here of the house SUBMITTED TO: `{r} reference to df.`
+Photo here of the house SUBMITTED TO: `r Energy_Audits$Adress_Name`
 
-SUBMITTED BY: `{r} reference to df.` DATE: `r format(Sys.time(), '%e %B %Y')`
+SUBMITTED BY: `r Energy_Audits$Auditor_full_name` DATE: `r format(Sys.time(), '%e %B %Y')`
 
 ## The Energy Audit
 
-Energy Audit of your property was conducted on `{r} reference to df.` We looked into insulation, mechanical equipment, conducted test like blower door test to quantify the energy efficiency of your home. By analyzing collected and all the data that you provided your home energy cost your approximately `{r} reference to df.` (This report also shows the list of improvements that could lower energy consumption and improve comfort and health)
+Energy Audit of your property was conducted on `r Energy_Audits$Audit_Date` We looked into insulation, mechanical equipment, conducted test like blower door test to quantify the energy efficiency of your home. By analyzing collected and all the data that you provided your home energy cost your approximately `r Energy_Audits$Yearly_Energy_Cost` yearly. (This report also shows the list of improvements that could lower energy consumption and improve comfort and health)
 
 ## Home's current condition
 
-Build: `{r} reference to df.`
+::: {layout-ncol="2"}
+Build: `r Energy_Audits$Year_Build`
 
-Area: `{r} reference to df.`
+Volume: `r Energy_Audits$Total_floor_area`
 
-Heating type: `{r} reference to df.`
+Area: `r Energy_Audits$Total_floor_area`
 
-etc. :
+Window type and area: `r Energy_Audits$Window_type`, `r Energy_Audits$Window_area`
+
+Heating type: `r Energy_Audits$Heating_Type`
+
+Door type and area:
+
+Total floor area: `r Energy_Audits$Total_floor_area`
+
+Net wall area:
+
+Ceiling height: `r Energy_Audits$Ceiling_height`
+
+Ceiling/attic area:
+:::
 
 ## Health and safety
 
@@ -59,28 +75,27 @@ Combustion Appliance Draft Test – `{r} reference to df.` (Sufficient Draft Pre
 
 (This can be optional in a longer report) The Combustion Appliance Draft Test evaluates the risk that the combustion gases in your home’s flue(s) will be drawn back into your home by a source of negative pressure (e.g. clothes dryer, bathroom fans, etc…) If a combustion appliance does not have sufficient draft pressure corrective action is required.
 
+Gas leak detection: `{r} reference to df.`
+
 Other Health & Safety Concerns: `{r} reference to df.` if there is some comment if not default to this - (There were no health and safety concerns that were identified at the time of your energy audit.)
 
 ## Insulation levels
 
-|                    |                        |                |
-|--------------------|------------------------|----------------|
-| HOME COMPONENT     | YOUR HOME’S            
-                      R-VALUES                | US D.O.E.      
-                                               RECOMMENDED     
-                                               R-VALUES        |
-| Attics/Ceilings    | `{r} reference to df.` | 49             |
-| Above Ground Walls | `{r} reference to df.` | 20             |
-| Basement Walls     | `{r} reference to df.` | 15             |
-| Basement Ceilings  | `{r} reference to df.` | 25             |
+|                    |                        |                               |
+|------------------------|----------------------------|--------------------|
+| HOME COMPONENT     | YOUR HOME’S R-VALUES   | US D.O.E.RECOMMENDED R-VALUES |
+| Attics/Ceilings    | `{r} reference to df.` | 49                            |
+| Above Ground Walls | `{r} reference to df.` | 20                            |
+| Basement Walls     | `{r} reference to df.` | 15                            |
+| Basement Ceilings  | `{r} reference to df.` | 25                            |
 
 link to US D.O.E. RECOMMENDED R-VALUES
 
 Images of the insulation pictures.
 
-## Air Leakage Test 
+## Air Leakage Test
 
-The blower door test, determined that your homes air leakage rate is `{r} reference to df.`Natural Air Changes per Hour(ACHn) (Should I explain what ACHn is?)
+The blower door test, determined that your homes air leakage rate is `{r} reference to df.`Natural Air Changes per Hour(ACHn) (Should I explain what ACHn is?) CFM50 was `{r} reference to df.` with `{r} reference to df.` ring used. (Include photo)
 
 ```{r}
 #| label: air_leakage_test
@@ -89,8 +104,7 @@ The blower door test, determined that your homes air leakage rate is `{r} refere
 #Here will be a singular bar plat with air leak visualization
 ```
 
-The blower door test and visual inspection detected the following areas for moderate to severe air
-leakage:
+The blower door test and visual inspection detected the following areas for moderate to severe air leakage:
 
 `{r} reference to df.{r} reference to df.`
 
@@ -99,22 +113,12 @@ leakage:
 `{r} reference to df.`
 
 ## 
+
 Heating and Cooling Systems
 
-(Image of heating system) Your home is currently heated with an `{r} reference to df.` Your current heating system has the following efficiency and output ratings:
-• Heating efficiency = `{r} reference to df.` Annual Fuel Utilization Efficiency (AFUE)
-• Heating output = `{r} reference to df.`Btu/hr
-Your home is cooled with `{r} reference to df.`. (I need conditional rendering here) The size, construction, and energy consuming features
-of your home have all been factored into the calculation of the heating and cooling loads for your
-home:
-• Heating load = `{r} reference to df.` Btu/hr
-• Cooling load = `{r} reference to df.`Btu/hr
-It is important to make sure that a new heating/cooling system is designed to meet the heating and
-cooling loads of your home. And please keep in mind that any changes to your home (i.e. – air sealing,
-insulating, etc…) will ultimately decrease your heating load and can lead to saving money on a new
-heating system by enabling you to purchase a system with a lower energy output.
+(Image of heating system) Your home is currently heated with an `{r} reference to df.` Your current heating system has the following efficiency and output ratings: • Heating efficiency = `{r} reference to df.` Annual Fuel Utilization Efficiency (AFUE) • Heating output = `{r} reference to df.`Btu/hr Your home is cooled with `{r} reference to df.`. (I need conditional rendering here) The size, construction, and energy consuming features of your home have all been factored into the calculation of the heating and cooling loads for your home: • Heating load = `{r} reference to df.` Btu/hr • Cooling load = `{r} reference to df.`Btu/hr It is important to make sure that a new heating/cooling system is designed to meet the heating and cooling loads of your home. And please keep in mind that any changes to your home (i.e. – air sealing, insulating, etc…) will ultimately decrease your heating load and can lead to saving money on a new heating system by enabling you to purchase a system with a lower energy output.
 
-\## Buildings Electricy use
+\## Energy Bill analysis
 
 ```{r}
 #| echo: true
@@ -163,3 +167,5 @@ ggplot() +
   theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
   labs(title = "Carriage's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
 ```
+
+

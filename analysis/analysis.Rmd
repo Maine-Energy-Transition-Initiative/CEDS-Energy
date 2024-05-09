@@ -299,12 +299,17 @@ Carriage_heating_and_electricity<- rbind(Carriage_heating_oil_sub, Carriage_elec
 ```
 
 ```{r energy_usage_animation_for_carriage}
-Animation1 <- ggplot(Carriage_heating_and_electricity, mapping = aes(x = Date, y = BTU, color = Fuel_Type, group = Fuel_Type)) +
+(Carriage_heating_and_electricity_filter <- Carriage_heating_and_electricity %>%
+  filter(Date >= as.Date("2017-01-01") & Date <= as.Date("2023-12-31")))
+
+Animation1 <- ggplot(Carriage_heating_and_electricity_filter, mapping = aes(x = Date, y = BTU, color = Fuel_Type, group = Fuel_Type)) +
   geom_line() + 
- # geom_line(Carriage_heating_oil, mapping = aes(x = `Delivery Date`, y = BTU), color = "blue") + 
   geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
                 linetype=1, colour="black") +
-   annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y = 5e+06, label="David started as the Director of Energy", angle=90) +
+   annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y = 1e+07, label="David started as the Director of Energy", angle=90) +
+  geom_vline(xintercept=as.POSIXct(as.Date("2022-02-15")),
+                linetype=1, colour="black") +
+  annotate("text", x=as.POSIXct(as.Date("2022-04-15")), y = 1e+07, label="HPWH Installed and Basemnt Insulated", angle=90) +
   transition_reveal(Date)+
   enter_fade() + exit_fade() 
 
