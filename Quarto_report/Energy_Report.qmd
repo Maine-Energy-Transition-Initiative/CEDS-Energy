@@ -82,7 +82,7 @@ Other Health & Safety Concerns: `{r} reference to df.` if there is some comment 
 ## Insulation levels
 
 |                    |                        |                               |
-|--------------------|------------------------|-------------------------------|
+|------------------------|----------------------------|--------------------|
 | HOME COMPONENT     | YOUR HOME’S R-VALUES   | US D.O.E.RECOMMENDED R-VALUES |
 | Attics/Ceilings    | `{r} reference to df.` | 49                            |
 | Above Ground Walls | `{r} reference to df.` | 20                            |
@@ -168,11 +168,4 @@ ggplot() +
   labs(title = "Carriage's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
 ```
 
-```{r}
-Energy_Audits_pr <- readr::read_rds(here::here("Energy_Audits_template"))
 
-Energy_Audits_pr |>
-  dplyr::distinct(Adress_Name) |>
-  dplyr::count(Adress_Name) |>
-  janitor::adorn_totals()
-```
