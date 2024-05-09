@@ -31,29 +31,28 @@ SUBMITTED BY: `r Energy_Audits$Auditor_full_name` DATE: `r format(Sys.time(), '%
 
 ## The Energy Audit
 
-Energy Audit of your property was conducted on `r Energy_Audits$Audit_Date` We looked into insulation, mechanical equipment, conducted test like blower door test to quantify the energy efficiency of your home. By analyzing collected and all the data that you provided your home energy cost your approximately `r Energy_Audits$Yearly_Energy_Cost` (This report also shows the list of improvements that could lower energy consumption and improve comfort and health)
+Energy Audit of your property was conducted on `r Energy_Audits$Audit_Date` We looked into insulation, mechanical equipment, conducted test like blower door test to quantify the energy efficiency of your home. By analyzing collected and all the data that you provided your home energy cost your approximately `r Energy_Audits$Yearly_Energy_Cost` yearly. (This report also shows the list of improvements that could lower energy consumption and improve comfort and health)
 
 ## Home's current condition
 
 ::: {layout-ncol="2"}
+Build: `r Energy_Audits$Year_Build`
 
-Build: `{r} reference to df.`
+Volume: `r Energy_Audits$Total_floor_area`
 
-Volume:
+Area: `r Energy_Audits$Total_floor_area`
 
-Area: `{r} reference to df.`
+Window type and area: `r Energy_Audits$Window_type`, `r Energy_Audits$Window_area`
 
-Window type and area:
-
-Heating type: `{r} reference to df.`
+Heating type: `r Energy_Audits$Heating_Type`
 
 Door type and area:
 
-Total floor area: `{r} reference to df.`
+Total floor area: `r Energy_Audits$Total_floor_area`
 
 Net wall area:
 
-Ceiling height:
+Ceiling height: `r Energy_Audits$Ceiling_height`
 
 Ceiling/attic area:
 :::
@@ -83,7 +82,7 @@ Other Health & Safety Concerns: `{r} reference to df.` if there is some comment 
 ## Insulation levels
 
 |                    |                        |                               |
-|------------------------|----------------------------|--------------------|
+|--------------------|------------------------|-------------------------------|
 | HOME COMPONENT     | YOUR HOME’S R-VALUES   | US D.O.E.RECOMMENDED R-VALUES |
 | Attics/Ceilings    | `{r} reference to df.` | 49                            |
 | Above Ground Walls | `{r} reference to df.` | 20                            |
@@ -167,4 +166,13 @@ ggplot() +
    annotate("text", x=as.POSIXct(as.Date("2019-07-01")), y=400, label="Electricity Data collection sarted", angle=90)+
   theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
   labs(title = "Carriage's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
+```
+
+```{r}
+Energy_Audits_pr <- readr::read_rds(here::here("Energy_Audits_template"))
+
+Energy_Audits_pr |>
+  dplyr::distinct(Adress_Name) |>
+  dplyr::count(Adress_Name) |>
+  janitor::adorn_totals()
 ```
