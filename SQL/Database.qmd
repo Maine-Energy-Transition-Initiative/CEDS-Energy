@@ -5,7 +5,23 @@ editor: visual
 ---
 
 ```{r}
+#| label: setup
 #| echo: false
 library(DBI)
 library(dbplyr)
+library(tidyverse)
+library(RMariaDB)
+library(duckdb)
+
+con <- DBI::dbConnect(duckdb::duckdb())
+
+```
+
+```{r}
+#| label: SQL training
+#|
+dbWriteTable(con, "mpg", ggplot2::mpg)|>
+dbWriteTable(con, "diamonds", ggplot2::diamonds)|>
+dbListTables()
+
 ```
