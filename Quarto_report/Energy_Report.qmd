@@ -1,5 +1,5 @@
 ---
-title: "Energy Report"
+title: "COA Community Energy Center"
 format: html
 editor: visual
 params:
@@ -41,11 +41,11 @@ Photo here of the house SUBMITTED TO: `r params$adress`
 
 SUBMITTED BY: `r params$author` DATE: `r format(Sys.time(), '%e %B %Y')`
 
-## The Energy Audit
+## Summery
 
 Energy Audit of your property was conducted on `r Building_Audit$Audit_Date` We looked into insulation, mechanical equipment, conducted test like blower door test to quantify the energy efficiency of your home. By analyzing collected and all the data that you provided your home energy cost your approximately `r Building_Audit$Yearly_Energy_Cost` yearly. (This report also shows the list of improvements that could lower energy consumption and improve comfort and health)
 
-## Home's current condition
+## Home's current conditions
 
 ::: {layout-ncol="2"}
 Build: `r Building_Audit$Year_Build`
@@ -92,14 +92,14 @@ Gas leak detection: `{r} reference to df.`
 Other Health & Safety Concerns: `{r} reference to df.` if there is some comment if not default to this - (There were no health and safety concerns that were identified at the time of your energy audit.)
 
 ## Insulation levels
-|                    |                        |                               |
-|------------------------|----------------------------|--------------------|
-| HOME COMPONENT     | YOUR HOME’S R-VALUES   | US D.O.E.RECOMMENDED R-VALUES |
-| Attics/Ceilings    | `r Building_Audit$"Attics/Ceilings R-value"` | 49                            |
-| Above Ground Walls | `r Building_Audit$"Above Ground Walls R-value"` | 20                            |
-| Basement Walls     | `r Building_Audit$"Basement Walls R-value"` | 15                            |
-| Basement Ceilings  | `r Building_Audit$"Basement Ceilings R-value"` | 25                            |
 
+|                    |                                                 |                               |
+|------------------------|----------------------------|--------------------|
+| HOME COMPONENT     | YOUR HOME’S R-VALUES                            | US D.O.E.RECOMMENDED R-VALUES |
+| Attics/Ceilings    | `r Building_Audit$"Attics/Ceilings R-value"`    | 49                            |
+| Above Ground Walls | `r Building_Audit$"Above Ground Walls R-value"` | 20                            |
+| Basement Walls     | `r Building_Audit$"Basement Walls R-value"`     | 15                            |
+| Basement Ceilings  | `r Building_Audit$"Basement Ceilings R-value"`  | 25                            |
 
 link to US D.O.E. RECOMMENDED R-VALUES
 
@@ -116,9 +116,11 @@ The blower door test, determined that your homes air leakage rate is `r Building
 #Here will be a singular bar plat with air leak visualization
 ```
 
-The blower door test and visual inspection detected the following areas for moderate to severe air leakage: (This would be pictures)
+The blower door test and visual inspection detected the following areas for moderate to severe air leakage:
 
-`{r} reference to df.{r} reference to df.`
+(This would be pictures)
+
+`{r} reference to df.`
 
 `{r} reference to df.`
 
@@ -128,13 +130,25 @@ The blower door test and visual inspection detected the following areas for mode
 
 Heating and Cooling Systems
 
-(Image of heating system) Your home is currently heated with an `{r} reference to df.` Your current heating system has the following efficiency and output ratings: • Heating efficiency = `{r} reference to df.` Annual Fuel Utilization Efficiency (AFUE) • Heating output = `{r} reference to df.`Btu/hr Your home is cooled with `{r} reference to df.`. (I need conditional rendering here) The size, construction, and energy consuming features of your home have all been factored into the calculation of the heating and cooling loads for your home: • Heating load = `{r} reference to df.` Btu/hr • Cooling load = `{r} reference to df.`Btu/hr It is important to make sure that a new heating/cooling system is designed to meet the heating and cooling loads of your home. And please keep in mind that any changes to your home (i.e. – air sealing, insulating, etc…) will ultimately decrease your heating load and can lead to saving money on a new heating system by enabling you to purchase a system with a lower energy output.
+(Image of heating system) Your home is currently heated with an `r Building_Audit$"Heater Type"` Your current heating system has the following efficiency and output ratings:
 
-<<<<<<< HEAD
-\## Buildings Electricy use
-=======
-\## Energy Bill analysis
->>>>>>> 743eb163beee9b711ec6100c9ff96502158af738
+-   Heating efficiency = `r Building_Audit$"Heating Efficiency"`
+
+-   Annual Fuel Utilization Efficiency (AFUE)(need a new column here)
+
+-   Heating output = `r Building_Audit$"Heating output"` Btu/hr.
+
+Your home is cooled with (need new column for cooling type) `{r} reference to df.`. (I need conditional rendering here) The size, construction, and energy consuming features of your home have all been factored into the calculation of the heating and cooling loads for your home:
+
+-    Heating load = `r Building_Audit$"Heating Load"` Btu/hr
+
+-   Cooling load = `r Building_Audit$"Cooling load"`Btu/hr
+
+It is important to make sure that a new heating/cooling system is designed to meet the heating and cooling loads of your home. And please keep in mind that any changes to your home (i.e. – air sealing, insulating, etc…) will ultimately decrease your heating load and can lead to saving money on a new heating system by enabling you to purchase a system with a lower energy output.
+
+## Buildings Electricy use
+
+## Energy Bill analysis
 
 ```{r}
 #| echo: true
