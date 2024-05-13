@@ -6,11 +6,13 @@ editor: visual
 
 ## Goals of the Program
 
-The goals of the program is to improve 10 buildings on the Great Cranberry Island
+The goal of this program is to reduce total carbon emissions in Maine communities through comprehensive home energy audits, which will guide installation of the systems listed below.
 
 # 10 Steps to home improvements
 
 **1. EPA WaterSense showerheads**  Energy savings of 5-10%
+
+Use less water without compromising pressure, saving money on water heating bills
 
 -   A 1.5GPM showerhead uses 40% less water and thus 40% less energy to heat the water.
 
@@ -18,51 +20,67 @@ The goals of the program is to improve 10 buildings on the Great Cranberry Islan
 
 **2. LED light bulbs** Energy savings of 5-10%
 
--   LEDs use 85% less energy than incandescent bulbs, and reduce monthly energy costs by \$20-30 for an average home. 
+Higher quality, longer-lasting light that costs less on electricity bills
+
+-   LEDs use 85% less energy than incandescent bulbs, and reduce monthly energy costs by \$20-30 for an average home.
 
 **3. Window Dressers** Energy savings of 5-10%
+
+Reduces draftiness, making you feel warmer and lowering heating costs
 
 -   Insulated window inserts improve indoor comfort and energy efficiency for less than 1/10th the cost of replacing windows. [www.windowdressers.org](http://www.windowdressers.org) 
 
 **4. Heat pump water heater** **(HPWH)** Energy savings of 10-20%
 
+More energy efficient water heating, saving costs on long-term energy bills and reducing fossil fuel usage
+
 -   Use 70% less energy than a standard electric water heater.
 
 -   Significant rebates available through Efficiency Maine that increase their affordability.
 
--   Side benefit of helping dehumidify the space they’re in, like a damp basement.
+-   Side benefit of helping dehumidify the space they're in, like a damp basement.
 
 **5. Electric appliances** Energy savings of up to 10%
 
--   Measure your refrigerator’s energy use and upgrade to an EnergyStar model as needed. 
+Improved health and safety while improving energy costs and reducing fossil fuel usage
+
+-   Measure your refrigerator's energy use and upgrade to an EnergyStar model as needed. 
 
 -   Replace gas cooking equipment with induction or electric for health and safety.
 
 **6. Energy audit** Health and Safety
 
+Comprehensive guide to energy issues within the home
+
 -   Have a comprehensive audit to assess air leakage and insulation needs for your home.
 
 -   Measures energy use, identifies opportunities for improvements, and identifies moisture problems or health and safety needs like ventilation and mold remediation. 
 
-**7a. Basement/crawl space** Energy savings of 10-30%
+**7a. Basement/crawl space sealing** Energy savings of 10-30%
+
+Prevents heat from leaving the house and moisture and pests from entering
 
 -   Sealing the basement or crawlspace blocks rodents and heat loss.
 
 -   Vapor barrier prevents ground moisture from getting into the house - reducing mold.
 
--   We recommend 3” of spray foam (R-21) from floor up over the rim joist to air seal and retain heat. This is an incredible improvement for fieldstone foundations. 
+-   We recommend 3" of spray foam (R-21) from floor up over the rim joist to air seal and retain heat. This is an incredible improvement for fieldstone foundations. 
 
 -   Make sure the contractor uses HFO/5th generation/low-Global Warming Potential spray foam. Older HFC blowing agents have 500x the carbon emissions!
 
 **7b. Attic and wall air sealing and insulation** Energy savings of 10-25%
 
+Prevents heat from escaping the house, improving the efficacy of insulation
+
 -   Because warm air rises, a significant portion of heat loss is through the attic. 
 
 -   Air sealing first ensures that insulation works properly.
 
--   We recommend 18-24” of cellulose insulation to achieve R60-R80 in attics.
+-   We recommend 18-24" of cellulose insulation to achieve R60-R80 in attics.
 
 **8. Air source heat pumps** Energy savings of 10-40%
+
+More energy efficient air heating and cooling year-round, saving costs on long-term energy bills and reducing fossil fuel usage
 
 -   Provide winter heating and summer cooling and dehumidification for your home.
 
@@ -70,9 +88,13 @@ The goals of the program is to improve 10 buildings on the Great Cranberry Islan
 
 **9. Electric Vehicle**
 
+Removes gas bills and reduces fossil fuel dependence
+
 -   A 2020 study by Consumer Reports found that the lifetime ownership costs were significantly lower for EVs. Most EVs saved between \$6,000 - \$10,000 over their lifetimes.
 
 **10. Solar** Energy production up to 100%
+
+Generates self-sufficient energy, lowering energy bills and reducing dependence on fossil fuels and commercial energy grids
 
 -   Install rooftop solar to supply all your electricity needs.
 
@@ -84,18 +106,20 @@ The goals of the program is to improve 10 buildings on the Great Cranberry Islan
 
 **High-efficiency wood stove**
 
+Consumes less wood while retaining all the benefits of a wood stove
+
 New high-efficiency wood stoves are up to twice as efficient as older models, cutting wood consumption by up to half while providing as much heat to the home. Wood stoves are a great source of backup heat during power outages.
 
 **Whole-home surge protection**
+
+Improved home safety and resilience, provides insurance against electrical surges
 
 As we electrify our energy consumption, and especially with the complex electronics in these systems, it is essential to install whole-home surge protection. These devices can cost \$100-400, and need to be installed by an electrician. A single surge event can cause more damage than the upfront cost of the surge protector.
 
 **Ventilation**
 
+Improves air quality and promotes even temperature distribution
+
 As we seal our buildings and reduce air leakage (drafts), mechanical ventilation becomes more important. In many homes, exhaust fans in the kitchen and bathrooms are adequate. When homes are very tight, ventilation that both exhausts stale air and brings in fresh air is needed. Energy-recovery and heat-recovery ventilators exchange heat between the incoming and outgoing air, to temper the fresh air coming in and reduce heat loss.
-
-**Efficiency Maine: Rebates and support**
-
-Efficiency Maine’s website has additional information on federal tax credits and energy rebates available in Maine. They are a great source for finding a contractor in your area to help with any of these improvements: [www.efficiencymaine.com/at-home/](https://www.efficiencymaine.com/at-home/) 
 
 *List made by David Gibson, Director of Energy at College of the Atlantic*
