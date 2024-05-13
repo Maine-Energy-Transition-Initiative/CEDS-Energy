@@ -1,0 +1,4 @@
+- source: project
+  netlify:
+    - id: e9f1e4a7-6cf5-4a50-8e8a-c27687a174bd
+      url: 'https://darling-stroopwafel-a6e272.netlify.app'
