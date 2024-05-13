@@ -115,10 +115,11 @@ Images of the insulation pictures.
 The blower door test, determined that your homes air leakage rate is `r Building_Audit$"Natural Air Changes per Hour(ACHn)"`Natural Air Changes per Hour(ACHn) (Should I explain what ACHn is?) CFM50 was `r Building_Audit$"CFM50 reading"` with `r Building_Audit$"Ring Used"` ring used. (Include photo)
 ```{r}
 #| label: setup air leakage data
+#| echo: false
 ACHn <- Building_Audit |>
   select("Natural Air Changes per Hour(ACHn)")|>
   mutate()
-ACHn1 <- data.frame(IdialACHn = c(1))
+ACHn1 <- data.frame(IdialACHn = c("Ideal"))
 airleakdata <- cbind(ACHn,ACHn1)  
 ```
 
@@ -126,9 +127,13 @@ airleakdata <- cbind(ACHn,ACHn1)
 #| label: air leakage tests ggplot
 #| warning: false
 
-ggplot(Building_Audit, aes(y="Natural Air Changes per Hour(ACHn)", x="Natural Air Changes per Hour(ACHn)")) + 
-    geom_bar(position="fill", stat="identity")
-
+ggplot(airleakdata, aes(y=IdialACHn,))+
+  geom_bar(width=1)+
+  geom_vline(xintercept=airleakdata$`Natural Air Changes per Hour(ACHn)`,
+                linetype=1, colour="red")+
+  theme_void()+
+  
+#y="Natural Air Changes per Hour(ACHn)" 
 #Here will be a singular bar plat with air leak visualization
 ```
 
