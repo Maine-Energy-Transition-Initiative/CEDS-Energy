@@ -1,0 +1,113 @@
+---
+title: "Air_quality_arduino"
+format: html
+editor: visual
+---
+
+```{r}
+#| label: setup-arduino-api-packages
+#| echo: false
+#| warning: false
+#install.packages("Rduinoiot")
+library(Rduinoiot)
+
+#install.packages("devtools")
+devtools::install_github("FlavioLeccese92/Rduinoiot")
+```
+
+```{r}
+#| label: set-api-credentials
+#| echo: false
+#| warning: false
+Sys.setenv(ARDUINO_API_CLIENT_ID = '8BO2NX9eLMFJWOq44d3HwvTLM1x27ekr')
+Sys.setenv(ARDUINO_API_CLIENT_SECRET = 'JeE2jMJlnsYgUr98LrbqFIoHyH4qbOHZtNIJfgQn2ubaLkmWRApcDo7dU3NiBAHA')
+
+create_auth_token()
+tl = things_list()
+```
+
+```{r}
+#| label: assign-module-ids
+#| echo: false
+#| warning: false
+AQ01 = "1c7d23e8-526c-435f-9514-43100c634a3d"
+Humidity1 = "e9230942-e050-449d-b608-54777a9c84ee"
+Temp1 = "a7aa4f36-e201-49ad-9aa7-5e89d861e04d"
+conc10p0_1 = "16677d16-5c99-453a-bf88-8cd8c97583b5"
+conc2p5_1 = "e80beaa0-4ec3-455d-8430-70bb4231f6e4"
+noxInd1 = "54e2dcb2-7716-48b1-b69c-0303ca23c046"
+vocInd1 = "2137f69f-c126-446e-87c2-4d1b6a2feeba"
+
+AQ02 = "a35129a2-465a-4b55-a76f-d9d460ca7edd"
+Humidity2 = "54d1c2a1-fdc5-480e-b614-553fffe5c9e6"
+Temp2 = "c6e3b1e5-3c0f-42ab-8ff2-6d8d2bdf129b"
+conc10p0_2 = "4579f77e-4649-4bb7-937e-583819f0b53c"
+conc2p5_2 = "a2ca4e15-b2df-4d0c-8785-d0fed5ab4906"
+noxInd2 = "450ec530-df7d-4374-a08b-d38af1852cf0"
+vocInd2 = "d16c5381-2579-4874-ace2-b1573d64aafc"
+
+AQ03 = "7487e8fd-5c44-48d2-b10c-59bec4308867"
+Humidity3 = "9506a3f3-89e4-4c39-87e1-5aa496f71beb"
+Temp3 = "bec63040-5853-4c77-9544-a33c0f807105"
+conc10p0_3 = "9bff6f88-e742-40a9-bf4f-8f0d60e78edf"
+conc2p5_3 = "8c803a6b-a081-472d-92ce-7e94c5854a8c"
+noxInd3 = "b13e9ca0-3b5f-41d2-9711-e9f0bc80591c"
+vocInd3 = "0bd373f8-cfd1-4232-8ab7-15a4321f76d1"
+
+AQ04 = "4b3031a0-4d6b-4f7d-83fd-50c123580bff"
+Humidity4 = "d8fa1192-6348-46a0-b145-adace11eb7ec"
+Temp4 = "0ba03533-ace4-4321-97dc-f7f733527802"
+conc10p0_4 = "d1076d47-7e4d-4e20-8423-eca7dbc05873"
+conc2p5_4 = "b394433a-57e2-4c36-ab8b-85329683278e"
+noxInd4 = "1658e182-45dc-41cb-9752-25620ebdc2cf"
+vocInd4 = "a26b12eb-897f-4361-bcd0-088f44df821e"
+
+AQ05 = "67e9622e-c100-40cd-8352-ca77f4f718f3"
+Humidity5 = "11bb6443-aa60-49e6-8116-db4b75046b4a"
+Temp5 = "b66e98eb-c17b-412f-87a0-78e79ac1d017"
+conc10p0_5 = "02a8bb74-3ab8-40fb-b52c-f0f483db352a"
+conc2p5_5 = "43773669-895b-4f5f-8332-58e763d25912"
+noxInd5 = "7766aa85-6565-4cae-9475-224b4748a0e8"
+vocInd5 = "fb4627fa-1d1f-4906-ac97-8c166fbc04ed"
+
+
+# monitoring <- data.frame(property_id = c(Humidity1, ), arduino_id = rep(AQ01, 4))
+```
+
+```{r}
+#| label: import-AQ01-data
+#| echo: false
+#| warning: false
+AQ01_Temperature = things_properties_timeseries(thing_id = AQ01, property_id = Temp1, desc = FALSE) %>% 
+  rename("Temperature" = "value")
+
+AQ01_Humidity = things_properties_timeseries(thing_id = AQ01, property_id = Humidity1, desc = FALSE) %>% 
+  rename("Humidity" = "value")
+
+AQ01_10p0_Concentration = things_properties_timeseries(thing_id = AQ01, property_id = conc10p0_1, desc = FALSE) %>% 
+  rename("10p0 Concentration" = "value")
+
+AQ01_2p5_Concentration = things_properties_timeseries(thing_id = AQ01, property_id = conc2p5_1, desc = FALSE) %>% 
+  rename("2p5 Concentration" = "value")
+
+AQ01_noxIndex = things_properties_timeseries(thing_id = AQ01, property_id = noxInd1, desc = FALSE) %>% 
+  rename("nox_Index" = "value")
+
+AQ01_vocIndex = things_properties_timeseries(thing_id = AQ01, property_id = vocInd1, desc = FALSE) %>% 
+  rename("voc_Index" = "value")
+
+AQ01_Full = AQ01_Humidity %>% left_join(AQ01_Temperature) %>% left_join(AQ01_10p0_Concentration) %>% left_join(AQ01_2p5_Concentration) %>% left_join(AQ01_noxIndex) %>% left_join(AQ01_vocIndex) %>%
+  mutate(time = as_datetime(time)) %>% rename("Date" = "time")
+
+```
+
+```{r}
+#| label: draft-temp-graph
+#| echo: false
+#| warning: false
+AQ01_Full %>%
+  ggplot(aes(x = Date, y = Temperature)) +
+  geom_line() +
+  scale_x_datetime(date_breaks = "1 days") +
+  theme(axis.text.x = element_text(angle = 45))
+```
