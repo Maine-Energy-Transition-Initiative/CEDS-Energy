@@ -10,33 +10,30 @@ library(readxl)
 
 # Load data ====================================================================
 
-Energy_Audits_render <- read_excel("/data/data/Energy_Audit_template.xlsx")
+Energy_Audits_render <- read_excel("Energy_Audit_template.xlsx")
 
+#
 
 # Create dataframe to iterate over =============================================
 
 # HTML reports
 
-Energy_Audits_html <- pets |>
-  distinct(Adress_Name) |>
+Energy_Audits_html <- Energy_Audits_render |>
+  distinct(Adress_Name, Auditor_full_name) |>
   mutate(
     output_format = "html",
-    output_file = paste(
-      tolower(adress),
-      tolower(gsub(" ", "-", breed)),
+    output_file = paste(Adress_Name,
       "report.html",
-      sep = "-"
-    ),
+      sep = "-"),
     execute_params = map2(
-      pet_type,
-      breed,
-      \(pet_type, breed) list(pet_type = pet_type, fave_breed = breed)
+      Adress_Name, Auditor_full_name,
+      \(Adress_Name, Auditor_full_name) list(adress = Adress_Name, author = Auditor_full_name)
     )
   )
 
 # PDF reports
 
-pet_reports_pdf <- pet_reports_html |>
+Energy_Audits_pdf <- Energy_Audits_html |>
   mutate(
     output_file = gsub("html", "pdf", output_file),
     output_format = gsub("html", "pdf", output_format)
@@ -44,22 +41,20 @@ pet_reports_pdf <- pet_reports_html |>
 
 # Bind HTML and PDF report dataframes together
 
-pet_reports <- rbind(pet_reports_html, pet_reports_pdf)
+Energy_Audits_reports <- rbind(Energy_Audits_html, Energy_Audits_pdf)
 
 # Subset to first 2 cat/dog breeds =============================================
 
-pet_reports_subset <- pet_reports |>
-  slice_head(n = 2, by = c(pet_type, output_format)) |>
-  select(output_file, output_format, execute_params)
+#pet_reports_subset <- pet_reports |>
+ # slice_head(n = 2, by = c(pet_type, output_format)) |>
+  #select(output_file, output_format, execute_params)
 
 # Map over each row ============================================================
 
 pwalk(
-  pet_reports_subset,
   quarto_render,
-  input = here("4-demo-quarto-render-purrr.qmd"),
-  .progress = TRUE
-)
+  input = here("Energy_Report.qmd"),
+  .progress = TRUE)
 
 # Move reports to separate folder ==============================================
 

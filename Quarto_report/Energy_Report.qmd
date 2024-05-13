@@ -3,11 +3,12 @@ title: "Energy Report"
 format: html
 editor: visual
 params:
-  adress: "Energy_Audit_template$adress"
+  adress: "Me_test1"
+  author: "Rudolfs"
 ---
 
 ```{r}
-#| label: setup
+#| label: load packages
 #| echo: false
 #| warning: false
 
@@ -19,42 +20,53 @@ library(ggplot2)
 library(stringr)
 library(readxl)
 
+```
+
+```{r}
+#| label: setup data
+#| echo: false
+#| warning: false
+
 #Load Data
-Energy_Audits <- read_excel("../data/Energy_Audit_template.xlsx")
+Building_Audit <- read_excel("../data/Energy_Audit_template.xlsx")
+
+#Building_Audit <- Energy_Audits |>
+  #filter(Adress_Name == params$adress & Auditor_full_name == params$Auditor_full_name)
+
 ```
 
 ## Home Energy Audit Report
 
-Photo here of the house SUBMITTED TO: `r Energy_Audits$Adress_Name`
+Photo here of the house SUBMITTED TO: `r params$adress`
 
-SUBMITTED BY: `r Energy_Audits$Auditor_full_name` DATE: `r format(Sys.time(), '%e %B %Y')`
+SUBMITTED BY: `r params$author` DATE: `r format(Sys.time(), '%e %B %Y')`
 
 ## The Energy Audit
 
-Energy Audit of your property was conducted on `r Energy_Audits$Audit_Date` We looked into insulation, mechanical equipment, conducted test like blower door test to quantify the energy efficiency of your home. By analyzing collected and all the data that you provided your home energy cost your approximately `r Energy_Audits$Yearly_Energy_Cost` yearly. (This report also shows the list of improvements that could lower energy consumption and improve comfort and health)
+Energy Audit of your property was conducted on `r Building_Audit$Audit_Date` We looked into insulation, mechanical equipment, conducted test like blower door test to quantify the energy efficiency of your home. By analyzing collected and all the data that you provided your home energy cost your approximately `r Building_Audit$Yearly_Energy_Cost` yearly. (This report also shows the list of improvements that could lower energy consumption and improve comfort and health)
 
 ## Home's current condition
 
 ::: {layout-ncol="2"}
-Build: `r Energy_Audits$Year_Build`
+Build: `r Building_Audit$Year_Build`
 
-Volume: `r Energy_Audits$Total_floor_area`
+Volume: `r Building_Audit$Total_floor_area`
 
-Area: `r Energy_Audits$Total_floor_area`
+Area: `r Building_Audit$Total_floor_area`
 
-Window type and area: `r Energy_Audits$Window_type`, `r Energy_Audits$Window_area`
+Window type and area: `r Building_Audit$Window_type`, `r Building_Audit$Window_area`
 
-Heating type: `r Energy_Audits$Heating_Type`
+Heating type: `r Buiding_Audit$Heating_Type`
 
-Door type and area:
+Door type and area: `r Building_Audit$Door_type`, `r Building_Audit$Door_area`
 
-Total floor area: `r Energy_Audits$Total_floor_area`
+Total floor area: `r Building_Audit$$Total_floor_area`
 
-Net wall area:
+Net wall area: `r Building_Audit$Net_wall_area`
 
-Ceiling height: `r Energy_Audits$Ceiling_height`
+Ceiling height: `r Building_Audit$Ceiling_height`
 
-Ceiling/attic area:
+Ceiling/attic area: `r Building_Audit$Ceiling/Attic_area`
 :::
 
 ## Health and safety
@@ -167,5 +179,3 @@ ggplot() +
   theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
   labs(title = "Carriage's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
 ```
-
-
