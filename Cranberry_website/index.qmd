@@ -4,7 +4,7 @@ title: ""
 
 # Maine Energy Retrofits for Community Improvements (MERCI)
 
-Welcome! We are a government-funded program committed to providing high-quality energy audits and low-cost energy improvements to Maine homeowners.
+Welcome! We are a government-funded program committed to providing free high-quality energy audits and catalyze low-cost energy improvements to Maine homeowners.
 
 ![](Images/heat-pump-cat.jpg){fig-align="center" width="560"}
 
