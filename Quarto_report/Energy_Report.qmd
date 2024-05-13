@@ -28,10 +28,10 @@ library(readxl)
 #| warning: false
 
 #Load Data
-Building_Audit <- read_excel("../data/Energy_Audit_template.xlsx")
+Energy_Audits <- read_excel("../data/Energy_Audit_template.xlsx")
 
-#Building_Audit <- Energy_Audits |>
-  #filter(Adress_Name == params$adress & Auditor_full_name == params$Auditor_full_name)
+Building_Audit <- Energy_Audits |>
+  filter(Adress_Name == params$adress) # Auditor_full_name == params$Auditor_full_name
 
 ```
 
@@ -56,17 +56,17 @@ Area: `r Building_Audit$Total_floor_area`
 
 Window type and area: `r Building_Audit$Window_type`, `r Building_Audit$Window_area`
 
-Heating type: `r Buiding_Audit$Heating_Type`
+Heating type: `r Building_Audit$Heating_Type`
 
 Door type and area: `r Building_Audit$Door_type`, `r Building_Audit$Door_area`
 
-Total floor area: `r Building_Audit$$Total_floor_area`
+Total floor area: `r Building_Audit$Total_floor_area`
 
 Net wall area: `r Building_Audit$Net_wall_area`
 
 Ceiling height: `r Building_Audit$Ceiling_height`
 
-Ceiling/attic area: `r Building_Audit$Ceiling/Attic_area`
+Ceiling/attic area: `r Building_Audit$"Ceiling/attic_area"`
 :::
 
 ## Health and safety
@@ -92,31 +92,14 @@ Gas leak detection: `{r} reference to df.`
 Other Health & Safety Concerns: `{r} reference to df.` if there is some comment if not default to this - (There were no health and safety concerns that were identified at the time of your energy audit.)
 
 ## Insulation levels
-
-<<<<<<< HEAD
-|                |             |     |
-|----------------|-------------|-----|
-| HOME COMPONENT | YOUR HOME’S |     |
-| R-VALUES       | US D.O.E.   |     |
-
-```         
-                                           RECOMMENDED     
-                                           R-VALUES        |
-```
-
-| Attics/Ceilings \| `{r} reference to df.` \| 49 \|
-| Above Ground Walls \| `{r} reference to df.` \| 20 \|
-| Basement Walls \| `{r} reference to df.` \| 15 \|
-| Basement Ceilings \| `{r} reference to df.` \| 25 \|
-=======
 |                    |                        |                               |
 |------------------------|----------------------------|--------------------|
 | HOME COMPONENT     | YOUR HOME’S R-VALUES   | US D.O.E.RECOMMENDED R-VALUES |
-| Attics/Ceilings    | `{r} reference to df.` | 49                            |
-| Above Ground Walls | `{r} reference to df.` | 20                            |
-| Basement Walls     | `{r} reference to df.` | 15                            |
-| Basement Ceilings  | `{r} reference to df.` | 25                            |
->>>>>>> 743eb163beee9b711ec6100c9ff96502158af738
+| Attics/Ceilings    | `r Building_Audit$"Attics/Ceilings R-value"` | 49                            |
+| Above Ground Walls | `r Building_Audit$"Above Ground Walls R-value"` | 20                            |
+| Basement Walls     | `r Building_Audit$"Basement Walls R-value"` | 15                            |
+| Basement Ceilings  | `r Building_Audit$"Basement Ceilings R-value"` | 25                            |
+
 
 link to US D.O.E. RECOMMENDED R-VALUES
 
@@ -124,7 +107,7 @@ Images of the insulation pictures.
 
 ## Air Leakage Test
 
-The blower door test, determined that your homes air leakage rate is `{r} reference to df.`Natural Air Changes per Hour(ACHn) (Should I explain what ACHn is?) CFM50 was `{r} reference to df.` with `{r} reference to df.` ring used. (Include photo)
+The blower door test, determined that your homes air leakage rate is `r Building_Audit$"Natural Air Changes per Hour(ACHn)"`Natural Air Changes per Hour(ACHn) (Should I explain what ACHn is?) CFM50 was `r Building_Audit$"CFM50 reading"` with `r Building_Audit$"Ring Used"` ring used. (Include photo)
 
 ```{r}
 #| label: air_leakage_test
@@ -133,7 +116,7 @@ The blower door test, determined that your homes air leakage rate is `{r} refere
 #Here will be a singular bar plat with air leak visualization
 ```
 
-The blower door test and visual inspection detected the following areas for moderate to severe air leakage:
+The blower door test and visual inspection detected the following areas for moderate to severe air leakage: (This would be pictures)
 
 `{r} reference to df.{r} reference to df.`
 
