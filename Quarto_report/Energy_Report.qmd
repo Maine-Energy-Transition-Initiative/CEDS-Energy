@@ -19,6 +19,7 @@ library(dplyr)
 library(ggplot2)
 library(stringr)
 library(readxl)
+library(tidyverse)
 
 ```
 
@@ -35,13 +36,13 @@ Building_Audit <- Energy_Audits |>
 
 ```
 
-## Home Energy Audit Report
+##Home Energy Audit Report 
 
 Photo here of the house SUBMITTED TO: `r params$adress`
 
 SUBMITTED BY: `r params$author` DATE: `r format(Sys.time(), '%e %B %Y')`
 
-## Summery
+## Summary
 
 Energy Audit of your property was conducted on `r Building_Audit$Audit_Date` We looked into insulation, mechanical equipment, conducted test like blower door test to quantify the energy efficiency of your home. By analyzing collected and all the data that you provided your home energy cost your approximately `r Building_Audit$Yearly_Energy_Cost` yearly. (This report also shows the list of improvements that could lower energy consumption and improve comfort and health)
 
@@ -71,25 +72,29 @@ Ceiling/attic area: `r Building_Audit$"Ceiling/attic_area"`
 
 ## Health and safety
 
-Combustion Gas Spillage Test – `{r} reference to df.` (Emissions Spilled for `{r} reference to df.` seconds) (#or maybe I can set if the emissions spilled for \>60 seconds than it set's automatic to FAILED)
+Combustion Gas Spillage Test – `r case_when(Building_Audit$"Seconds of Combustion Gas Spillage Test" >= 60 ~ 'FAILED',TRUE ~ 'PASSED')` (Emissions Spilled for `r Building_Audit$"Seconds of Combustion Gas Spillage Test"` seconds)
 
 (This can be optional in a longer report)The Combustion Gas Spillage Test examines your current combustion appliances for spillage of emissions into your home. Most combustion appliances spill for a short period of time, especially when they are first starting. An appliance that spills emissions for more than 60 seconds fails the test and corrective action is needed. This is often due to a clogged or restricted chimney.
 
-Appliance Carbon Monoxide (CO) Test – PASSED (`{r} reference to df.` parts per million) (#or maybe I can set if the emissions spilled for \>26 parts per million than it set's automatic to FAILED)
+Appliance Carbon Monoxide (CO) Test – `r case_when(Building_Audit$"Appliance Carbon Monoxide (CO) Test" > 26 ~ 'FAILED',TRUE ~ 'PASSED')`( Detected `r Building_Audit$"Appliance Carbon Monoxide (CO) Test"`parts per million)
 
 (This can be optional in a longer report) The Appliance Carbon Monoxide test examines the concentration of CO inside of the chimney/flue that is designed to vent the emissions of the combustion process out of your home. If levels of CO in the emissions of your combustion appliance exceeds 26 parts per million, correction action is highly recommended. If they exceed 100 parts per million corrective action is needed. CO is produced from incomplete combustion, so often times a clean and tune of your appliance is the best fix.
 
-Ambient Carbon Monoxide (CO) Test – PASSED (`{r} reference to df.` parts per million) (#or maybe I can set if the emissions spilled for \>35 parts per million than it set's automatic to FAILED)
+Ambient Carbon Monoxide (CO) Test – `r case_when(Building_Audit$"Carbon Monoxide (CO)parts per million Test" > 35 ~ 'FAILED',TRUE ~ 'PASSED')` (Detected `r Building_Audit$"Carbon Monoxide (CO)parts per million Test"` parts per million)
 
 (This can be optional in a longer report) The Ambient Carbon Monoxide test examines the inside of your home for the presence of CO. All homes with combustion appliances and/or attached garages must to have UL2034 listed carbon monoxide detectors installed in the appropriate locations. If levels of CO in your home reach 35 parts per million the appliance creating the problem should be disabled and the home should be evacuated and ventilated until levels fall below 35 PPM. The appliance should then be repaired or replaced.
 
-Combustion Appliance Draft Test – `{r} reference to df.` (Sufficient Draft Pressure)
+Combustion Appliance Draft Test – `r Building_Audit$"Combustion Appliance Draft Test (PASSED/FAILED)"` 
 
 (This can be optional in a longer report) The Combustion Appliance Draft Test evaluates the risk that the combustion gases in your home’s flue(s) will be drawn back into your home by a source of negative pressure (e.g. clothes dryer, bathroom fans, etc…) If a combustion appliance does not have sufficient draft pressure corrective action is required.
 
-Gas leak detection: `{r} reference to df.`
+Gas leak detection: `r Building_Audit$"Gas leak detection(PASSED/FAILED)"`
 
-Other Health & Safety Concerns: `{r} reference to df.` if there is some comment if not default to this - (There were no health and safety concerns that were identified at the time of your energy audit.)
+Other Health & Safety Concerns: `r case_when(Building_Audit$"Other Health & Safety Concerns" > 35 ~ 'FAILED',TRUE ~ 'PASSED')` if there is some comment if not default to this - (There were no health and safety concerns that were identified at the time of your energy audit.)
+
+## Air quality
+
+
 
 ## Insulation levels
 
@@ -108,10 +113,21 @@ Images of the insulation pictures.
 ## Air Leakage Test
 
 The blower door test, determined that your homes air leakage rate is `r Building_Audit$"Natural Air Changes per Hour(ACHn)"`Natural Air Changes per Hour(ACHn) (Should I explain what ACHn is?) CFM50 was `r Building_Audit$"CFM50 reading"` with `r Building_Audit$"Ring Used"` ring used. (Include photo)
+```{r}
+#| label: setup air leakage data
+ACHn <- Building_Audit |>
+  select("Natural Air Changes per Hour(ACHn)")|>
+  mutate()
+ACHn1 <- data.frame(IdialACHn = c(1))
+airleakdata <- cbind(ACHn,ACHn1)  
+```
 
 ```{r}
-#| label: air_leakage_test
+#| label: air leakage tests ggplot
 #| warning: false
+
+ggplot(Building_Audit, aes(y="Natural Air Changes per Hour(ACHn)", x="Natural Air Changes per Hour(ACHn)")) + 
+    geom_bar(position="fill", stat="identity")
 
 #Here will be a singular bar plat with air leak visualization
 ```
@@ -140,7 +156,7 @@ Heating and Cooling Systems
 
 Your home is cooled with (need new column for cooling type) `{r} reference to df.`. (I need conditional rendering here) The size, construction, and energy consuming features of your home have all been factored into the calculation of the heating and cooling loads for your home:
 
--    Heating load = `r Building_Audit$"Heating Load"` Btu/hr
+-   Heating load = `r Building_Audit$"Heating Load"` Btu/hr
 
 -   Cooling load = `r Building_Audit$"Cooling load"`Btu/hr
 
@@ -151,11 +167,10 @@ It is important to make sure that a new heating/cooling system is designed to me
 ## Energy Bill analysis
 
 ```{r}
-#| echo: true
+#| echo: false
 #| warning: false
 library(readxl)
 library(tidyverse)
-Sys.Date()
 ```
 
 ```{r}

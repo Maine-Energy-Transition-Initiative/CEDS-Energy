@@ -94,13 +94,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="home-energy-audit-report" class="level2">
-<h2 class="anchored" data-anchor-id="home-energy-audit-report">Home Energy Audit Report</h2>
+<p>##Home Energy Audit Report</p>
 <p>Photo here of the house SUBMITTED TO: Me_test1</p>
 <p>SUBMITTED BY: Rudolfs DATE: 13 May 2024</p>
-</section>
-<section id="summery" class="level2">
-<h2 class="anchored" data-anchor-id="summery">Summery</h2>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
 <p>Energy Audit of your property was conducted on 2024-05-25 We looked into insulation, mechanical equipment, conducted test like blower door test to quantify the energy efficiency of your home. By analyzing collected and all the data that you provided your home energy cost your approximately 3000 yearly. (This report also shows the list of improvements that could lower energy consumption and improve comfort and health)</p>
 </section>
 <section id="homes-current-conditions" class="level2">
@@ -150,16 +148,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="health-and-safety" class="level2">
 <h2 class="anchored" data-anchor-id="health-and-safety">Health and safety</h2>
-<p>Combustion Gas Spillage Test – <code>{r} reference to df.</code> (Emissions Spilled for <code>{r} reference to df.</code> seconds) (#or maybe I can set if the emissions spilled for &gt;60 seconds than it set’s automatic to FAILED)</p>
+<p>Combustion Gas Spillage Test – FAILED (Emissions Spilled for 60 seconds)</p>
 <p>(This can be optional in a longer report)The Combustion Gas Spillage Test examines your current combustion appliances for spillage of emissions into your home. Most combustion appliances spill for a short period of time, especially when they are first starting. An appliance that spills emissions for more than 60 seconds fails the test and corrective action is needed. This is often due to a clogged or restricted chimney.</p>
-<p>Appliance Carbon Monoxide (CO) Test – PASSED (<code>{r} reference to df.</code> parts per million) (#or maybe I can set if the emissions spilled for &gt;26 parts per million than it set’s automatic to FAILED)</p>
+<p>Appliance Carbon Monoxide (CO) Test – PASSED( Detected 24parts per million)</p>
 <p>(This can be optional in a longer report) The Appliance Carbon Monoxide test examines the concentration of CO inside of the chimney/flue that is designed to vent the emissions of the combustion process out of your home. If levels of CO in the emissions of your combustion appliance exceeds 26 parts per million, correction action is highly recommended. If they exceed 100 parts per million corrective action is needed. CO is produced from incomplete combustion, so often times a clean and tune of your appliance is the best fix.</p>
-<p>Ambient Carbon Monoxide (CO) Test – PASSED (<code>{r} reference to df.</code> parts per million) (#or maybe I can set if the emissions spilled for &gt;35 parts per million than it set’s automatic to FAILED)</p>
+<p>Ambient Carbon Monoxide (CO) Test – PASSED (Detected 20 parts per million)</p>
 <p>(This can be optional in a longer report) The Ambient Carbon Monoxide test examines the inside of your home for the presence of CO. All homes with combustion appliances and/or attached garages must to have UL2034 listed carbon monoxide detectors installed in the appropriate locations. If levels of CO in your home reach 35 parts per million the appliance creating the problem should be disabled and the home should be evacuated and ventilated until levels fall below 35 PPM. The appliance should then be repaired or replaced.</p>
-<p>Combustion Appliance Draft Test – <code>{r} reference to df.</code> (Sufficient Draft Pressure)</p>
+<p>Combustion Appliance Draft Test – PASSED</p>
 <p>(This can be optional in a longer report) The Combustion Appliance Draft Test evaluates the risk that the combustion gases in your home’s flue(s) will be drawn back into your home by a source of negative pressure (e.g.&nbsp;clothes dryer, bathroom fans, etc…) If a combustion appliance does not have sufficient draft pressure corrective action is required.</p>
-<p>Gas leak detection: <code>{r} reference to df.</code></p>
-<p>Other Health &amp; Safety Concerns: <code>{r} reference to df.</code> if there is some comment if not default to this - (There were no health and safety concerns that were identified at the time of your energy audit.)</p>
+<p>Gas leak detection: FAILED</p>
+<p>Other Health &amp; Safety Concerns: FAILED if there is some comment if not default to this - (There were no health and safety concerns that were identified at the time of your energy audit.)</p>
+</section>
+<section id="air-quality" class="level2">
+<h2 class="anchored" data-anchor-id="air-quality">Air quality</h2>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Using GitHub PAT from the git credential store.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Downloading GitHub repo FlavioLeccese92/Rduinoiot@HEAD</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+── R CMD build ─────────────────────────────────────────────────────────────────
+* checking for file 'C:\Users\Rudolfs Lukasevics\AppData\Local\Temp\RtmpQ9AV2w\remotes69c065e468e5\FlavioLeccese92-Rduinoiot-03cb727/DESCRIPTION' ... OK
+* preparing 'Rduinoiot':
+* checking DESCRIPTION meta-information ... OK
+* checking for LF line-endings in source and make files and shell scripts
+* checking for empty or unneeded directories
+* building 'Rduinoiot_0.1.0.tar.gz'
+</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'Rduinoiot' is in use and will not be installed</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Method succeeded
+✔ Method succeeded</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Method succeeded
+✔ Method succeeded
+✔ Method succeeded
+✔ Method succeeded
+✔ Method succeeded
+✔ Method succeeded</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(time)`
+Joining with `by = join_by(time)`
+Joining with `by = join_by(time)`
+Joining with `by = join_by(time)`
+Joining with `by = join_by(time)`</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Energy_Report_files/figure-html/draft-temp-graph-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="insulation-levels" class="level2">
 <h2 class="anchored" data-anchor-id="insulation-levels">Insulation levels</h2>
@@ -202,9 +253,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="air-leakage-test" class="level2">
 <h2 class="anchored" data-anchor-id="air-leakage-test">Air Leakage Test</h2>
-<p>The blower door test, determined that your homes air leakage rate is 600Natural Air Changes per Hour(ACHn) (Should I explain what ACHn is?) CFM50 was 500 with A ring used. (Include photo)</p>
+<p>The blower door test, determined that your homes air leakage rate is 0.5Natural Air Changes per Hour(ACHn) (Should I explain what ACHn is?) CFM50 was 500 with A ring used. (Include photo)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Here will be a singular bar plat with air leak visualization</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ACHn &lt;- Building_Audit |&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a> <span class="co"># select("Natural Air Changes per Hour(ACHn)")|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#mutate()|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#df['ACHn1'] &lt;- </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#airleakdata    </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Building_Audit, <span class="fu">aes</span>(<span class="at">y=</span><span class="st">"Natural Air Changes per Hour(ACHn)"</span>, <span class="at">x=</span><span class="st">"Natural Air Changes per Hour(ACHn)"</span>)) <span class="sc">+</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">"fill"</span>, <span class="at">stat=</span><span class="st">"identity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Energy_Report_files/figure-html/air%20leakage%20tests%20ggplot-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Here will be a singular bar plat with air leak visualization</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The blower door test and visual inspection detected the following areas for moderate to severe air leakage:</p>
 <p>(This would be pictures)</p>
@@ -234,16 +298,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="energy-bill-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="energy-bill-analysis">Energy Bill analysis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.Date</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-05-13"</code></pre>
-</div>
-</div>
-<div class="cell">
 <div class="cell-output-display">
-<p><img src="Energy_Report_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="Energy_Report_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
