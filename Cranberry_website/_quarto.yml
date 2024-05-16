@@ -26,7 +26,7 @@ website:
         menu:
           - href: more.qmd
             text: Questions
-         #worked before, stopped working
+            
   page-footer: 
     background: gray
     left: "Copyright 2024, Someone" 

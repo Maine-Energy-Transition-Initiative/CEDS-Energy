@@ -123,3 +123,4 @@ Improves air quality and promotes even temperature distribution
 As we seal our buildings and reduce air leakage (drafts), mechanical ventilation becomes more important. In many homes, exhaust fans in the kitchen and bathrooms are adequate. When homes are very tight, ventilation that both exhausts stale air and brings in fresh air is needed. Energy-recovery and heat-recovery ventilators exchange heat between the incoming and outgoing air, to temper the fresh air coming in and reduce heat loss.
 
 *List made by David Gibson, Director of Energy at College of the Atlantic*
+
