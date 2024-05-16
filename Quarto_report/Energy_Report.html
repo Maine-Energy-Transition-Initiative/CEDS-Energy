@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -96,7 +62,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>##Home Energy Audit Report</p>
 <p>Photo here of the house SUBMITTED TO: Me_test1</p>
-<p>SUBMITTED BY: Rudolfs DATE: 13 May 2024</p>
+<p>SUBMITTED BY: Rudolfs DATE: 16 May 2024</p>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
 <p>Energy Audit of your property was conducted on 2024-05-25 We looked into insulation, mechanical equipment, conducted test like blower door test to quantify the energy efficiency of your home. By analyzing collected and all the data that you provided your home energy cost your approximately 3000 yearly. (This report also shows the list of improvements that could lower energy consumption and improve comfort and health)</p>
@@ -161,56 +127,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="air-quality" class="level2">
 <h2 class="anchored" data-anchor-id="air-quality">Air quality</h2>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Using GitHub PAT from the git credential store.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Downloading GitHub repo FlavioLeccese92/Rduinoiot@HEAD</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-── R CMD build ─────────────────────────────────────────────────────────────────
-* checking for file 'C:\Users\Rudolfs Lukasevics\AppData\Local\Temp\RtmpQ9AV2w\remotes69c065e468e5\FlavioLeccese92-Rduinoiot-03cb727/DESCRIPTION' ... OK
-* preparing 'Rduinoiot':
-* checking DESCRIPTION meta-information ... OK
-* checking for LF line-endings in source and make files and shell scripts
-* checking for empty or unneeded directories
-* building 'Rduinoiot_0.1.0.tar.gz'
-</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'Rduinoiot' is in use and will not be installed</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Method succeeded
-✔ Method succeeded</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Method succeeded
-✔ Method succeeded
-✔ Method succeeded
-✔ Method succeeded
-✔ Method succeeded
-✔ Method succeeded</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining with `by = join_by(time)`
-Joining with `by = join_by(time)`
-Joining with `by = join_by(time)`
-Joining with `by = join_by(time)`
-Joining with `by = join_by(time)`</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="Energy_Report_files/figure-html/draft-temp-graph-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
 </section>
 <section id="insulation-levels" class="level2">
 <h2 class="anchored" data-anchor-id="insulation-levels">Insulation levels</h2>
@@ -224,7 +140,7 @@ Joining with `by = join_by(time)`</code></pre>
 <tr class="odd">
 <td>HOME COMPONENT</td>
 <td>YOUR HOME’S R-VALUES</td>
-<td>US D.O.E.RECOMMENDED R-VALUES</td>
+<td>US D.O.E. RECOMMENDED R-VALUES</td>
 </tr>
 <tr class="even">
 <td>Attics/Ceilings</td>
@@ -255,20 +171,9 @@ Joining with `by = join_by(time)`</code></pre>
 <h2 class="anchored" data-anchor-id="air-leakage-test">Air Leakage Test</h2>
 <p>The blower door test, determined that your homes air leakage rate is 0.5Natural Air Changes per Hour(ACHn) (Should I explain what ACHn is?) CFM50 was 500 with A ring used. (Include photo)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ACHn &lt;- Building_Audit |&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a> <span class="co"># select("Natural Air Changes per Hour(ACHn)")|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#mutate()|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#df['ACHn1'] &lt;- </span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#airleakdata    </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Building_Audit, <span class="fu">aes</span>(<span class="at">y=</span><span class="st">"Natural Air Changes per Hour(ACHn)"</span>, <span class="at">x=</span><span class="st">"Natural Air Changes per Hour(ACHn)"</span>)) <span class="sc">+</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">"fill"</span>, <span class="at">stat=</span><span class="st">"identity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Energy_Report_files/figure-html/air%20leakage%20tests%20ggplot-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Here will be a singular bar plat with air leak visualization</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The blower door test and visual inspection detected the following areas for moderate to severe air leakage:</p>
 <p>(This would be pictures)</p>
@@ -299,7 +204,7 @@ Joining with `by = join_by(time)`</code></pre>
 <h2 class="anchored" data-anchor-id="energy-bill-analysis">Energy Bill analysis</h2>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="Energy_Report_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="Energy_Report_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
