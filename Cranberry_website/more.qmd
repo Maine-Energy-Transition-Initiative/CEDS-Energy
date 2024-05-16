@@ -1,5 +1,19 @@
 ---
-Title: "New info"
+Title: "Frequently Asked Questions"
 ---
 
-Here we can write more information
+# Frequently Asked Questions
+
+None yet! This page will be updated as the program continues.
+
+## Contact Us
+
+Have a question? Contact the project leads using the emails below:
+
+**David Gibson -** Lead energy director at COA
+
+dgibson\@coa.edu
+
+**Nicole Grohoski -** Assistant energy director
+
+ngrohoski\@coa.edu
