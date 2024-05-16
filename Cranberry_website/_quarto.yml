@@ -21,12 +21,7 @@ website:
       - href: goals.qmd
         text: Goals
       - href: more.qmd
-        text: Questions
-      - text: "More"
-        menu:
-          - href: more.qmd
-            text: Questions
-            
+        text: FAQs/Contact
   page-footer: 
     background: gray
     left: "Copyright 2024, Someone" 

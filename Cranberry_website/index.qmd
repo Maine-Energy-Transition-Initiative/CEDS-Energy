@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "Landing Page"
 ---
 
 # Maine Energy Retrofits for Community Improvements (MERCI)
