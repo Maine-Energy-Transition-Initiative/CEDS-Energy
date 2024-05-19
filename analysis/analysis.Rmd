@@ -29,6 +29,8 @@ table_electricity_case_study <- read_excel("../data/table_electricity_case_study
 
 # table_weather_2023_BHB <-
   # read_excel("/cloud/project/data/BHBairport_2023.xlsx")
+
+table_electricity_case_study_updated <- read_excel("../data/table_electricity_case_study_updated.xlsx")
 ```
 
 ```{r Carriage data filter}
@@ -36,7 +38,7 @@ Carriage_heating_oil <- table_heating_oil_case_study |>
   filter(Building == "Carriage") |>
   mutate()
 
-Carriage_electricity <- table_electricity_case_study |>
+Carriage_electricity <- table_electricity_case_study_updated |>
   filter(Building == "Carriage  House") |>
   mutate()
 ```
@@ -65,7 +67,7 @@ Cottage_heating_oil <- table_heating_oil_case_study |>
   filter(Building == "Cottage") |>
   mutate()
 
-Cottage_electricity <- table_electricity_case_study |>
+Cottage_electricity <- table_electricity_case_study_up |>
   filter(Building == "Cotttage House") |>
   mutate()
 ```
