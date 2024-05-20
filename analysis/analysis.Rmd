@@ -67,7 +67,7 @@ Cottage_heating_oil <- table_heating_oil_case_study |>
   filter(Building == "Cottage") |>
   mutate()
 
-Cottage_electricity <- table_electricity_case_study_up |>
+Cottage_electricity <- table_electricity_case_study_updated |>
   filter(Building == "Cotttage House") |>
   mutate()
 ```
@@ -300,7 +300,7 @@ Carriage_heating_oil_sub <- Carriage_heating_oil %>%
 Carriage_heating_and_electricity<- rbind(Carriage_heating_oil_sub, Carriage_electricity_sub)
 ```
 
-```{r energy_usage_animation_for_carriage}
+```{r energy_usage_animation_for_carriage, fig.alt = "Animation of two line plots over 2017-2024 of the energy use of Carriage measuered in BTUs one through electricity and the other heating oil. Two vertical lines one in early June 2021 labled David started as Director of Energy and the second in mid February 2022 labled HPWH Installed and Basemnt Insulated. In the animation we notice Carriage uses a high number of BTUs through heating oil and not many though electricity, after David is hired and the energy improvements are made there are less BTUs being used overall and they mainly come from electricity.}
 (Carriage_heating_and_electricity_filter <- Carriage_heating_and_electricity %>%
   filter(Date >= as.Date("2017-01-01") & Date <= as.Date("2023-12-31")))
 
@@ -343,7 +343,7 @@ Cottage_heating_oil_sub <- Cottage_heating_oil %>%
 Cottage_heating_and_electricity<- rbind(Cottage_heating_oil_sub, Cottage_electricity_sub)
 ```
 
-```{r energy_usage_animation_for_cottage}
+```{r energy_usage_animation_for_cottage, fig.alt = "Animation of two line plots over 2017-2024 of the energy use of Cottage measuered in BTUs one through electricity and the other heating oil. Two vertical lines one in early June 2021 labled David started as Director of Energy and the second in mid February 2022 labled HPWH Installed and Basemnt and Attic Insulated. In the animation we notice Cottage uses a high number of BTUs through heating oil and not many though electricity, after David is hired and the energy improvements are made there are less BTUs being used overall and they mainly come from electricity.}
 (Cottage_heating_and_electricity_filter <- Cottage_heating_and_electricity %>%
   filter(Date >= as.Date("2017-01-01") & Date <= as.Date("2023-12-31")))
 
