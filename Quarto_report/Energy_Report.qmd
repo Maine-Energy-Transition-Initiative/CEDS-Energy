@@ -40,18 +40,22 @@ Building_Audit <- Energy_Audits |>
 #| label: image path setup
 #| echo: false
 #| warning: false
+
 # Unique identifier for the image
 image_id <- "CEC_logo_sketch"
 
 # Generate the file path for the image based on the identifier
 image_path <- paste0("", image_id, ".png")
+
+
+```
+```{r}
+#| label: image render
+#| echo: false
+#| warning: false
+
 # Include the image in the report
-knitr::include_graphics(image_path, dpi = 10)
-
-#![The_logo](C:/Users/Rudolfs #Lukasevics/Desktop/Repos/CEDS-Energy/images/CEC_logo_sketch.png, )
-
-#{width=250px}
-#<img src="../Quarto_report/images/CEC_logo_sketch.png" alt="CEC logo sketch" #style="width:500px;height:600px;">
+knitr::include_graphics(image_path,)
 ```
 
 ## Home Energy Audit Report
