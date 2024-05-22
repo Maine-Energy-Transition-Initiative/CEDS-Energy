@@ -22,6 +22,8 @@ website:
         text: Goals
       - href: more.qmd
         text: FAQs/Contact
+      - href: cases.qmd
+        text: Case Studies
   page-footer: 
     background: gray
     left: "Copyright 2024, Someone" 
