@@ -7,6 +7,11 @@ output: github_document
 ```{r load-packages, message = FALSE}
 library(tidyverse)
 library(broom)
+library(readxl)
+#install.packages("rwunderground")
+library(rwunderground)
+#install.packages("gganimate")
+library(gganimate)
 ```
 
 ## 1. Introduction
@@ -15,6 +20,450 @@ library(broom)
 
 ## 2. Data
 
+Data presentation.
+
+```{r Reading data}
+table_heating_oil_case_study <- read_excel("../data/table_heating_oil_case_study.xlsx")
+
+table_electricity_case_study <- read_excel("../data/table_electricity_case_study.xlsx")
+
+# table_weather_2023_BHB <-
+  # read_excel("/cloud/project/data/BHBairport_2023.xlsx")
+
+table_electricity_case_study_updated <- read_excel("../data/table_electricity_case_study_updated.xlsx")
+```
+
+```{r Carriage data filter}
+Carriage_heating_oil <- table_heating_oil_case_study |>
+  filter(Building == "Carriage") |>
+  mutate()
+
+Carriage_electricity <- table_electricity_case_study_updated |>
+  filter(Building == "Carriage  House") |>
+  mutate()
+```
+
+```{r Dual Plot for Carriage, eval=FALSE}
+  ggplot() +
+  geom_line(Carriage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
+  geom_line(Carriage_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
+  scale_y_continuous(
+    name = "Gallons",
+    sec.axis = sec_axis(trans = ~.*1, name="kWh"))+
+  geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
+                linetype=3, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y=600, label="David started as the Director of Energy", angle=90) +
+  geom_vline(xintercept=as.POSIXct(as.Date("2019-09-01")),
+                linetype=3, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2019-07-01")), y=400, label="Electricity Data collection sarted", angle=90)+
+  theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
+  labs(title = "Carriage's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
+
+ggsave(filename = "Carriage's house energy history.png", device = "png", width = 7, height = 7)
+```
+
+```{r Cottage data filter}
+Cottage_heating_oil <- table_heating_oil_case_study |>
+  filter(Building == "Cottage") |>
+  mutate()
+
+Cottage_electricity <- table_electricity_case_study_updated |>
+  filter(Building == "Cotttage House") |>
+  mutate()
+```
+
+```{r Dual Plot for Cottage}
+  ggplot() +
+  geom_line(Cottage_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
+  geom_line(Cottage_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
+  scale_y_continuous(
+    name = "Gallons",
+    sec.axis = sec_axis(trans = ~.*1, name="kWh"))+
+  geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
+                linetype=3, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y=1500, label="David started as the Director of Energy", angle=90) +
+  geom_vline(xintercept=as.POSIXct(as.Date("2019-09-01")),
+                linetype=3, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2019-07-01")), y=1200, label="Electricity Data collection sarted", angle=90)+
+  theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
+  labs(title = "Cottage's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
+
+#ggsave(filename = "Cottage's house energy history.png", device = "png", width = 7, height = 7)
+
+```
+
+```{r Witchcliff Appartments data filter}
+Witchcliff_apt_heating_oil <- table_heating_oil_case_study |>
+  filter(Building == "Witchcliff Apartments") |>
+  mutate()
+
+Witchcliff_apt_electricity <- table_electricity_case_study |>
+  filter(Building == "Witchcliff Appartments") |>
+  mutate()
+```
+
+```{r Dual Plot for Witchcliff Appartments}
+  ggplot() +
+  geom_line(Witchcliff_apt_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
+  geom_line(Witchcliff_apt_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
+  scale_y_continuous(
+    name = "Gallons",
+    sec.axis = sec_axis(trans = ~.*1, name="kWh"))+
+  geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
+                linetype=3, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y=600, label="David started as the Director of Energy", angle=90) +
+  geom_vline(xintercept=as.POSIXct(as.Date("2019-07-01")),
+                linetype=3, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2019-05-01")), y=500, label="Electricity Data collection sarted", angle=90)+
+  theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
+  labs(title = "Witchcliff Appartments energy history", subtitle = "Gallons of heating oil and kWh of electricity")
+
+#ggsave(filename = "Witchcliff Appartments energy history.png", device = "png", width = 7, height = 7)
+
+```
+
+```{r Carters House data filter}
+Carters_house_heating_oil <- table_heating_oil_case_study |>
+  filter(Building == "BHF Farm House") |>
+  mutate()
+
+Carters_house_electricity <- table_electricity_case_study |>
+  filter(Building == "BHF Carter House") |>
+  mutate()
+```
+
+```{r Dual Plot for Carters house}
+  ggplot() +
+  geom_line(Carters_house_heating_oil, mapping = aes(x = `Delivery Date`, y = Gallons), color = "blue") + 
+  geom_line(Carters_house_electricity, mapping = aes(x = Month, y = KWH), color = "red") +
+  scale_y_continuous(
+    name = "Gallons",
+    sec.axis = sec_axis(trans = ~.*1, name="kWh"))+
+  geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
+                linetype=3, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y=900, label="David started as the Director of Energy", angle=90) +
+  geom_vline(xintercept=as.POSIXct(as.Date("2019-07-01")),
+                linetype=3, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2019-05-01")), y=500, label="Electricity Data collection sarted", angle=90)+
+  theme(axis.title.y.left = element_text(colour = "blue"),axis.title.y.right = element_text(colour = "red" ))+
+  labs(title = "Carter's house energy history", subtitle = "Gallons of heating oil and kWh of electricity")
+
+#ggsave(filename = "Carter's house energy history.png", device = "png", width = 7, height = 7)
+
+```
+
+```{r Heating Degree Days 2023}
+# table_weather_2023_BHB <- table_weather_2023_BHB |>
+  # mutate(Heating_Degree_Day = case_when(`Avg Temperature (°C)` <= 18 ~ TRUE, `Avg Temperature (°C)` > 18 ~ FALSE))
+
+
+```
+
+```{r BHB Temperature 2023}
+# ggplot() +
+  # geom_line(table_weather_2023_BHB, mapping = aes(x = `Date`, y = `Avg Temperature (°C)`))
+```
+
+```{r Humidity Nicolo, eval=FALSE}
+Humidity_ambient |>
+  ggplot()+
+  geom_line(aes(x = time, y = value))
+
+```
+
+```{r Temperature Nicolo, eval=FALSE}
+Temperature_ambient |>
+  ggplot()+
+  geom_line(aes(x = time, y = value))
+```
+
+```{r VocIndex Nicolo, eval=FALSE}
+vocIndex |>
+  ggplot()+
+  geom_line(aes(x = time, y = value))
+```
+
+```{r massConcentration Nicolo, eval=FALSE}
+massConcentrationPm2p5 |>
+  ggplot()+
+  geom_line(aes(x = time, y = value))
+```
+
+```{r Scrapping data from wunderground, eval=FALSE}
+url <- 'https://www.wunderground.com/dashboard/pws/KMECRANB5/table/2023-01-29/2023-01-29/monthly'
+weather <- read_html(url) |>
+  html_nodes("div.tabel-wrapper.ng-star-inserted")|>
+  html_table()
+```
+
+
+```{r Downloading wunderground data, eval=FALSE}
+
+history(set_location(zip_code = 04609), date = 20240321) #testided with multiplelocation calls (stationID, Town Name etc.)
+
+```
+
+```{r test Downloading wunderground data, eval=FALSE}
+#Found in Stackoverflow but cant figure the (i) part. https://stackoverflow.com/questions/58342525/how-to-extract-data-from-weather-underground-wunderground-into-csv-files
+
+start_date <- as.POSIXct("2019-09-01",tz="est")
+end_date <-  as.POSIXct(Sys.Date(),tz="est")
+
+dates <- seq.POSIXt(start_date,end_date,by="day")
+
+my_dates<-as.integer(unlist(strsplit(as.character(dates),"-")))
+
+my_dates<-array(my_dates,dim=c(3,length(my_dates)/3))
+
+my_dates<-as.data.frame(t(my_dates), )
+
+colnames(my_dates)<-c("year","month","day")
+
+station <- "KMECRANB5"
+
+myurl <- vector()
+myfile <- vector()
+
+for(i in 1:nrow(my_dates)) {
+  i = 1
+  myurl[i] <- paste("https://www.wunderground.com/weatherstation/WXDailyHistory.asp?ID=",station,"&day=",my_dates$day[i],"&month=",my_dates$month[i],"&year=",my_dates$year[i],"&graphspan=day&format=1", sep = "") #I think the website changed so there is no URL that has just history it's now incorporated in dashboard. Can't see history table only by individual day,week, month.
+  folder <- "data"
+  myfile[i] <- paste("CranberryWeather",i,".csv", sep = "")
+  download.file(url = myurl[i], file.path(folder, myfile[i], fsep = "\\" ))
+}
+```
+
+```{r Import Datasets, eval=FALSE}
+# Cranberry2023 <- read_excel("../data/KMECRANB5-2023-Weather.xlsx")
+# BHB2124 <- read_csv("../data/BHBairport-21-24.csv")
+```
+
+```{r Clean up Great Cranberry data, eval=FALSE}
+
+Cranberry2023Clean <- Cranberry2023 %>%
+  mutate(High_Temp = as.numeric(gsub(" °F", "", High_Temp))) %>%
+  mutate(Avg_Temp = as.numeric(gsub(" °F", "", Avg_Temp))) %>%
+  mutate(Low_Temp = as.numeric(gsub(" °F", "", Low_Temp))) %>%
+  mutate(High_DP = as.numeric(gsub(" °F", "", High_DP))) %>%
+  mutate(Avg_DP = as.numeric(gsub(" °F", "", Avg_DP))) %>%
+  mutate(Low_DP = as.numeric(gsub(" °F", "", Low_DP))) %>%
+  mutate(High_Humid = as.numeric(gsub(" %", "", High_Humid))) %>%
+  mutate(Avg_Humid = as.numeric(gsub(" %", "", Avg_Humid))) %>%
+  mutate(Low_Humid = as.numeric(gsub(" %", "", Low_Humid))) %>%
+  mutate(High_Speed = as.numeric(gsub(" mph", "", High_Speed))) %>%
+  mutate(Avg_Speed = as.numeric(gsub(" mph", "", Avg_Speed))) %>%
+  mutate(Low_Speed = as.numeric(gsub(" mph", "", Low_Speed))) %>%
+  mutate(High_Pressure = as.numeric(gsub(" in", "", High_Pressure))) %>%
+  mutate(Low_Pressure = as.numeric(gsub(" in", "", Low_Pressure))) %>%
+  mutate(Precip_Accum = as.numeric(gsub(" in", "", Precip_Accum))) 
+```
+
+
+```{r Cranberry-heating-degree-days, eval=FALSE}
+# Cranberry2023Clean <- Cranberry2023Clean |>
+  # mutate(Heating_Degree_Day = 65 - Avg_Temp)
+
+Cranberry2023Clean |>
+  ggplot(aes(x = Date, y = Heating_Degree_Day)) +
+  geom_col()
+```
+
+```{r Clean BHB data, eval=FALSE}
+BHB_Clean <- BHB2124 |>
+  filter(!row_number() %in% c(1, 2, 3, 4, 5)) |>
+  separate_wider_delim(cols = `Fahrenheit-based heating degree days with a base temperature of 65 F`, delim = ",", names = c("HDDs", "Percent_Uncertainty")) |>
+  rename("Date" = `Description:`) |>
+  mutate(`Date` = as.Date(`Date`)) |>
+  mutate(`HDDs` = as.numeric(`HDDs`)) |>
+  mutate(`Percent_Uncertainty` = as.numeric(`Percent_Uncertainty`))
+```
+
+```{r KWH/heating_oil_to_BTU_calculation_carriage}
+Carriage_electricity <- Carriage_electricity %>% 
+  mutate(BTU = KWH) %>% 
+  mutate(BTU = BTU * 3412)
+
+Carriage_heating_oil <- Carriage_heating_oil %>% 
+  mutate(BTU = Gallons) %>% 
+  mutate(BTU = BTU * 138690) #this is the math for heating oil the other fuel types of other calculations but is unnecessary to separate and do at this point
+
+Carriage_electricity_sub <- Carriage_electricity %>%
+  select(Month, Building, BTU) %>%
+  rename(Date = Month) %>%
+  mutate(Fuel_Type = "electricity")
+
+Carriage_heating_oil_sub <- Carriage_heating_oil %>%
+  select(`Delivery Date`, Building, BTU) %>%
+  rename(Date = `Delivery Date`) %>%
+  mutate(Fuel_Type = "heating oil")
+
+Carriage_heating_and_electricity<- rbind(Carriage_heating_oil_sub, Carriage_electricity_sub)
+```
+
+```{r energy_usage_animation_for_carriage, fig.alt = "Animation of two line plots over 2017-2024 of the energy use of Carriage measuered in BTUs one through electricity and the other heating oil. Two vertical lines one in early June 2021 labled David started as Director of Energy and the second in mid February 2022 labled HPWH Installed and Basemnt Insulated. In the animation we notice Carriage uses a high number of BTUs through heating oil and not many though electricity, after David is hired and the energy improvements are made there are less BTUs being used overall and they mainly come from electricity.}
+(Carriage_heating_and_electricity_filter <- Carriage_heating_and_electricity %>%
+  filter(Date >= as.Date("2017-01-01") & Date <= as.Date("2023-12-31")))
+
+Animation1 <- ggplot(Carriage_heating_and_electricity_filter, mapping = aes(x = Date, y = BTU, color = Fuel_Type, group = Fuel_Type)) +
+  geom_line() + 
+  geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
+                linetype=1, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y = 1e+07, label="David started as the Director of Energy", angle=90) +
+  geom_vline(xintercept=as.POSIXct(as.Date("2022-02-15")),
+                linetype=1, colour="black") +
+  annotate("text", x=as.POSIXct(as.Date("2022-04-15")), y = 1e+07, label="HPWH Installed and Basemnt Insulated", angle=90) +
+  transition_reveal(Date)+
+  enter_fade() + exit_fade() 
+
+animation = animate(Animation1,
+                    renderer = av_renderer())
+animation
+
+anim_save("Animation1MVP.gif", Animation1)
+```
+```{rr KWH/heating_oil_to_BTU_calculation_cottage}
+Cottage_electricity <- Cottage_electricity %>% 
+  mutate(BTU = KWH) %>% 
+  mutate(BTU = BTU * 3412)
+
+Cottage_heating_oil <- Cottage_heating_oil %>% 
+  mutate(BTU = Gallons) %>% 
+  mutate(BTU = BTU * 138690) #this is the math for heating oil the other fuel types of other calculations but is unnecessary to separate and do at this point
+
+Cottage_electricity_sub <- Cottage_electricity %>%
+  select(Month, Building, BTU) %>%
+  rename(Date = Month) %>%
+  mutate(Fuel_Type = "electricity")
+
+Cottage_heating_oil_sub <- Cottage_heating_oil %>%
+  select(`Delivery Date`, Building, BTU) %>%
+  rename(Date = `Delivery Date`) %>%
+  mutate(Fuel_Type = "heating oil")
+
+Cottage_heating_and_electricity<- rbind(Cottage_heating_oil_sub, Cottage_electricity_sub)
+```
+
+```{r energy_usage_animation_for_cottage, fig.alt = "Animation of two line plots over 2017-2024 of the energy use of Cottage measuered in BTUs one through electricity and the other heating oil. Two vertical lines one in early June 2021 labled David started as Director of Energy and the second in mid February 2022 labled HPWH Installed and Basemnt and Attic Insulated. In the animation we notice Cottage uses a high number of BTUs through heating oil and not many though electricity, after David is hired and the energy improvements are made there are less BTUs being used overall and they mainly come from electricity.}
+(Cottage_heating_and_electricity_filter <- Cottage_heating_and_electricity %>%
+  filter(Date >= as.Date("2017-01-01") & Date <= as.Date("2023-12-31")))
+
+Animation1 <- ggplot(Cottage_heating_and_electricity_filter, mapping = aes(x = Date, y = BTU, color = Fuel_Type, group = Fuel_Type)) +
+  geom_line() + 
+  geom_vline(xintercept=as.POSIXct(as.Date("2021-08-01")),
+                linetype=1, colour="black") +
+   annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y = 1e+07, label="David started as the Director of Energy", angle=90) +
+  geom_vline(xintercept=as.POSIXct(as.Date("2022-02-15")),
+                linetype=1, colour="black") +
+  annotate("text", x=as.POSIXct(as.Date("2022-04-15")), y = 1e+07, label="HPWH Installed and Basemnt and Attic Insulated", angle=90) +
+  transition_reveal(Date)+
+  enter_fade() + exit_fade() 
+
+animation = animate(Animation1,
+                    renderer = av_renderer())
+animation
+
+#anim_save("Animation1MVP.gif", Animation1)
+```
+
+```{r setup-arduino-api-packages, eval = FALSE}
+install.packages("Rduinoiot")
+library(Rduinoiot)
+
+install.packages("devtools")
+devtools::install_github("FlavioLeccese92/Rduinoiot")
+```
+```{r set-api-credentials}
+Sys.setenv(ARDUINO_API_CLIENT_ID = '8BO2NX9eLMFJWOq44d3HwvTLM1x27ekr')
+Sys.setenv(ARDUINO_API_CLIENT_SECRET = 'JeE2jMJlnsYgUr98LrbqFIoHyH4qbOHZtNIJfgQn2ubaLkmWRApcDo7dU3NiBAHA')
+
+create_auth_token()
+tl = things_list()
+```
+
+```{r import-arduino-data-test}
+AQ01_Temperature = things_properties_timeseries(thing_id = "1c7d23e8-526c-435f-9514-43100c634a3d",
+                                                property_id = "a7aa4f36-e201-49ad-9aa7-5e89d861e04d",
+                                                desc = FALSE)
+AQ01_Temperature = AQ01_Temperature %>% separate_wider_delim(cols = time, delim = " ", 
+                                                            names = c("Date", "Time")) %>%
+                                        rename("Temperature" = "value")
+```
+
+```{r assign-module-ids}
+AQ01 = "1c7d23e8-526c-435f-9514-43100c634a3d"
+Humidity1 = "e9230942-e050-449d-b608-54777a9c84ee"
+Temp1 = "a7aa4f36-e201-49ad-9aa7-5e89d861e04d"
+conc10p0_1 = "16677d16-5c99-453a-bf88-8cd8c97583b5"
+conc2p5_1 = "e80beaa0-4ec3-455d-8430-70bb4231f6e4"
+noxInd1 = "54e2dcb2-7716-48b1-b69c-0303ca23c046"
+vocInd1 = "2137f69f-c126-446e-87c2-4d1b6a2feeba"
+
+AQ02 = "a35129a2-465a-4b55-a76f-d9d460ca7edd"
+Humidity2 = "54d1c2a1-fdc5-480e-b614-553fffe5c9e6"
+Temp2 = "c6e3b1e5-3c0f-42ab-8ff2-6d8d2bdf129b"
+conc10p0_2 = "4579f77e-4649-4bb7-937e-583819f0b53c"
+conc2p5_2 = "a2ca4e15-b2df-4d0c-8785-d0fed5ab4906"
+noxInd2 = "450ec530-df7d-4374-a08b-d38af1852cf0"
+vocInd2 = "d16c5381-2579-4874-ace2-b1573d64aafc"
+
+AQ03 = "7487e8fd-5c44-48d2-b10c-59bec4308867"
+Humidity3 = "9506a3f3-89e4-4c39-87e1-5aa496f71beb"
+Temp3 = "bec63040-5853-4c77-9544-a33c0f807105"
+conc10p0_3 = "9bff6f88-e742-40a9-bf4f-8f0d60e78edf"
+conc2p5_3 = "8c803a6b-a081-472d-92ce-7e94c5854a8c"
+noxInd3 = "b13e9ca0-3b5f-41d2-9711-e9f0bc80591c"
+vocInd3 = "0bd373f8-cfd1-4232-8ab7-15a4321f76d1"
+
+AQ04 = "4b3031a0-4d6b-4f7d-83fd-50c123580bff"
+Humidity4 = "d8fa1192-6348-46a0-b145-adace11eb7ec"
+Temp4 = "0ba03533-ace4-4321-97dc-f7f733527802"
+conc10p0_4 = "d1076d47-7e4d-4e20-8423-eca7dbc05873"
+conc2p5_4 = "b394433a-57e2-4c36-ab8b-85329683278e"
+noxInd4 = "1658e182-45dc-41cb-9752-25620ebdc2cf"
+vocInd4 = "a26b12eb-897f-4361-bcd0-088f44df821e"
+
+AQ05 = "67e9622e-c100-40cd-8352-ca77f4f718f3"
+Humidity5 = "11bb6443-aa60-49e6-8116-db4b75046b4a"
+Temp5 = "b66e98eb-c17b-412f-87a0-78e79ac1d017"
+conc10p0_5 = "02a8bb74-3ab8-40fb-b52c-f0f483db352a"
+conc2p5_5 = "43773669-895b-4f5f-8332-58e763d25912"
+noxInd5 = "7766aa85-6565-4cae-9475-224b4748a0e8"
+vocInd5 = "fb4627fa-1d1f-4906-ac97-8c166fbc04ed"
+
+
+# monitoring <- data.frame(property_id = c(Humidity1, ), arduino_id = rep(AQ01, 4))
+```
+
+```{r import-AQ01-data}
+AQ01_Temperature = things_properties_timeseries(thing_id = AQ01, property_id = Temp1, desc = FALSE) %>% 
+  rename("Temperature" = "value")
+
+AQ01_Humidity = things_properties_timeseries(thing_id = AQ01, property_id = Humidity1, desc = FALSE) %>% 
+  rename("Humidity" = "value")
+
+AQ01_10p0_Concentration = things_properties_timeseries(thing_id = AQ01, property_id = conc10p0_1, desc = FALSE) %>% 
+  rename("10p0 Concentration" = "value")
+
+AQ01_2p5_Concentration = things_properties_timeseries(thing_id = AQ01, property_id = conc2p5_1, desc = FALSE) %>% 
+  rename("2p5 Concentration" = "value")
+
+AQ01_noxIndex = things_properties_timeseries(thing_id = AQ01, property_id = noxInd1, desc = FALSE) %>% 
+  rename("nox_Index" = "value")
+
+AQ01_vocIndex = things_properties_timeseries(thing_id = AQ01, property_id = vocInd1, desc = FALSE) %>% 
+  rename("voc_Index" = "value")
+
+AQ01_Full = AQ01_Humidity %>% left_join(AQ01_Temperature) %>% left_join(AQ01_10p0_Concentration) %>% left_join(AQ01_2p5_Concentration) %>% left_join(AQ01_noxIndex) %>% left_join(AQ01_vocIndex) %>%
+  mutate(time = as_datetime(time)) %>% rename("Date" = "time")
+
+```
+```{r draft-temp-graph}
+AQ01_Full %>%
+  ggplot(aes(x = Date, y = Temperature)) +
+  geom_line() +
+  scale_x_datetime(date_breaks = "1 days") +
+  theme(axis.text.x = element_text(angle = 45))
+```
 
 
 ## 3. Data analysis plan

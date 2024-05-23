@@ -1,0 +1,23 @@
+---
+title: "About"
+format: html
+editor: visual
+---
+
+# Local background
+
+Maine is the most heating oil dependent state in the country, with 58% of homes using fuel oil as the primary source of heat. In recent years, we have spent more than \$4 billion annually on fossil fuels, resulting in more than 6% of the state's GDP being spent on energy imports. In the last two years, heating oil and kerosene prices doubled from \$2-\$3/gallon to \$5-6/gallon, and stayed above \$4/gallon for the entire year from March 2022 to 2023. At the same time, Maine's electricity prices increased significantly, causing already high household energy burdens to nearly double in the last two years.
+
+To compound this issue, Maine has some of the oldest houses in the nation, meaning many homes are poorly or entirely uninsulated. 56% of the houses in Maine were built before 1980, and most of the homes built since then are not well insulated either. Maine has enacted a statewide Climate Action Plan to counteract and correct this issue, but it has encountered significant workforce shortages, particularly in the energy efficiency and weatherization sector. As such, the state has identified doubling the energy efficiency workforce as a priority for reaching clean energy goals, hiring more workers and issuing grants for energy improvement projects.
+
+![The Community Energy Center at College of the Atlantic](Images/CEC.jpg)
+
+# This program
+
+The energy team at College of the Atlantic, headed by David Gibson, recently received a grant from the U.S. Department of Energy Building Technologies Office to fund a program making home energy improvements more accessible to coastal Maine homeowners. Participating households will receive upgrades to critical areas of their homes, such as heating and cooling systems, lighting, insulation, and air sealing, in addition to potential solar arrays. The upgrade process begins with an in-depth audit of the current systems installed in groups of 10 or more buildings, and identifying the upgrades that would provide the most benefit in comfort and energy efficiency. From there, the team will coordinate with contractors on the behalf of the homeowners to install these measures.
+
+In addition to the team organizing energy upgrades, this project also involves a data science team to quantitatively analyze the benefit provided by the installed upgrades using temperature and heating load data. The team will also analyze data collected from the Arduino air quality monitors installed in consenting households, both to visualize the effectiveness of the energy upgrades and to identify potential air quality risks to be corrected.
+
+### **References:**
+
+-   EIA. <https://www.eia.gov/state/data.php?sid=ME#ConsumptionExpenditures>. Accessed on Feb 6, 2024.

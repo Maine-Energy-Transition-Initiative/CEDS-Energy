@@ -1,0 +1,42 @@
+project:
+  type: website
+execute:
+  freeze: auto
+website:
+  title: "MERCI Homepage"
+  navbar:
+    tools:
+      - icon: globe2
+        text: Community Energy Center
+        href: https://www.coa.edu/cec/
+      - icon: github
+        text: Project Github Repo
+        href: https://github.com/LaurieLBaker/CEDS-Energy
+      
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+      - communities.qmd
+      - href: goals.qmd
+        text: Goals
+      - href: more.qmd
+        text: FAQs/Contact
+      - href: cases.qmd
+        text: Case Studies
+  page-footer: 
+    background: gray
+    left: "Copyright 2024, Someone" 
+    center: "Made with quarto"
+    right: "Built during Community Engaged Data Science 2024"
+    
+format:
+  html:
+    theme: 
+      light: [flatly, theme-light.scss]
+      dark: [darkly, theme-dark.scss]
+    css: styles.css
+    toc: false
+
+editor: visual
+
