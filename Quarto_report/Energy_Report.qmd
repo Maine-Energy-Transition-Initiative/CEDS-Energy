@@ -5,6 +5,7 @@ editor: visual
 params:
   adress: "Me_test1"
   author: "Rudolfs"
+---s
 ---
 
 ```{r}
@@ -36,8 +37,10 @@ Building_Audit <- Energy_Audits |>
 
 ```
 
+## Home Energy Audit Report
+
 ```{r}
-#| label: image path setup
+#| label: house image path setup
 #| echo: false
 #| warning: false
 
@@ -49,7 +52,8 @@ image_path <- paste0("", image_id, ".png")
 
 
 ```
-```{r}
+
+```{r, out.width = "50%", fig.align = 'center'}
 #| label: image render
 #| echo: false
 #| warning: false
@@ -58,9 +62,7 @@ image_path <- paste0("", image_id, ".png")
 knitr::include_graphics(image_path,)
 ```
 
-## Home Energy Audit Report
-
-Photo here of the house SUBMITTED TO: `r params$adress`
+SUBMITTED TO: `r params$adress`
 
 SUBMITTED BY: `r params$author` DATE: `r format(Sys.time(), '%e %B %Y')`
 
@@ -121,7 +123,30 @@ Other Health & Safety Concerns: `r case_when(Building_Audit$"Other Health & Safe
 | Above Ground Walls | `r Building_Audit$"Above Ground Walls R-value"` | 30                             |
 | Basement Walls     | `r Building_Audit$"Basement Walls R-value"`     | 19                             |
 
-source [U.S. Department of Energy Pacific Northwest Labaratory](https://basc.pnnl.gov/information/2009-2021-iecc-and-irc-minimum-insulation-requirements-new-homes)
+source [U.S. Department of Energy, Pacific Northwest Labaratory](https://basc.pnnl.gov/information/2009-2021-iecc-and-irc-minimum-insulation-requirements-new-homes)
+
+Here are some picture of your insulation.
+
+```{r}
+#| label: insulation image path setup
+#| echo: false
+#| warning: false
+
+insulation <- list.files('images', pattern = 'VIS')
+# Unique identifier for the image
+insulation_image_id <- insulation
+
+insulation_image_path <- paste0("images/", insulation_image_id, "")
+```
+
+```{r, out.width = "50%", fig.align = 'left'}
+#| label: insulaton image render
+#| echo: false
+#| warning: false
+
+# Include the image in the report
+knitr::include_graphics(insulation_image_path,)
+```
 
 Images of the insulation pictures.
 
