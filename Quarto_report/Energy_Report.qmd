@@ -49,6 +49,7 @@ image_path <- paste0("", image_id, ".png")
 
 
 ```
+
 ```{r}
 #| label: image render
 #| echo: false
@@ -115,7 +116,7 @@ Other Health & Safety Concerns: `r case_when(Building_Audit$"Other Health & Safe
 ## Insulation levels
 
 |                    |                                                 |                                |
-|------------------------|----------------------------|--------------------|
+|--------------------|-------------------------------------------------|--------------------------------|
 | HOME COMPONENT     | YOUR HOME’S R-VALUES                            | US D.O.E. RECOMMENDED R-VALUES |
 | Attics/Ceilings    | `r Building_Audit$"Attics/Ceilings R-value"`    | 60                             |
 | Above Ground Walls | `r Building_Audit$"Above Ground Walls R-value"` | 30                             |
