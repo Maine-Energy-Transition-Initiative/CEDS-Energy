@@ -1,0 +1,11 @@
+---
+title: "Case Studies"
+format: html
+editor: visual
+---
+
+# Home Energy Improvement Case Studies
+
+## Cottage House
+
+## Carriage House
