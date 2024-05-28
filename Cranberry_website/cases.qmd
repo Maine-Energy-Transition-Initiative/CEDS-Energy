@@ -6,6 +6,22 @@ editor: visual
 
 # Home Energy Improvement Case Studies
 
-## Cottage House
+## Cottage
 
-## Carriage House
+![](Images/cottage.jpeg)
+
+The Cottage house was built in the 60s and the residents over the years have complained of moisture issues and insufficient heating and cooling. The school also didn't like the cost of the heating oil deliveries or that it it was dependent on fossil fuels. After doing a comprehensive energy audit it was determined to need two heat pumps (one on each floor) and a heat pump water heater. As well as the basement needing a vapor barrier and insulation.
+
+![Cottage basement after improvements were made.](Images/cottage_basement_improvements.jpeg){fig-alt="Image of the basement of Cottage after energy improvements have been made. The walls have been spray foamed and there is thick rubber vapor barrier over the floor and half way up the walls." fig-align="center" width="297"}
+
+Before the energy improvements were made the heat
+
+## Carriage
+
+![](Images/carriage_house.jpg)
+
+The Carriage house was built in the 60s and the residents over the years have complained of moisture issues and inconsistent heating and cooling throughout the house. The school also didn't like the cost of the heating oil deliveries or that it it was dependent on fossil fuels. After doing a comprehensive energy audit it was determined to need two heat pumps and a heat pump water heater. As well as the basement needing a vapor barrier and the attic and basement needing insulation.
+
+![Carriage's attic before undergoing improvments](Images/carriage_before.jpeg){width="346"}
+
+![Carriage's attic after energy improvements.](Images/carriage_after.jpg){width="346"}
