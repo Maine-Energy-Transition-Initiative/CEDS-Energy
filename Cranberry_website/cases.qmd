@@ -2,6 +2,7 @@
 title: "Case Studies"
 format: html
 editor: visual
+css: style.css
 ---
 
 # Home Energy Improvement Case Studies
@@ -12,11 +13,13 @@ editor: visual
 
 The Cottage house was built in 1880 and the residents over the years have complained of moisture issues and insufficient heating and cooling. The school also didn't like the cost of the heating oil deliveries or that it it was dependent on fossil fuels. After doing a comprehensive energy audit it was determined to need two heat pumps (one on each floor) and a heat pump water heater. As well as the basement needing a vapor barrier and insulation.
 
-![Cottage basement after improvements were made.](Images/cottage_basement_improvements.jpeg){fig-alt="Image of the basement of Cottage after energy improvements have been made. The walls have been spray foamed and there is thick rubber vapor barrier over the floor and half way up the walls." fig-align="center" width="297"}
+![](Images/cottage_basement_improvements.jpeg){fig-alt="Image of the basement of Cottage after energy improvements have been made. The walls have been spray foamed and there is thick rubber vapor barrier over the floor and half way up the walls." fig-align="center" width="321"}
+
+{style = "text-align: center;"} Cottage after improvements were made.
 
 Before the energy improvements were made the total amount of energy the house was using was high and most was being wasted do to the leaky basement. Now the house is much tighter, uses less energy more efficiently and is no longer reliant on fossil fuels. The residents no longer have moisture issues and comfortable heating and cooling year round.
 
-animation
+![](Images/cottage_animation.webm)
 
 ## Carriage
 

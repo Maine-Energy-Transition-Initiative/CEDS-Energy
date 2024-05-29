@@ -319,7 +319,7 @@ animation = animate(Animation1,
                     renderer = av_renderer())
 animation
 
-anim_save("Animation1MVP.gif", Animation1)
+anim_save("Animation1MVP.mp4", Animation1)
 ```
 ```{rr KWH/heating_oil_to_BTU_calculation_cottage}
 Cottage_electricity <- Cottage_electricity %>% 
