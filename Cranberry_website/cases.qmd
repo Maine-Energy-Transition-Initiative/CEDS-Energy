@@ -17,7 +17,7 @@ The Cottage house was built in 1880 and the residents over the years have compla
 
 Before the energy improvements were made the total amount of energy the house was using was high and most was being wasted do to the leaky basement. Now the house is much tighter, uses less energy more efficiently and is no longer reliant on fossil fuels. The residents no longer have moisture issues and comfortable heating and cooling year round.
 
-![Cottage's energy use over time.](Images/cottage_animation.webm){fig-align="left"}
+![Cottage's energy use over time.](Images/cottage_animation.webm){fig-alt="Animation of two line plots over 2017-2024 of the energy use of Cottage measuered in BTUs one through electricity and the other heating oil. Two vertical lines one in early June 2021 labled David started as Director of Energy and the second in mid February 2022 labled HP/HPWH Installed and Basemnt and Attic Insulated. In the animation we notice Cottage uses a high number of BTUs through heating oil and not many though electricity, after David is hired and the energy improvements are made there are less BTUs being used overall and they mainly come from electricity." fig-align="left"}
 
 ## Carriage
 
@@ -25,10 +25,10 @@ Before the energy improvements were made the total amount of energy the house wa
 
 The Carriage house was built in 1887 and the residents over the years have complained of moisture issues and inconsistent heating and cooling throughout the house. The school also didn't like the cost of the heating oil deliveries or that it it was dependent on fossil fuels. After doing a comprehensive energy audit it was determined to need two heat pumps and a heat pump water heater. As well as the basement needing a vapor barrier and the attic and basement needing insulation.
 
-![Carriage's attic before undergoing improvements](Images/carriage_before.jpeg){fig-alt="Image of Carriage's attic before improvements were made with stuff strewn about the floor and fiberglass batts coming out of the roof cavities" width="396"}
+![Carriage's attic before undergoing improvements](Images/carriage_before.jpeg){fig-alt="Image of Carriage's attic before improvements were made with stuff strewn about the floor and fiberglass batts coming out of the roof cavities" fig-align="left" width="396"}
 
-![Carriage's attic after energy improvements.](Images/carriage_after.jpg){fig-alt="Image of Carriges attic after the insulation was fixed and a ceiling was placed." width="396"}
+![Carriage's attic after energy improvements.](Images/carriage_after.jpg){fig-alt="Image of Carriges attic after the insulation was fixed and a ceiling was placed." fig-align="left" width="396"}
 
 Before the energy improvements were made the total amount of energy the house was using was high and most was being wasted do to the leaky basement and attic. Now the house is much tighter, uses less energy more efficiently and is no longer reliant on fossil fuels. Now the residents have a much more evenly heated and cooled home.
 
-![Carriage's energy use over time.](Images/carriage_animation.webm)
+![Carriage's energy use over time.](Images/carriage_animation.webm){fig-alt="Animation of two line plots over 2017-2024 of the energy use of Carriage measuered in BTUs one through electricity and the other heating oil. Two vertical lines one in early June 2021 labled David started as Director of Energy and the second in mid February 2022 labled HP/HPWH Installed and Basemnt Insulated. In the animation we notice Carriage uses a high number of BTUs through heating oil and not many though electricity, after David is hired and the energy improvements are made there are less BTUs being used overall and they mainly come from electricity." fig-align="left"}
