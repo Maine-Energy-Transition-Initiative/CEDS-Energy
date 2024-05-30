@@ -311,7 +311,7 @@ Animation1 <- ggplot(Carriage_heating_and_electricity_filter, mapping = aes(x = 
    annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y = 1e+07, label="David started as the Director of Energy", angle=90) +
   geom_vline(xintercept=as.POSIXct(as.Date("2022-02-15")),
                 linetype=1, colour="black") +
-  annotate("text", x=as.POSIXct(as.Date("2022-04-15")), y = 1e+07, label="HP/HPWH Installed and Basemnt Insulated", angle=90) +
+  annotate("text", x=as.POSIXct(as.Date("2022-04-15")), y = 1e+07, label="HP/HPWH Installed and Basement/Attic Insulated", angle=90) +
   transition_reveal(Date)+
   enter_fade() + exit_fade() 
 
@@ -354,7 +354,7 @@ Animation1 <- ggplot(Cottage_heating_and_electricity_filter, mapping = aes(x = D
    annotate("text", x=as.POSIXct(as.Date("2021-06-01")), y = 1e+07, label="David started as the Director of Energy", angle=90) +
   geom_vline(xintercept=as.POSIXct(as.Date("2022-02-15")),
                 linetype=1, colour="black") +
-  annotate("text", x=as.POSIXct(as.Date("2022-04-15")), y = 1e+07, label="HP/HPWH Installed and Basemnt and Attic Insulated", angle=90) +
+  annotate("text", x=as.POSIXct(as.Date("2022-04-15")), y = 1e+07, label="HP/HPWH Installed and Basement Insulated", angle=90) +
   transition_reveal(Date)+
   enter_fade() + exit_fade() 
 
