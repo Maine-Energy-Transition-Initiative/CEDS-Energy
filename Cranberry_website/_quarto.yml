@@ -3,7 +3,7 @@ project:
 execute:
   freeze: auto
 website:
-  title: "MERCI Homepage"
+  title: "Homepage"
   navbar:
     tools:
       - icon: globe2
