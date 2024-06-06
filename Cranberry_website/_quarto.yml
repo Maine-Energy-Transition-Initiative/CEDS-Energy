@@ -3,7 +3,7 @@ project:
 execute:
   freeze: auto
 website:
-  title: "MERCI Homepage"
+  title: "Homepage"
   navbar:
     tools:
       - icon: globe2
@@ -20,10 +20,10 @@ website:
       - communities.qmd
       - href: goals.qmd
         text: Goals
-      - href: more.qmd
-        text: FAQs/Contact
       - href: cases.qmd
         text: Case Studies
+      - href: more.qmd
+        text: FAQs/Contact
   page-footer: 
     background: gray
     left: "Copyright 2024, Someone" 
