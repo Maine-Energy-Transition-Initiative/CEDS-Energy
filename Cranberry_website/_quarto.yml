@@ -16,7 +16,6 @@ website:
     left:
       - href: goals.qmd
         text: Our Process
-      - about.qmd
       - href: communities.qmd
         text: Communities
       - href: cases.qmd
