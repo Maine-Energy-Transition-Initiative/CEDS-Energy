@@ -6,16 +6,17 @@ library(dplyr)
 library(purrr)
 library(quarto)
 library(fs)
+library(readxl)
 
 # Load data ====================================================================
 
-#Energy_Audits_render <- read_excel("../CEDS-Energy/data/Energy_Audit_template.xlsx")
+Energy_Audits_render <- read_excel("../CEDS-Energy/data/Energy_Audit_template.xlsx")
 
 # Create data frame to iterate over =============================================
 
 # HTML reports
 
-Audit_reports_html <- Energy_Audits |>
+Audit_reports_html <- Energy_Audits_render |>
   distinct(Adress_Name, Auditor_full_name) |>
   mutate(
     output_format = "html",
@@ -52,9 +53,11 @@ Audit_reports_html <- Energy_Audits |>
 
 # Map over each row ============================================================
 
+Audit_reports_html_sub <- Audit_reports_html[, 3:5]
+
 pwalk(
-  Audit_reports_html,
-  quarto_render,
+  Audit_reports_html_sub,
+  quarto::quarto_render,
   input = here("Energy_Report.qmd"),
   .progress = TRUE
 )
