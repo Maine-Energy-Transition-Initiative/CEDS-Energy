@@ -14,16 +14,14 @@ website:
         href: https://github.com/LaurieLBaker/CEDS-Energy
       
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
-      - communities.qmd
       - href: goals.qmd
-        text: Goals
+        text: Our Process
+      - href: communities.qmd
+        text: Communities
       - href: cases.qmd
         text: Case Studies
-      - href: more.qmd
-        text: FAQs/Contact
+      - href: about.qmd
+        text: About
   page-footer: 
     background: gray
     left: "Copyright 2024, Someone" 
