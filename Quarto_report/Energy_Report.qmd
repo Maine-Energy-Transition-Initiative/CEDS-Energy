@@ -1,6 +1,9 @@
 ---
 title: "COA Community Energy Center"
-format: html
+format:
+  html: default
+  pdf: default
+  docx: default
 editor: visual
 params:
   adress: "Me_test1"
@@ -139,7 +142,7 @@ Other Health & Safety Concerns: `r Health_safety_message`
 ## Insulation levels
 
 |                    |                                                 |                                |
-|-----------------|---------------------------------|----------------------|
+|------------------|--------------------------------|----------------------|
 | HOME COMPONENT     | YOUR HOME’S R-VALUES                            | US D.O.E. RECOMMENDED R-VALUES |
 | Attics/Ceilings    | `r Building_Audit$"Attics/Ceilings R-value"`    | 60                             |
 | Above Ground Walls | `r Building_Audit$"Above Ground Walls R-value"` | 30                             |

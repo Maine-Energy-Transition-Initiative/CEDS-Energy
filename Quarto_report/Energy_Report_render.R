@@ -35,30 +35,28 @@ Audit_reports_html <- Energy_Audits_render |>
 
 # PDF reports
 
-#pet_reports_pdf <- pet_reports_html |>
-  #mutate(
- #   output_file = gsub("html", "pdf", output_file),
- #   output_format = gsub("html", "pdf", output_format)
- # )
+Audit_reports_pdf <- Audit_reports_html |>
+  mutate(
+   output_file = gsub("html", "pdf", output_file),
+    output_format = gsub("html", "pdf", output_format)
+  )
 
 # Bind HTML and PDF report dataframes together
 
-#pet_reports <- rbind(pet_reports_html, pet_reports_pdf)
+Audit_reports <- rbind(Audit_reports_html, Audit_reports_pdf)
 
-# Subset to first 2 cat/dog breeds =============================================
+# Select to render =============================================
 
-#pet_reports_subset <- pet_reports |>
-  #slice_head(n = 2, by = c(pet_type, output_format)) |>
-  #select(output_file, output_format, execute_params)
+
+Audit_reports_sub <- Audit_reports|>
+  select(output_file, output_format, execute_params)
 
 # Map over each row ============================================================
 
-Audit_reports_html_sub <- Audit_reports_html[, 3:5]
-
 pwalk(
-  Audit_reports_html_sub,
+  Audit_reports_sub,
   quarto::quarto_render,
-  input = here("Energy_Report.qmd"),
+  input = here("Quarto_report/Energy_Report.qmd"),
   .progress = TRUE
 )
 
