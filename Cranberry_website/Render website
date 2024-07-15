@@ -1,6 +1,0 @@
-(ERROR) Unknown option "-a". Did you mean option "-h"?
-
-Error: Unknown option "-a". Did you mean option "-h"?
-    at Command.parseCommand (file:///C:/Program%20Files/RStudio/resources/app/bin/quarto/bin/quarto.js:8335:59)
-    at async quarto (file:///C:/Program%20Files/RStudio/resources/app/bin/quarto/bin/quarto.js:127545:5)
-    at async file:///C:/Program%20Files/RStudio/resources/app/bin/quarto/bin/quarto.js:127563:9

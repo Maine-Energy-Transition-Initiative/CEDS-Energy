@@ -7,10 +7,11 @@ library(purrr)
 library(quarto)
 library(fs)
 library(readxl)
+library(tinytex)
 
 # Load data ====================================================================
 
-Energy_Audits_render <- read_excel("../CEDS-Energy/data/Energy_Audit_template.xlsx")
+Energy_Audits_render <- read_excel("data/Energy_Audit_template.xlsx")
 
 # Create data frame to iterate over =============================================
 
@@ -56,7 +57,7 @@ Audit_reports_sub <- Audit_reports|>
 pwalk(
   Audit_reports_sub,
   quarto::quarto_render,
-  input = here("Quarto_report/Energy_Report.qmd"),
+  input = here("Quarto_report/Energy_Report_Summer.qmd"),
   .progress = TRUE
 )
 
