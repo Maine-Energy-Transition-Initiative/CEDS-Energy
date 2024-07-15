@@ -73,7 +73,7 @@ pwalk(
 output_dir <- "reports_summer"
 
 # List files that contain ".html" or ".pdf".
-files <- dir_ls(here(), regexp = ".html$|.pdf$|.docx$")
+files <- dir_ls(here(), regexp = ".html$|.pdf$|.docx")
 
 # Create directory if needed
 dir_create(output_dir)

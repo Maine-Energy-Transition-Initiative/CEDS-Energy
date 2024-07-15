@@ -4,7 +4,7 @@ format:
   html: default
   pdf: default
   docx: default
-editor: visual
+editor: source
 params:
   adress: "Me_test1"
   author: "Rudolfs"
