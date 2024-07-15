@@ -42,9 +42,16 @@ Audit_reports_pdf <- Audit_reports_html |>
     output_format = gsub("html", "pdf", output_format)
   )
 
+#Docx reports
+
+Audit_reports_docx <- Audit_reports_html |>
+  mutate(
+    output_file = gsub("html", "docx", output_file),
+    output_format = gsub("html", "docx", output_format)
+  )
 # Bind HTML and PDF report dataframes together
 
-Audit_reports <- rbind(Audit_reports_html, Audit_reports_pdf)
+Audit_reports <- rbind(Audit_reports_html, Audit_reports_pdf, Audit_reports_docx)
 
 # Select to render =============================================
 
@@ -63,10 +70,10 @@ pwalk(
 
 # Move reports to separate folder ==============================================
 
-output_dir <- "reports"
+output_dir <- "reports_summer"
 
 # List files that contain ".html" or ".pdf".
-files <- dir_ls(here(), regexp = ".html$|.pdf$")
+files <- dir_ls(here(), regexp = ".html$|.pdf$|.docx$")
 
 # Create directory if needed
 dir_create(output_dir)
