@@ -74,7 +74,7 @@ SUBMITTED BY: `r params$author` DATE: `r format(Sys.time(), '%e %B %Y')`
 
 ## Summary
 
-Energy Audit of your property was conducted on `r Building_Audit\$Audit_Date` We looked into insulation, mechanical equipment, conducted test like blower door test to quantify the energy efficiency of your home. By analyzing collected and all the data that you provided your home energy cost your approximately \`r Building_Audit\$Yearly_Energy_Cost\` yearly. (This report also shows the list of improvements that could lower energy consumption and improve comfort and health)
+Energy Audit of your property was conducted on `r Building_Audit$Audit_Date` We looked into insulation, mechanical equipment, conducted test like blower door test to quantify the energy efficiency of your home. By analyzing collected and all the data that you provided your home energy cost your approximately `r Building_Audit$Yearly_Energy_Cost` yearly. (This report also shows the list of improvements that could lower energy consumption and improve comfort and health)
 
 ## Home's current conditions
 
@@ -118,8 +118,7 @@ Combustion Appliance Draft Test – `r Building_Audit$"Combustion Appliance Draf
 #| label: Gas leak message
 #| echo: false
 #| results: hide
- Gas_leak_message <- if (Building_Audit$Gas_leak_where != 'N/A'){
-    print (Building_Audit$Gas_leak_where)
+ Gas_leak_message <- if (isTRUE(Building_Audit$Gas_leak_where !='N/A')){print (Building_Audit$Gas_leak_where)
 } else {
     print ("")}
 ```
@@ -130,8 +129,7 @@ Gas leak detection: `r Building_Audit$"Gas leak detection(PASSED/FAILED)"`, `r G
 #| label: Health and safety concerns
 #| echo: false
 #| results: hide
-Health_safety_message <- if (Building_Audit$`Other Health & Safety Concerns` != 'NA'){
-    print (Building_Audit$`Other Health & Safety Concerns`)
+Health_safety_message <- if (isTRUE(Building_Audit$`Other Health & Safety Concerns` !='NA')){print (Building_Audit$`Other Health & Safety Concerns`)
 } else {print ("There were no further health and/or safety concerns that were identified at the time of your energy audit.")}
 ```
 
