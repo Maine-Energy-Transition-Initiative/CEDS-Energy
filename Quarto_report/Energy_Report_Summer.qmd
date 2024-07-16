@@ -72,17 +72,18 @@ recommendations <- energy_test_googlesheets |>
 
 pivot_recommendations <- recommendations |>
   pivot_longer(cols = "[Furnace tune-up]":"[Other]",
-    names_to = "recomendation", 
-    values_to = "rank")
+    names_to = "Recommendation", 
+    values_to = "Rank")
 
 pivot_recommendations['Description'] <- c("Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation")
 
 ranked_recommendations <- pivot_recommendations |>
-  arrange((rank))|>
-    filter(rank != 0)
+  mutate(Recommendation = recode(Recommendation,  '[Furnace tune-up]' = 'Furnace tune-up', '[Low-flow showerhead(s)]' = 'Low-flow showerhead(s)', '[LEDs]' = 'LEDs', '[Window Dressers]' = 'Window Dressers', '[Refrigerator]' = 'Refrigerator', '[Freezer]' = 'Freezer', '[Induction Stove]' = 'Induction Stove', '[Heat Pump Water Heater]' = 'Heat Pump Water Heater', '[Gutters]' = 'Gutters', '[Bathroom exhaust fan]' = 'Bathroom exhaust fan', '[Kitchen exhaust fan]' = 'Kitchen exhaust fan', '[Vapor Barrier]' = 'Vapor Barrier', '[Spray Foam]' = 'Spray Foam', '[Attic Insulation ]' = 'Attic Insulation', '[Wall Insulation]' = 'Wall Insulation', '[Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', '[Air Source Heat Pump]'= 'Air Source Heat Pump', '[EV+charger]' = 'EV+charger', '[Solar]' = 'Solar', '[Other]' = 'Other')) |>
+    arrange((Rank))|>
+    filter(Rank != 0)
 ```
 
-### Energy Audit Report
+# Energy Audit Report
 
 ```{r}
 #| label: house image path setup
@@ -132,15 +133,15 @@ Here will be the table of contents
 
 ## 1. Summary of your Audit
 
-#1.1 Visual Inspection and Measurements
+### 1.1 Visual Inspection and Measurements
 
 We started with a tour and visual inspection of the inside and outside of the home. We identified any visible damage to the building, moisture control strategies, major appliances, and insulation. We measured square footage and volume of the home, as well as the area of all exterior windows and doors. We used a kill-a-watt meter to measure the electricity use of some appliances. During your audit, we used a carbon monoxide meter to measure the ambient carbon monoxide levels throughout the home.
 
-#1.2 Attic
+### 1.2 Attic
 
 We entered the attic to check for insulation, air sealing, ventilation, and potential hazards such as mold. Additionally, we visually inspected the attic ventilation and any duct and pipework passing through the attic.
 
-#1.3 Basement
+### 1.3 Basement
 
 We visually inspected any appliances in the basement and noted insulation levels, moisture, rodents, and any other concerns.
 
@@ -175,16 +176,16 @@ Option 1: We visually inspected and conducted combustion safety tests on the com
 
 IF propane gas, Add sentence to Options 1/2: We also performed gas leak detection tests on your propane appliance(s).--->
 ```
-#1.5 Blower Door / Air Leakage Test
+### 1.5 Blower Door / Air Leakage Test
 
 We used a large fan in an exterior door to depressurize your house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks. To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.
+
 ## 2. Summary of Recommendations
 
 ```{r}
+#| eval: true
 #| echo: false
 gt_ranked_recommendations <- gt(ranked_recommendations)
 
 gt_ranked_recommendations
 ```
-
-
