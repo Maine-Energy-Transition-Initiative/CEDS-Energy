@@ -61,6 +61,8 @@ recommendations <- energy_test_googlesheets |>
   #filter(Adress_Name == params$adress) |>
   select("[Furnace tune-up]":"[Other]")
 
+
+
 ```
 
 ```{r}
@@ -68,11 +70,15 @@ recommendations <- energy_test_googlesheets |>
 #| echo: false
 #| warning: false
 
-ranked_recommendations <- recommendations |>
+pivot_recommendations <- recommendations |>
   pivot_longer(cols = "[Furnace tune-up]":"[Other]",
     names_to = "recomendation", 
-    values_to = "rank")|>
-    arrange((rank))|>
+    values_to = "rank")
+
+pivot_recommendations['Description'] <- c("Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation")
+
+ranked_recommendations <- pivot_recommendations |>
+  arrange((rank))|>
     filter(rank != 0)
 ```
 
