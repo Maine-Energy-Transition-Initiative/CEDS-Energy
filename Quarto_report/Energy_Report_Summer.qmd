@@ -81,6 +81,9 @@ ranked_recommendations <- pivot_recommendations |>
   mutate(Recommendation = recode(Recommendation,  '[Furnace tune-up]' = 'Furnace tune-up', '[Low-flow showerhead(s)]' = 'Low-flow showerhead(s)', '[LEDs]' = 'LEDs', '[Window Dressers]' = 'Window Dressers', '[Refrigerator]' = 'Refrigerator', '[Freezer]' = 'Freezer', '[Induction Stove]' = 'Induction Stove', '[Heat Pump Water Heater]' = 'Heat Pump Water Heater', '[Gutters]' = 'Gutters', '[Bathroom exhaust fan]' = 'Bathroom exhaust fan', '[Kitchen exhaust fan]' = 'Kitchen exhaust fan', '[Vapor Barrier]' = 'Vapor Barrier', '[Spray Foam]' = 'Spray Foam', '[Attic Insulation ]' = 'Attic Insulation', '[Wall Insulation]' = 'Wall Insulation', '[Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', '[Air Source Heat Pump]'= 'Air Source Heat Pump', '[EV+charger]' = 'EV+charger', '[Solar]' = 'Solar', '[Other]' = 'Other')) |>
     arrange((Rank))|>
     filter(Rank != 0)
+
+ranked_clean_recommendations <- ranked_recommendations|>
+    select(-Rank)
 ```
 
 # Energy Audit Report
@@ -185,7 +188,7 @@ We used a large fan in an exterior door to depressurize your house. This allows 
 ```{r}
 #| eval: true
 #| echo: false
-gt_ranked_recommendations <- gt(ranked_recommendations)
+gt_ranked_recommendations <- gt(ranked_clean_recommendations)
 
 gt_ranked_recommendations
 ```
