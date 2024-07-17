@@ -1,14 +1,18 @@
 ---
 title: ""
 format:
-  html: default
-  pdf: default
-  docx: default
+  html:
+    css: styles.css
+  pdf:
+    css: styles.css
+  docx:
+    css: styles.css
 editor: source
 params:
   adress: "Me_test1"
   author: "Rudolfs"
 toc: false
+css: styles.css
 ---
 
 ```{r}
@@ -86,7 +90,7 @@ ranked_clean_recommendations <- ranked_recommendations|>
     select(-Rank)
 ```
 
-# Energy Audit Report
+# Energy Audit Report {.bheader}
 
 ```{r}
 #| label: house image path setup
@@ -149,25 +153,43 @@ We entered the attic to check for insulation, air sealing, ventilation, and pote
 We visually inspected any appliances in the basement and noted insulation levels, moisture, rodents, and any other concerns.
 
 ```{r}
+#| label: If else chapter 1.4 heading
 #| echo: false
+#| warning: false
+
 x <- c("Heating oil")
 if (x == "Heating oil") {
-  print("#1.4 Combustion Appliance Safety 
-We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens.")
+  cat('# 1.4 Combustion Appliance Safety1')
 } else if (x == "Propane") {
-  print("#1.4 Combustion Appliance Safety 
-We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens.")
+  cat('# 1.4 Combustion Appliance Safety2')
 } else if (x == "Kerosene") {
-  print("#1.4 Combustion Appliance Safety 
-We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens.")
+  cat('# 1.4 Combustion Appliance Safety3')
 } else if (x == "Firewood"){
-  print("#1.4 Combustion Appliance Safety 
-We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens.")
+  cat('# 1.4 Combustion Appliance Safety4')
 } else if (x == "Pellets") {
-  print("#1.4 Combustion Appliance Safety 
-We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens.")
+  cat('# 1.4 Combustion Appliance Safety5')
 } else {
-  print("")
+  cat("")
+}
+```
+
+```{r}
+#| label: If else text of chapter 1.4
+#| echo: false
+
+x <- c("Heating oil")
+if (x == "Heating oil") {
+  writeLines("We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens.")
+} else if (x == "Propane") {
+  cat("We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens.")
+} else if (x == "Kerosene") {
+  cat("We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens.")
+} else if (x == "Firewood"){
+  cat("We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens.")
+} else if (x == "Pellets") {
+  cat("We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens.")
+} else {
+  cat("")
 }
 ```
 
@@ -184,6 +206,8 @@ IF propane gas, Add sentence to Options 1/2: We also performed gas leak detectio
 We used a large fan in an exterior door to depressurize your house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks. To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.
 
 ## 2. Summary of Recommendations
+
+We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report. 
 
 ```{r}
 #| eval: true
