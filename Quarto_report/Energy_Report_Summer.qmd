@@ -12,7 +12,7 @@ params:
   adress: "Me_test1"
   author: "Rudolfs"
 toc: false
-css: styles.css
+
 ---
 
 ```{r}
@@ -52,27 +52,24 @@ Building_Audit <- Energy_Audits |>
 ```
 
 ```{r}
-#| label: setup googlesheets data
+#| label: load googlesheets data
 #| echo: false
 #| warning: false
 
 #Load Data
 energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1NLoDskkQKP9rJdX1TPIwwy_xLSv0wcp77KCfG0lVxCc/edit?resourcekey=&gid=755427871#gid=755427871")
 
-#=======filter the spreadsheet to make smaller tables for different visualizations/code chunks
-
-recommendations <- energy_test_googlesheets |>
-  #filter(Adress_Name == params$adress) |>
-  select("[Furnace tune-up]":"[Other]")
-
-
-
 ```
 
 ```{r}
-#| label: rank recommendations
+#| label: setup rank recommendations data
 #| echo: false
 #| warning: false
+
+
+recommendations <- energy_test_googlesheets |>
+  #filter(Adress_Name == params$adress) |> #need to parametorize
+  select("[Furnace tune-up]":"[Other]")
 
 pivot_recommendations <- recommendations |>
   pivot_longer(cols = "[Furnace tune-up]":"[Other]",
@@ -89,6 +86,16 @@ ranked_recommendations <- pivot_recommendations |>
 ranked_clean_recommendations <- ranked_recommendations|>
     select(-Rank)
 ```
+
+```{r}
+#| label: Setup basics data
+#| echo: false
+#| warning: false
+
+basics <- energy_test_googlesheets |>
+  select(`Date Built`, `Number floors`, `Foundation Type`, `Volume of conditioned space`, `Square footage of conditioned space`, `Attic insulation type`, `Thickness of the attic insulation (inches)`, `Condition of attic insulation?`, `Ambient Carbon Monoxide reading`, `Gallons of Heating Oil`,`Cost in Dollars...84`,`Successive Energy Fuel...85`,`Successive Energy Fuel...86`,`Gallons of Kerosene`,`Cost in Dollars...88`,`Successive Energy Fuel...89`,`Gallons of Propane`,`Cost in Dollars...91`,`Successive Energy Fuel...92`,`kWh of Electricity`,`Cost in Dollars...94`,`Successive Energy Fuel...95`,`Cords of Firewood`,`Cost in Dollars...97`,`Successive Energy Fuel...98`,`Tons of pellets`,`Cost in Dollars...100`,`Successive Energy Fuel...101`,`Write the quantity and measuring unit`, `Cost in Dollars...103` )
+```
+
 
 # Energy Audit Report {.bheader}
 
@@ -155,6 +162,7 @@ We visually inspected any appliances in the basement and noted insulation levels
 ```{r}
 #| label: If else chapter 1.4 heading
 #| echo: false
+#| eval: false
 #| warning: false
 
 x <- c("Heating oil")
@@ -176,6 +184,7 @@ if (x == "Heating oil") {
 ```{r}
 #| label: If else text of chapter 1.4
 #| echo: false
+#| eval: false
 
 x <- c("Heating oil")
 if (x == "Heating oil") {
@@ -193,11 +202,11 @@ if (x == "Heating oil") {
 }
 ```
 
-```{=html}
-<!---
-**1.4 Combustion Appliance Safety** 
+### 1.4 Combustion Appliance Safety
 We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens.
-Option 1: We visually inspected and conducted combustion safety tests on the combustion appliance(s) in your home. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home. Option 2: We visually inspected your appliance(s) but were unable to perform combustion safety tests.
+
+<!--- Option 1: We visually inspected and conducted combustion safety tests on the combustion appliance(s) in your home. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home. 
+Option 2: We visually inspected your appliance(s) but were unable to perform combustion safety tests.
 
 IF propane gas, Add sentence to Options 1/2: We also performed gas leak detection tests on your propane appliance(s).--->
 ```
