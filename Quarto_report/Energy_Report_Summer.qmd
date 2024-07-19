@@ -92,8 +92,25 @@ ranked_clean_recommendations <- ranked_recommendations|>
 #| echo: false
 #| warning: false
 
-basics <- energy_test_googlesheets |>
-  select(`Date Built`, `Number floors`, `Foundation Type`, `Volume of conditioned space`, `Square footage of conditioned space`, `Attic insulation type`, `Thickness of the attic insulation (inches)`, `Condition of attic insulation?`, `Ambient Carbon Monoxide reading`, `Gallons of Heating Oil`,`Cost in Dollars...84`,`Successive Energy Fuel...85`,`Successive Energy Fuel...86`,`Gallons of Kerosene`,`Cost in Dollars...88`,`Successive Energy Fuel...89`,`Gallons of Propane`,`Cost in Dollars...91`,`Successive Energy Fuel...92`,`kWh of Electricity`,`Cost in Dollars...94`,`Successive Energy Fuel...95`,`Cords of Firewood`,`Cost in Dollars...97`,`Successive Energy Fuel...98`,`Tons of pellets`,`Cost in Dollars...100`,`Successive Energy Fuel...101`,`Write the quantity and measuring unit`, `Cost in Dollars...103` )
+double_basics <- energy_test_googlesheets |>
+  select(`Date Built`, `Number of floors`, `Volume of conditioned space`, `Square footage of conditioned space`, `Thickness of the attic insulation (inches), at the thinnest location`, `Gallons of Heating Oil`,`Cost in Dollars...84`,`Gallons of Kerosene`,`Cost in Dollars...88`,`Gallons of Propane`,`Cost in Dollars...91`,`kWh of Electricity`,`Cost in Dollars...94`,`Cords of Firewood`,`Cost in Dollars...97`,`Tons of pellets`,`Cost in Dollars...100`,`Write the quantity and measuring unit`, `Cost in Dollars...103` )
+
+character_basics <- energy_test_googlesheets |>
+  select( `Foundation Type`, `Attic insulation type`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Ambient Carbon Monoxide reading`,)
+
+pivot_double_basics <- double_basics |>
+  pivot_longer(cols = "Date Built":"Cost in Dollars...103",
+    names_to = "Info", 
+    values_to = "Values")
+
+pivot_character_basics <- character_basics |>
+  pivot_longer(cols = "Foundation Type":"Ambient Carbon Monoxide reading",
+    names_to = "Info", 
+    values_to = "Values")
+
+pivot_all_basics <- pivot_double_basics |>
+  rbind(pivot_character_basics)
+  
 ```
 
 
