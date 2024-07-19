@@ -108,9 +108,9 @@ pivot_character_basics <- character_basics |>
     names_to = "Info", 
     values_to = "Values")
 
-pivot_all_basics <- pivot_double_basics |>
-  rbind(pivot_character_basics)
-  
+all_basics <- pivot_double_basics |>
+  rbind(pivot_character_basics) |>
+  filter(Values != is.na(NA))
 ```
 
 
@@ -226,7 +226,7 @@ We assessed combustion appliances that burn fossil fuels such as propane, heatin
 Option 2: We visually inspected your appliance(s) but were unable to perform combustion safety tests.
 
 IF propane gas, Add sentence to Options 1/2: We also performed gas leak detection tests on your propane appliance(s).--->
-```
+
 ### 1.5 Blower Door / Air Leakage Test
 
 We used a large fan in an exterior door to depressurize your house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks. To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.
@@ -236,9 +236,38 @@ We used a large fan in an exterior door to depressurize your house. This allows 
 We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report. 
 
 ```{r}
+#| label: 2. summery table
 #| eval: true
 #| echo: false
-gt_ranked_recommendations <- gt(ranked_clean_recommendations)
+gt_ranked_recommendations <- gt(ranked_clean_recommendations) |>
+tab_options(table.width = pct(100))
 
 gt_ranked_recommendations
 ```
+
+## 3. What We Found
+### 3.1 Basics 
+```{r}
+#| label: 3.1 basics table
+#| eval: true
+#| echo: false
+gt_all_basics <- gt(all_basics) |>
+tab_options(table.width = pct(100))
+
+gt_all_basics
+```
+### 3.2 Exterior
+
+### 3.3 Interior/Living space
+### 3.4 Blower Door / Air Leakage Test
+A blower door test simulates a 20mph wind hitting your house. To run the test, we used a large fan in an exterior door to depressurize your house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks. To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.
+```{r}
+
+```
+Using a thermal imaging camera, we looked for major air leakage locations and thermal bridging, where heat is bypassesing the insulation.
+There was evidence of …. 
+### 3.5 Attic
+### 3.6 Basement
+### 3.7 Electrical and Mechanical Systems
+### 3.8 Energy Bills
+## 4. Recommendations
