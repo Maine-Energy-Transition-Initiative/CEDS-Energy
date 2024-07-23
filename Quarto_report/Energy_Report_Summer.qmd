@@ -183,21 +183,32 @@ We visually inspected any appliances in the basement and noted insulation levels
 #| eval: false
 #| warning: false
 
-x <- c("Heating oil")
-if (x == "Heating oil") {
-  cat('# 1.4 Combustion Appliance Safety1')
-} else if (x == "Propane") {
-  cat('# 1.4 Combustion Appliance Safety2')
-} else if (x == "Kerosene") {
-  cat('# 1.4 Combustion Appliance Safety3')
-} else if (x == "Firewood"){
-  cat('# 1.4 Combustion Appliance Safety4')
-} else if (x == "Pellets") {
-  cat('# 1.4 Combustion Appliance Safety5')
+Energyfuels <- data.frame(energy_test_googlesheets$`Energy Fuels`)
+ 
+Energyfuels <- data.frame(str_detect(Energyfuels, pattern = c("Heat", "Kerosene", "Propane", "Elec", "Firewood", "Pelllets", "Other"))) 
+
+colnames(Energyfuels)[1] <- 'Energyfuels'
+
+Energyfuels$Energyfuels_grouped = Energyfuels$Energyfuels
+  
+Energyfuels <- Energyfuels |>
+  group_by(Energyfuels_grouped) |>
+  arrange(factor(Energyfuels, levels = c('TRUE', 'FALSE')))|>
+  select(-ends_with('ls')) #|>
+  #slice(1)
+
+Energyfuels_slice <- Energyfuels|>
+  slice(1)
+
+  
+if (y == "TRUE") {
+  cat('# 1.4 Combustion Appliance Safety')
 } else {
   cat("")
 }
 ```
+
+
 
 ```{r}
 #| label: If else text of chapter 1.4
