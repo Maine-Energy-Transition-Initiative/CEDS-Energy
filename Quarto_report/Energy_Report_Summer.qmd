@@ -10,7 +10,6 @@ params:
   adress: "Me_test1"
   author: "Rudolfs"
 toc: false
-
 ---
 
 ```{r}
@@ -89,13 +88,13 @@ ranked_clean_recommendations <- ranked_recommendations|>
 #| label: Setup basics data
 #| echo: false
 #| warning: false
-#| eval: false
+#| eval: true
 
 double_basics <- energy_test_googlesheets |>
-  select(`Date Built`, `Number of floors`, `Volume of conditioned space`, `Square footage of conditioned space`, `Thickness of the attic insulation (inches), at the thinnest location`, `Gallons of Heating Oil`,`Cost in Dollars(Heating Oil)`,`Gallons of Kerosene`,`Cost in Dollars(Kerosene)`,`Gallons of Propane`,`Cost in Dollars(Propane)`,`kWh of Electricity`,`Cost in Dollars(Electricity)`,`Cords of Firewood`,`Cost in Dollars(Firewood)`,`Tons of pellets`,`Cost in Dollars(Pellets)`,`Write the quantity and measuring unit`, `Cost in Dollars(Other)` )
+  select(`Date Built`, `Number of floors`, `Volume of conditioned space (cubic feet)`, `Square footage of conditioned space`, `Thickness of the attic insulation (inches), at the thinnest location`, `Gallons of Heating Oil`,`Cost in Dollars(Heating Oil)`,`Gallons of Kerosene`,`Cost in Dollars(Kerosene)`,`Gallons of Propane`,`Cost in Dollars(Propane)`,`kWh of Electricity`,`Cost in Dollars(Electricity)`,`Cords of Firewood`,`Cost in Dollars(Firewood)`,`Tons of pellets`,`Cost in Dollars(Pellets)`,`Write the quantity and measuring unit`, `Cost in Dollars(Other)` )
 
 character_basics <- energy_test_googlesheets |>
-  select( `Foundation Type`, `Attic insulation type`, `Quality of attic insulations installation? Assess worst part of installation.`,`Ambient Carbon Monoxide reading`,)
+  select( `Foundation Type`, `Attic insulation type`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Ambient Carbon Monoxide reading`,)
 
 pivot_double_basics <- double_basics |>
   pivot_longer(cols = "Date Built":"Cost in Dollars(Other)",
@@ -109,10 +108,9 @@ pivot_character_basics <- character_basics |>
 
 all_basics <- pivot_double_basics |>
   rbind(pivot_character_basics) |>
-  arrange(factor(Info, levels = c('Date Built', 'Foundation Type', 'Attic insulation type',  'Thickness of the attic insulation (inches), at the thinnest location', 'Quality of attic insulations installation? Assess worst part of installation.', 'Number of floors', 'Square footage of conditioned space', 'Volume of conditioned space','Ambient Carbon Monoxide reading',  'Gallons of Heating Oil', 'Cost in Dollars(Heating Oil)', 'Gallons of Kerosene', 'Cost in Dollars(Kerosene)', 'Gallons of Propane', 'Cost in Dollars(Propane)', 'kWh of Electricity', 'Cost in Dollars(Electricity)', 'Cords of Firewood', 'Cost in Dollars(Firewood)', 'Tons of pellets', 'Cost in Dollars(Pellets)', 'Write the quantity and measuring unit', 'Cost in Dollars(Other)' )))
+  arrange(factor(Info, levels = c('Date Built', 'Foundation Type', 'Attic insulation type',  'Thickness of the attic insulation (inches), at the thinnest location', 'Quality of attic insulations installation? Assess worst part of installation.', 'Number of floors', 'Square footage of conditioned space', 'Volume of conditioned space (cubic feet)','Ambient Carbon Monoxide reading',  'Gallons of Heating Oil', 'Cost in Dollars(Heating Oil)', 'Gallons of Kerosene', 'Cost in Dollars(Kerosene)', 'Gallons of Propane', 'Cost in Dollars(Propane)', 'kWh of Electricity', 'Cost in Dollars(Electricity)', 'Cords of Firewood', 'Cost in Dollars(Firewood)', 'Tons of pellets', 'Cost in Dollars(Pellets)', 'Write the quantity and measuring unit', 'Cost in Dollars(Other)' )))
   #filter(Values != is.na(NA))
 ```
-
 
 ### Energy Audit Report {.bheader}
 
@@ -179,7 +177,7 @@ We visually inspected any appliances in the basement and noted insulation levels
 ```{r}
 #| label: If else chapter 1.4 heading
 #| echo: false
-#| eval: false
+#| eval: true
 #| warning: false
 
 
@@ -192,6 +190,16 @@ if (energy_test_googlesheets$combustion_fuels == TRUE) {
   cat("")
 }
 ```
+```{r}
+#| label: If else chapter 1.4 body
+#| echo: false
+#| eval: false
+#| warning: false
+
+
+```
+
+`r if(energy_test_googlesheets$combustion_fuels == TRUE){"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens."}else{""}``r if(energy_test_googlesheets$combustion_fuels == TRUE){"La LA la"}`
 
 
 ```{r}
@@ -215,21 +223,20 @@ if (x == "Heating oil") {
 }
 ```
 
-### 1.4 Combustion Appliance Safety
-We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens.
 
+```{=html}
 <!--- Option 1: We visually inspected and conducted combustion safety tests on the combustion appliance(s) in your home. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home. 
 Option 2: We visually inspected your appliance(s) but were unable to perform combustion safety tests.
 
 IF propane gas, Add sentence to Options 1/2: We also performed gas leak detection tests on your propane appliance(s).--->
-
+```
 ### 1.5 Blower Door / Air Leakage Test
 
 We used a large fan in an exterior door to depressurize your house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks. To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.
 
 ## 2. Summary of Recommendations
 
-We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report. 
+We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report.
 
 ```{r}
 #| label: 2. summery table
@@ -242,7 +249,9 @@ gt_ranked_recommendations
 ```
 
 ## 3. What We Found
-### 3.1 Basics 
+
+### 3.1 Basics
+
 ```{r}
 #| label: 3.1 basics table
 #| eval: false
@@ -252,18 +261,17 @@ tab_options(table.width = pct(100))
 
 gt_all_basics
 ```
+
 ### 3.2 Exterior
 
 ### 3.3 Interior/Living space
+
 ### 3.4 Blower Door / Air Leakage Test
+
 A blower door test simulates a 20mph wind hitting your house. To run the test, we used a large fan in an exterior door to depressurize your house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks. To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.
+
 ```{r}
 
 ```
-Using a thermal imaging camera, we looked for major air leakage locations and thermal bridging, where heat is bypassesing the insulation.
-There was evidence of …. 
-### 3.5 Attic
-### 3.6 Basement
-### 3.7 Electrical and Mechanical Systems
-### 3.8 Energy Bills
-## 4. Recommendations
+
+Using a thermal imaging camera, we looked for major air leakage locations and thermal bridging, where heat is bypassesing the insulation. There was evidence of …. \### 3.5 Attic \### 3.6 Basement \### 3.7 Electrical and Mechanical Systems \### 3.8 Energy Bills \## 4. Recommendations
