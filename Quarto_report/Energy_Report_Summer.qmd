@@ -112,6 +112,17 @@ all_basics <- pivot_double_basics |>
   #filter(Values != is.na(NA))
 ```
 
+```{r}
+double_basics_test <- double_basics |>
+  #select("Gallons of Kerosene", "Cost in Dollars (Kerosene)") |>
+  paste(Anual_fire = double_basics$`Gallons of Kerosene`, " Gallons,", double_basics$`Cost in Dollars (Kerosene)`, "USD")
+
+test <- as.data.frame(double_basics_test)
+
+print(test)
+```
+
+
 ### Energy Audit Report {.bheader}
 
 ```{r}
