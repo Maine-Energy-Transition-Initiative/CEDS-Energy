@@ -1,12 +1,10 @@
 ---
 title: ""
 format:
-  html:
-    css: styles.css
-  pdf:
-    css: styles.css
-  docx:
-    css: styles.css
+  html: default
+  pdf: default
+  docx: default
+css: styles.css
 editor: source
 params:
   adress: "Me_test1"
@@ -91,6 +89,7 @@ ranked_clean_recommendations <- ranked_recommendations|>
 #| label: Setup basics data
 #| echo: false
 #| warning: false
+#| eval: false
 
 double_basics <- energy_test_googlesheets |>
   select(`Date Built`, `Number of floors`, `Volume of conditioned space`, `Square footage of conditioned space`, `Thickness of the attic insulation (inches), at the thinnest location`, `Gallons of Heating Oil`,`Cost in Dollars(Heating Oil)`,`Gallons of Kerosene`,`Cost in Dollars(Kerosene)`,`Gallons of Propane`,`Cost in Dollars(Propane)`,`kWh of Electricity`,`Cost in Dollars(Electricity)`,`Cords of Firewood`,`Cost in Dollars(Firewood)`,`Tons of pellets`,`Cost in Dollars(Pellets)`,`Write the quantity and measuring unit`, `Cost in Dollars(Other)` )
@@ -115,7 +114,7 @@ all_basics <- pivot_double_basics |>
 ```
 
 
-# Energy Audit Report {.bheader}
+### Energy Audit Report {.bheader}
 
 ```{r}
 #| label: house image path setup
@@ -183,31 +182,16 @@ We visually inspected any appliances in the basement and noted insulation levels
 #| eval: false
 #| warning: false
 
-Energyfuels <- data.frame(energy_test_googlesheets$`Energy Fuels`)
- 
-Energyfuels <- data.frame(str_detect(Energyfuels, pattern = c("Heat", "Kerosene", "Propane", "Elec", "Firewood", "Pelllets", "Other"))) 
 
-colnames(Energyfuels)[1] <- 'Energyfuels'
+energy_test_googlesheets <- energy_test_googlesheets %>%
+  mutate(combustion_fuels = str_detect(`Energy Fuels`, pattern = "[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))
 
-Energyfuels$Energyfuels_grouped = Energyfuels$Energyfuels
-  
-Energyfuels <- Energyfuels |>
-  group_by(Energyfuels_grouped) |>
-  arrange(factor(Energyfuels, levels = c('TRUE', 'FALSE')))|>
-  select(-ends_with('ls')) #|>
-  #slice(1)
-
-Energyfuels_slice <- Energyfuels|>
-  slice(1)
-
-  
-if (y == "TRUE") {
+if (energy_test_googlesheets$combustion_fuels == TRUE) {
   cat('# 1.4 Combustion Appliance Safety')
-} else {
+} else{
   cat("")
 }
 ```
-
 
 
 ```{r}
@@ -261,7 +245,7 @@ gt_ranked_recommendations
 ### 3.1 Basics 
 ```{r}
 #| label: 3.1 basics table
-#| eval: true
+#| eval: false
 #| echo: false
 gt_all_basics <- gt(all_basics) |>
 tab_options(table.width = pct(100))
