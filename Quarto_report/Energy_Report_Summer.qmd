@@ -32,6 +32,7 @@ library(cowplot)
 library(googlesheets4)
 library(reticulate)
 library(gt)
+library(tibble)
 
 ```
 
@@ -93,28 +94,41 @@ ranked_clean_recommendations <- ranked_recommendations|>
 double_basics <- energy_test_googlesheets |>
   select(`Date Built`, `Number of floors`, `Volume of conditioned space (cubic feet)`, `Square footage of conditioned space`, `Thickness of the attic insulation (inches), at the thinnest location`, `Gallons of Heating Oil`,`Cost in Dollars (Heating Oil)`,`Gallons of Kerosene`,`Cost in Dollars (Kerosene)`,`Gallons of Propane`,`Cost in Dollars (Propane)`,`kWh of Electricity`,`Cost in Dollars (Electricity)`,`Cords of Firewood`,`Cost in Dollars (Firewood)`,`Tons of pellets`,`Cost in Dollars (Pellets)`,`Write the quantity and measuring unit`, `Cost in Dollars (Other)` )
 
-character_basics <- energy_test_googlesheets |>
-  select( `Foundation Type`, `Attic insulation type`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Ambient Carbon Monoxide reading`,)
-
-pivot_double_basics <- double_basics |>
-  pivot_longer(cols = "Date Built":"Cost in Dollars (Other)",
+double_other <- energy_test_googlesheets |>
+  select(`Date Built`, `Number of floors`, `Volume of conditioned space (cubic feet)`, `Square footage of conditioned space`)|>
+  pivot_longer(cols = "Date Built":"Square footage of conditioned space",
     names_to = "Info", 
     values_to = "Values")
 
-pivot_character_basics <- character_basics |>
+character_other <- energy_test_googlesheets |>
+  select( `Foundation Type`,`Ambient Carbon Monoxide reading`,)|>
   pivot_longer(cols = "Foundation Type":"Ambient Carbon Monoxide reading",
     names_to = "Info", 
     values_to = "Values")
 
-all_basics <- pivot_double_basics |>
-  rbind(pivot_character_basics) |>
-  arrange(factor(Info, levels = c('Date Built', 'Foundation Type', 'Attic insulation type',  'Thickness of the attic insulation (inches), at the thinnest location', "Quality of attic insulation's installation? Assess worst part of installation.", 'Number of floors', 'Square footage of conditioned space', 'Volume of conditioned space (cubic feet)','Ambient Carbon Monoxide reading',  'Gallons of Heating Oil', 'Cost in Dollars(Heating Oil)', 'Gallons of Kerosene', 'Cost in Dollars(Kerosene)', 'Gallons of Propane', 'Cost in Dollars(Propane)', 'kWh of Electricity', 'Cost in Dollars(Electricity)', 'Cords of Firewood', 'Cost in Dollars(Firewood)', 'Tons of pellets', 'Cost in Dollars(Pellets)', 'Write the quantity and measuring unit', 'Cost in Dollars(Other)' ))) #|>
-  #filter(Values != is.na(NA))
+```
+
+```{r}
+#| label: attic data for chapter 3
+#| echo: false
+
+attic_basics <- energy_test_googlesheets |>
+  select( `Attic insulation type`, `Quality of attic insulation's installation? Assess worst part of installation.`, `Thickness of the attic insulation (inches), at the thinnest location`)|>
+  mutate(Attic_all = paste(`Attic insulation type`, ",", `Quality of attic insulation's installation? Assess worst part of installation.`, "instullation,", `Thickness of the attic insulation (inches), at the thinnest location`, "inches"))|>
+  mutate(Info = 'Attic',
+        .before =`Attic insulation type`)
+
+attic_basics <- attic_basics[,-c(2,3,4)]
+
+names(attic_basics) <- c('Info', 'Values')
+  
+
 ```
 
 
 ```{r}
 #| label: setup energy sources gallons
+#| echo: false
 gallon_sources <- double_basics |>
   select('Gallons of Heating Oil', 'Gallons of Propane', 'Gallons of Kerosene')|>
   pivot_longer(cols = c('Gallons of Heating Oil', 'Gallons of Propane', 'Gallons of Kerosene' ),
@@ -140,6 +154,7 @@ annual_totals_gallon <- annual_totals_gallon[, -c(2,3,4)]
 
 ```{r}
 #| label: setup energy sources kWh
+#| echo: false
 kWh_sources <- double_basics |>
   select('kWh of Electricity')|>
   pivot_longer(cols = c('kWh of Electricity'),
@@ -163,6 +178,7 @@ annual_totals_kWh <- annual_totals_kWh[, -c(2,3,4)]
 
 ```{r}
 #| label: setup energy sources cords
+#| echo: false
 cords_sources <- double_basics |>
   select('Cords of Firewood')|>
   pivot_longer(cols = c('Cords of Firewood'),
@@ -186,6 +202,7 @@ annual_totals_cords <- annual_totals_cords[, -c(2,3,4)]
 
 ```{r}
 #| label: setup energy sources tons
+#| echo: false
 tons_sources <- double_basics |>
   select('Tons of pellets')|>
   pivot_longer(cols = c('Tons of pellets'),
@@ -209,6 +226,7 @@ annual_totals_tons <- annual_totals_tons[, -c(2,3,4)]
 
 ```{r}
 #| label: setup energy sources other
+#| echo: false
 other_sources <- double_basics |>
   select('Write the quantity and measuring unit')|>
   pivot_longer(cols = c('Write the quantity and measuring unit'),
@@ -231,9 +249,23 @@ annual_totals_other <- annual_totals_other[, -c(2,3,4)]
 ```
 
 ```{r}
-test1 <- annual_totals_kWh|>
+#| label: annual totals for energy sources chapter 3
+#| echo: false
+annual_totals <- annual_totals_kWh|>
   rbind(annual_totals_gallon, annual_totals_cords, annual_totals_tons )
+
+names(annual_totals) <- c('Info', 'Values')
 ```
+
+```{r}
+#| label: all basics
+#| echo: false
+
+all_basics <- double_other |>
+  rbind(character_other, attic_basics,annual_totals )|>
+  arrange(factor(Info, levels = c('Date Built', 'Foundation Type', 'Attic', 'Number of floors', 'Square footage of conditioned space', 'Volume of conditioned space (cubic feet)','Ambient Carbon Monoxide reading')))
+```
+
 
 ### Energy Audit Report {.bheader}
 
