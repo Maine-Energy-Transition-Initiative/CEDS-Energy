@@ -1,18 +1,35 @@
+
+```{r}
+#| label: setup air leakage data
+#| echo: false
+#Load Data
+Energy_Audits <- read_excel("../data/Energy_Audit_template.xlsx")
+
+Building_Audit <- Energy_Audits |>
+  filter(Adress_Name == params$adress) # Auditor_full_name == params$Auditor_full_name
+
+ACHn <- Building_Audit |>
+  select("Natural Air Changes per Hour(ACHn)")|>
+  mutate()
+ACHn1 <- data.frame(IdialACHn = c("Ideal"))
+airleakdata <- cbind(ACHn,ACHn1)  
+```
+
 ```{r}
 #| label: ACHn ggplot
 #| warning: false
 #| echo: false
 
-ggplot(airleakdata, aes(y=IdialACHn))+
+ggplot(Building_Audit, aes(y=1))+
   geom_bar(width=1, fill ="#add8e6")+
   #scale_fill_gradient(low="#FF8888",high="#FF0000")+ #it should be working idk why it doesn't
   geom_vline(xintercept= c(0, 0.04, 0.35, 0.41, 0.6,1), size= 1.3, ylim)+
-  geom_vline(xintercept=0.47,
+  geom_vline(xintercept=0.52,
                 linetype=1, colour="blue", size= 1.3)+ #(maybe have coditional color? red if ACHn is to big blue if it's ok)
   #scale_x_reverse()+
   
 #The vline text lables
-  geom_text(aes(x=0.47, label="Your Home", y=1), nudge_x= -0.03, colour="blue", angle=90, text=element_text(size=11)) +
+  geom_text(aes(x=0.52, label="Your Home", y=1), nudge_x= -0.03, colour="blue", angle=90, text=element_text(size=11)) +
   geom_text(aes(x=0, label="", y=1), nudge_x= -0.03, colour="black", angle=90, text=element_text(size=11)) +
   geom_text(aes(x=0.04, label="Passive House", y=1), nudge_x= -0.02, colour="black", angle=90, text=element_text(size=11)) +
   geom_text(aes(x=0.35, label="Very Tight Mechanical \nVentilation Needed", y=1), nudge_x= -0.05, colour="black", angle=90, text=element_text(size=11)) +
@@ -21,7 +38,7 @@ ggplot(airleakdata, aes(y=IdialACHn))+
   geom_text(aes(x=1, label="Very Leaky", y=1), nudge_x= -0.03, colour="black", angle=90, text=element_text(size=11)) +
   
 #The vline text values 
-  geom_text(aes(x=0.47, label=0.47, y=1.55), nudge_x= -0.03,nudge_y = -1, colour="blue", angle=90, text=element_text(size=11)) +
+  geom_text(aes(x=0.52, label=0.52, y=1.55), nudge_x= -0.03,nudge_y = -1, colour="blue", angle=90, text=element_text(size=11)) +
   geom_text(aes(x=0, label="0", y=1.55), nudge_x= -0.03,nudge_y = -1.0323, colour="black", angle=90, text=element_text(size=11)) +
   geom_text(aes(x=0.04, label="0.04", y=1.55), nudge_x= -0.02, nudge_y = -1, colour="black", angle=90, text=element_text(size=11)) +
   geom_text(aes(x=0.35, label="0.35", y=1.55), nudge_x= -0.03,nudge_y = -1, colour="black", angle=90, text=element_text(size=11)) +
@@ -29,7 +46,7 @@ ggplot(airleakdata, aes(y=IdialACHn))+
   geom_text(aes(x=0.6, label="0.6", y=1.55), nudge_x= -0.03,nudge_y = -1, colour="black", angle=90, text=element_text(size=11)) +
   geom_text(aes(x=1, label="1", y=1.55), nudge_x= -0.03,nudge_y = -1.03, colour="black", angle=90, text=element_text(size=11)) +
   theme_void()
-ggsave("Helen3.png", width=10, height=5)
+ggsave("Helen_0_52.png", width=10, height=5)
 #Here will be a singular bar plat with air leak visualization
 ```
 

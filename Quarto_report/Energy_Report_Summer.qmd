@@ -112,16 +112,128 @@ all_basics <- pivot_double_basics |>
   #filter(Values != is.na(NA))
 ```
 
+
 ```{r}
-double_basics_test <- double_basics |>
-  #select("Gallons of Kerosene", "Cost in Dollars (Kerosene)") |>
-  paste(Anual_fire = double_basics$`Gallons of Kerosene`, " Gallons,", double_basics$`Cost in Dollars (Kerosene)`, "USD")
+#| label: setup energy sources gallons
+gallon_sources <- double_basics |>
+  select('Gallons of Heating Oil', 'Gallons of Propane', 'Gallons of Kerosene')|>
+  pivot_longer(cols = c('Gallons of Heating Oil', 'Gallons of Propane', 'Gallons of Kerosene' ),
+    names_to = "Source", 
+    values_to = "Amount")
 
-test <- as.data.frame(double_basics_test)
+gallon_cost <- double_basics|>
+  select('Cost in Dollars (Heating Oil)', 'Cost in Dollars (Propane)', 'Cost in Dollars (Kerosene)')|>
+  pivot_longer(cols = c('Cost in Dollars (Heating Oil)', 'Cost in Dollars (Propane)', 'Cost in Dollars (Kerosene)'),
+    names_to = "Source_Cost", 
+    values_to = "Dollars")
 
-print(test)
+annual_totals_gallon <- gallon_sources |>
+  cbind(gallon_cost) |>
+  filter(Amount != is.na(NA))|>
+  mutate(Anual_Totals = paste(`Amount`, " Gallons,", `Dollars`, "USD"))
+
+annual_totals_gallon <- annual_totals_gallon |>
+  mutate(Source = recode(Source,  'Gallons of Heating Oil' = 'Annual heating oil usage from bills', 'Gallons of Propane' = 'Annual propane usage from bills', 'Gallons of Kerosene' = 'Annual kerosene usage from the bills'))
+
+annual_totals_gallon <- annual_totals_gallon[, -c(2,3,4)]
 ```
 
+```{r}
+#| label: setup energy sources kWh
+kWh_sources <- double_basics |>
+  select('kWh of Electricity')|>
+  pivot_longer(cols = c('kWh of Electricity'),
+    names_to = "Source", 
+    values_to = "Amount")
+
+kWh_cost <- double_basics|>
+  select('kWh of Electricity')|>
+  pivot_longer(cols = c('kWh of Electricity'),
+    names_to = "Source_Cost", 
+    values_to = "Dollars")
+
+annual_totals_kWh <- kWh_sources |>
+  cbind(gallon_cost) |>
+  filter(Amount != is.na(NA))|>
+  mutate(Anual_Totals = paste(`Amount`, " kWh,", `Dollars`, "USD"))|>
+  mutate(Source = recode(Source,  'kWh of Electricity' = 'Annual electricity usage from bills',))
+
+annual_totals_kWh <- annual_totals_kWh[, -c(2,3,4)]
+```
+
+```{r}
+#| label: setup energy sources cords
+cords_sources <- double_basics |>
+  select('Cords of Firewood')|>
+  pivot_longer(cols = c('Cords of Firewood'),
+    names_to = "Source", 
+    values_to = "Amount")
+
+cords_cost <- double_basics|>
+  select('Cords of Firewood')|>
+  pivot_longer(cols = c('Cords of Firewood'),
+    names_to = "Source_Cost", 
+    values_to = "Dollars")
+
+annual_totals_cords <- cords_sources |>
+  cbind(cords_cost) |>
+  filter(Amount != is.na(NA))|>
+  mutate(Anual_Totals = paste(`Amount`, " Cords,", `Dollars`, "USD"))|>
+   mutate(Source = recode(Source, 'Cords of Firewood' = 'Annual firewood usage from bills',))
+
+annual_totals_cords <- annual_totals_cords[, -c(2,3,4)]
+```
+
+```{r}
+#| label: setup energy sources tons
+tons_sources <- double_basics |>
+  select('Tons of pellets')|>
+  pivot_longer(cols = c('Tons of pellets'),
+    names_to = "Source", 
+    values_to = "Amount")
+
+tons_cost <- double_basics|>
+  select('Tons of pellets')|>
+  pivot_longer(cols = c('Tons of pellets'),
+    names_to = "Source_Cost", 
+    values_to = "Dollars")
+
+annual_totals_tons <- tons_sources |>
+  cbind(tons_cost) |>
+  filter(Amount != is.na(NA))|>
+  mutate(Anual_Totals = paste(`Amount`, " Tons,", `Dollars`, "USD"))|>
+   mutate(Source = recode(Source,  'Tons of pellets' = 'Annual pellets usage from bills',))
+
+annual_totals_tons <- annual_totals_tons[, -c(2,3,4)]
+```
+
+```{r}
+#| label: setup energy sources other
+other_sources <- double_basics |>
+  select('Write the quantity and measuring unit')|>
+  pivot_longer(cols = c('Write the quantity and measuring unit'),
+    names_to = "Source", 
+    values_to = "Amount")
+
+other_cost <- double_basics|>
+  select('Write the quantity and measuring unit')|>
+  pivot_longer(cols = c('Write the quantity and measuring unit'),
+    names_to = "Source_Cost", 
+    values_to = "Dollars")
+
+annual_totals_other <- other_sources |>
+  cbind(other_cost) |>
+  filter(Amount != is.na(NA))|>
+  mutate(Anual_Totals = paste(`Amount`, `Dollars`, "USD"))|>
+  mutate(Source = recode(Source,  'Write the quantity and measuring unit' = 'Other annual energy usage from bills',))
+
+annual_totals_other <- annual_totals_other[, -c(2,3,4)]
+```
+
+```{r}
+test1 <- annual_totals_kWh|>
+  rbind(annual_totals_gallon, annual_totals_cords, annual_totals_tons )
+```
 
 ### Energy Audit Report {.bheader}
 
