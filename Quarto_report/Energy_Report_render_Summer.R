@@ -11,7 +11,7 @@ library(tinytex)
 
 # Load data ====================================================================
 
-Energy_Audits_render <- read_excel("data/Energy_Audit_template.xlsx")
+Energy_Audits_render <- read_sheet("https://docs.google.com/spreadsheets/d/1L38lSRkBoKfQBvQ4I7ItyoWNYLbWi3Lg4Jh2KKlzdOg/edit?usp=sharing")
 
 # Create data frame to iterate over =============================================
 

@@ -77,7 +77,7 @@ pivot_recommendations <- recommendations |>
 pivot_recommendations['Description'] <- c("Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation")
 
 ranked_recommendations <- pivot_recommendations |>
-  mutate(Recommendation = recode(Recommendation,  'Recommendations ranking [Furnace Tune-up]' = 'Furnace Tune-up', 'Recommendations ranking [Low-flow showerhead(s)]' = 'Low-flow showerhead(s)', 'Recommendations ranking [LEDs]' = 'LEDs', 'Recommendations ranking [Window Dressers]' = 'Window Dressers', 'Recommendations ranking [Refrigerator]' = 'Refrigerator', 'Recommendations ranking [Freezer]' = 'Freezer', 'Recommendations ranking [Induction Stove]' = 'Induction Stove', 'Recommendations ranking [Heat Pump Water Heater]' = 'Heat Pump Water Heater', 'Recommendations ranking [Gutters]' = 'Gutters', 'Recommendations ranking [Bathroom exhaust fan]' = 'Bathroom exhaust fan', 'Recommendations ranking [Kitchen exhaust fan]' = 'Kitchen exhaust fan', 'Recommendations ranking [Vapor Barrier]' = 'Vapor Barrier', 'Recommendations ranking [Spray Foam]' = 'Spray Foam', 'Recommendations ranking [Attic Insulation ]' = 'Attic Insulation', 'Recommendations ranking [Wall Insulation]' = 'Wall Insulation', 'Recommendations ranking [Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', 'Recommendations ranking [Air Source Heat Pump]'= 'Air Source Heat Pump', 'Recommendations ranking [EV+charger]' = 'EV+charger', 'Recommendations ranking [Solar]' = 'Solar', 'Recommendations ranking [Other]' = 'Other')) |>
+  mutate(Recommendation = recode(Recommendation,  'Recommendations ranking [Furnace Tune-up]' = 'Furnace Tune-up', 'Recommendations ranking [Low-flow Showerhead(s)]' = 'Low-flow showerhead(s)', 'Recommendations ranking [LEDs]' = 'LEDs', 'Recommendations ranking [Window Dressers]' = 'Window Dressers', 'Recommendations ranking [Refrigerator]' = 'Refrigerator', 'Recommendations ranking [Freezer]' = 'Freezer', 'Recommendations ranking [Induction Stove]' = 'Induction Stove', 'Recommendations ranking [Heat Pump Water Heater]' = 'Heat Pump Water Heater', 'Recommendations ranking [Gutters]' = 'Gutters', 'Recommendations ranking [Bathroom exhaust fan]' = 'Bathroom exhaust fan', 'Recommendations ranking [Kitchen exhaust fan]' = 'Kitchen exhaust fan', 'Recommendations ranking [Vapor Barrier]' = 'Vapor Barrier', 'Recommendations ranking [Spray Foam]' = 'Spray Foam', 'Recommendations ranking [Attic Insulation ]' = 'Attic Insulation', 'Recommendations ranking [Wall Insulation]' = 'Wall Insulation', 'Recommendations ranking [Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', 'Recommendations ranking [Air Source Heat Pump]'= 'Air Source Heat Pump', 'Recommendations ranking [EV+charger]' = 'EV+charger', 'Recommendations ranking [Solar]' = 'Solar', 'Recommendations ranking [Other]' = 'Other')) |>
     arrange((Rank))|>
     filter(Rank != 0)
 
@@ -266,6 +266,48 @@ all_basics <- double_other |>
   arrange(factor(Info, levels = c('Date Built', 'Foundation Type', 'Attic', 'Number of floors', 'Square footage of conditioned space', 'Volume of conditioned space (cubic feet)','Ambient Carbon Monoxide reading')))
 ```
 
+```{r}
+#| label: setup data 3.2
+#| echo: false
+
+exterior <- energy_test_googlesheets|>
+  select('Roof type', 'Roof age', 'Condition of the Roof?', 'Orientation of the primary roof faces','Comment about condition of the roof', 'Existing moisture control strategies?', 'Condition of moisture control strategies?', 'Comments about existing moisture control strategies?', 'Siding type', 'Condition of the siding?', 'Comment about condition of the siding', 'Door(s) type | 1', 'Number of doors of this type | 1', 'Total door area of this type | 1', 'How many windows of this type there are? | 1', 'Number of panes in windows of this type and material | 1 [single]', 'Number of panes in windows of this type and material | 1 [double]', 'Number of panes in windows of this type and material | 1 [triple]', 'Condition of the windows of this type? | 1', 'More about condition of the windows of this type | 1', 'Total windows areas of this type? | 1')
+
+exterior_double <- exterior |>
+  select('Roof age','Number of doors of this type | 1', 'Total door area of this type | 1', 'How many windows of this type there are? | 1', 'Total windows areas of this type? | 1')|>
+  pivot_longer(cols = c('Roof age','Number of doors of this type | 1', 'Total door area of this type | 1', 'How many windows of this type there are? | 1', 'Total windows areas of this type? | 1'), names_to = "Info", 
+    values_to = "Values"
+  )
+
+exterior_character <- exterior |>
+  select('Roof type', 'Condition of the Roof?', 'Orientation of the primary roof faces','Comment about condition of the roof', 'Existing moisture control strategies?', 'Condition of moisture control strategies?', 'Comments about existing moisture control strategies?', 'Siding type', 'Condition of the siding?', 'Comment about condition of the siding', 'Door(s) type | 1', 'Number of panes in windows of this type and material | 1 [single]', 'Number of panes in windows of this type and material | 1 [double]', 'Number of panes in windows of this type and material | 1 [triple]', 'Condition of the windows of this type? | 1', 'More about condition of the windows of this type | 1') |>
+  pivot_longer(cols = c('Roof type', 'Condition of the Roof?', 'Orientation of the primary roof faces', 'Existing moisture control strategies?', 'Condition of moisture control strategies?', 'Comments about existing moisture control strategies?', 'Siding type', 'Condition of the siding?', 'Comment about condition of the siding', 'Door(s) type | 1', 'Number of panes in windows of this type and material | 1 [single]', 'Number of panes in windows of this type and material | 1 [double]', 'Number of panes in windows of this type and material | 1 [triple]', 'Condition of the windows of this type? | 1', 'More about condition of the windows of this type | 1'), names_to = "Info", 
+    values_to = "Values"
+  )
+
+
+```
+
+```{r}
+#| label: setup roof type
+#| echo: false
+roof_type_characters <- exterior |>
+  select('Roof type', 'Condition of the Roof?', 'Orientation of the primary roof faces','Comment about condition of the roof')
+
+roof_type_all <- exterior |>
+  select('Roof type', 'Condition of the Roof?', 'Orientation of the primary roof faces','Comment about condition of the roof') |>
+  mutate(Info = paste(`Roof type`, "in ",`Condition of the Roof?`,"condition, oriented to the ", `Orientation of the primary roof faces`, ".", `Comment about condition of the roof`))#|>
+  #mutate(`Roof type` = recode(`Roof type`,  'Roof type' = 'Other annual energy usage from bills',))
+
+roof_type_all <- roof_type_all[, -c(1:4)]
+
+roof_type_all <- roof_type_all|>
+  pivot_longer(cols = Info ,
+    names_to = "Info" ,
+    values_to = "Values")|>
+  mutate(Info = recode(Info,  'Info' = 'Roof type',))
+```
+
 
 ### Energy Audit Report {.bheader}
 
@@ -371,7 +413,11 @@ We recommend the following upgrades for your home. Detailed information about th
 #| eval: true
 #| echo: false
 gt_ranked_recommendations <- gt(ranked_clean_recommendations) |>
-tab_options(table.width = pct(100))
+  tab_options(table.width = pct(100))|>
+  cols_width(
+    Recommendation ~ px(200),
+    Description ~ px(450)
+  )
 
 gt_ranked_recommendations
 ```
@@ -398,6 +444,11 @@ gt_all_basics
 
 
 ### 3.2 Exterior
+
+```{r}
+#| label: 3.2 Exterior table
+```
+
 
 ### 3.3 Interior/Living space
 
