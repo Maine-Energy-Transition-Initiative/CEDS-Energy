@@ -67,17 +67,17 @@ energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1
 
 recommendations <- energy_test_googlesheets |>
   #filter(Adress_Name == params$adress) |> #need to parametorize
-  select("Recommendations ranking [Furnace Tune-up]":"Recommendations ranking [Other]")
+  select(c("Recommendations ranking [Furnace Tune-up]":"Recommendations ranking [Other]", 'Recommendations ranking [Continuous exterior wall insulation]'))
 
 pivot_recommendations <- recommendations |>
-  pivot_longer(cols = "Recommendations ranking [Furnace Tune-up]":"Recommendations ranking [Other]",
+  pivot_longer(cols = "Recommendations ranking [Furnace Tune-up]":"Recommendations ranking [Continuous exterior wall insulation]",
     names_to = "Recommendation", 
     values_to = "Rank")
 
-pivot_recommendations['Description'] <- c("Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation","Description of Recommendation")
+pivot_recommendations['Description'] <- c("Have the furnace and flue inspected and adjusted by a licensed professional. This should be available from your oil or propane delivery company.","Install high efficiency low flow shower heads to reduce the amount of water and energy to heat this water used when showering. This will save a typical home more than $200/year.","Switch your light bulbs to LED light bulbs. LEDs use 80% less energy than incandescent light bulbs which can significantly reduce your electricity bill. We provide free LED light bulbs, contact us for some if we did not give you any during the audit.","Getting insulating window inserts that help air-seal windows and reduce heat loss and gain. There will be a Window Dresser build on Great Cranberry Island September 28th-October 2nd. Sign up at https://windowdressers.org/sign-up-for-inserts/ There will be a Window Dressers build in Eastport November 18 to 25. Contact Pete to sign up: 207-214-4751 or EastportMEEnergy@gmail.com","Replacing your refrigerator with a new, EnergyStar certified fridge. Look at the Energy Guide label to compare the energy use of new refrigerators.","Replacing your freezer with a new, EnergyStar certified freezer. Look at the Energy Guide label to compare the energy use of new freezers.","Induction stoves are more efficient and safer than electric or gas stoves. There is no risk of carbon monoxide or other harmful combustion gases","Install a heat pump water heater to provide your hot water for cooking and bathing. This is the most efficient way to heat water and will save hundreds of dollars a year compared to electric resistance, heating oil or propane hot water. It will also help to dehumidify while it's running. If your current water heater burns oil or propane, this will also remove a source of combustion gases from your home.","Install gutters and downspouts that divert water at least six feet away from the foundation and to where the ground slopes away from the house.","Replace bathroom exhaust fans with new exhaust fans rated at least 50 CFM. We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise.","We recommend a kitchen exhaust fan to remove harmful combustion gases from your home.","Install a vapor barrier on the basement floor to stop moisture from entering the basement and house.","Install spray foam on the basement walls.","Air seal the attic and insulate it to at least R-60 (18” of loose-fill cellulose insulation).","Insulate the wall stud cavities with dense packed, blown-in cellulose insulation.","Replace your existing electrical panel to increase the capacity to 200 amps (and address potential safety hazards). This may be eligible for a 30% tax credit up to $600.","Install # air source heat pumps and whole-house surge protection.","Install # air source heat pumps and whole-house surge protection.","Rooftop solar can provide most or all of your home electrical usage. Contact a solar company for pricing and details specific to your home.", "TYPE HERE", "Add a continuous layer of insulation and potentially replacing the air and moisture barrier once it becomes time to replace the siding.")
 
 ranked_recommendations <- pivot_recommendations |>
-  mutate(Recommendation = recode(Recommendation,  'Recommendations ranking [Furnace Tune-up]' = 'Furnace Tune-up', 'Recommendations ranking [Low-flow Showerhead(s)]' = 'Low-flow showerhead(s)', 'Recommendations ranking [LEDs]' = 'LEDs', 'Recommendations ranking [Window Dressers]' = 'Window Dressers', 'Recommendations ranking [Refrigerator]' = 'Refrigerator', 'Recommendations ranking [Freezer]' = 'Freezer', 'Recommendations ranking [Induction Stove]' = 'Induction Stove', 'Recommendations ranking [Heat Pump Water Heater]' = 'Heat Pump Water Heater', 'Recommendations ranking [Gutters]' = 'Gutters', 'Recommendations ranking [Bathroom exhaust fan]' = 'Bathroom exhaust fan', 'Recommendations ranking [Kitchen exhaust fan]' = 'Kitchen exhaust fan', 'Recommendations ranking [Vapor Barrier]' = 'Vapor Barrier', 'Recommendations ranking [Spray Foam]' = 'Spray Foam', 'Recommendations ranking [Attic Insulation ]' = 'Attic Insulation', 'Recommendations ranking [Wall Insulation]' = 'Wall Insulation', 'Recommendations ranking [Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', 'Recommendations ranking [Air Source Heat Pump]'= 'Air Source Heat Pump', 'Recommendations ranking [EV+charger]' = 'EV+charger', 'Recommendations ranking [Solar]' = 'Solar', 'Recommendations ranking [Other]' = 'Other')) |>
+  mutate(Recommendation = recode(Recommendation,  'Recommendations ranking [Furnace Tune-up]' = 'Furnace Tune-up', 'Recommendations ranking [Low-flow Showerhead(s)]' = 'High efficiency  shower head(s)', 'Recommendations ranking [LEDs]' = 'LEDs', 'Recommendations ranking [Window Dressers]' = 'Window Dressers', 'Recommendations ranking [Refrigerator]' = 'Refrigerator', 'Recommendations ranking [Freezer]' = 'Freezer', 'Recommendations ranking [Induction Stove]' = 'Induction Stove', 'Recommendations ranking [Heat Pump Water Heater]' = 'Heat Pump Water Heater', 'Recommendations ranking [Gutters]' = 'Gutters', 'Recommendations ranking [Bathroom exhaust fan]' = 'Bathroom exhaust fan(s)', 'Recommendations ranking [Kitchen exhaust fan]' = 'Kitchen exhaust fan', 'Recommendations ranking [Vapor Barrier]' = 'Vapor Barrier', 'Recommendations ranking [Spray Foam]' = 'Spray Foam', 'Recommendations ranking [Attic Insulation ]' = 'Attic Insulation', 'Recommendations ranking [Blow-in cellulose wall insulation]' = 'Blow-in cellulose wall insulation','Recommendations ranking [Continuous exterior wall insulation]' = 'Continuous exterior wall insulation', 'Recommendations ranking [Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', 'Recommendations ranking [Air Source Heat Pump]'= 'Air Source Heat Pump', 'Recommendations ranking [EV+charger]' = 'EV+charger', 'Recommendations ranking [Solar]' = 'Solar', 'Recommendations ranking [Other]' = 'Other')) |>
     arrange((Rank))|>
     filter(Rank != 0)
 
@@ -459,7 +459,7 @@ energy_test_googlesheets <- energy_test_googlesheets %>%
   mutate(combustion_propane = str_detect(`Energy Sources`, pattern = "Propane"))
 ```
 
-`r if(energy_test_googlesheets$combustion_fuels == TRUE){"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home."}else{""}` `r if(energy_test_googlesheets$combustion_fuels == TRUE){"La LA la"}else{""}` `r if(energy_test_googlesheets$combustion_propane == TRUE){"We also performed gas leak detection tests on your propane appliance(s)."}else{""} `
+`r if(energy_test_googlesheets$combustion_fuels == TRUE){"We visually inspected the combustion appliance(s) in your home,"}else{""}` `r if(energy_test_googlesheets$combustion_fuels == TRUE){"La LA la"}else{""}` `r if(energy_test_googlesheets$combustion_propane == TRUE){"We also performed gas leak detection tests on your propane appliance(s)."}else{""} `
 
 ### 1.5 Blower Door / Air Leakage Test
 
@@ -508,6 +508,17 @@ gt_all_basics
 
 ```{r}
 #| label: 3.2 Exterior table
+#| eval: true
+#| echo: false
+gt_all_exterior <- gt(all_exterior) |>
+  tab_options(table.width = pct(100))|>
+  cols_width(
+    Info ~ px(200),
+    Values ~ px(450)
+  )
+  
+
+gt_all_exterior
 ```
 
 
