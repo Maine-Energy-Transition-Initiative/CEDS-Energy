@@ -403,19 +403,29 @@ all_blower_door['Description'] <- c("CFM50 describes how many cubic feet per min
 #| echo: false
 
 attic_double <- energy_test_googlesheets|>
-  select(`Attic Area`, `Thickness of the attic insulation (inches), at the thinnest location`)|>
-  pivot_longer(c(`Attic Area`, `Thickness of the attic insulation (inches), at the thinnest location`),
+  select(`Attic Area`)|> # `Thickness of the attic insulation (inches), at the thinnest location`
+  pivot_longer(c(`Attic Area`),
     names_to = "Info",
     values_to = "Values")
 
 attic_character <- energy_test_googlesheets|>
   select(`Does attic have air sealing?`, `Comment about air sealing`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture`, `Is there ducktwork in the attic?`, `Comment about condition of the ducktwork in the attic`,`Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Attic insulation type`)|>
-  pivot_longer(c(`Does attic have air sealing?`, `Comment about air sealing`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture`, `Is there ducktwork in the attic?`, `Comment about condition of the ducktwork in the attic`,`Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Attic insulation type`),
-    names_to = "Info",
-    values_to = "Values")
+  mutate(`Air sealing:` = paste(`Does attic have air sealing?`,`Comment about air sealing`))|>
+  mutate(`Other observations:` = paste(`Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture`))|>
+  mutate(`Ventilation:` = `Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`)|>
+  mutate(`Ducts:` = `Is there ducktwork in the attic?`, `Comment about condition of the ducktwork in the attic`)
+
+attic_character <- attic_character[, -c(1:9)]
+  
+attic_character <- attic_character|>
+  pivot_longer(c(`Attic insulation type`,`Quality of attic insulation's installation? Assess worst part of installation.`,`Air sealing:`,`Other observations:`,`Ventilation:`,`Ducts:`),
+  names_to = "Info",
+   values_to = "Values")
 
 all_attic <- attic_double|>
-  rbind(attic_character)
+  rbind(attic_character)|>
+  arrange((factor(Info, levels = c("Attic Area","Attic insulation type", "Quality of attic insulation's installation? Assess worst part of installation.", "Air sealing:","Other observations:","Ventilation:","Ducts:" ))))|>
+  mutate(Info = recode(Info,"Attic Area" = "Area (sq ft):","Attic insulation type" = "Insulation type:", "Quality of attic insulation's installation? Assess worst part of installation." = "Insulation condition:"  ))
 ```
 
 ```{r}
