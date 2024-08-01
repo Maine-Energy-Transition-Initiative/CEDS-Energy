@@ -1,15 +1,18 @@
 ---
-title: ""
+title: "Energy Audit Report"
 format:
   html: default
   pdf: default
-  docx: default
+  docx:
+    number-sections: true
+    number-depth: 3
+    number-offset: 0
 css: styles.css
+tbl-colwidths: [75,25]
 editor: source
 params:
   adress: "Me_test1"
   author: "Rudolfs"
-toc: false
 ---
 
 ```{r}
@@ -33,6 +36,7 @@ library(googlesheets4)
 library(reticulate)
 library(gt)
 library(tibble)
+library(kableExtra)
 
 ```
 
@@ -58,6 +62,8 @@ Building_Audit <- Energy_Audits |>
 energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1L38lSRkBoKfQBvQ4I7ItyoWNYLbWi3Lg4Jh2KKlzdOg/edit?usp=sharing")
 
 energy_test_googlesheets <- energy_test_googlesheets[2, ]
+
+#clean_dataset <- janitor::clean_names(dataset)
 
 ```
 
@@ -145,7 +151,7 @@ gallon_cost <- double_basics|>
 annual_totals_gallon <- gallon_sources |>
   cbind(gallon_cost) |>
   filter(Amount != is.na(NA))|>
-  mutate(Anual_Totals = paste(`Amount`, " Gallons,", `Dollars`, "USD"))
+  mutate(Anual_Totals = paste0(`Amount`, " Gallons,", `Dollars`, "USD"))
 
 annual_totals_gallon <- annual_totals_gallon |>
   mutate(Source = recode(Source,  'Gallons of Heating Oil' = 'Annual heating oil usage from bills:', 'Gallons of Propane' = 'Annual propane usage from bills:', 'Gallons of Kerosene' = 'Annual kerosene usage from the bills:'))
@@ -409,9 +415,9 @@ attic_double <- energy_test_googlesheets|>
     values_to = "Values")
 
 attic_character <- energy_test_googlesheets|>
-  select(`Does attic have air sealing?`, `Comment about air sealing`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture`, `Is there ducktwork in the attic?`, `Comment about condition of the ducktwork in the attic`,`Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Attic insulation type`)|>
+  select(`Does attic have air sealing?`, `Comment about air sealing`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Is there ducktwork in the attic?`, `Comment about condition of the ducktwork in the attic`,`Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Attic insulation type`)|>
   mutate(`Air sealing:` = paste(`Does attic have air sealing?`,`Comment about air sealing`))|>
-  mutate(`Other observations:` = paste(`Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture`))|>
+  mutate(`Other observations:` = paste(`Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`))|>
   mutate(`Ventilation:` = `Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`)|>
   mutate(`Ducts:` = `Is there ducktwork in the attic?`, `Comment about condition of the ducktwork in the attic`)
 
@@ -449,7 +455,6 @@ all_basement <- basement_double|>
   rbind(basement_character)
 ```
 
-### Energy Audit Report {.bheader}
 
 ```{r}
 #| label: house image path setup
@@ -493,23 +498,26 @@ We conducted an energy assessment of your home on `r Building_Audit$Audit_Date`.
 
 ![](images/Logos-together.png)
 
-## Table of Contents
 
 Here will be the table of contents
 
-## 1. Summary of your Audit
+## Summary of your Audit
 
-### 1.1 Visual Inspection and Measurements
+### Visual Inspection and Measurements
 
 We started with a tour and visual inspection of the inside and outside of the home. We identified any visible damage to the building, moisture control strategies, major appliances, and insulation. We measured square footage and volume of the home, as well as the area of all exterior windows and doors. We used a kill-a-watt meter to measure the electricity use of some appliances. During your audit, we used a carbon monoxide meter to measure the ambient carbon monoxide levels throughout the home.
 
-### 1.2 Attic
+### Attic
 
 We entered the attic to check for insulation, air sealing, ventilation, and potential hazards such as mold. Additionally, we visually inspected the attic ventilation and any duct and pipework passing through the attic.
 
-### 1.3 Basement
+### Basement
 
 We visually inspected any appliances in the basement and noted insulation levels, moisture, rodents, and any other concerns.
+
+### Blower Door / Air Leakage Test
+
+We used a large fan in an exterior door to depressurize your house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks. To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.
 
 ```{r}
 #| label: If else chapter 1.4 heading
@@ -521,14 +529,14 @@ We visually inspected any appliances in the basement and noted insulation levels
 energy_test_googlesheets <- energy_test_googlesheets %>%
   mutate(combustion_fuels = str_detect(`Energy Sources`, pattern = "[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))
 
-energy_test_googlesheets <- energy_test_googlesheets %>%
-  mutate(combustion_fuels = str_detect(`Energy Sources`, pattern = "[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))
+#energy_test_googlesheets <- energy_test_googlesheets %>%
+  #mutate(failed_combustion_safety_test = str_detect(`Air free CO`, pattern = (!= is.na(NA))))
 
-if (energy_test_googlesheets$combustion_fuels == TRUE) {
-  print(' 1.4 Combustion Appliance Safety')
-} else{
-  cat("")
-}
+#if (energy_test_googlesheets$combustion_fuels == TRUE) {
+  #cat('Combustion Appliance Safety')
+#} else{
+#  cat("")
+#}
 ```
 
 ```{r}
@@ -541,13 +549,12 @@ energy_test_googlesheets <- energy_test_googlesheets %>%
   mutate(combustion_propane = str_detect(`Energy Sources`, pattern = "Propane"))
 ```
 
-`r if(energy_test_googlesheets$combustion_fuels == TRUE){"We visually inspected the combustion appliance(s) in your home,"}else{""}` `r if(energy_test_googlesheets$combustion_fuels == TRUE){"La LA la"}else{""}` `r if(energy_test_googlesheets$combustion_propane == TRUE){"We also performed gas leak detection tests on your propane appliance(s)."}else{""}`
+### Combustion Appliance Safety
 
-### 1.5 Blower Door / Air Leakage Test
+`r if(energy_test_googlesheets$combustion_fuels == TRUE){"We visually inspected the combustion appliance(s) in your home,"}else{""}` `r if(energy_test_googlesheets$combustion_fuels == TRUE){"and conducted combustion safety tests."}else{""}` `r if(energy_test_googlesheets$combustion_propane == TRUE){"We also performed gas leak detection tests on your propane appliance(s)."}else{""}`
 
-We used a large fan in an exterior door to depressurize your house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks. To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.
 
-## 2. Summary of Recommendations
+## Summary of Recommendations
 
 We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report.
 
@@ -565,9 +572,9 @@ gt_ranked_recommendations <- gt(ranked_clean_recommendations) |>
 gt_ranked_recommendations
 ```
 
-## 3. What We Found
+## What We Found
 
-### 3.1 Basics
+### Basics
 
 ```{r}
 #| label: 3.1 basics table
@@ -588,7 +595,7 @@ gt_all_basics <- gt(all_basics) |>
 gt_all_basics
 ```
 
-### 3.2 Exterior
+### Exterior
 
 ```{r}
 #| label: 3.2 Exterior table
@@ -614,11 +621,13 @@ gt_all_exterior <- gt(all_exterior) |>
  # )
 
 gt_all_exterior
+
+#kableExtra::kable(all_exterior)
 ```
 
-### 3.3 Interior/Living space
+### Interior/Living space
 
-### 3.4 Blower Door / Air Leakage Test
+### Blower Door / Air Leakage Test
 
 A blower door test simulates a 20mph wind hitting your house. To run the test, we used a large fan in an exterior door to depressurize your house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks. To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.
 
@@ -644,7 +653,7 @@ gt_all_blower_door
 
 Using a thermal imaging camera, we looked for major air leakage locations and thermal bridging, where heat is bypassing the insulation. There was evidence of ….
 
-### 3.5 Attic
+### Attic
 
 ```{r}
 #| label: 3.5 attic table
@@ -665,10 +674,11 @@ gt_all_attic
 ```
 
 
-### 3.6 Basement
+### Basement
 
-### 3.7 Electrical and Mechanical Systems
+### Electrical and Mechanical Systems
 
-### 3.8 Energy Bills
+### Energy Bills
 
-## 4. Recommendations
+## Recommendations
+
