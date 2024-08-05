@@ -37,20 +37,7 @@ library(reticulate)
 library(gt)
 library(tibble)
 library(kableExtra)
-
-```
-
-```{r}
-#| label: setup data
-#| echo: false
-#| warning: false
-#| eval: false
-
-#Load Data
-Energy_Audits <- read_excel("../data/Energy_Audit_template.xlsx")
-
-Building_Audit <- Energy_Audits |>
-  filter(Adress_Name == params$adress) # Auditor_full_name == params$Auditor_full_name
+library(janitor)
 
 ```
 
@@ -58,13 +45,18 @@ Building_Audit <- Energy_Audits |>
 #| label: load googlesheets data
 #| echo: false
 #| warning: false
+#| eval: true
 
 #Load Data
-energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1L38lSRkBoKfQBvQ4I7ItyoWNYLbWi3Lg4Jh2KKlzdOg/edit?usp=sharing", col_types = "c")
+all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Q4Kn8YNwurZ2DdfKoujyfyszxS0EKyuidWiohRoIuh8/edit?resourcekey=&gid=1384599070#gid=1384599070", col_types = "c")
 
-energy_test_googlesheets <- energy_test_googlesheets[2, ]
+energy_test_googlesheets <- all_energy_test_googlesheets[1, ]
 
-#clean_dataset <- janitor::clean_names(dataset)
+clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
+
+#Building_Audit <- Energy_Audits |> #to make it parametorized
+  #filter(Adress_Name == params$adress) # Auditor_full_name == params$Auditor_full_name
+
 
 ```
 
@@ -75,22 +67,22 @@ energy_test_googlesheets <- energy_test_googlesheets[2, ]
 
 recommendations <- energy_test_googlesheets |>
   #filter(Adress_Name == params$adress) |> #need to parametorize
-  select(c("Recommendations ranking [Furnace/boiler Tune-up]":"Recommendations ranking [Other]", 'Recommendations ranking [Continuous exterior wall insulation]'))
+  select(c("Recommendations ranking [Furnace/Boiler Tune-up]":"Recommendations ranking [Other]", 'Recommendations ranking [Continuous Exterior Wall Insulation]'))
 
 pivot_recommendations <- recommendations |>
-  pivot_longer(cols = "Recommendations ranking [Furnace/boiler Tune-up]":"Recommendations ranking [Continuous exterior wall insulation]",
+  pivot_longer(cols = everything(),
     names_to = "Recommendation", 
     values_to = "Rank")
 
-pivot_recommendations['Description'] <- c("Have the furnace and flue inspected and adjusted by a licensed professional. This should be available from your oil or propane delivery company.","Install high efficiency low flow shower heads to reduce the amount of water and energy to heat this water used when showering. This will save a typical home more than $200/year.","Switch your light bulbs to LED light bulbs. LEDs use 80% less energy than incandescent light bulbs which can significantly reduce your electricity bill. We provide free LED light bulbs, contact us for some if we did not give you any during the audit.","Getting insulating window inserts that help air-seal windows and reduce heat loss and gain. There will be a Window Dresser build on Great Cranberry Island September 28th-October 2nd. Sign up at https://windowdressers.org/sign-up-for-inserts/ There will be a Window Dressers build in Eastport November 18 to 25. Contact Pete to sign up: 207-214-4751 or EastportMEEnergy@gmail.com","Replacing your refrigerator with a new, EnergyStar certified fridge. Look at the Energy Guide label to compare the energy use of new refrigerators.","Replacing your freezer with a new, EnergyStar certified freezer. Look at the Energy Guide label to compare the energy use of new freezers.","Induction stoves are more efficient and safer than electric or gas stoves. There is no risk of carbon monoxide or other harmful combustion gases","Install a heat pump water heater to provide your hot water for cooking and bathing. This is the most efficient way to heat water and will save hundreds of dollars a year compared to electric resistance, heating oil or propane hot water. It will also help to dehumidify while it's running. If your current water heater burns oil or propane, this will also remove a source of combustion gases from your home.","Install gutters and downspouts that divert water at least six feet away from the foundation and to where the ground slopes away from the house.","Replace bathroom exhaust fans with new exhaust fans rated at least 50 CFM. We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise.","We recommend a kitchen exhaust fan to remove harmful combustion gases from your home.","Install a vapor barrier on the basement floor to stop moisture from entering the basement and house.","Install spray foam on the basement walls.","Air seal the attic and insulate it to at least R-60 (18” of loose-fill cellulose insulation).","Insulate the wall stud cavities with dense packed, blown-in cellulose insulation.","Replace your existing electrical panel to increase the capacity to 200 amps (and address potential safety hazards). This may be eligible for a 30% tax credit up to $600.","Install # air source heat pumps and whole-house surge protection.","Install # air source heat pumps and whole-house surge protection.","Rooftop solar can provide most or all of your home electrical usage. Contact a solar company for pricing and details specific to your home.", "TYPE HERE", "Add a continuous layer of insulation and potentially replacing the air and moisture barrier once it becomes time to replace the siding.")
+pivot_recommendations['Description'] <- c("Have the furnace and flue inspected and adjusted by a licensed professional. This should be available from your oil or propane delivery company.","Install high efficiency low flow shower heads to reduce the amount of water and energy to heat this water used when showering. This will save a typical home more than $200/year.","Switch your light bulbs to LED light bulbs. LEDs use 80% less energy than incandescent light bulbs which can significantly reduce your electricity bill. We provide free LED light bulbs, contact us for some if we did not give you any during the audit.","Getting insulating window inserts that help air-seal windows and reduce heat loss and gain. There will be a Window Dresser build on Great Cranberry Island September 28th-October 2nd. Sign up at https://windowdressers.org/sign-up-for-inserts/ There will be a Window Dressers build in Eastport November 18 to 25. Contact Pete to sign up: 207-214-4751 or EastportMEEnergy@gmail.com","Replacing your refrigerator with a new, EnergyStar certified fridge. Look at the Energy Guide label to compare the energy use of new refrigerators.","Replacing your freezer with a new, EnergyStar certified freezer. Look at the Energy Guide label to compare the energy use of new freezers.","Induction stoves are more efficient and safer than electric or gas stoves. There is no risk of carbon monoxide or other harmful combustion gases","Install a heat pump water heater to provide your hot water for cooking and bathing. This is the most efficient way to heat water and will save hundreds of dollars a year compared to electric resistance, heating oil or propane hot water. It will also help to dehumidify while it's running. If your current water heater burns oil or propane, this will also remove a source of combustion gases from your home.","Install gutters and downspouts that divert water at least six feet away from the foundation and to where the ground slopes away from the house.","Replace bathroom exhaust fans with new exhaust fans rated at least 50 CFM. We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise.","We recommend a kitchen exhaust fan to remove harmful combustion gases from your home.","Install a vapor barrier on the basement floor to stop moisture from entering the basement and house.","Install spray foam on the basement walls.","Air seal the attic and insulate it to at least R-60 (18” of loose-fill cellulose insulation).","Insulate the wall stud cavities with dense packed, blown-in cellulose insulation.","Add a continuous layer of insulation and potentially replace the air and moisture barrier once it becomes time to replace the siding.","Replace your existing electrical panel to increase the capacity to 200 amps (and address potential safety hazards). This may be eligible for a 30% tax credit up to $600.","Install # air source heat pumps and whole-house surge protection.","An electric vehicle will eliminate your gas costs and reduce fossil fuel dependence. A 2020 study by Consumer Reports found that lifetime ownership costs were significantly lower for EVs, saving between $6,000 - $10,000 over their lifetimes.","Rooftop solar can provide most or all of your home electrical usage. Contact a solar company for pricing and details specific to your home.", "TYPE HERE")
 
 ranked_recommendations <- pivot_recommendations |>
-  mutate(Recommendation = recode(Recommendation,  'Recommendations ranking [Furnace/boiler Tune-up]' = 'Furnace/boiler Tune-up', 'Recommendations ranking [Low-flow Showerhead(s)]' = 'High efficiency  shower head(s)', 'Recommendations ranking [LEDs]' = 'LEDs', 'Recommendations ranking [Window Dressers]' = 'Window Dressers', 'Recommendations ranking [Refrigerator]' = 'Refrigerator', 'Recommendations ranking [Freezer]' = 'Freezer', 'Recommendations ranking [Induction Stove]' = 'Induction Stove', 'Recommendations ranking [Heat Pump Water Heater]' = 'Heat Pump Water Heater', 'Recommendations ranking [Gutters]' = 'Gutters', 'Recommendations ranking [Bathroom Exhaust Fan]' = 'Bathroom exhaust fan(s)', 'Recommendations ranking [Kitchen Exhaust Fan]' = 'Kitchen exhaust fan', 'Recommendations ranking [Vapor Barrier]' = 'Vapor Barrier', 'Recommendations ranking [Spray Foam]' = 'Spray Foam', 'Recommendations ranking [Attic Insulation ]' = 'Attic Insulation', 'Recommendations ranking [Blow-in cellulose wall insulation]' = 'Blow-in cellulose wall insulation','Recommendations ranking [Continuous exterior wall insulation]' = 'Continuous exterior wall insulation', 'Recommendations ranking [Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', 'Recommendations ranking [Air Source Heat Pump]'= 'Air Source Heat Pump', 'Recommendations ranking [EV+charger]' = 'EV+charger', 'Recommendations ranking [Solar]' = 'Solar', 'Recommendations ranking [Other]' = 'Other')) |>
+  mutate(Recommendation = recode(Recommendation,  'Recommendations ranking [Furnace/Boiler Tune-up]' = 'Furnace/Boiler Tune-up', 'Recommendations ranking [High Efficiency Showerhead(s)]' = 'High efficiency  shower head(s)', 'Recommendations ranking [LEDs]' = 'LEDs', 'Recommendations ranking [Window Dressers]' = 'Window Dressers', 'Recommendations ranking [Refrigerator]' = 'Refrigerator', 'Recommendations ranking [Freezer]' = 'Freezer', 'Recommendations ranking [Induction Stove]' = 'Induction Stove', 'Recommendations ranking [Heat Pump Water Heater]' = 'Heat Pump Water Heater', 'Recommendations ranking [Gutters]' = 'Gutters', 'Recommendations ranking [Bathroom Exhaust Fan]' = 'Bathroom exhaust fan(s)', 'Recommendations ranking [Kitchen Exhaust Fan]' = 'Kitchen exhaust fan', 'Recommendations ranking [Vapor Barrier]' = 'Vapor Barrier', 'Recommendations ranking [Spray Foam Basement Walls]' = 'Spray Foam Basement Walls', 'Recommendations ranking [Attic Air Sealing and Insulation ]' = 'Attic Insulation', 'Recommendations ranking [Blown-in Cellulose Wall Insulation]' = 'Blow-in cellulose wall insulation','Recommendations ranking [Continuous Exterior Wall Insulation]' = 'Continuous exterior wall insulation', 'Recommendations ranking [Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', 'Recommendations ranking [Air Source Heat Pump]'= 'Air Source Heat Pump', 'Recommendations ranking [EV Charger]' = 'EV+charger', 'Recommendations ranking [Solar]' = 'Solar', 'Recommendations ranking [Other]' = 'Other')) #|>
     arrange((Rank))|>
     filter(Rank != 0)
 
 ranked_clean_recommendations <- ranked_recommendations|>
-    select(-Rank)
+   select(-Rank)
 ```
 
 ```{r}
@@ -104,7 +96,7 @@ double_basics <- energy_test_googlesheets |>
 
 double_other <- energy_test_googlesheets |>
   select(`Date Built`, `Number of floors`, `Volume of conditioned space (cubic feet)`, `Square footage of conditioned space`)|>
-  pivot_longer(cols = "Date Built":"Square footage of conditioned space",
+  pivot_longer(cols = everything(),
     names_to = "Info", 
     values_to = "Values")
 
@@ -275,51 +267,74 @@ all_basics <- double_other |>
 ```
 
 ```{r}
-#| label: setup data 3.2
+#| label: setup data 3.2 not finished
 #| echo: false
+#| eval: false
 
-exterior <- energy_test_googlesheets|>
-  select('Roof type', 'Roof age', 'Condition of the Roof?', 'Orientation of the primary roof faces','Comment about condition of the roof', 'Existing moisture control strategies?', 'Condition of moisture control strategies?', 'Comments about existing moisture control strategies?', 'Siding type', 'Condition of the siding?', 'Comment about condition of the siding', 'Door(s) type | 1', 'Number of doors of this type | 1', 'Total door area of this type | 1', 'How many windows of this type there are? | 1', 'Number of panes in windows of this type and material | 1 [single]', 'Number of panes in windows of this type and material | 1 [double]', 'Number of panes in windows of this type and material | 1 [triple]', 'Condition of the windows of this type? | 1', 'More about condition of the windows of this type | 1', 'Total windows areas of this type? | 1')
+exterior_n <- clean_audit_data|>
+  select(roof_type, roof_age, condition_of_the_roof, orientation_of_the_primary_roof_faces, comment_about_condition_of_the_roof, existing_moisture_control_strategies, condition_of_moisture_control_strategies, comments_about_existing_moisture_control_strategies, siding_type, condition_of_the_siding, comment_about_condition_of_the_siding, door_s_type_2_insulated, door_s_type_2_hollow, door_s_type_2_glass_door, condition_fit_of_the_doors_of_this_type_2, number_of_doors_of_this_type_2, total_door_area_of_this_type_2_174, door_s_type_1_insulated, door_s_type_1_hollow, door_s_type_1_glass_door, condition_fit_of_the_doors_of_this_type_1, number_of_doors_of_this_type_1, total_door_area_of_this_type_1, door_s_type_3_insulated, door_s_type_3_hollow, door_s_type_3_glass_door, condition_fit_of_the_doors_of_this_type_3, number_of_doors_of_this_type_3, total_door_area_of_this_type_3_178, how_many_windows_of_this_type_there_are_1, how_many_windows_of_this_type_there_are_2, how_many_windows_of_this_type_there_are_3, how_many_windows_of_this_type_there_are_4, how_many_windows_of_this_type_there_are_5) #'How many windows of this type there are? | 1', 'Number of panes in windows of this type and material | 1 [single]', 'Number of panes in windows of this type and material | 1 [double]', 'Number of panes in windows of this type and material | 1 [triple]', 'Condition of the windows of this type? | 1', 'More about condition of the windows of this type | 1', 'Total windows areas of this type? | 1'
 
 ```
 
 ```{r}
-#| label: setup roof type
+#| label: setup exterior data 3.2
 #| echo: false
 
-roof_type_all <- exterior |>
-  select('Roof type', 'Condition of the Roof?','Comment about condition of the roof') |>
-  mutate(Info = paste(`Roof type`, "in ",`Condition of the Roof?`,"condition. ", `Comment about condition of the roof`))#|>
-
-roof_type_all <- roof_type_all[, -c(1:3)]
-
-roof_type_all <- roof_type_all|>
-  pivot_longer(cols = Info ,
+exterior_3.2 <- clean_audit_data|>
+  select(roof_type, roof_age, condition_of_the_roof, orientation_of_the_primary_roof_faces, comment_about_condition_of_the_roof, existing_moisture_control_strategies, condition_of_moisture_control_strategies, comments_about_existing_moisture_control_strategies,siding_type, comment_about_condition_of_the_siding, condition_of_the_siding)|>
+  
+  #remove values with N/A
+  #mutate(select() str_detect(`Energy Sources`, pattern = #"[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))
+  
+  #join information into one column for roof type in 3.2
+  mutate('Roof type:'= paste0(roof_type, "in ",  condition_of_the_roof ,"condition. ", comment_about_condition_of_the_roof))|>
+  
+  #join information into one column for moisture control in 3.2
+  mutate('Moisture control:' = paste0("Current moisture control strategies: ", existing_moisture_control_strategies,'.  These were in ',condition_of_moisture_control_strategies, ' condition .',comments_about_existing_moisture_control_strategies))|>
+  
+  #join information into one column for siding in 3.2
+  mutate('Siding:' = paste0(siding_type,' in ', condition_of_the_siding, ' condition. ', comment_about_condition_of_the_siding))|>
+  #delete unwanted columns, the once that were used to create joined columns
+  select(-c(1,3,5:11))|>
+  #pivot horizontal columns to be displayed vertical in the rows
+  pivot_longer(cols = everything() ,
     names_to = "Info" ,
     values_to = "Values")|>
-  mutate(Info = recode(Info,  'Info' = 'Roof type:',))
+  #rename the columns as they need to be displayed
+  mutate(Info = recode(Info,  roof_age = 'Roof age:', orientation_of_the_primary_roof_faces = 'Orientation:'))
+
 ```
 
 ```{r}
-#| label: setup roof moisture control
+#| label: setup interior/living spaces for 3.3
 #| echo: false
 
-roof_moisture_control <- exterior |>
-  select('Existing moisture control strategies?', 'Condition of moisture control strategies?', 'Comments about existing moisture control strategies?') |>
-  mutate(Info = paste(`Existing moisture control strategies?`,'in ', `Condition of moisture control strategies?`, 'condition .', `Comments about existing moisture control strategies?`))#|>
+all_interior <- clean_audit_data|>
+  
+  #select all the columns that have information about the interior/living spaces
+  select(wall_stud_insulation_type, thickness_of_the_wall_stud_insulation, quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, any_additional_comments_on_wall_stud_insulation, wall_continuous_insulation_type, thickness_of_the_wall_continuous_insulation, quality_of_wall_continuous_insulations_installation_assess_worst_part_of_installation, any_additional_comments_on_wall_continuous_insulation, framing_type, general_comment_about_the_living_room, general_comment_about_the_bathroom_s, general_comment_about_the_kitchen)|>
 
-roof_moisture_control <- roof_moisture_control[, -c(1:3)]
-
-roof_moisture_control <- roof_moisture_control|>
-  pivot_longer(cols = Info ,
+ #join information into one column for stud insulation in 3.3
+  mutate('Walls:'= paste0("Walls framing is ", framing_type , " type. There is ", wall_stud_insulation_type, " insulation ", thickness_of_the_wall_stud_insulation, " inches thick in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, " condition. ", any_additional_comments_on_wall_stud_insulation))|>
+  
+  #delete unwanted columns, the once that were used to create joined columns
+  select(-c(1:9))|>
+  #pivot horizontal columns to be displayed vertical in the rows
+  pivot_longer(cols = everything() ,
     names_to = "Info" ,
     values_to = "Values")|>
-  mutate(Info = recode(Info,  'Info' = 'Moisture control:',))
+  #rename the columns as they need to be displayed
+  mutate(Info = recode(Info,  general_comment_about_the_living_room = 'Living room:', general_comment_about_the_bathroom_s = 'Bathroom(s):', general_comment_about_the_kitchen = 'Kitchen:'))|>
+  
+  #arrange the rows in wanted order
+  arrange(factor(Info, levels = c('Walls:')))
 ```
 
+
 ```{r}
-#| label: setup siding
+#| label: setup siding old
 #| echo: false
+#| eval: false
 
 siding <- exterior |>
   select('Siding type', 'Condition of the siding?', 'Comment about condition of the siding') |>
@@ -335,8 +350,9 @@ siding <- siding|>
 ```
 
 ```{r}
-#| label: setup exterior doors
+#| label: setup exterior doors old
 #| echo: false
+#| eval: false
 
 doors <- exterior |>
   select('Door(s) type | 1', 'Number of doors of this type | 1', 'Total door area of this type | 1') |>
@@ -352,8 +368,9 @@ doors <- doors|>
 ```
 
 ```{r}
-#| label: setup windows
+#| label: setup windows old
 #| echo: false
+#| eval: false
 
 windows <- exterior |>
   select('How many windows of this type there are? | 1', 'Number of panes in windows of this type and material | 1 [single]', 'Number of panes in windows of this type and material | 1 [double]', 'Number of panes in windows of this type and material | 1 [triple]', 'Condition of the windows of this type? | 1', 'More about condition of the windows of this type | 1', 'Total windows areas of this type? | 1') |>
@@ -369,8 +386,9 @@ windows <- windows|>
 ```
 
 ```{r}
-#| label: 3.2 table setup
+#| label: 3.2 table setup old
 #| echo: false
+#| eval: false
 
 all_exterior <- roof_type_all |>
   rbind(roof_moisture_control, siding, doors, windows )#|>
@@ -416,16 +434,16 @@ attic_double <- energy_test_googlesheets|>
     values_to = "Values")
 
 attic_character <- energy_test_googlesheets|>
-  select(`Does attic have air sealing?`, `Comment about air sealing`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Is there ducktwork in the attic?`, `Comment about condition of the ducktwork in the attic`,`Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Attic insulation type`)|>
+  select(`Does attic have air sealing?`, `Comment about air sealing`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Is there ductwork in the attic?`, `Comment about condition of the ductwork in the attic`,`Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Attic insulation type`)|>
   mutate(`Air sealing:` = paste(`Does attic have air sealing?`,`Comment about air sealing`))|>
   mutate(`Other observations:` = paste(`Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`))|>
   mutate(`Ventilation:` = `Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`)|>
-  mutate(`Ducts:` = `Is there ducktwork in the attic?`, `Comment about condition of the ducktwork in the attic`)
+  mutate(`Ducts:` = `Is there ductwork in the attic?`, `Comment about condition of the ductwork in the attic`)
 
 attic_character <- attic_character[, -c(1:9)]
   
 attic_character <- attic_character|>
-  pivot_longer(c(`Attic insulation type`,`Quality of attic insulation's installation? Assess worst part of installation.`,`Air sealing:`,`Other observations:`,`Ventilation:`,`Ducts:`),
+  pivot_longer(cols = everything(),
   names_to = "Info",
    values_to = "Values")
 
@@ -438,24 +456,40 @@ all_attic <- attic_double|>
 ```{r}
 #| label: basement data for 3.6
 #| echo: false
-#| eval: false
 
-#basement_double <- energy_test_googlesheets|>
- # select(`Area of basement/crawlspace ground (square feet)`, `Thickness of basement/crawlspace #insulation?`, `Basement/crawlspace net wall area`)|>
-  #pivot_longer(c(`Area of basement/crawlspace ground (square feet)`, `Thickness of #basement/crawlspace insulation?`, `Basement/crawlspace net wall area`),
-#    names_to = "Info",
-#    values_to = "Values")
+all_basement <- clean_audit_data|>
+  
+  #select all the columns that have information about the basement/crawlspace
+  select(is_there_ductwork_in_the_basement_crawlspace, comment_about_ductwork_condition_in_the_basement_crawlspace, comment_about_the_basement_crawlspace_insulation, hazards_basement_crawlspace, any_hazards_or_mold_moisture_asbestos_present_in_the_basement_crawlspace, describe_the_hazards_or_mold_moisture_in_basement_crawlspace, quality_of_the_basement_crawlspace_insulations_installation_assess_worst_part_of_installation, moisture_and_mold_control_strategies, basement_crawlspace_insulation_type, insulation_of_appliances_in_basement_crawlspace, area_of_basement_crawlspace_ground_square_feet, thickness_of_basement_crawlspace_insulation, basement_crawlspace_net_wall_area, condition_of_moisture_control_strategies_in_the_basement_crawlspace, comments_about_existing_moisture_control_strategies )|>
+  
+  #join information into one column for moisture control in 3.6
+  mutate(`Moisture Control:` = paste0(moisture_and_mold_control_strategies, "in ",condition_of_moisture_control_strategies_in_the_basement_crawlspace,"condition. ", comments_about_existing_moisture_control_strategies))|>
+  
+  #join information into one column for ducts in 3.6
+  mutate(`Ducts:` = paste0(is_there_ductwork_in_the_basement_crawlspace,comment_about_ductwork_condition_in_the_basement_crawlspace))|>
+  
+  #join information into one column for insulation condition in 3.6
+  mutate(`Insulation condition:` = paste0(quality_of_the_basement_crawlspace_insulations_installation_assess_worst_part_of_installation, comment_about_the_basement_crawlspace_insulation))|>
+  
+  #join information into one column for other observations in 3.6
+  mutate(`Other observations:` = paste0("There is ", hazards_basement_crawlspace, describe_the_hazards_or_mold_moisture_in_basement_crawlspace))|>
+  
+  #delete unwanted columns, the once that were used to create joined columns
+  select(-c(1:8, 12:15))|>
+  
+  #pivot horizontal columns to be displayed vertical in the rows
+  pivot_longer(, cols = everything(),
+    names_to = "Info",
+    values_to = "Values")|>
+  
+  #rename the columns as they need to be displayed
+  mutate(Info = recode(Info,  area_of_basement_crawlspace_ground_square_feet = 'Area (sq ft):', insulation_of_appliances_in_basement_crawlspace = 'Insulation of appliances:', 	
+basement_crawlspace_insulation_type = 'Inuslation type:'))|>
+  
+  #arrange the rows in correct order
+  arrange(factor(Info, levels = c('Area (sq ft):','Inuslation type:', 'Insulation condition:')))
 
-basement_character <- energy_test_googlesheets|>
-  select(`Comment about the basement/crawlspace insulation`,`Hazards basement/crawlspace` , `Any hazards or mold/moisture/asbestos present in the basement/crawlspace?` ,`Describe the hazards or mold/moisture in  basement/crawlspace`, `Is there ductwork in the basement/crawlspace?`,`Comment about ductwork condition in the basement/crawlspace`, `Quality of the basement/crawlspace insulation's installation? Assess worst part of installation`,`Moisture and mold control strategies`,`Basement/crawlspace insulation type`,`Insulation of appliances in basement/crawlspace`,`Area of basement/crawlspace ground (square feet)`, `Thickness of basement/crawlspace insulation?`, `Basement/crawlspace net wall area`)|>
- pivot_longer(, cols = everything(),
-   names_to = "Info",
-   values_to = "Values")
-
-#all_basement <- basement_double|>
-  #rbind(basement_character)
 ```
-
 
 ```{r}
 #| label: house image path setup
@@ -481,11 +515,11 @@ image_path <- paste0("", image_id, ".png")
 knitr::include_graphics(image_path,)
 ```
 
-Homeowner(s): `r energy_test_googlesheets$"Homeowner/s"`
+Homeowner(s): `r clean_audit_data$homeowner_s`
 
-Address: `r energy_test_googlesheets$Home_Address`
+Address: `r clean_audit_data$home_address`
 
-Auditors: `r energy_test_googlesheets$Names_of_the_Auditors`
+Auditors: `r clean_audit_data$names_of_the_auditors`
 
 Contact: mdicommunityenergy\@coa.edu, 802 266 0301
 
@@ -493,7 +527,7 @@ Date: `r format(Sys.time(), '%e %B %Y')`
 
 ------------------------------------------------------------------------
 
-We conducted an energy assessment of your home on `r Building_Audit$Audit_Date`. This report will tell you what we did, what we found, and what we suggest for your home. These suggestions include information on incentives and financing to make improvements more affordable.
+We conducted an energy assessment of your home on `r clean_audit_data$date_of_audit`. This report will tell you what we did, what we found, and what we suggest for your home. These suggestions include information on incentives and financing to make improvements more affordable.
 
 ------------------------------------------------------------------------
 
@@ -521,23 +555,20 @@ We visually inspected any appliances in the basement and noted insulation levels
 We used a large fan in an exterior door to depressurize your house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks. To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.
 
 ```{r}
-#| label: If else chapter 1.4 heading
+#| label: If else chapter 1.5 heading
 #| echo: false
 #| eval: true
 #| warning: false
 
+energy_test_googlesheets <- energy_test_googlesheets |>
+  mutate(combustion_fuels = str_detect(`Energy Sources`, pattern = "[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))|>
+  mutate(combustionst1 = str_detect(`Could you perform combustion safety tests in worst case scenario? 1`, pattern = "Yes"))
 
-energy_test_googlesheets <- energy_test_googlesheets %>%
-  mutate(combustion_fuels = str_detect(`Energy Sources`, pattern = "[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))
+#clean_audit_data <- clean_audit_data |>
+  #mutate(combustionst = str_detect(could_you_perform_combustion_safety_tests_2, pattern = "Yes"))
 
-#energy_test_googlesheets <- energy_test_googlesheets %>%
-  #mutate(failed_combustion_safety_test = str_detect(`Air free CO`, pattern = (!= is.na(NA))))
-
-#if (energy_test_googlesheets$combustion_fuels == TRUE) {
-  #cat('Combustion Appliance Safety')
-#} else{
-#  cat("")
-#}
+#clean_audit_data <- clean_audit_data|>
+  #select(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1, could_you_perform_combustion_safety_tests_2, could_you_perform_combustion_safety_tests_3, could_you_perform_combustion_safety_tests_4)
 ```
 
 ```{r}
@@ -552,12 +583,15 @@ energy_test_googlesheets <- energy_test_googlesheets %>%
 
 ### Combustion Appliance Safety
 
-`r if(energy_test_googlesheets$combustion_fuels == TRUE){"We visually inspected the combustion appliance(s) in your home,"}else{""}` `r if(energy_test_googlesheets$combustion_fuels == TRUE){"and conducted combustion safety tests."}else{""}` `r if(energy_test_googlesheets$combustion_propane == TRUE){"We also performed gas leak detection tests on your propane appliance(s)."}else{""}`
+`r if(energy_test_googlesheets$combustion_fuels == TRUE){"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens."}else{""}`
+
+
+`r if(energy_test_googlesheets$combustion_propane == TRUE){"We also performed gas leak detection tests on your propane appliance(s)."}else{""}`
 
 
 ## Summary of Recommendations
 
-We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report.
+We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found later in this report.
 
 ```{r}
 #| label: 2. summery table
@@ -602,7 +636,7 @@ gt_all_basics
 #| label: 3.2 Exterior table
 #| eval: true
 #| echo: false
-gt_all_exterior <- gt(all_exterior) |>
+gt_exterior_3.2 <- gt(exterior_3.2) |>
   tab_options(table.width = pct(100))|>
   cols_width(
     Info ~ px(200),
@@ -621,12 +655,30 @@ gt_all_exterior <- gt(all_exterior) |>
    # locations = list(cells_column_labels())
  # )
 
-gt_all_exterior
+gt_exterior_3.2
 
 #kableExtra::kable(all_exterior)
 ```
 
 ### Interior/Living space
+
+```{r}
+#| label: 3.3 interior
+#| eval: true
+#| echo: false
+gt_all_interior <- gt(all_interior) |>
+  tab_options(table.width = pct(100))|>
+  cols_width(
+    Info ~ px(150),
+    Values ~ px(100)
+  )|>
+  cols_label(
+    Info = "",
+    Values = ""
+  )
+
+gt_all_interior
+```
 
 ### Blower Door / Air Leakage Test
 
@@ -676,6 +728,24 @@ gt_all_attic
 
 
 ### Basement
+
+```{r}
+#| label: 3.6 basement/crawlspace table
+#| eval: true
+#| echo: false
+gt_all_basement <- gt(all_basement) |>
+  tab_options(table.width = pct(100))|>
+  cols_width(
+    Info ~ px(200),
+    Values ~ px(450),
+  )|>
+  cols_label(
+    Info = "",
+    Values = ""
+  )
+
+gt_all_basement
+```
 
 ### Electrical and Mechanical Systems
 
