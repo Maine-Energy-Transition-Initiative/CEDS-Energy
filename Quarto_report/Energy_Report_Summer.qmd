@@ -77,11 +77,12 @@ pivot_recommendations <- recommendations |>
 pivot_recommendations['Description'] <- c("Have the furnace and flue inspected and adjusted by a licensed professional. This should be available from your oil or propane delivery company.","Install high efficiency low flow shower heads to reduce the amount of water and energy to heat this water used when showering. This will save a typical home more than $200/year.","Switch your light bulbs to LED light bulbs. LEDs use 80% less energy than incandescent light bulbs which can significantly reduce your electricity bill. We provide free LED light bulbs, contact us for some if we did not give you any during the audit.","Getting insulating window inserts that help air-seal windows and reduce heat loss and gain. There will be a Window Dresser build on Great Cranberry Island September 28th-October 2nd. Sign up at https://windowdressers.org/sign-up-for-inserts/ There will be a Window Dressers build in Eastport November 18 to 25. Contact Pete to sign up: 207-214-4751 or EastportMEEnergy@gmail.com","Replacing your refrigerator with a new, EnergyStar certified fridge. Look at the Energy Guide label to compare the energy use of new refrigerators.","Replacing your freezer with a new, EnergyStar certified freezer. Look at the Energy Guide label to compare the energy use of new freezers.","Induction stoves are more efficient and safer than electric or gas stoves. There is no risk of carbon monoxide or other harmful combustion gases","Install a heat pump water heater to provide your hot water for cooking and bathing. This is the most efficient way to heat water and will save hundreds of dollars a year compared to electric resistance, heating oil or propane hot water. It will also help to dehumidify while it's running. If your current water heater burns oil or propane, this will also remove a source of combustion gases from your home.","Install gutters and downspouts that divert water at least six feet away from the foundation and to where the ground slopes away from the house.","Replace bathroom exhaust fans with new exhaust fans rated at least 50 CFM. We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise.","We recommend a kitchen exhaust fan to remove harmful combustion gases from your home.","Install a vapor barrier on the basement floor to stop moisture from entering the basement and house.","Install spray foam on the basement walls.","Air seal the attic and insulate it to at least R-60 (18” of loose-fill cellulose insulation).","Insulate the wall stud cavities with dense packed, blown-in cellulose insulation.","Add a continuous layer of insulation and potentially replace the air and moisture barrier once it becomes time to replace the siding.","Replace your existing electrical panel to increase the capacity to 200 amps (and address potential safety hazards). This may be eligible for a 30% tax credit up to $600.","Install # air source heat pumps and whole-house surge protection.","An electric vehicle will eliminate your gas costs and reduce fossil fuel dependence. A 2020 study by Consumer Reports found that lifetime ownership costs were significantly lower for EVs, saving between $6,000 - $10,000 over their lifetimes.","Rooftop solar can provide most or all of your home electrical usage. Contact a solar company for pricing and details specific to your home.", "TYPE HERE")
 
 ranked_recommendations <- pivot_recommendations |>
-  mutate(Recommendation = recode(Recommendation,  'Recommendations ranking [Furnace/Boiler Tune-up]' = 'Furnace/Boiler Tune-up', 'Recommendations ranking [High Efficiency Showerhead(s)]' = 'High efficiency  shower head(s)', 'Recommendations ranking [LEDs]' = 'LEDs', 'Recommendations ranking [Window Dressers]' = 'Window Dressers', 'Recommendations ranking [Refrigerator]' = 'Refrigerator', 'Recommendations ranking [Freezer]' = 'Freezer', 'Recommendations ranking [Induction Stove]' = 'Induction Stove', 'Recommendations ranking [Heat Pump Water Heater]' = 'Heat Pump Water Heater', 'Recommendations ranking [Gutters]' = 'Gutters', 'Recommendations ranking [Bathroom Exhaust Fan]' = 'Bathroom exhaust fan(s)', 'Recommendations ranking [Kitchen Exhaust Fan]' = 'Kitchen exhaust fan', 'Recommendations ranking [Vapor Barrier]' = 'Vapor Barrier', 'Recommendations ranking [Spray Foam Basement Walls]' = 'Spray Foam Basement Walls', 'Recommendations ranking [Attic Air Sealing and Insulation ]' = 'Attic Insulation', 'Recommendations ranking [Blown-in Cellulose Wall Insulation]' = 'Blow-in cellulose wall insulation','Recommendations ranking [Continuous Exterior Wall Insulation]' = 'Continuous exterior wall insulation', 'Recommendations ranking [Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', 'Recommendations ranking [Air Source Heat Pump]'= 'Air Source Heat Pump', 'Recommendations ranking [EV Charger]' = 'EV+charger', 'Recommendations ranking [Solar]' = 'Solar', 'Recommendations ranking [Other]' = 'Other')) #|>
-    arrange((Rank))|>
-    filter(Rank != 0)
+  mutate(Recommendation = recode(Recommendation,  'Recommendations ranking [Furnace/Boiler Tune-up]' = 'Furnace/Boiler Tune-up', 'Recommendations ranking [High Efficiency Showerhead(s)]' = 'High efficiency  shower head(s)', 'Recommendations ranking [LEDs]' = 'LEDs', 'Recommendations ranking [Window Dressers]' = 'Window Dressers', 'Recommendations ranking [Refrigerator]' = 'Refrigerator', 'Recommendations ranking [Freezer]' = 'Freezer', 'Recommendations ranking [Induction Stove]' = 'Induction Stove', 'Recommendations ranking [Heat Pump Water Heater]' = 'Heat Pump Water Heater', 'Recommendations ranking [Gutters]' = 'Gutters', 'Recommendations ranking [Bathroom Exhaust Fan]' = 'Bathroom exhaust fan(s)', 'Recommendations ranking [Kitchen Exhaust Fan]' = 'Kitchen exhaust fan', 'Recommendations ranking [Vapor Barrier]' = 'Vapor Barrier', 'Recommendations ranking [Spray Foam Basement Walls]' = 'Spray Foam Basement Walls', 'Recommendations ranking [Attic Air Sealing and Insulation ]' = 'Attic Insulation', 'Recommendations ranking [Blown-in Cellulose Wall Insulation]' = 'Blow-in cellulose wall insulation','Recommendations ranking [Continuous Exterior Wall Insulation]' = 'Continuous exterior wall insulation', 'Recommendations ranking [Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', 'Recommendations ranking [Air Source Heat Pump]'= 'Air Source Heat Pump', 'Recommendations ranking [EV Charger]' = 'EV+charger', 'Recommendations ranking [Solar]' = 'Solar', 'Recommendations ranking [Other]' = 'Other')) |>
+  mutate_at('Rank', as.numeric)|>
+    arrange((Rank))
 
 ranked_clean_recommendations <- ranked_recommendations|>
+   filter(Rank != 0)|>
    select(-Rank)
 ```
 
@@ -330,7 +331,6 @@ all_interior <- clean_audit_data|>
   arrange(factor(Info, levels = c('Walls:')))
 ```
 
-
 ```{r}
 #| label: setup siding old
 #| echo: false
@@ -533,7 +533,6 @@ We conducted an energy assessment of your home on `r clean_audit_data$date_of_au
 
 ![](images/Logos-together.png)
 
-
 Here will be the table of contents
 
 ## Summary of your Audit
@@ -564,29 +563,38 @@ energy_test_googlesheets <- energy_test_googlesheets |>
   mutate(combustion_fuels = str_detect(`Energy Sources`, pattern = "[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))|>
   mutate(combustionst1 = str_detect(`Could you perform combustion safety tests in worst case scenario? 1`, pattern = "Yes"))
 
-#clean_audit_data <- clean_audit_data |>
-  #mutate(combustionst = str_detect(could_you_perform_combustion_safety_tests_2, pattern = "Yes"))
+energy_test_googlesheets <- energy_test_googlesheets |>
+  mutate(combustion_propane = str_detect(`Energy Sources`, pattern = "Propane"))
 
 #clean_audit_data <- clean_audit_data|>
   #select(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1, could_you_perform_combustion_safety_tests_2, could_you_perform_combustion_safety_tests_3, could_you_perform_combustion_safety_tests_4)
 ```
 
-```{r}
-#| label: If else chapter 1.4 gas option
-#| echo: false
-#| eval: true
-#| warning: false
 
-energy_test_googlesheets <- energy_test_googlesheets %>%
-  mutate(combustion_propane = str_detect(`Energy Sources`, pattern = "Propane"))
-```
 
 ### Combustion Appliance Safety
 
-`r if(energy_test_googlesheets$combustion_fuels == TRUE){"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens."}else{""}`
+`r if(energy_test_googlesheets$combustion_fuels == TRUE){"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens."}else{""}` **DELETE UNWANTED** We visually inspected the combustion appliance(s) in your home, as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home. but we were unable to perform combustion safety tests.
+
+```{r}
+#| label: If else chapter 1.5 not working options
+#| echo: false
+#| eval: false
+#| warning: false
 
 
-`r if(energy_test_googlesheets$combustion_propane == TRUE){"We also performed gas leak detection tests on your propane appliance(s)."}else{""}`
+# all below are not working
+
+`r if(energy_test_googlesheets$combustion_propane == TRUE){"We also performed gas leak detection tests on your propane appliance(s)."}else{""}`  
+
+`r if(energy_test_googlesheets$combustion_fuels == TRUE){"We visually inspected the combustion appliance(s) in your home,"}else{""}`
+
+`r if(energy_test_googlesheets$combustionst1 == TRUE){"as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home."}else{""}`
+
+`r if(energy_test_googlesheets$combustionst1 == FALSE){"but we were unable to perform combustion safety tests."}else{""}`
+
+#all above are not working
+```
 
 
 ## Summary of Recommendations
@@ -726,7 +734,6 @@ gt_all_attic <- gt(all_attic) |>
 gt_all_attic
 ```
 
-
 ### Basement
 
 ```{r}
@@ -752,4 +759,17 @@ gt_all_basement
 ### Energy Bills
 
 ## Recommendations
+
+```{r}
+#| label: setup data 4.0
+#| eval: false
+#| echo: false
+recommendations_4.0 <- ranked_recommendations|>
+   filter(Rank != 0)#|>
+   #select(-Rank)
+  
+ 
+  
+  
+```
 
