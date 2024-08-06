@@ -50,7 +50,7 @@ library(janitor)
 #Load Data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Q4Kn8YNwurZ2DdfKoujyfyszxS0EKyuidWiohRoIuh8/edit?resourcekey=&gid=1384599070#gid=1384599070", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[1, ]
+energy_test_googlesheets <- all_energy_test_googlesheets[3, ]
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
 
@@ -399,10 +399,10 @@ all_exterior <- roof_type_all |>
 #| label: 3.4 data set up
 #| echo: false
 blower_door_leakage <- energy_test_googlesheets|>
-  select( "Equivalent leakage area natural","Equivalent leakage area blower door")|>
-  mutate(`Equivalent leakage area` = paste(`Equivalent leakage area natural`, "under natural conditions,", `Equivalent leakage area blower door`, "under CFM50."))
+  select( "Equivalent leakage area")|>
+  mutate(`Equivalent leakage area` = paste0(`Equivalent leakage area`, "under natural conditions."))
 
-blower_door_leakage <-blower_door_leakage[,-c(1:2)]
+#blower_door_leakage <-blower_door_leakage[,-c(1)]
 
 blower_door_leakage <-blower_door_leakage|>
   pivot_longer(c("Equivalent leakage area"),
@@ -533,7 +533,7 @@ We conducted an energy assessment of your home on `r clean_audit_data$date_of_au
 
 ![](images/Logos-together.png)
 
-Here will be the table of contents
+Here will be the table of contents (after deleting 1.5 if not needed in Word go to references and add table of content in Docs go to the insert and on the bottom is table of context)
 
 ## Summary of your Audit
 
