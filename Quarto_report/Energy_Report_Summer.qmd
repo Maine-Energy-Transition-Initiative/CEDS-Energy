@@ -560,40 +560,38 @@ We used a large fan in an exterior door to depressurize your house. This allows 
 #| warning: false
 
 energy_test_googlesheets <- energy_test_googlesheets |>
-  mutate(combustion_fuels = str_detect(`Energy Sources`, pattern = "[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))|>
-  mutate(combustionst1 = str_detect(`Could you perform combustion safety tests in worst case scenario? 1`, pattern = "Yes"))
+  mutate(combustion_fuels = str_detect(`Energy Sources`, pattern = "[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))
+  
 
 energy_test_googlesheets <- energy_test_googlesheets |>
   mutate(combustion_propane = str_detect(`Energy Sources`, pattern = "Propane"))
 
-#clean_audit_data <- clean_audit_data|>
+clean_audit_data <- clean_audit_data|>
   #select(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1, could_you_perform_combustion_safety_tests_2, could_you_perform_combustion_safety_tests_3, could_you_perform_combustion_safety_tests_4)
+  mutate(combustionst1 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1, pattern = "Yes"))|>
+  mutate(combustionst2 = str_detect(could_you_perform_combustion_safety_tests_2, pattern = "Yes"))|>
+  mutate(combustionst3 = str_detect(could_you_perform_combustion_safety_tests_3, pattern = "Yes"))|>
+  mutate(combustionst4 = str_detect(could_you_perform_combustion_safety_tests_4, pattern = "Yes"))
+  
 ```
 
 
 
 ### Combustion Appliance Safety
 
-`r if(energy_test_googlesheets$combustion_fuels == TRUE){"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens."}else{""}` **DELETE UNWANTED** We visually inspected the combustion appliance(s) in your home, as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home. but we were unable to perform combustion safety tests.
+`r if (clean_audit_data$combustionst1 == TRUE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home."} else if (clean_audit_data$combustionst2 == TRUE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home."}  else if (clean_audit_data$combustionst3 == TRUE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home."}  else if (clean_audit_data$combustionst4 == TRUE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home."} else if (clean_audit_data$combustionst1 == FALSE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, but we were unable to perform combustion safety tests. "}  else if (clean_audit_data$combustionst2 == FALSE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, but we were unable to perform combustion safety tests. "}  else if (clean_audit_data$combustionst3 == FALSE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, but we were unable to perform combustion safety tests. "}  else if (clean_audit_data$combustionst4 == FALSE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, but we were unable to perform combustion safety tests. "} else {""}`
+
+`r if(energy_test_googlesheets$combustion_propane == TRUE){"We also performed gas leak detection tests on your propane appliance(s)."}else{""}`  
+
 
 ```{r}
-#| label: If else chapter 1.5 not working options
+#| label: If else chapter 1.5 draft
 #| echo: false
 #| eval: false
 #| warning: false
 
 
-# all below are not working
-
-`r if(energy_test_googlesheets$combustion_propane == TRUE){"We also performed gas leak detection tests on your propane appliance(s)."}else{""}`  
-
-`r if(energy_test_googlesheets$combustion_fuels == TRUE){"We visually inspected the combustion appliance(s) in your home,"}else{""}`
-
-`r if(energy_test_googlesheets$combustionst1 == TRUE){"as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home."}else{""}`
-
-`r if(energy_test_googlesheets$combustionst1 == FALSE){"but we were unable to perform combustion safety tests."}else{""}`
-
-#all above are not working
+if (clean_audit_data$combustionst1 == TRUE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home."} else if (clean_audit_data$combustionst2 == TRUE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home."}  else if (clean_audit_data$combustionst3 == TRUE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home."}  else if (clean_audit_data$combustionst4 == TRUE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home."} else if (clean_audit_data$combustionst1 == FALSE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, but we were unable to perform combustion safety tests. "}  else if (clean_audit_data$combustionst2 == FALSE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, but we were unable to perform combustion safety tests. "}  else if (clean_audit_data$combustionst3 == FALSE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, but we were unable to perform combustion safety tests. "}  else if (clean_audit_data$combustionst4 == FALSE) {"We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, but we were unable to perform combustion safety tests. "} else {""}
 ```
 
 
@@ -761,15 +759,127 @@ gt_all_basement
 ## Recommendations
 
 ```{r}
-#| label: setup data 4.0
-#| eval: false
+#| label: setup data for recommendations 4.0
 #| echo: false
-recommendations_4.0 <- ranked_recommendations|>
-   filter(Rank != 0)#|>
-   #select(-Rank)
-  
+#| eval: false
+
+furnice_boiler_tune_up <- clean_audit_data|>
+  select(recommendations_ranking_furnace_boiler_tune_up)|>
+  mutate(furnice_boiler_tune_up = str_detect(recommendations_ranking_furnace_boiler_tune_up, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_furnace_boiler_tune_up)
+
+high_efficiency_shower_heads<- clean_audit_data|>
+  select(recommendations_ranking_high_efficiency_showerhead_s)|>
+  mutate(high_efficiency_shower_heads = str_detect(recommendations_ranking_high_efficiency_showerhead_s, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_high_efficiency_showerhead_s)
+
+led<- clean_audit_data|>
+  select(recommendations_ranking_le_ds)|>
+  mutate(led= str_detect(recommendations_ranking_le_ds, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_le_ds)
+
+window_dressers <- clean_audit_data|>
+  select(recommendations_ranking_window_dressers)|>
+  mutate(window_dressers = str_detect(recommendations_ranking_window_dressers, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_window_dressers)
+
+refrigerator <- clean_audit_data|>
+  select(recommendations_ranking_refrigerator)|>
+  mutate(refrigerator = str_detect(recommendations_ranking_refrigerator, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_refrigerator)
+
+ freezer<- clean_audit_data|>
+  select(recommendations_ranking_freezer)|>
+  mutate(freezer = str_detect(recommendations_ranking_freezer, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_freezer)
  
-  
-  
+induction_stove<- clean_audit_data|>
+  select(recommendations_ranking_induction_stove)|>
+  mutate(induction_stove = str_detect(recommendations_ranking_induction_stove, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_induction_stove)
+
+heatpwh <- clean_audit_data|>
+  select(recommendations_ranking_heat_pump_water_heater)|>
+  mutate(heatpwh = str_detect(recommendations_ranking_heat_pump_water_heater, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_heat_pump_water_heater)
+
+gutters <- clean_audit_data|>
+  select(recommendations_ranking_gutters)|>
+  mutate(gutters= str_detect(recommendations_ranking_gutters, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_gutters)
+
+bathroom_exhaust_fan <- clean_audit_data|>
+  select(recommendations_ranking_bathroom_exhaust_fan)|>
+  mutate(bathroom_exhaust_fan = str_detect(recommendations_ranking_bathroom_exhaust_fan, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_bathroom_exhaust_fan)
+
+kitchen_exhaust_fan <- clean_audit_data|>
+  select(recommendations_ranking_kitchen_exhaust_fan)|>
+  mutate(kitchen_exhaust_fan= str_detect(recommendations_ranking_kitchen_exhaust_fan, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_kitchen_exhaust_fan)
+
+vapor_barrier <- clean_audit_data|>
+  select(recommendations_ranking_vapor_barrier)|>
+  mutate(vapor_barrier = str_detect(recommendations_ranking_vapor_barrier, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_vapor_barrier)
+
+spray_foam <- clean_audit_data|>
+  select(recommendations_ranking_spray_foam_basement_walls)|>
+  mutate(spray_foam = str_detect(recommendations_ranking_spray_foam_basement_walls, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_spray_foam_basement_walls)
+
+attic_air_sealing_and_insulation <- clean_audit_data|>
+  select(recommendations_ranking_attic_air_sealing_and_insulation)|>
+  mutate(attic_air_sealing_and_insulation = str_detect(recommendations_ranking_attic_air_sealing_and_insulation, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_attic_air_sealing_and_insulation)
+
+wall_stud_insulation <- clean_audit_data|>
+  select(recommendations_ranking_blown_in_cellulose_wall_insulation)|>
+  mutate(wall_stud_insulation = str_detect(recommendations_ranking_blown_in_cellulose_wall_insulation, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_blown_in_cellulose_wall_insulation)
+
+continuous_wall_insulation <- clean_audit_data|>
+  select(recommendations_ranking_continuous_exterior_wall_insulation)|>
+  mutate(continuous_wall_insulation = str_detect(recommendations_ranking_continuous_exterior_wall_insulation, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_continuous_exterior_wall_insulation)
+
+electrical_panel <- clean_audit_data|>
+  select(recommendations_ranking_electrical_panel_upgrade)|>
+  mutate(electrical_panel = str_detect(recommendations_ranking_electrical_panel_upgrade, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_electrical_panel_upgrade)
+
+airsource_hp <- clean_audit_data|>
+  select(recommendations_ranking_air_source_heat_pump)|>
+  mutate(airsource_hp = str_detect(recommendations_ranking_air_source_heat_pump, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_air_source_heat_pump)
+
+ev <- clean_audit_data|>
+  select(recommendations_ranking_ev_charger)|>
+  mutate(ev = str_detect(recommendations_ranking_ev_charger, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_ev_charger)
+
+solar <- clean_audit_data|>
+  select(recommendations_ranking_solar)|>
+  mutate(solar = str_detect(recommendations_ranking_solar, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_solar)
+
+other <- clean_audit_data|>
+  select(recommendations_ranking_other)|>
+  mutate(other = str_detect(recommendations_ranking_other, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_other)
 ```
+
+```{r}
+#| label: first recommendation
+#| echo: false
+#| eval: furnice_boiler_tune_up
+#| results: asis
+
+
+#results='asis',
+cat("## Hey look, a heading!
+
+lorem ipsum dolor emet...")
+```
+
 
