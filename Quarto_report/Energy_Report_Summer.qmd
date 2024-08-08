@@ -74,7 +74,7 @@ pivot_recommendations <- recommendations |>
     names_to = "Recommendation", 
     values_to = "Rank")
 
-pivot_recommendations['Description'] <- c("Have the furnace and flue inspected and adjusted by a licensed professional. This should be available from your oil or propane delivery company.","Install high efficiency low flow shower heads to reduce the amount of water and energy to heat this water used when showering. This will save a typical home more than $200/year.","Switch your light bulbs to LED light bulbs. LEDs use 80% less energy than incandescent light bulbs which can significantly reduce your electricity bill. We provide free LED light bulbs, contact us for some if we did not give you any during the audit.","Getting insulating window inserts that help air-seal windows and reduce heat loss and gain. There will be a Window Dresser build on Great Cranberry Island September 28th-October 2nd. Sign up at https://windowdressers.org/sign-up-for-inserts/ There will be a Window Dressers build in Eastport November 18 to 25. Contact Pete to sign up: 207-214-4751 or EastportMEEnergy@gmail.com","Replacing your refrigerator with a new, EnergyStar certified fridge. Look at the Energy Guide label to compare the energy use of new refrigerators.","Replacing your freezer with a new, EnergyStar certified freezer. Look at the Energy Guide label to compare the energy use of new freezers.","Induction stoves are more efficient and safer than electric or gas stoves. There is no risk of carbon monoxide or other harmful combustion gases","Install a heat pump water heater to provide your hot water for cooking and bathing. This is the most efficient way to heat water and will save hundreds of dollars a year compared to electric resistance, heating oil or propane hot water. It will also help to dehumidify while it's running. If your current water heater burns oil or propane, this will also remove a source of combustion gases from your home.","Install gutters and downspouts that divert water at least six feet away from the foundation and to where the ground slopes away from the house.","Replace bathroom exhaust fans with new exhaust fans rated at least 50 CFM. We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise.","We recommend a kitchen exhaust fan to remove harmful combustion gases from your home.","Install a vapor barrier on the basement floor to stop moisture from entering the basement and house.","Install spray foam on the basement walls.","Air seal the attic and insulate it to at least R-60 (18” of loose-fill cellulose insulation).","Insulate the wall stud cavities with dense packed, blown-in cellulose insulation.","Add a continuous layer of insulation and potentially replace the air and moisture barrier once it becomes time to replace the siding.","Replace your existing electrical panel to increase the capacity to 200 amps (and address potential safety hazards). This may be eligible for a 30% tax credit up to $600.","Install # air source heat pumps and whole-house surge protection.","An electric vehicle will eliminate your gas costs and reduce fossil fuel dependence. A 2020 study by Consumer Reports found that lifetime ownership costs were significantly lower for EVs, saving between $6,000 - $10,000 over their lifetimes.","Rooftop solar can provide most or all of your home electrical usage. Contact a solar company for pricing and details specific to your home.", "TYPE HERE")
+pivot_recommendations['Description'] <- c("Have the furnace and flue inspected and adjusted by a licensed professional. This should be available from your oil or propane delivery company.","Install high efficiency low flow shower heads to reduce the amount of water and energy to heat this water used when showering. This will save a typical home more than $200/year.","Switch your light bulbs to LED light bulbs. LEDs use 80% less energy than incandescent light bulbs which can significantly reduce your electricity bill. We provide free LED light bulbs, contact us for some if we did not give you any during the audit.","Getting insulating window inserts that help air-seal windows and reduce heat loss and gain. There will be a Window Dresser build on Great Cranberry Island September 28th-October 2nd. Sign up at https://windowdressers.org/sign-up-for-inserts/ There will be a Window Dressers build in Eastport November 18 to 25. Contact Pete to sign up: 207-214-4751 or EastportMEEnergy@gmail.com","Replacing your refrigerator with a new, EnergyStar certified fridge. Look at the Energy Guide label to compare the energy use of new refrigerators.","Replacing your freezer with a new, EnergyStar certified freezer. Look at the Energy Guide label to compare the energy use of new freezers.","Induction stoves are more efficient and safer than electric or gas stoves. There is no risk of carbon monoxide or other harmful combustion gases","Install a heat pump water heater to provide your hot water for cooking and bathing. This is the most efficient way to heat water and will save hundreds of dollars a year compared to electric resistance, heating oil or propane hot water. It will also help to dehumidify while it's running. If your current water heater burns oil or propane, this will also remove a source of combustion gases from your home.","Install gutters and downspouts that divert water at least six feet away from the foundation and to where the ground slopes away from the house.","Bathroom exhaust fans should be rated for at least 50 cubic feet per minute (CFM). We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise.","We recommend a kitchen exhaust fan to remove harmful combustion gases from your home. A fan can also help with moisture concerns.","Install a vapor barrier on the basement floor to stop moisture from entering the basement and house.","Install spray foam on the basement walls.","Air seal the attic and insulate it to at least R-60 (18” of loose-fill cellulose insulation).","Insulate the wall stud cavities with dense packed, blown-in cellulose insulation. This can often be done from the attic.","Add a continuous layer of insulation and potentially replace the air and moisture barrier once it becomes time to replace the siding.","Replace your existing electrical panel to increase the capacity to 200 amps (and address potential safety hazards). This may be eligible for a 30% tax credit up to $600.","Install # air source heat pumps and whole-house surge protection.","An electric vehicle will eliminate your gas costs and reduce fossil fuel dependence. A 2020 study by Consumer Reports found that lifetime ownership costs were significantly lower for EVs, saving between $6,000 - $10,000 over their lifetimes.","Rooftop solar can provide most or all of your home electrical usage. Contact a solar company for pricing and details specific to your home.", "TYPE HERE")
 
 ranked_recommendations <- pivot_recommendations |>
   mutate(Recommendation = recode(Recommendation,  'Recommendations ranking [Furnace/Boiler Tune-up]' = 'Furnace/Boiler Tune-up', 'Recommendations ranking [High Efficiency Showerhead(s)]' = 'High efficiency  shower head(s)', 'Recommendations ranking [LEDs]' = 'LEDs', 'Recommendations ranking [Window Dressers]' = 'Window Dressers', 'Recommendations ranking [Refrigerator]' = 'Refrigerator', 'Recommendations ranking [Freezer]' = 'Freezer', 'Recommendations ranking [Induction Stove]' = 'Induction Stove', 'Recommendations ranking [Heat Pump Water Heater]' = 'Heat Pump Water Heater', 'Recommendations ranking [Gutters]' = 'Gutters', 'Recommendations ranking [Bathroom Exhaust Fan]' = 'Bathroom exhaust fan(s)', 'Recommendations ranking [Kitchen Exhaust Fan]' = 'Kitchen exhaust fan', 'Recommendations ranking [Vapor Barrier]' = 'Vapor Barrier', 'Recommendations ranking [Spray Foam Basement Walls]' = 'Spray Foam Basement Walls', 'Recommendations ranking [Attic Air Sealing and Insulation ]' = 'Attic Insulation', 'Recommendations ranking [Blown-in Cellulose Wall Insulation]' = 'Blow-in cellulose wall insulation','Recommendations ranking [Continuous Exterior Wall Insulation]' = 'Continuous exterior wall insulation', 'Recommendations ranking [Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', 'Recommendations ranking [Air Source Heat Pump]'= 'Air Source Heat Pump', 'Recommendations ranking [EV Charger]' = 'EV+charger', 'Recommendations ranking [Solar]' = 'Solar', 'Recommendations ranking [Other]' = 'Other')) |>
@@ -110,7 +110,7 @@ double_other <- energy_test_googlesheets |>
 
 attic_basics <- energy_test_googlesheets |>
   select( `Attic insulation type`, `Quality of attic insulation's installation? Assess worst part of installation.`, `Thickness of the attic insulation (inches), at the thinnest location`)|>
-  mutate(Attic_all = paste(`Attic insulation type`, ",", `Quality of attic insulation's installation? Assess worst part of installation.`, "instullation,", `Thickness of the attic insulation (inches), at the thinnest location`, "inches"))|>
+  mutate(Attic_all = paste(`Attic insulation type`, ",", `Thickness of the attic insulation (inches), at the thinnest location`, "inches"))|>
   mutate(Info = 'Attic',
         .before =`Attic insulation type`)
 
@@ -422,7 +422,7 @@ all_blower_door <- blower_door|>
   mutate(Info = recode(Info,  "CFM50" = "CFM50:", "ACH50" = "ACH50:","Equivalent leakage area" = "Equivalent leakage area:","ACHn" = "ACHnatural:" ))|>
   arrange(factor(Info, levels = c('CFM50:', 'ACH50:', 'Equivalent leakage area:', 'ACHnatural:')))
 
-all_blower_door['Description'] <- c("CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.", "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.","This is the area equivalent to all of the air leaks in the house combined.","Accounting for the volume of the home, this means that the house exchanges –% of its air every hour. Over one day, the house goes through – complete air changes.")
+all_blower_door['Description'] <- c("CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.", "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.","This is the area (in square inches) equivalent to all of the air leaks in the house combined.","Accounting for the volume of the home, this means that the house exchanges –% of its air every hour. Over one day, the house goes through – complete air changes.")
 ```
 
 ```{r}
@@ -437,7 +437,7 @@ attic_double <- energy_test_googlesheets|>
 
 attic_character <- energy_test_googlesheets|>
   select(`Does attic have air sealing?`, `Comment about air sealing`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Is there ductwork in the attic?`, `Comment about condition of the ductwork in the attic`,`Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Attic insulation type`)|>
-  mutate(`Air sealing:` = paste(`Does attic have air sealing?`,`Comment about air sealing`))|>
+  mutate(`Air sealing:` = paste0("There is ",`Does attic have air sealing?`,"air sealing. ",`Comment about air sealing`))|>
   mutate(`Other observations:` = paste(`Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`))|>
   mutate(`Ventilation:` = `Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`)|>
   mutate(`Ducts:` = `Is there ductwork in the attic?`, `Comment about condition of the ductwork in the attic`)
@@ -452,7 +452,8 @@ attic_character <- attic_character|>
 all_attic <- attic_double|>
   rbind(attic_character)|>
   arrange((factor(Info, levels = c("Attic Area","Attic insulation type", "Quality of attic insulation's installation? Assess worst part of installation.", "Air sealing:","Other observations:","Ventilation:","Ducts:" ))))|>
-  mutate(Info = recode(Info,"Attic Area" = "Area (sq ft):","Attic insulation type" = "Insulation type:", "Quality of attic insulation's installation? Assess worst part of installation." = "Insulation condition:"  ))
+  mutate(Info = recode(Info,"Attic Area" = "Area (sq ft):","Attic insulation type" = "Insulation type:", "Quality of attic insulation's installation? Assess worst part of installation." = "Insulation condition:"  ))#|>
+  #filter(str_detect(Values, pattern = "No"))
 ```
 
 ```{r}
@@ -535,7 +536,7 @@ We conducted an energy assessment of your home on `r clean_audit_data$date_of_au
 
 ![](images/Logos-together.png)
 
-Here will be the table of contents (after deleting 1.5 if not needed in Word go to references and add table of content in Docs go to the insert and on the bottom is table of context)
+Add here the table of content: in Word go to references and add table of content, in Docs go to the insert and on the bottom add the table of context
 
 ## Summary of your Audit
 
@@ -727,7 +728,13 @@ gt_all_interior
 
 ### Blower Door / Air Leakage Test
 
-A blower door test simulates a 20mph wind hitting your house. To run the test, we used a large fan in an exterior door to depressurize your house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks. To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.
+A blower door test simulates a 20mph wind hitting your house from all sides.
+
+To run the test, we used a large fan in an exterior door to depressurize your house. As air is pulled out through the fan, an equal volume of air is pulled in through all of the gaps, cracks, and air leaks throughout the house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks. 
+
+To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.
+
+Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.
 
 ```{r}
 #| label: 3.4 blower door table
@@ -803,7 +810,7 @@ all_electrical_mechanical <- clean_audit_data|>
   select(amperage_of_breaker_panel, number_of_unused_breaker_spaces, comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage)|>
   
   #join information into one column for breaker panel in 3.7
-  mutate('Electrical panel:'= paste0("The electrical panel has ", amperage_of_breaker_panel, " amperage. There are ", number_of_unused_breaker_spaces, " unused breaker spaces. ", comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage))|>
+  mutate('Electrical panel:'= paste0("The electrical panel has and  amperage of ", amperage_of_breaker_panel, ". There are ", number_of_unused_breaker_spaces, " unused breaker spaces. ", comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage))|>
   
   #delete unwanted columns, the once that were used to create joined columns
   select(-c(1:3))|>
@@ -832,8 +839,44 @@ gt_all_electrical_mechanical
 ### Energy Bills
 
 ```{r}
-#| label: setup section
+#| label: setup section 3.8
 #| echo: false
+
+quantity_energy_bills <- clean_audit_data|>
+  
+  #select all the columns that will be used
+  select(gallons_of_heating_oil, gallons_of_kerosene, gallons_of_propane, k_wh_of_electricity, cords_of_firewood,  tons_of_pellets, write_the_quantity_and_measuring_unit)|>
+  
+   #pivot horizontal columns to be displayed vertical in the rows
+  pivot_longer(cols = c(gallons_of_heating_oil, gallons_of_kerosene, gallons_of_propane, k_wh_of_electricity, cords_of_firewood,  tons_of_pellets, write_the_quantity_and_measuring_unit),
+    names_to = "Type" ,
+    values_to = "kWh/gallons/cords/tonns")|>
+  mutate(Type = recode(Type, gallons_of_heating_oil = "Heating oil", gallons_of_kerosene = "Kerosene" , gallons_of_propane = "Propane", k_wh_of_electricity = "Electricity", cords_of_firewood = "Firewood",  tons_of_pellets = "Pellets", write_the_quantity_and_measuring_unit = "Type the name of other energy source"))
+  
+
+cost_energy_bills <- clean_audit_data|>
+  select(cost_in_dollars_heating_oil, cost_in_dollars_kerosene, cost_in_dollars_propane, cost_in_dollars_electricity, cost_in_dollars_firewood, cost_in_dollars_pellets, cost_in_dollars_other)|>
+  
+  #pivot horizontal columns to be displayed vertical in the rows
+  pivot_longer(cols = c(cost_in_dollars_heating_oil, cost_in_dollars_kerosene, cost_in_dollars_propane, cost_in_dollars_electricity, cost_in_dollars_firewood, cost_in_dollars_pellets, cost_in_dollars_other),
+    names_to = "Type2" ,
+    values_to = "Cost (USD)")
+
+all_energy_bills <- quantity_energy_bills|>
+  cbind(cost_energy_bills)|>
+   filter(`Cost (USD)` != is.na(NA))|>
+   select(-3)
+
+gt_all_energy_bills <- gt(all_energy_bills) |>
+  tab_options(table.width = pct(100))|>
+  cols_width(
+    Type ~ px(220),
+    `kWh/gallons/cords/tonns` ~ px(220),
+    `Cost (USD)` ~ px(220)
+  )
+
+gt_all_energy_bills
+  
 ```
 
 
