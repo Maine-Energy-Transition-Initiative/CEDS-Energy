@@ -50,7 +50,7 @@ library(janitor)
 #Load Data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Q4Kn8YNwurZ2DdfKoujyfyszxS0EKyuidWiohRoIuh8/edit?resourcekey=&gid=1384599070#gid=1384599070", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[3, ]
+energy_test_googlesheets <- all_energy_test_googlesheets[16, ]
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
 
@@ -536,7 +536,7 @@ We conducted an energy assessment of your home on `r clean_audit_data$date_of_au
 
 ![](images/Logos-together.png)
 
-Add here the table of content: in Word go to references and add table of content, in Docs go to the insert and on the bottom add the table of context
+**Add here the table of content: in Word go to references and add table of content, in Docs go to the insert and on the bottom add the table of context**
 
 ## Summary of your Audit
 
