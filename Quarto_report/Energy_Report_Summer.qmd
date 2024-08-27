@@ -81,10 +81,11 @@ pivot_recommendations['Description'] <- c("Have the furnace and flue inspected a
 
 ranked_recommendations <- pivot_recommendations |>
   mutate(Recommendation = recode(Recommendation,  'Recommendations ranking [Furnace/Boiler Tune-up]' = 'Furnace/Boiler Tune-up', 'Recommendations ranking [High Efficiency Showerhead(s)]' = 'High efficiency  shower head(s)', 'Recommendations ranking [LEDs]' = 'LEDs', 'Recommendations ranking [Window Dressers]' = 'Window Dressers', 'Recommendations ranking [Refrigerator]' = 'Refrigerator', 'Recommendations ranking [Freezer]' = 'Freezer', 'Recommendations ranking [Induction Stove]' = 'Induction Stove', 'Recommendations ranking [Heat Pump Water Heater]' = 'Heat Pump Water Heater', 'Recommendations ranking [Gutters]' = 'Gutters', 'Recommendations ranking [Bathroom Exhaust Fan]' = 'Bathroom exhaust fan(s)', 'Recommendations ranking [Kitchen Exhaust Fan]' = 'Kitchen exhaust fan', 'Recommendations ranking [Vapor Barrier]' = 'Vapor Barrier', 'Recommendations ranking [Spray Foam Basement Walls]' = 'Spray Foam Basement Walls', 'Recommendations ranking [Attic Air Sealing and Insulation ]' = 'Attic Insulation', 'Recommendations ranking [Blown-in Cellulose Wall Insulation]' = 'Blow-in cellulose wall insulation','Recommendations ranking [Continuous Exterior Wall Insulation]' = 'Continuous exterior wall insulation', 'Recommendations ranking [Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', 'Recommendations ranking [Air Source Heat Pump]'= 'Air Source Heat Pump', 'Recommendations ranking [EV Charger]' = 'EV+charger', 'Recommendations ranking [Solar]' = 'Solar', 'Recommendations ranking [Other]' = 'Other')) |>
-  mutate_at('Rank', as.numeric)|>
-    arrange((Rank))
+  mutate_at('Rank', as.numeric)
+    
 
 ranked_clean_recommendations <- ranked_recommendations|>
+   arrange((Rank))|>
    filter(Rank != 0)|>
    select(-Rank)
 ```
@@ -314,15 +315,20 @@ all_interior <- clean_audit_data|>
   
   #select all the columns that have information about the interior/living spaces
   select(wall_stud_insulation_type, thickness_of_the_wall_stud_insulation, quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, any_additional_comments_on_wall_stud_insulation, wall_continuous_insulation_type, thickness_of_the_wall_continuous_insulation, quality_of_wall_continuous_insulations_installation_assess_worst_part_of_installation, any_additional_comments_on_wall_continuous_insulation, framing_type, general_comment_about_the_living_room, general_comment_about_the_bathroom_s, general_comment_about_the_kitchen, k_wh_reading_1, k_wh_reading_2, time_passed_since_installation_of_kilowatt_meter_1, time_passed_since_installation_of_kilowatt_meter_2, which_appliance_did_you_measure_1, which_appliance_did_you_measure_2)|>
+  
+  #make conditional stock framing description
+mutate(stock_framing = case_when( framing_type == "Balloon" ~ 'The framing type of the home is balloon framing, which means the wall cavities extend the full height of the building (from the foundation to the roof). Often the wall cavities are interconnected with the floor and ceiling cavities. This framing type can create connected passageways for air to leave the house and rodents to enter the house. ', framing_type == "Platform" ~ 'The framing type of the home is platform framing, which means that wall cavities do not extend the full height of the building and are instead separated by floors. ', TRUE ~ 'NA'))|>
 
  #join information into one column for stud insulation in 3.3
-  mutate('Walls:'= paste0("Walls framing is ", framing_type , " type. There is ", wall_stud_insulation_type, " insulation ", thickness_of_the_wall_stud_insulation, " inches thick in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, " condition. ", any_additional_comments_on_wall_stud_insulation))|>
+  mutate('Walls:'= paste0( stock_framing, "There is ", wall_stud_insulation_type, " insulation ", thickness_of_the_wall_stud_insulation, " inches thick in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, " condition. ", any_additional_comments_on_wall_stud_insulation))|>
+   
+
   
   #join information into one column for kitchen in 3.3
   mutate('Kitchen:'= paste0(which_appliance_did_you_measure_1, " used ", k_wh_reading_1, " kWh in ", time_passed_since_installation_of_kilowatt_meter_1, " minutes. ", which_appliance_did_you_measure_2, " used ", k_wh_reading_2, " kWh in ", time_passed_since_installation_of_kilowatt_meter_2, " minutes. ", general_comment_about_the_kitchen ))|>
   
   #delete unwanted columns, the once that were used to create joined columns
-  select(-c(1:9, 12:18))|>
+  select(-c(1:9, 12:19))|>
   
   #pivot horizontal columns to be displayed vertical in the rows
   pivot_longer(cols = everything() ,
@@ -673,10 +679,11 @@ gt_all_basics <- gt(all_basics) |>
     Info ~ px(200),
     Values ~ px(450)
   )|>
-  cols_label(
-    Info = "",
-    Values = ""
-  )
+  tab_options(column_labels.hidden = TRUE)
+  #cols_label(
+  #  Info = "",
+ #   Values = ""
+ # )
   
 
 gt_all_basics
@@ -694,10 +701,7 @@ gt_exterior_3.2 <- gt(exterior_3.2) |>
     Info ~ px(200),
     Values ~ px(450)
   )|>
-  cols_label(
-    Info = "",
-    Values = ""
-  )#|>
+  tab_options(column_labels.hidden = TRUE)#|>
   #tab_style(
     #style = cell_borders(
      # sides = "all",
@@ -724,10 +728,7 @@ gt_all_interior <- gt(all_interior) |>
     Info ~ px(150),
     Values ~ px(100)
   )|>
-  cols_label(
-    Info = "",
-    Values = ""
-  )
+  tab_options(column_labels.hidden = TRUE)
 
 gt_all_interior
 ```
@@ -753,11 +754,7 @@ gt_all_blower_door <- gt(all_blower_door) |>
     Values ~ px(100),
     Description ~ px(400)
   )|>
-  cols_label(
-    Info = "",
-    Values = "",
-    Description = ""
-  )
+ tab_options(column_labels.hidden = TRUE)
 
 gt_all_blower_door
 ```
@@ -808,10 +805,7 @@ gt_all_basement <- gt(all_basement) |>
     Info ~ px(200),
     Values ~ px(450),
   )|>
-  cols_label(
-    Info = "",
-    Values = ""
-  )
+  tab_options(column_labels.hidden = TRUE)
 
 gt_all_basement
 ```
@@ -844,10 +838,7 @@ gt_all_electrical_mechanical <- gt(all_electrical_mechanical) |>
     Info ~ px(200),
     Values ~ px(450),
   )|>
-  cols_label(
-    Info = "",
-    Values = ""
-  )
+  tab_options(column_labels.hidden = TRUE)
 
 gt_all_electrical_mechanical
 
@@ -1012,18 +1003,85 @@ other <- clean_audit_data|>
 ```
 
 ```{r}
+#| label: set up automatic recomendation stock text 
+#| echo: false
+
+a_refriginator <- ranked_recommendations[5, ]
+
+a_freezer <- ranked_recommendations[6, ]
+
+a_induction_stove <- ranked_recommendations[7, ]
+
+a_vapor_barrier <- ranked_recommendations[12, ]
+
+a_spray_foam <- ranked_recommendations[13, ]
+
+a_attic_insulation <- ranked_recommendations[14, ]
+
+a_blow_in_cellulose <- ranked_recommendations[15, ]
+
+a_continuous_exterior_insulation <- ranked_recommendations[16, ]
+
+a_electrical_panel_upgrade <- ranked_recommendations[17, ]
+
+a_air_source_heat_pump <- ranked_recommendations[18, ]
+
+a_ev_and_charger <- ranked_recommendations[19, ]
+
+a_other <- ranked_recommendations[21, ]
+
+a_leds <- ranked_recommendations[3, ]
+
+a_shower_heads <- ranked_recommendations[2, ]
+
+a_furnice_boiler_tune_up <- ranked_recommendations[1, ]
+
+a_window_dressers <- ranked_recommendations[4, ]
+
+a_heat_pump_water_heater <- ranked_recommendations[8, ]
+
+a_gutters <- ranked_recommendations[9, ]
+
+a_bathroom_fan <- ranked_recommendations[10, ]
+
+a_kitchen_fan <- ranked_recommendations[11, ]
+
+a_solar <- ranked_recommendations[20, ]
+
+
+  
+```
+
+
+```{r}
 #| label: furnace boiler tune up recommendation
 #| echo: false
 #| results: asis
 
 
 if(furnice_boiler_tune_up == TRUE){
-  cat("### Furnice/boiler tune up
+  cat("### Furnace/Boiler Tune up
 *Problem*
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(furnice_boiler_tune_up == TRUE){
+  cat(a_furnice_boiler_tune_up$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(furnice_boiler_tune_up == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1044,12 +1102,27 @@ if( high_efficiency_shower_heads == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
 ")
 }else{
   cat("")
   }
 
+if(high_efficiency_shower_heads == TRUE){
+  cat(a_shower_heads$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(high_efficiency_shower_heads == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
+")
+}else{
+  cat("")
+  }
 ```
 
 ```{r}
@@ -1065,7 +1138,23 @@ if( led == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(led == TRUE){
+  cat(a_leds$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(led == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1086,7 +1175,23 @@ if( window_dressers == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(window_dressers == TRUE){
+  cat(a_window_dressers$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(window_dressers == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1107,7 +1212,23 @@ if( refrigerator == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(refrigerator == TRUE){
+  cat(a_refriginator$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(refrigerator == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1127,7 +1248,23 @@ if( freezer == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(freezer == TRUE){
+  cat(a_freezer$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(freezer == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1147,7 +1284,23 @@ if( induction_stove== TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(induction_stove == TRUE){
+  cat(a_induction_stove$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(induction_stove == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1167,7 +1320,23 @@ if( heatpwh == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(heatpwh == TRUE){
+  cat(a_heat_pump_water_heater$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(heatpwh == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1187,7 +1356,23 @@ if( gutters == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(gutters == TRUE){
+  cat(a_gutters$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(gutters == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1207,7 +1392,23 @@ if( bathroom_exhaust_fan == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(bathroom_exhaust_fan == TRUE){
+  cat(a_bathroom_fan$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(bathroom_exhaust_fan == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1227,7 +1428,23 @@ if( kitchen_exhaust_fan == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(kitchen_exhaust_fan == TRUE){
+  cat(a_kitchen_fan$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(kitchen_exhaust_fan == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1247,7 +1464,23 @@ if( vapor_barrier == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(vapor_barrier == TRUE){
+  cat(a_vapor_barrier$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(vapor_barrier == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1261,13 +1494,29 @@ if( vapor_barrier == TRUE){
 
 
 if( spray_foam == TRUE){
-  cat("### Spray foam basement walls
+  cat("### Spray foam Basement Walls
   
 *Problem*
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(spray_foam == TRUE){
+  cat(a_spray_foam$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(spray_foam == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1287,7 +1536,23 @@ if(attic_air_sealing_and_insulation == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(attic_air_sealing_and_insulation == TRUE){
+  cat(a_attic_insulation$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(attic_air_sealing_and_insulation == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1301,13 +1566,29 @@ if(attic_air_sealing_and_insulation == TRUE){
 
 
 if( wall_stud_insulation== TRUE){
-  cat("### Wall stud insulation
+  cat("### Blow-in cellulose wall insulation
   
 *Problem*
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(wall_stud_insulation == TRUE){
+  cat(a_blow_in_cellulose$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(wall_stud_insulation == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1321,13 +1602,29 @@ if( wall_stud_insulation== TRUE){
 
 
 if( continuous_wall_insulation== TRUE){
-  cat("### Continuous wall insulation
+  cat("### Continuous exterior wall insulation
   
 *Problem*
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(continuous_wall_insulation == TRUE){
+  cat(a_continuous_exterior_insulation$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(continuous_wall_insulation == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1347,7 +1644,23 @@ if( electrical_panel == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(electrical_panel == TRUE){
+  cat(a_electrical_panel_upgrade$Description
+    
+    )
+}else{
+  cat("")
+  }
+
+if(electrical_panel == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1361,13 +1674,29 @@ if( electrical_panel == TRUE){
 
 
 if( airsource_hp == TRUE){
-  cat("### Air source heat pump(s)
+  cat("### Air Source Heat Pump
   
 *Problem*
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(airsource_hp == TRUE){
+  cat(a_air_source_heat_pump$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(airsource_hp == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1387,7 +1716,23 @@ if( ev == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(ev == TRUE){
+  cat(a_ev_and_charger$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if( ev == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
@@ -1407,9 +1752,64 @@ if( solar == TRUE){
 
 *Recommendation*
 
-*Estimated Cost*
+")
+}else{
+  cat("")
+}
+
+if(solar == TRUE){
+  cat(a_solar$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(solar == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
 ")
 }else{
   cat("")
   }
 ```
+
+```{r}
+#| label: other recommendation
+#| echo: false
+#| results: asis
+
+
+if( other == TRUE){
+  cat("### Solar
+  
+*Problem*
+
+*Recommendation*
+
+")
+}else{
+  cat("")
+}
+
+if(other == TRUE){
+  cat(a_other$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(other == TRUE){
+  cat("
+
+*Estimated Cost/Benefit*
+")
+}else{
+  cat("")
+  }
+```
+
+## Financing
+
