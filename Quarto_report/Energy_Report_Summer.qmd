@@ -1143,7 +1143,7 @@ Your shower heads use more water and energy than high-efficiency shower heads, t
 
 *Recommendation*
 
-Install high-efficiency shower heads to reduce the amount of water and energy to heat the water used when showering. We recommend 1.5 gallon per minute shower heads that will save a gallon or more of water for every minute spent in the shower. 
+Install high-efficiency shower heads to reduce the amount of water and energy to heat the water used when showering.
 
 ")
 }else{
@@ -1159,7 +1159,7 @@ if(high_efficiency_shower_heads == TRUE){
   }
 
 if(high_efficiency_shower_heads == TRUE){
-  cat("
+  cat(" We recommend 1.5 gallon per minute shower heads that will save a gallon or more of water for every minute spent in the shower. 
 
 *Estimated Cost/Benefits/Incentives*
 
@@ -1229,7 +1229,7 @@ Your windows are a source of heat loss, reduce your comfort due to cold surface 
 *Recommendation*
 
 WindowDressers insulating window inserts help air-seal windows and reduce heat loss and gain. There will be a WindowDresser community build on Great Cranberry Island from November 9th through 14th. Sign up at https://windowdressers.org/sign-up-for-inserts/ There will be a WindowDressers community build in Eastport from November 18th through 25th. Contact Pete to sign up: 207-214-4751 or EastportMEEnergy@gmail.com
-WindowDressers are transparent and let in light while stopping drafts. Each insert is made of a custom-made pine frame wrapped on each side with tightly sealed, clear polyolefin film, creating an airspace between the two layers for additional insulation. The insert is finished with a compressible foam weather seal. The foam allows enough give for the inserts to be easily slid into place in the fall and removed in the spring while holding firmly enough to provide a tight, friction-based seal. The inserts are installed inside your existing window frame with no fasteners required and last 5-10 years. They are most effective in the winter, but depending on the window's exposure, they can sometimes be used in the summer to keep the house cooler.
+
 
 ")
 }else{
@@ -1245,7 +1245,7 @@ if(window_dressers == TRUE){
   }
 
 if(window_dressers == TRUE){
-  cat("
+  cat("WindowDressers are transparent and let in light while stopping drafts. Each insert is made of a custom-made pine frame wrapped on each side with tightly sealed, clear polyolefin film, creating an airspace between the two layers for additional insulation. The insert is finished with a compressible foam weather seal. The foam allows enough give for the inserts to be easily slid into place in the fall and removed in the spring while holding firmly enough to provide a tight, friction-based seal. The inserts are installed inside your existing window frame with no fasteners required and last 5-10 years. They are most effective in the winter, but depending on the window's exposure, they can sometimes be used in the summer to keep the house cooler.
 
 *Estimated Cost/Benefits/Incentives*
 
@@ -1410,7 +1410,7 @@ if( heatpwh == TRUE){
 
 *Recommendation*
 
-Install a heat pump water heater to provide your hot water for cooking and bathing. This is the most efficient way to heat water and will save hundreds of dollars a year compared to electric resistance, heating oil or propane hot water. It will also help to dehumidify while it's running. If your current water heater burns oil or propane, this will also remove a source of combustion gases from your house. We also recommend setting the temperature on the water heater at 130°F for more efficient operation.
+Install a heat pump water heater to provide your hot water for cooking and bathing. This is the most efficient way to heat water and will save hundreds of dollars a year compared to electric resistance, heating oil or propane hot water. It will also help to dehumidify while it's running. If your current water heater burns oil or propane, this will also remove a source of combustion gases from your house.
 
 ")
 }else{
@@ -1426,7 +1426,7 @@ if(heatpwh == TRUE){
   }
 
 if(heatpwh == TRUE){
-  cat("
+  cat(" We also recommend setting the temperature on the water heater at 130°F for more efficient operation.
 
 *Estimated Cost/Benefits/Incentives*
 
@@ -1495,7 +1495,7 @@ Currently, there is no bathroom exhaust fan, so moisture from the shower, toilet
 
 *Recommendation*
 
-Bathroom exhaust fans should be rated for at least 80 cubic feet per minute (CFM) if there is a shower. We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise. They should be installed before the attic is air-sealed and insulated. The fan needs to be ducted outside, so it does not add moisture into the attic.
+Bathroom exhaust fans should be rated for at least 80 cubic feet per minute (CFM) if there is a shower. We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise.
 
 ")
 }else{
@@ -1511,7 +1511,7 @@ if(bathroom_exhaust_fan == TRUE){
   }
 
 if(bathroom_exhaust_fan == TRUE){
-  cat("
+  cat(" They should be installed before the attic is air-sealed and insulated. The fan needs to be ducted outside, so it does not add moisture into the attic.
 
 *Estimated Cost/Benefits/Incentives*
 
@@ -1716,7 +1716,7 @@ The walls of the house are uninsulated, which is a significant source of heat lo
 
 *Recommendation*
 
-Insulate the wall stud cavities with dense packed, blown-in cellulose insulation. In balloon-framed homes, this can often be done from the attic, otherwise it can be done by drilling holes into the wall cavities from either the inside or outside.
+Insulate the wall stud cavities with dense packed, blown-in cellulose insulation.
 
 ")
 }else{
@@ -1732,7 +1732,7 @@ if(wall_stud_insulation == TRUE){
   }
 
 if(wall_stud_insulation == TRUE){
-  cat("
+  cat(" In balloon-framed homes, this can often be done from the attic, otherwise it can be done by drilling holes into the wall cavities from either the inside or outside.
 
 *Estimated Cost/Benefits/Incentives*
 
@@ -1761,7 +1761,7 @@ There isn’t continuous insulation between the siding and the exterior walls of
 
 *Recommendation*
 
-Add a continuous layer of insulation and potentially replace the air and moisture barrier once it becomes time to replace the siding. Add continuous insulation (R-6 or more) under the new siding to keep the house warmer in the winter and cooler in the summer. We recommend TimberHP TimberBoard insulation (produced in Madison, Maine) or Rockwool Comfortboard, but foam board can also be used. Before installing exterior insulation, the contractor can check if insulation is needed between the interior wall studs.
+Add a continuous layer of insulation and potentially replace the air and moisture barrier once it becomes time to replace the siding.
 
 ")
 }else{
@@ -1777,7 +1777,7 @@ if(continuous_wall_insulation == TRUE){
   }
 
 if(continuous_wall_insulation == TRUE){
-  cat("
+  cat(" Add continuous insulation (R-6 or more) under the new siding to keep the house warmer in the winter and cooler in the summer. We recommend TimberHP TimberBoard insulation (produced in Madison, Maine) or Rockwool Comfortboard, but foam board can also be used. Before installing exterior insulation, the contractor can check if insulation is needed between the interior wall studs.
 
 *Estimated Cost/Benefits/Incentives*
 
@@ -1847,7 +1847,7 @@ Combustion heating equipment is expensive, inefficient, and has the potential to
 
 *Recommendation*
 
-Install air source heat pumps and whole-house surge protection. Air source heat pumps can be up to 300% efficient and heat, cool, and dehumidify your house. A qualified installer will help determine what size system to install and where. Whole-house surge protection will protect your appliances and heat pumps from being damaged by an electrical surge.
+Install air source heat pumps and whole-house surge protection.
 
 ")
 }else{
@@ -1863,7 +1863,7 @@ if(airsource_hp == TRUE){
   }
 
 if(airsource_hp == TRUE){
-  cat("
+  cat(" Air source heat pumps can be up to 300% efficient and heat, cool, and dehumidify your house. A qualified installer will help determine what size system to install and where. Whole-house surge protection will protect your appliances and heat pumps from being damaged by an electrical surge.
 
 *Estimated Cost/Benefits/Incentives*
 
