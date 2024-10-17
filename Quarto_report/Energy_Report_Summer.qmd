@@ -57,36 +57,36 @@ energy_test_googlesheets <- all_energy_test_googlesheets[16, ]
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
 
-#Building_Audit <- Energy_Audits |> #to make it parametorized
-  #filter(Adress_Name == params$adress) # Auditor_full_name == params$Auditor_full_name
-
-
 ```
+
 
 ```{r}
 #| label: setup rank recommendations data
 #| echo: false
 #| warning: false
 
+  #select only recomendations to make separate data frame
 recommendations <- energy_test_googlesheets |>
-  #filter(Adress_Name == params$adress) |> #need to parametorize
   select(c("Recommendations ranking [Furnace/Boiler Tune-up]":"Recommendations ranking [Other 1]", 'Recommendations ranking [Continuous Exterior Wall Insulation]', 'Recommendations ranking [Pipe Insulation]', 'Recommendations ranking [Whole-House Surge Protection]', 'Recommendations ranking [Misc. Air Sealing]', 'Recommendations ranking [Other 2]', 'Recommendations ranking [Other 3]'))
-
+  
+  #pivot teh data to be displayed vertically
 pivot_recommendations <- recommendations |>
   pivot_longer(cols = everything(),
     names_to = "Recommendation", 
     values_to = "Rank")
 
+  #add description to each recommendation
 pivot_recommendations['Description'] <- c("Have the furnace and flue inspected and adjusted by a licensed professional. This should be available from your oil or propane delivery company.","Install high-efficiency shower heads to reduce the amount of water and energy to heat the water used when showering.","Switch your light bulbs to LED light bulbs. LEDs use 80% less energy than incandescent light bulbs which can significantly reduce your electricity bill. We provide free LED light bulbs, contact us for some if we did not give you any during the audit.","Window-Dressers insulating window inserts help air-seal windows and reduce heat loss and gain. There will be a Window-Dresser community build on Great Cranberry Island from November 8th through 14th. Sign up at https://windowdressers.org/sign-up-for-inserts/ There will be a Window Dressers build in Eastport from November 18th through 25th. Contact Pete to sign up: 207-214-4751 or EastportMEEnergy@gmail.com","Replace your refrigerator with a new, EnergyStar certified fridge. Look at the Energy Guide label to compare the energy use of new refrigerators.","Replace your freezer with a new, EnergyStar certified freezer. Look at the Energy Guide label to compare the energy use of new freezers.","Induction cooking appliances are more efficient and safer than electric or gas ones. There is no risk of carbon monoxide or other harmful combustion gases, and the surface doesn't heat up without a pot or pan on it.","Install a heat pump water heater to provide your hot water for cooking and bathing. This is the most efficient way to heat water and will save hundreds of dollars a year compared to electric resistance, heating oil or propane hot water. It will also help to dehumidify while it's running. If your current water heater burns oil or propane, this will also remove a source of combustion gases from your home.","Install gutters and downspouts that divert water at least six feet away from the foundation and to where the ground slopes away from the house.","Bathroom exhaust fans should be rated for at least 80 cubic feet per minute (CFM) if there is a shower. We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise.","We recommend a kitchen exhaust fan to remove harmful combustion gases from your home, which should be rated for at least 100 cubic feet per minute (CFM). A fan can also help with moisture concerns.","Install a vapor barrier on the basement floor to stop moisture from entering the basement and house.","Install spray foam on the basement/crawlspace walls to prevent moisture infiltration and reduce heat loss.","Air seal the attic and insulate it to at least R-60 (18” of loose-fill cellulose insulation).","Insulate the wall stud cavities with dense packed, blown-in cellulose insulation.","Add a continuous layer of insulation and potentially replace the air and moisture barrier once it becomes time to replace the siding.","Replace your existing electrical panel to increase the capacity to 200 amps (and address potential safety hazards).","Install air source heat pumps and whole-house surge protection.","An electric vehicle will eliminate your gas costs and reduce fossil fuel dependence. A 2020 study by Consumer Reports found that lifetime ownership costs were significantly lower for EVs, saving between $6,000 - $10,000 over their lifetimes.","Rooftop solar can supply most or all of your home electrical demands. Contact a solar company for pricing and details specific to your home.", "TYPE HERE (Other 1)", "Insulate both hot and cold water pipes that are uninsulated in the basement/crawlspace. This will save energy and prevent condensation.", "Upgrade your electrical panel to add whole-house surge protection.", "We recommend sealing air leaks and weatherstripping exterior doors.", "TYPE HERE (Other 2)", "TYPE HERE (Other 3)")
 
+  #rename the titles of recommendation as wanted to be outputted in report
 ranked_recommendations <- pivot_recommendations |>
   mutate(Recommendation = recode(Recommendation,  'Recommendations ranking [Furnace/Boiler Tune-up]' = 'Furnace/Boiler Tune-up', 'Recommendations ranking [High Efficiency Showerhead(s)]' = 'High-efficiency Shower Head(s)', 'Recommendations ranking [LEDs]' = 'LEDs', 'Recommendations ranking [Window-Dressers]' = 'Window Dressers', 'Recommendations ranking [Refrigerator]' = 'Refrigerator', 'Recommendations ranking [Freezer]' = 'Freezer', 'Recommendations ranking [Induction Stove/Oven]' = 'Induction Stove/Oven', 'Recommendations ranking [Heat Pump Water Heater]' = 'Heat Pump Water Heater', 'Recommendations ranking [Gutters]' = 'Gutters', 'Recommendations ranking [Bathroom Exhaust Fan(s)]' = 'Bathroom Exhaust Fan(s)', 'Recommendations ranking [Kitchen Exhaust Fan]' = 'Kitchen Exhaust Fan', 'Recommendations ranking [Vapor Barrier]' = 'Vapor Barrier', 'Recommendations ranking [Spray Foam Basement/Crawlspace Walls]' = 'Spray Foam Basement/Crawlspace Walls', 'Recommendations ranking [Attic Insulation and Air Sealing]' = 'Attic Insulation and Air Sealing', 'Recommendations ranking [Blown-in Cellulose Wall Insulation]' = 'Blown-in Cellulose Wall Insulation','Recommendations ranking [Continuous Exterior Wall Insulation]' = 'Continuous Exterior Wall Insulation', 'Recommendations ranking [Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', 'Recommendations ranking [Air Source Heat Pump]'= 'Air Source Heat Pump', 'Recommendations ranking [EV and Charger]' = 'EV+Charger', 'Recommendations ranking [Solar]' = 'Solar', 'Recommendations ranking [Other 1]' = 'Other 1', 'Recommendations ranking [Other 2]' = 'Other 2','Recommendations ranking [Other 3]' = 'Other 3','Recommendations ranking [Pipe Insulation]' = 'Pipe Insulation', 'Recommendations ranking [Whole-House Surge Protection]' = 'Whole-House Surge Protection', 'Recommendations ranking [Misc. Air Sealing]' = 'Misc. Air Sealing')) |>
   mutate_at('Rank', as.numeric)
     
-
+  #rank the recommendation as per auditors ranking and remove recommendations that are not rerecorded/applicable
 ranked_clean_recommendations <- ranked_recommendations|>
    arrange((Rank))|>
-  # filter(Rank != 0)|>
+   filter(Rank != 0)|>
    select(-Rank)
 ```
 
@@ -95,15 +95,17 @@ ranked_clean_recommendations <- ranked_recommendations|>
 #| echo: false
 #| warning: false
 #| eval: true
+  #select only basic data that use numbers
+energy_cost_quantity <- energy_test_googlesheets |>
+  select(`Gallons of Heating Oil`,`Cost in Dollars (Heating Oil)`,`Gallons of Kerosene`,`Cost in Dollars (Kerosene)`,`Gallons of Propane`,`Cost in Dollars (Propane)`,`kWh of Electricity`,`Cost in Dollars (Electricity)`,`Cords of Firewood`,`Cost in Dollars (Firewood)`,`Tons of pellets`,`Cost in Dollars (Pellets)`,`Write the quantity and measuring unit`, `Cost in Dollars (Other)` )
 
-double_basics <- energy_test_googlesheets |>
-  select(`Date Built`, `Number of floors`, `Volume of conditioned space (cubic feet)`, `Square footage of conditioned space`, `Thickness of the attic insulation (inches), at the thinnest location`, `Gallons of Heating Oil`,`Cost in Dollars (Heating Oil)`,`Gallons of Kerosene`,`Cost in Dollars (Kerosene)`,`Gallons of Propane`,`Cost in Dollars (Propane)`,`kWh of Electricity`,`Cost in Dollars (Electricity)`,`Cords of Firewood`,`Cost in Dollars (Firewood)`,`Tons of pellets`,`Cost in Dollars (Pellets)`,`Write the quantity and measuring unit`, `Cost in Dollars (Other)` )
-
-double_other <- energy_test_googlesheets |>
-  select(`Date Built`, `Number of floors`, `Volume of conditioned space (cubic feet)`, `Square footage of conditioned space`)|>
+  #select other data that is numbers
+double_other <- clean_audit_data |>
+  select( date_built, number_of_floors, volume_of_conditioned_space_cubic_feet, square_footage_of_conditioned_space, ambient_carbon_monoxide_reading)|>
   pivot_longer(cols = everything(),
     names_to = "Info", 
-    values_to = "Values")
+    values_to = "Values")|>
+  mutate(Info = recode(Info, date_built = 'Date Built', number_of_floors = 'Number of floors', square_footage_of_conditioned_space = 'Square footage of conditioned space', volume_of_conditioned_space_cubic_feet = 'Volume of conditioned space (cubic feet)', ambient_carbon_monoxide_reading = 'Ambient Carbon Monoxide reading'))
 
 
 ```
@@ -111,15 +113,18 @@ double_other <- energy_test_googlesheets |>
 ```{r}
 #| label: attic data for basics
 #| echo: false
-
+  #select all the data that is basic related to attic
 attic_basics <- energy_test_googlesheets |>
   select( `Attic insulation type`, `Quality of attic insulation's installation? Assess worst part of installation.`, `Thickness of the attic insulation (inches), at the thinnest location`)|>
+  #join the data into one row
   mutate(Attic_all = paste(`Attic insulation type`, ",", `Thickness of the attic insulation (inches), at the thinnest location`, "inches"))|>
   mutate(Info = 'Attic',
         .before =`Attic insulation type`)
 
+  #remove unwanted rows
 attic_basics <- attic_basics[,-c(2,3,4)]
-
+  
+  #rename the column heading
 names(attic_basics) <- c('Info', 'Values')
   
 
@@ -128,18 +133,22 @@ names(attic_basics) <- c('Info', 'Values')
 ```{r}
 #| label: setup energy sources gallons
 #| echo: false
-gallon_sources <- double_basics |>
+
+  #select amount and pivot the energy sources using gallons 
+gallon_sources <- energy_cost_quantity |>
   select('Gallons of Heating Oil', 'Gallons of Propane', 'Gallons of Kerosene')|>
   pivot_longer(cols = c('Gallons of Heating Oil', 'Gallons of Propane', 'Gallons of Kerosene' ),
     names_to = "Source", 
     values_to = "Amount")
 
-gallon_cost <- double_basics|>
+#select cost and pivot the energy sources using gallons 
+gallon_cost <- energy_cost_quantity|>
   select('Cost in Dollars (Heating Oil)', 'Cost in Dollars (Propane)', 'Cost in Dollars (Kerosene)')|>
   pivot_longer(cols = c('Cost in Dollars (Heating Oil)', 'Cost in Dollars (Propane)', 'Cost in Dollars (Kerosene)'),
     names_to = "Source_Cost", 
     values_to = "Dollars")
 
+  #filter sources that are not present in the house 
 annual_totals_gallon <- gallon_sources |>
   cbind(gallon_cost) |>
   filter(Amount != is.na(NA))|>
@@ -154,13 +163,13 @@ annual_totals_gallon <- annual_totals_gallon[, -c(2,3,4)]
 ```{r}
 #| label: setup energy sources kWh
 #| echo: false
-kWh_sources <- double_basics |>
+kWh_sources <- energy_cost_quantity |>
   select('kWh of Electricity')|>
   pivot_longer(cols = c('kWh of Electricity'),
     names_to = "Source", 
     values_to = "Amount")
 
-kWh_cost <- double_basics|>
+kWh_cost <- energy_cost_quantity|>
   select('kWh of Electricity')|>
   pivot_longer(cols = c('kWh of Electricity'),
     names_to = "Source_Cost", 
@@ -178,13 +187,13 @@ annual_totals_kWh <- annual_totals_kWh[, -c(2,3,4)]
 ```{r}
 #| label: setup energy sources cords
 #| echo: false
-cords_sources <- double_basics |>
+cords_sources <- energy_cost_quantity |>
   select('Cords of Firewood')|>
   pivot_longer(cols = c('Cords of Firewood'),
     names_to = "Source", 
     values_to = "Amount")
 
-cords_cost <- double_basics|>
+cords_cost <- energy_cost_quantity|>
   select('Cords of Firewood')|>
   pivot_longer(cols = c('Cords of Firewood'),
     names_to = "Source_Cost", 
@@ -202,13 +211,13 @@ annual_totals_cords <- annual_totals_cords[, -c(2,3,4)]
 ```{r}
 #| label: setup energy sources tons
 #| echo: false
-tons_sources <- double_basics |>
+tons_sources <- energy_cost_quantity |>
   select('Tons of pellets')|>
   pivot_longer(cols = c('Tons of pellets'),
     names_to = "Source", 
     values_to = "Amount")
 
-tons_cost <- double_basics|>
+tons_cost <- energy_cost_quantity|>
   select('Tons of pellets')|>
   pivot_longer(cols = c('Tons of pellets'),
     names_to = "Source_Cost", 
@@ -226,13 +235,13 @@ annual_totals_tons <- annual_totals_tons[, -c(2,3,4)]
 ```{r}
 #| label: setup energy sources other
 #| echo: false
-other_sources <- double_basics |>
+other_sources <- energy_cost_quantity |>
   select('Write the quantity and measuring unit')|>
   pivot_longer(cols = c('Write the quantity and measuring unit'),
     names_to = "Source", 
     values_to = "Amount")
 
-other_cost <- double_basics|>
+other_cost <- energy_cost_quantity|>
   select('Write the quantity and measuring unit')|>
   pivot_longer(cols = c('Write the quantity and measuring unit'),
     names_to = "Source_Cost", 
@@ -379,21 +388,36 @@ doors <- doors|>
 ```
 
 ```{r}
-#| label: setup windows old
+#| label: windows setup
 #| echo: false
 #| eval: false
 
-windows <- exterior |>
-  select('How many windows of this type there are? | 1', 'Number of panes in windows of this type and material | 1 [single]', 'Number of panes in windows of this type and material | 1 [double]', 'Number of panes in windows of this type and material | 1 [triple]', 'Condition of the windows of this type? | 1', 'More about condition of the windows of this type | 1', 'Total windows areas of this type? | 1') |>
-  mutate(Info = paste(`How many windows of this type there are? | 1`, `Number of panes in windows of this type and material | 1 [single]`, `Number of panes in windows of this type and material | 1 [double]`, `Number of panes in windows of this type and material | 1 [triple]`, `Condition of the windows of this type? | 1`, `More about condition of the windows of this type | 1`, `Total windows areas of this type? | 1`))#|>
+windows <- clean_audit_data |>
+  select(how_many_windows_of_this_type_there_are_1, number_of_panes_in_windows_of_this_type_and_material_1_single, number_of_panes_in_windows_of_this_type_and_material_1_double, number_of_panes_in_windows_of_this_type_and_material_1_triple)|>
+  pivot_longer(cols = everything(),
+   names_to = "Info" ,
+   values_to = "Values") #|>
+ #filter(!is.na(Values))
 
-windows <- windows[, -c(1:7)]
+windows_vector <- windows$Info
 
-windows <- windows|>
-  pivot_longer(cols = Info ,
-    names_to = "Info" ,
-    values_to = "Values")|>
-  mutate(Info = recode(Info,  'Info' = 'Windows:',))
+windows_vector_test <- str_detect(windows_vector, "double")
+
+if(all(windows_vector_test == c(F,T))) 
+{"Combo1"} else {windows$Values = paste0(windows$Values, " double glazed")}
+  
+
+#install.packages("data.table")
+library(data.table)
+windows[windows$Info %like% "double", ]
+
+#windows <- windows[, -c(1:7)]
+
+#windows <- windows|>
+  #pivot_longer(cols = Info ,
+  #  names_to = "Info" ,
+ #   values_to = "Values")|>
+#  mutate(Info = recode(Info,  'Info' = 'Windows:',))
 ```
 
 ```{r}
@@ -579,6 +603,7 @@ energy_test_googlesheets <- clean_audit_data |>
   mutate(combustion_propane = str_detect(energy_sources, pattern = "Propane"))
 
 clean_audit_data <- clean_audit_data|>
+  mutate(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1_163 = ifelse(is.na(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1_163), 0, could_you_perform_combustion_safety_tests_in_worst_case_scenario_1_163))|>
   mutate(combustionst1 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1_163, pattern = "Yes"))|>
   mutate(combustionst2 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_2, pattern = "Yes"))|>
   mutate(combustionst3 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_3, pattern = "Yes"))
@@ -871,8 +896,8 @@ cost_energy_bills <- clean_audit_data|>
 
 all_energy_bills <- quantity_energy_bills|>
   cbind(cost_energy_bills)|>
-   filter(`Cost (USD)` != is.na(NA))|>
-   select(-3)
+   filter(`Cost (USD)` != is.na(NA))#|>
+   #select(-3)
 
 gt_all_energy_bills <- gt(all_energy_bills) |>
   tab_options(table.width = pct(100))|>
@@ -2192,12 +2217,12 @@ if(other_3 == TRUE){
 ```
 
 ```{r}
-#| label: 5 additional resources recommendation
+#| label: additional resources recommendation
 #| echo: false
 #| results: asis
 
 
-cat("### Five Additional Resources
+cat("## Additional Resources
 
 Many home efficiency upgrades are eligible for Efficiency Maine rebates and federal tax credits. Financial incentives vary based on income level and type of occupancy. An overview of all state rebates and federal tax credits can be found here: https://www.efficiencymaine.com/at-home/ 
 
@@ -2209,6 +2234,6 @@ Our Maine Energy Upgrade Program team is willing and able to help you sort out t
 ")
 ```
 
-## Financing
+
 
 
