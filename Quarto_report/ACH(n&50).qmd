@@ -30,14 +30,14 @@ ACHn1 <- data.frame(IdialACHn = c("Ideal"))
 ggplot(Building_Audit, aes(y=1))+
   geom_bar(width=1, fill ="#F5F5DC")+ #add8e6
   #scale_fill_gradient(low="#FF8888",high="#FF0000")+ #it should be working idk why it doesn't
-   geom_vline(xintercept=0.54, #move this to before previous x intercepts
+   geom_vline(xintercept=0.4, #move this to before previous x intercepts
                 linetype=1, colour="#59D2FE", size= 3)+ #(maybe have coditional color? red if ACHn is to big blue if it's ok)
   #scale_x_reverse()+
   geom_vline(xintercept= c(0, 0.04, 0.35, 0.41, 0.6,1), size= 1.3, ylim)+
  
   
 #The vline text lables
-  geom_text(aes(x=0.54, label="Your Home", y=1.3), nudge_x= -0.03, colour="#59D2FE", angle=90, size = 4, text=element_text(size=20)) + #move this to the legend
+  geom_text(aes(x=0.4, label="Your Home", y=1.3), nudge_x= -0.03, colour="#59D2FE", angle=90, size = 4, text=element_text(size=20)) + #move this to the legend
   geom_text(aes(x=0, label="", y=1), nudge_x= -0.03, colour="black", angle=90, text=element_text(size=11)) +
   geom_text(aes(x=0.04, label="Passive House", y=1), nudge_x= -0.02, colour="black", angle=90, text=element_text(size=11)) +
   geom_text(aes(x=0.35, label="Very Tight Mechanical \nVentilation Needed", y=1), nudge_x= -0.05, colour="black", angle=90, text=element_text(size=11)) +
@@ -46,7 +46,7 @@ ggplot(Building_Audit, aes(y=1))+
   geom_text(aes(x=1, label="Very Leaky", y=1), nudge_x= -0.03, colour="black", angle=90, text=element_text(size=11)) +
   
 #The vline text values 
-  geom_text(aes(x=0.54, label=0.54, y=1.55), nudge_x= -0.03,nudge_y = -1, colour="#59D2FE", angle=90, text=element_text(size=11)) + #move this to the legend
+  geom_text(aes(x=0.4, label=0.4, y=1.55), nudge_x= -0.03,nudge_y = -1, colour="#59D2FE", angle=90, text=element_text(size=11)) + #move this to the legend
   geom_text(aes(x=0, label="0", y=1.55), nudge_x= -0.03,nudge_y = -1.0323, colour="black", angle=90, text=element_text(size=11)) +
   geom_text(aes(x=0.04, label="0.04", y=1.55), nudge_x= -0.02, nudge_y = -1, colour="black", angle=90, text=element_text(size=11)) +
   geom_text(aes(x=0.35, label="0.35", y=1.55), nudge_x= -0.03,nudge_y = -1, colour="black", angle=90, text=element_text(size=11)) +
@@ -55,7 +55,7 @@ ggplot(Building_Audit, aes(y=1))+
   geom_text(aes(x=1, label="1", y=1.55), nudge_x= -0.03,nudge_y = -1.03, colour="black", angle=90, text=element_text(size=11)) +
   theme_void()
   
-ggsave("graph_0_54.png", width=10, height=5)
+ggsave("graph_0_40.png", width=10, height=5)
 #Here will be a singular bar plat with air leak visualization
 ```
 
