@@ -105,7 +105,7 @@ double_other <- clean_audit_data |>
   pivot_longer(cols = everything(),
     names_to = "Info", 
     values_to = "Values")|>
-  mutate(Info = recode(Info, date_built = 'Date Built', number_of_floors = 'Number of floors', square_footage_of_conditioned_space = 'Square footage of conditioned space', volume_of_conditioned_space_cubic_feet = 'Volume of conditioned space (cubic feet)', ambient_carbon_monoxide_reading = 'Ambient Carbon Monoxide reading'))
+  mutate(Info = recode(Info, date_built = 'Date Built', number_of_floors = 'Number of floors', square_footage_of_conditioned_space = 'Square footage of conditioned space', volume_of_conditioned_space_cubic_feet = 'Volume of conditioned space (cubic feet)', ambient_carbon_monoxide_reading = 'Ambient Carbon Monoxide reading (ppm)'))
 
 
 ```
