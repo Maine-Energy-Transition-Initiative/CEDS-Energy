@@ -1,0 +1,74 @@
+```{r}
+#| label: setup siding old
+#| echo: false
+#| eval: false
+
+siding <- exterior |>
+  select('Siding type', 'Condition of the siding?', 'Comment about condition of the siding') |>
+  mutate(Info = paste(`Siding type`,'in ', `Condition of the siding?`, 'condition .', `Comment about condition of the siding`))#|>
+
+siding <- siding[, -c(1:3)]
+
+siding <- siding|>
+  pivot_longer(cols = Info ,
+    names_to = "Info" ,
+    values_to = "Values")|>
+  mutate(Info = recode(Info,  'Info' = 'Siding:',))
+```
+
+```{r}
+#| label: setup exterior doors old
+#| echo: false
+#| eval: false
+
+doors <- exterior |>
+  select('Door(s) type | 1', 'Number of doors of this type | 1', 'Total door area of this type | 1') |>
+  mutate(Info = paste(`Number of doors of this type | 1`, `Door(s) type | 1`,'door. Totaling ', `Total door area of this type | 1`, 'square feet.'))#|>
+
+doors <- doors[, -c(1:3)]
+
+doors <- doors|>
+  pivot_longer(cols = Info ,
+    names_to = "Info" ,
+    values_to = "Values")|>
+  mutate(Info = recode(Info,  'Info' = 'Exterior doors:',))
+```
+
+```{r}
+#| label: setup windows old
+#| echo: false
+#| eval: false
+
+windows <- exterior |>
+  select('How many windows of this type there are? | 1', 'Number of panes in windows of this type and material | 1 [single]', 'Number of panes in windows of this type and material | 1 [double]', 'Number of panes in windows of this type and material | 1 [triple]', 'Condition of the windows of this type? | 1', 'More about condition of the windows of this type | 1', 'Total windows areas of this type? | 1') |>
+  mutate(Info = paste(`How many windows of this type there are? | 1`, `Number of panes in windows of this type and material | 1 [single]`, `Number of panes in windows of this type and material | 1 [double]`, `Number of panes in windows of this type and material | 1 [triple]`, `Condition of the windows of this type? | 1`, `More about condition of the windows of this type | 1`, `Total windows areas of this type? | 1`))#|>
+
+windows <- windows[, -c(1:7)]
+
+windows <- windows|>
+  pivot_longer(cols = Info ,
+    names_to = "Info" ,
+    values_to = "Values")|>
+  mutate(Info = recode(Info,  'Info' = 'Windows:',))
+```
+
+```{r}
+#| label: 3.2 table setup old
+#| echo: false
+#| eval: false
+
+all_exterior <- roof_type_all |>
+  rbind(roof_moisture_control, siding, doors, windows )#|>
+  #arrange(factor(Info, levels = c('Date Built', 'Foundation Type', 'Attic', 'Number of floors', 'Square footage of conditioned space', 'Volume of conditioned space (cubic feet)','Ambient Carbon Monoxide reading')))
+```
+
+
+```{r}
+#| label: setup data 3.2 not finished
+#| echo: false
+#| eval: false
+
+exterior_n <- clean_audit_data|>
+  select(roof_type, roof_age, condition_of_the_roof, orientation_of_the_primary_roof_faces, comment_about_condition_of_the_roof, existing_moisture_control_strategies, condition_of_moisture_control_strategies, comments_about_existing_moisture_control_strategies, siding_type, condition_of_the_siding, comment_about_condition_of_the_siding, door_s_type_2_insulated, door_s_type_2_hollow, door_s_type_2_glass_door, condition_fit_of_the_doors_of_this_type_2, number_of_doors_of_this_type_2, total_door_area_of_this_type_2_174, door_s_type_1_insulated, door_s_type_1_hollow, door_s_type_1_glass_door, condition_fit_of_the_doors_of_this_type_1, number_of_doors_of_this_type_1, total_door_area_of_this_type_1, door_s_type_3_insulated, door_s_type_3_hollow, door_s_type_3_glass_door, condition_fit_of_the_doors_of_this_type_3, number_of_doors_of_this_type_3, total_door_area_of_this_type_3_178, how_many_windows_of_this_type_there_are_1, how_many_windows_of_this_type_there_are_2, how_many_windows_of_this_type_there_are_3, how_many_windows_of_this_type_there_are_4, how_many_windows_of_this_type_there_are_5) #'How many windows of this type there are? | 1', 'Number of panes in windows of this type and material | 1 [single]', 'Number of panes in windows of this type and material | 1 [double]', 'Number of panes in windows of this type and material | 1 [triple]', 'Condition of the windows of this type? | 1', 'More about condition of the windows of this type | 1', 'Total windows areas of this type? | 1'
+
+```
