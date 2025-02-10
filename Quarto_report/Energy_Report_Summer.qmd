@@ -7,6 +7,8 @@ format:
     number-sections: true
     number-depth: 3
     number-offset: 0
+    mainfont: Calibri
+    monofont: Calibri
 css: styles.css
 tbl-colwidths: [75,25]
 editor: source
@@ -50,31 +52,46 @@ library(janitor)
 #Load Audit Data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
+<<<<<<< HEAD
 energy_test_googlesheets <- all_energy_test_googlesheets[1, ]
+=======
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
-clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
+energy_test_googlesheets <- all_energy_test_googlesheets[16, ]
 
-#Building_Audit <- Energy_Audits |> #to make it parametorized
-  #filter(Adress_Name == params$adress) # Auditor_full_name == params$Auditor_full_name
-
+<<<<<<< HEAD
 #Load Recommendation Info
 recommendations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c")
 
   
+=======
+clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 ```
+
 
 ```{r}
 #| label: setup rank recommendations data
 #| echo: false
 #| warning: false
 
+<<<<<<< HEAD
 pivot_recommendations <- clean_audit_data |>
   select(c(recommendations_ranking_furnace_boiler_tune_up:recommendations_ranking_other_3, recommendations_ranking_ductwork_air_sealing_and_insulation))|>
+=======
+  #select only recomendations to make separate data frame
+recommendations <- energy_test_googlesheets |>
+  select(c("Recommendations ranking [Furnace/Boiler Tune-up]":"Recommendations ranking [Other 1]", 'Recommendations ranking [Continuous Exterior Wall Insulation]', 'Recommendations ranking [Pipe Insulation]', 'Recommendations ranking [Whole-House Surge Protection]', 'Recommendations ranking [Misc. Air Sealing]', 'Recommendations ranking [Other 2]', 'Recommendations ranking [Other 3]'))
+  
+  #pivot teh data to be displayed vertically
+pivot_recommendations <- recommendations |>
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
   pivot_longer(cols = everything(),
     names_to = "Rec_from_google_form", 
     values_to = "Rank")
 
+<<<<<<< HEAD
 ranked_clean_recommendations <- recommendations_googlesheets |>
   bind_cols(pivot_recommendations)|>
  select(-Rec_from_google_form)|>
@@ -82,6 +99,21 @@ ranked_clean_recommendations <- recommendations_googlesheets |>
   filter(Rank != 0)|>
   select(-Rank)
 
+=======
+  #add description to each recommendation
+pivot_recommendations['Description'] <- c("Have the furnace and flue inspected and adjusted by a licensed professional. This should be available from your oil or propane delivery company.","Install high-efficiency shower heads to reduce the amount of water and energy to heat the water used when showering.","Switch your light bulbs to LED light bulbs. LEDs use 80% less energy than incandescent light bulbs which can significantly reduce your electricity bill. We provide free LED light bulbs, contact us for some if we did not give you any during the audit.","Window-Dressers insulating window inserts help air-seal windows and reduce heat loss and gain. There will be a Window-Dresser community build on Great Cranberry Island from November 8th through 14th. Sign up at https://windowdressers.org/sign-up-for-inserts/ There will be a Window Dressers build in Eastport from November 18th through 25th. Contact Pete to sign up: 207-214-4751 or EastportMEEnergy@gmail.com","Replace your refrigerator with a new, EnergyStar certified fridge. Look at the Energy Guide label to compare the energy use of new refrigerators.","Replace your freezer with a new, EnergyStar certified freezer. Look at the Energy Guide label to compare the energy use of new freezers.","Induction cooking appliances are more efficient and safer than electric or gas ones. There is no risk of carbon monoxide or other harmful combustion gases, and the surface doesn't heat up without a pot or pan on it.","Install a heat pump water heater to provide your hot water for cooking and bathing. This is the most efficient way to heat water and will save hundreds of dollars a year compared to electric resistance, heating oil or propane hot water. It will also help to dehumidify while it's running. If your current water heater burns oil or propane, this will also remove a source of combustion gases from your home.","Install gutters and downspouts that divert water at least six feet away from the foundation and to where the ground slopes away from the house.","Bathroom exhaust fans should be rated for at least 80 cubic feet per minute (CFM) if there is a shower. We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise.","We recommend a kitchen exhaust fan to remove harmful combustion gases from your home, which should be rated for at least 100 cubic feet per minute (CFM). A fan can also help with moisture concerns.","Install a vapor barrier on the basement floor to stop moisture from entering the basement and house.","Install spray foam on the basement/crawlspace walls to prevent moisture infiltration and reduce heat loss.","Air seal the attic and insulate it to at least R-60 (18” of loose-fill cellulose insulation).","Insulate the wall stud cavities with dense packed, blown-in cellulose insulation.","Add a continuous layer of insulation and potentially replace the air and moisture barrier once it becomes time to replace the siding.","Replace your existing electrical panel to increase the capacity to 200 amps (and address potential safety hazards).","Install air source heat pumps and whole-house surge protection.","An electric vehicle will eliminate your gas costs and reduce fossil fuel dependence. A 2020 study by Consumer Reports found that lifetime ownership costs were significantly lower for EVs, saving between $6,000 - $10,000 over their lifetimes.","Rooftop solar can supply most or all of your home electrical demands. Contact a solar company for pricing and details specific to your home.", "TYPE HERE (Other 1)", "Insulate both hot and cold water pipes that are uninsulated in the basement/crawlspace. This will save energy and prevent condensation.", "Upgrade your electrical panel to add whole-house surge protection.", "We recommend sealing air leaks and weatherstripping exterior doors.", "TYPE HERE (Other 2)", "TYPE HERE (Other 3)")
+
+  #rename the titles of recommendation as wanted to be outputted in report
+ranked_recommendations <- pivot_recommendations |>
+  mutate(Recommendation = recode(Recommendation,  'Recommendations ranking [Furnace/Boiler Tune-up]' = 'Furnace/Boiler Tune-up', 'Recommendations ranking [High Efficiency Showerhead(s)]' = 'High-efficiency Shower Head(s)', 'Recommendations ranking [LEDs]' = 'LEDs', 'Recommendations ranking [Window-Dressers]' = 'Window Dressers', 'Recommendations ranking [Refrigerator]' = 'Refrigerator', 'Recommendations ranking [Freezer]' = 'Freezer', 'Recommendations ranking [Induction Stove/Oven]' = 'Induction Stove/Oven', 'Recommendations ranking [Heat Pump Water Heater]' = 'Heat Pump Water Heater', 'Recommendations ranking [Gutters]' = 'Gutters', 'Recommendations ranking [Bathroom Exhaust Fan(s)]' = 'Bathroom Exhaust Fan(s)', 'Recommendations ranking [Kitchen Exhaust Fan]' = 'Kitchen Exhaust Fan', 'Recommendations ranking [Vapor Barrier]' = 'Vapor Barrier', 'Recommendations ranking [Spray Foam Basement/Crawlspace Walls]' = 'Spray Foam Basement/Crawlspace Walls', 'Recommendations ranking [Attic Insulation and Air Sealing]' = 'Attic Insulation and Air Sealing', 'Recommendations ranking [Blown-in Cellulose Wall Insulation]' = 'Blown-in Cellulose Wall Insulation','Recommendations ranking [Continuous Exterior Wall Insulation]' = 'Continuous Exterior Wall Insulation', 'Recommendations ranking [Electrical Panel Upgrade]' = 'Electrical Panel Upgrade', 'Recommendations ranking [Air Source Heat Pump]'= 'Air Source Heat Pump', 'Recommendations ranking [EV and Charger]' = 'EV+Charger', 'Recommendations ranking [Solar]' = 'Solar', 'Recommendations ranking [Other 1]' = 'Other 1', 'Recommendations ranking [Other 2]' = 'Other 2','Recommendations ranking [Other 3]' = 'Other 3','Recommendations ranking [Pipe Insulation]' = 'Pipe Insulation', 'Recommendations ranking [Whole-House Surge Protection]' = 'Whole-House Surge Protection', 'Recommendations ranking [Misc. Air Sealing]' = 'Misc. Air Sealing')) |>
+  mutate_at('Rank', as.numeric)
+    
+  #rank the recommendation as per auditors ranking and remove recommendations that are not rerecorded/applicable
+ranked_clean_recommendations <- ranked_recommendations|>
+   arrange((Rank))|>
+   filter(Rank != 0)|>
+   select(-Rank)
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 ```
 
 ```{r}
@@ -89,15 +121,17 @@ ranked_clean_recommendations <- recommendations_googlesheets |>
 #| echo: false
 #| warning: false
 #| eval: true
+  #select only basic data that use numbers
+energy_cost_quantity <- energy_test_googlesheets |>
+  select(`Gallons of Heating Oil`,`Cost in Dollars (Heating Oil)`,`Gallons of Kerosene`,`Cost in Dollars (Kerosene)`,`Gallons of Propane`,`Cost in Dollars (Propane)`,`kWh of Electricity`,`Cost in Dollars (Electricity)`,`Cords of Firewood`,`Cost in Dollars (Firewood)`,`Tons of pellets`,`Cost in Dollars (Pellets)`,`Write the quantity and measuring unit`, `Cost in Dollars (Other)` )
 
-double_basics <- energy_test_googlesheets |>
-  select(`Date Built`, `Number of floors`, `Volume of conditioned space (cubic feet)`, `Square footage of conditioned space`, `Thickness of the attic insulation (inches), at the thinnest location`, `Gallons of Heating Oil`,`Cost in Dollars (Heating Oil)`,`Gallons of Kerosene`,`Cost in Dollars (Kerosene)`,`Gallons of Propane`,`Cost in Dollars (Propane)`,`kWh of Electricity`,`Cost in Dollars (Electricity)`,`Cords of Firewood`,`Cost in Dollars (Firewood)`,`Tons of pellets`,`Cost in Dollars (Pellets)`,`Write the quantity and measuring unit`, `Cost in Dollars (Other)` )
-
-double_other <- energy_test_googlesheets |>
-  select(`Date Built`, `Number of floors`, `Volume of conditioned space (cubic feet)`, `Square footage of conditioned space`)|>
+  #select other data that is numbers
+double_other <- clean_audit_data |>
+  select( date_built, number_of_floors, volume_of_conditioned_space_cubic_feet, square_footage_of_conditioned_space, ambient_carbon_monoxide_reading)|>
   pivot_longer(cols = everything(),
     names_to = "Info", 
-    values_to = "Values")
+    values_to = "Values")|>
+  mutate(Info = recode(Info, date_built = 'Date Built', number_of_floors = 'Number of floors', square_footage_of_conditioned_space = 'Square footage of conditioned space', volume_of_conditioned_space_cubic_feet = 'Volume of conditioned space (cubic feet)', ambient_carbon_monoxide_reading = 'Ambient Carbon Monoxide reading (ppm)'))
 
 
 ```
@@ -105,15 +139,18 @@ double_other <- energy_test_googlesheets |>
 ```{r}
 #| label: attic data for basics
 #| echo: false
-
+  #select all the data that is basic related to attic
 attic_basics <- energy_test_googlesheets |>
   select( `Attic insulation type`, `Quality of attic insulation's installation? Assess worst part of installation.`, `Thickness of the attic insulation (inches), at the thinnest location`)|>
+  #join the data into one row
   mutate(Attic_all = paste(`Attic insulation type`, ",", `Thickness of the attic insulation (inches), at the thinnest location`, "inches"))|>
   mutate(Info = 'Attic',
         .before =`Attic insulation type`)
 
+  #remove unwanted rows
 attic_basics <- attic_basics[,-c(2,3,4)]
-
+  
+  #rename the column heading
 names(attic_basics) <- c('Info', 'Values')
   
 
@@ -122,18 +159,22 @@ names(attic_basics) <- c('Info', 'Values')
 ```{r}
 #| label: setup energy sources gallons
 #| echo: false
-gallon_sources <- double_basics |>
+
+  #select amount and pivot the energy sources using gallons 
+gallon_sources <- energy_cost_quantity |>
   select('Gallons of Heating Oil', 'Gallons of Propane', 'Gallons of Kerosene')|>
   pivot_longer(cols = c('Gallons of Heating Oil', 'Gallons of Propane', 'Gallons of Kerosene' ),
     names_to = "Source", 
     values_to = "Amount")
 
-gallon_cost <- double_basics|>
+#select cost and pivot the energy sources using gallons 
+gallon_cost <- energy_cost_quantity|>
   select('Cost in Dollars (Heating Oil)', 'Cost in Dollars (Propane)', 'Cost in Dollars (Kerosene)')|>
   pivot_longer(cols = c('Cost in Dollars (Heating Oil)', 'Cost in Dollars (Propane)', 'Cost in Dollars (Kerosene)'),
     names_to = "Source_Cost", 
     values_to = "Dollars")
 
+  #filter sources that are not present in the house 
 annual_totals_gallon <- gallon_sources |>
   cbind(gallon_cost) |>
   filter(Amount != is.na(NA))|>
@@ -148,13 +189,13 @@ annual_totals_gallon <- annual_totals_gallon[, -c(2,3,4)]
 ```{r}
 #| label: setup energy sources kWh
 #| echo: false
-kWh_sources <- double_basics |>
+kWh_sources <- energy_cost_quantity |>
   select('kWh of Electricity')|>
   pivot_longer(cols = c('kWh of Electricity'),
     names_to = "Source", 
     values_to = "Amount")
 
-kWh_cost <- double_basics|>
+kWh_cost <- energy_cost_quantity|>
   select('kWh of Electricity')|>
   pivot_longer(cols = c('kWh of Electricity'),
     names_to = "Source_Cost", 
@@ -172,13 +213,13 @@ annual_totals_kWh <- annual_totals_kWh[, -c(2,3,4)]
 ```{r}
 #| label: setup energy sources cords
 #| echo: false
-cords_sources <- double_basics |>
+cords_sources <- energy_cost_quantity |>
   select('Cords of Firewood')|>
   pivot_longer(cols = c('Cords of Firewood'),
     names_to = "Source", 
     values_to = "Amount")
 
-cords_cost <- double_basics|>
+cords_cost <- energy_cost_quantity|>
   select('Cords of Firewood')|>
   pivot_longer(cols = c('Cords of Firewood'),
     names_to = "Source_Cost", 
@@ -196,13 +237,13 @@ annual_totals_cords <- annual_totals_cords[, -c(2,3,4)]
 ```{r}
 #| label: setup energy sources tons
 #| echo: false
-tons_sources <- double_basics |>
+tons_sources <- energy_cost_quantity |>
   select('Tons of pellets')|>
   pivot_longer(cols = c('Tons of pellets'),
     names_to = "Source", 
     values_to = "Amount")
 
-tons_cost <- double_basics|>
+tons_cost <- energy_cost_quantity|>
   select('Tons of pellets')|>
   pivot_longer(cols = c('Tons of pellets'),
     names_to = "Source_Cost", 
@@ -220,13 +261,13 @@ annual_totals_tons <- annual_totals_tons[, -c(2,3,4)]
 ```{r}
 #| label: setup energy sources other
 #| echo: false
-other_sources <- double_basics |>
+other_sources <- energy_cost_quantity |>
   select('Write the quantity and measuring unit')|>
   pivot_longer(cols = c('Write the quantity and measuring unit'),
     names_to = "Source", 
     values_to = "Amount")
 
-other_cost <- double_basics|>
+other_cost <- energy_cost_quantity|>
   select('Write the quantity and measuring unit')|>
   pivot_longer(cols = c('Write the quantity and measuring unit'),
     names_to = "Source_Cost", 
@@ -299,15 +340,20 @@ all_interior <- clean_audit_data|>
   
   #select all the columns that have information about the interior/living spaces
   select(wall_stud_insulation_type, thickness_of_the_wall_stud_insulation, quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, any_additional_comments_on_wall_stud_insulation, wall_continuous_insulation_type, thickness_of_the_wall_continuous_insulation, quality_of_wall_continuous_insulations_installation_assess_worst_part_of_installation, any_additional_comments_on_wall_continuous_insulation, framing_type, general_comment_about_the_living_room, general_comment_about_the_bathroom_s, general_comment_about_the_kitchen, k_wh_reading_1, k_wh_reading_2, time_passed_since_installation_of_kilowatt_meter_1, time_passed_since_installation_of_kilowatt_meter_2, which_appliance_did_you_measure_1, which_appliance_did_you_measure_2)|>
+  
+  #make conditional stock framing description
+mutate(stock_framing = case_when( framing_type == "Balloon" ~ 'The framing type of the home is balloon framing, which means the wall cavities extend the full height of the building (from the foundation to the roof). Often the wall cavities are interconnected with the floor and ceiling cavities. This framing type can create connected passageways for air to leave the house and rodents to enter the house. ', framing_type == "Platform" ~ 'The framing type of the home is platform framing, which means that wall cavities do not extend the full height of the building and are instead separated by floors. ', TRUE ~ 'NA'))|>
 
  #join information into one column for stud insulation in 3.3
-  mutate('Walls:'= paste0("Walls framing is ", framing_type , " type. There is ", wall_stud_insulation_type, " insulation ", thickness_of_the_wall_stud_insulation, " inches thick in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, " condition. ", any_additional_comments_on_wall_stud_insulation))|>
+  mutate('Walls:'= paste0( stock_framing, "There is ", wall_stud_insulation_type, " insulation ", thickness_of_the_wall_stud_insulation, " inches thick in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, " condition. ", any_additional_comments_on_wall_stud_insulation))|>
+   
+
   
   #join information into one column for kitchen in 3.3
   mutate('Kitchen:'= paste0(which_appliance_did_you_measure_1, " used ", k_wh_reading_1, " kWh in ", time_passed_since_installation_of_kilowatt_meter_1, " minutes. ", which_appliance_did_you_measure_2, " used ", k_wh_reading_2, " kWh in ", time_passed_since_installation_of_kilowatt_meter_2, " minutes. ", general_comment_about_the_kitchen ))|>
   
   #delete unwanted columns, the once that were used to create joined columns
-  select(-c(1:9, 12:18))|>
+  select(-c(1:9, 12:19))|>
   
   #pivot horizontal columns to be displayed vertical in the rows
   pivot_longer(cols = everything() ,
@@ -321,6 +367,115 @@ all_interior <- clean_audit_data|>
   arrange(factor(Info, levels = c('Walls:')))
 ```
 
+<<<<<<< HEAD
+=======
+```{r}
+#| label: setup siding old
+#| echo: false
+#| eval: false
+
+siding <- exterior |>
+  select('Siding type', 'Condition of the siding?', 'Comment about condition of the siding') |>
+  mutate(Info = paste(`Siding type`,'in ', `Condition of the siding?`, 'condition .', `Comment about condition of the siding`))#|>
+
+siding <- siding[, -c(1:3)]
+
+siding <- siding|>
+  pivot_longer(cols = Info ,
+    names_to = "Info" ,
+    values_to = "Values")|>
+  mutate(Info = recode(Info,  'Info' = 'Siding:',))
+```
+
+```{r}
+#| label: setup exterior doors old
+#| echo: false
+#| eval: false
+
+doors <- exterior |>
+  select('Door(s) type | 1', 'Number of doors of this type | 1', 'Total door area of this type | 1') |>
+  mutate(Info = paste(`Number of doors of this type | 1`, `Door(s) type | 1`,'door. Totaling ', `Total door area of this type | 1`, 'square feet.'))#|>
+
+doors <- doors[, -c(1:3)]
+
+doors <- doors|>
+  pivot_longer(cols = Info ,
+    names_to = "Info" ,
+    values_to = "Values")|>
+  mutate(Info = recode(Info,  'Info' = 'Exterior doors:',))
+```
+
+```{r}
+#| label: windows setup
+#| echo: false
+#| eval: false
+
+windows <- clean_audit_data |>
+  select(how_many_windows_of_this_type_there_are_1, number_of_panes_in_windows_of_this_type_and_material_1_single, number_of_panes_in_windows_of_this_type_and_material_1_double, number_of_panes_in_windows_of_this_type_and_material_1_triple)|>
+  pivot_longer(cols = everything(),
+   names_to = "Info" ,
+   values_to = "Values") #|>
+ #filter(!is.na(Values))
+
+windows_vector <- windows$Info
+
+windows_vector_test <- str_detect(windows_vector, "double")
+
+if(all(windows_vector_test == c(F,T))) 
+{"Combo1"} else {windows$Values = paste0(windows$Values, " double glazed")}
+  
+
+#install.packages("data.table")
+library(data.table)
+windows[windows$Info %like% "double", ]
+
+#windows <- windows[, -c(1:7)]
+
+#windows <- windows|>
+  #pivot_longer(cols = Info ,
+  #  names_to = "Info" ,
+ #   values_to = "Values")|>
+#  mutate(Info = recode(Info,  'Info' = 'Windows:',))
+```
+
+```{r}
+#| label: 3.2 table setup old
+#| echo: false
+#| eval: false
+
+all_exterior <- roof_type_all |>
+  rbind(roof_moisture_control, siding, doors, windows )#|>
+  #arrange(factor(Info, levels = c('Date Built', 'Foundation Type', 'Attic', 'Number of floors', 'Square footage of conditioned space', 'Volume of conditioned space (cubic feet)','Ambient Carbon Monoxide reading')))
+```
+
+```{r}
+#| label: 3.4 data set up
+#| echo: false
+blower_door_leakage <- energy_test_googlesheets|>
+  select( "Equivalent leakage area")|>
+  mutate(`Equivalent leakage area` = paste0(`Equivalent leakage area`, " under natural conditions."))
+
+#blower_door_leakage <-blower_door_leakage[,-c(1)]
+
+blower_door_leakage <-blower_door_leakage|>
+  pivot_longer(c("Equivalent leakage area"),
+    names_to = "Info", 
+    values_to = "Values")
+
+blower_door <- energy_test_googlesheets|>
+  select(c("CFM50", "ACH50","ACHn", ))|> #there is another column "Comments about air leakage"
+  pivot_longer(c("CFM50", "ACH50","ACHn"),
+    names_to = "Info", 
+    values_to = "Values")
+
+all_blower_door <- blower_door|>
+  rbind(blower_door_leakage)|>
+  mutate(Info = recode(Info,  "CFM50" = "CFM50:", "ACH50" = "ACH50:","Equivalent leakage area" = "Equivalent leakage area:","ACHn" = "ACHnatural:" ))|>
+  arrange(factor(Info, levels = c('CFM50:', 'ACH50:', 'Equivalent leakage area:', 'ACHnatural:')))
+
+all_blower_door['Description'] <- c("CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.", "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.","This is the area (in square inches) equivalent to all of the air leaks in the house combined.","Accounting for the volume of the home, this means that the house exchanges –% of its air every hour. Over one day, the house goes through – complete air changes.")
+```
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 ```{r}
 #| label: attic data for 3.5
@@ -421,9 +576,9 @@ Address: `r clean_audit_data$home_address`
 
 Auditors: `r clean_audit_data$names_of_the_auditors`
 
-Contact: mdicommunityenergy\@coa.edu, 802 266 0301
+Contact: mdicommunityenergy\@coa.edu, (802) 266-0301
 
-Date: `r format(Sys.time(), '%e %B %Y')`
+Date: `r format(Sys.time(), '%B %e %Y')`
 
 ------------------------------------------------------------------------
 
@@ -433,7 +588,7 @@ We conducted an energy assessment of your home on `r clean_audit_data$date_of_au
 
 ![](images/Logos-together.png)
 
-Add here the table of content: in Word go to references and add table of content, in Docs go to the insert and on the bottom add the table of context
+**Add here the table of content: in Word go to references and add table of content, in Docs go to the insert and on the bottom add the table of context**
 
 ## Summary of your Audit
 
@@ -467,12 +622,19 @@ energy_sources_googlesheets <- clean_audit_data |>
   mutate(combustion_propane = str_detect(energy_sources, pattern = "Propane"))
 
 clean_audit_data <- clean_audit_data|>
+<<<<<<< HEAD
   mutate(combustionst1 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1, pattern = "Yes")) 
 
 #I will have to add this later
 ##|>
  ## mutate(combustionst2 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_2, ##pattern = "Yes"))|>
  ## mutate(combustionst3 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_3, pattern = "Yes"))
+=======
+  mutate(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1_163 = ifelse(is.na(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1_163), 0, could_you_perform_combustion_safety_tests_in_worst_case_scenario_1_163))|>
+  mutate(combustionst1 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1_163, pattern = "Yes"))|>
+  mutate(combustionst2 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_2, pattern = "Yes"))|>
+  mutate(combustionst3 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_3, pattern = "Yes"))
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
   
 ```
 
@@ -569,10 +731,11 @@ gt_all_basics <- gt(all_basics) |>
     Info ~ px(200),
     Values ~ px(450)
   )|>
-  cols_label(
-    Info = "",
-    Values = ""
-  )
+  tab_options(column_labels.hidden = TRUE)
+  #cols_label(
+  #  Info = "",
+ #   Values = ""
+ # )
   
 
 gt_all_basics
@@ -590,10 +753,7 @@ gt_exterior_3.2 <- gt(exterior_3.2) |>
     Info ~ px(200),
     Values ~ px(450)
   )|>
-  cols_label(
-    Info = "",
-    Values = ""
-  )#|>
+  tab_options(column_labels.hidden = TRUE)#|>
   #tab_style(
     #style = cell_borders(
      # sides = "all",
@@ -620,10 +780,7 @@ gt_all_interior <- gt(all_interior) |>
     Info ~ px(150),
     Values ~ px(100)
   )|>
-  cols_label(
-    Info = "",
-    Values = ""
-  )
+  tab_options(column_labels.hidden = TRUE)
 
 gt_all_interior
 ```
@@ -667,7 +824,7 @@ ach50_calculated$new <- as.numeric(ach50_calculated$cfm50) * 60 / as.numeric(ach
 
 A blower door test simulates a 20mph wind hitting your house from all sides.
 
-To run the test, we used a large fan in an exterior door to depressurize your house. As air is pulled out through the fan, an equal volume of air is pulled in through all of the gaps, cracks, and air leaks throughout the house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks. 
+To run the test, we used a large fan in an exterior door to depressurize your house. As air is pulled out through the fan, an equal volume of air is pulled in through all of the gaps, cracks, and air leaks throughout the house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks.
 
 To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.
 
@@ -684,11 +841,7 @@ gt_all_blower_door <- gt(all_blower_door) |>
     Values ~ px(100),
     Description ~ px(400)
   )|>
-  cols_label(
-    Info = "",
-    Values = "",
-    Description = ""
-  )
+ tab_options(column_labels.hidden = TRUE)
 
 gt_all_blower_door
 ```
@@ -707,10 +860,22 @@ gt_all_attic <- gt(all_attic) |>
     Info ~ px(200),
     Values ~ px(450),
   )|>
-  cols_label(
-    Info = "",
-    Values = ""
+  tab_options(column_labels.hidden = TRUE)|>
+  tab_options(table.font.size = 100)|>
+  tab_style(
+    style = list(
+      cell_borders(
+        sides = "all",
+        color = "#000",
+        weight = px(2)
+      )),
+    locations = cells_body()
   )
+  #use it in all table to get rid of the column lables
+  #cols_label(
+   # Info = "",
+   # Values = ""
+  #)
 
 gt_all_attic
 ```
@@ -727,10 +892,7 @@ gt_all_basement <- gt(all_basement) |>
     Info ~ px(200),
     Values ~ px(450),
   )|>
-  cols_label(
-    Info = "",
-    Values = ""
-  )
+  tab_options(column_labels.hidden = TRUE)
 
 gt_all_basement
 ```
@@ -763,15 +925,11 @@ gt_all_electrical_mechanical <- gt(all_electrical_mechanical) |>
     Info ~ px(200),
     Values ~ px(450),
   )|>
-  cols_label(
-    Info = "",
-    Values = ""
-  )
+  tab_options(column_labels.hidden = TRUE)
 
 gt_all_electrical_mechanical
 
 ```
-
 
 ### Energy Bills
 
@@ -801,8 +959,8 @@ cost_energy_bills <- clean_audit_data|>
 
 all_energy_bills <- quantity_energy_bills|>
   cbind(cost_energy_bills)|>
-   filter(`Cost (USD)` != is.na(NA))|>
-   select(-3)
+   filter(`Cost (USD)` != is.na(NA))#|>
+   #select(-3)
 
 gt_all_energy_bills <- gt(all_energy_bills) |>
   tab_options(table.width = pct(100))|>
@@ -816,7 +974,6 @@ gt_all_energy_bills
   
 ```
 
-
 ## Recommendations
 
 ```{r}
@@ -826,116 +983,146 @@ gt_all_energy_bills
 
 furnice_boiler_tune_up <- clean_audit_data|>
   select(recommendations_ranking_furnace_boiler_tune_up)|>
-  mutate(furnice_boiler_tune_up = str_detect(recommendations_ranking_furnace_boiler_tune_up, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(furnice_boiler_tune_up = str_detect(recommendations_ranking_furnace_boiler_tune_up, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_furnace_boiler_tune_up)
 
 high_efficiency_shower_heads<- clean_audit_data|>
   select(recommendations_ranking_high_efficiency_showerhead_s)|>
-  mutate(high_efficiency_shower_heads = str_detect(recommendations_ranking_high_efficiency_showerhead_s, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(high_efficiency_shower_heads = str_detect(recommendations_ranking_high_efficiency_showerhead_s, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_high_efficiency_showerhead_s)
 
 led<- clean_audit_data|>
   select(recommendations_ranking_le_ds)|>
-  mutate(led= str_detect(recommendations_ranking_le_ds, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(led = str_detect(recommendations_ranking_le_ds, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_le_ds)
 
 window_dressers <- clean_audit_data|>
   select(recommendations_ranking_window_dressers)|>
-  mutate(window_dressers = str_detect(recommendations_ranking_window_dressers, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(window_dressers = str_detect(recommendations_ranking_window_dressers, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_window_dressers)
 
 refrigerator <- clean_audit_data|>
   select(recommendations_ranking_refrigerator)|>
-  mutate(refrigerator = str_detect(recommendations_ranking_refrigerator, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(refrigerator = str_detect(recommendations_ranking_refrigerator, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_refrigerator)
 
  freezer<- clean_audit_data|>
   select(recommendations_ranking_freezer)|>
-  mutate(freezer = str_detect(recommendations_ranking_freezer, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(freezer = str_detect(recommendations_ranking_freezer, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_freezer)
  
 induction_stove<- clean_audit_data|>
   select(recommendations_ranking_induction_stove_oven)|>
+<<<<<<< HEAD
   mutate(induction_stove = str_detect(recommendations_ranking_induction_stove_oven, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+=======
+  mutate(induction_stove = str_detect(recommendations_ranking_induction_stove_oven, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
   select(-recommendations_ranking_induction_stove_oven)
 
 heatpwh <- clean_audit_data|>
   select(recommendations_ranking_heat_pump_water_heater)|>
-  mutate(heatpwh = str_detect(recommendations_ranking_heat_pump_water_heater, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(heatpwh = str_detect(recommendations_ranking_heat_pump_water_heater, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_heat_pump_water_heater)
 
 gutters <- clean_audit_data|>
   select(recommendations_ranking_gutters)|>
-  mutate(gutters= str_detect(recommendations_ranking_gutters, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(gutters= str_detect(recommendations_ranking_gutters, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_gutters)
 
 bathroom_exhaust_fan <- clean_audit_data|>
   select(recommendations_ranking_bathroom_exhaust_fan_s)|>
+<<<<<<< HEAD
   mutate(bathroom_exhaust_fan = str_detect(recommendations_ranking_bathroom_exhaust_fan_s, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+=======
+  mutate(bathroom_exhaust_fan = str_detect(recommendations_ranking_bathroom_exhaust_fan_s, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
   select(-recommendations_ranking_bathroom_exhaust_fan_s)
 
 kitchen_exhaust_fan <- clean_audit_data|>
   select(recommendations_ranking_kitchen_exhaust_fan)|>
-  mutate(kitchen_exhaust_fan= str_detect(recommendations_ranking_kitchen_exhaust_fan, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(kitchen_exhaust_fan= str_detect(recommendations_ranking_kitchen_exhaust_fan, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_kitchen_exhaust_fan)
 
 vapor_barrier <- clean_audit_data|>
   select(recommendations_ranking_vapor_barrier)|>
-  mutate(vapor_barrier = str_detect(recommendations_ranking_vapor_barrier, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(vapor_barrier = str_detect(recommendations_ranking_vapor_barrier, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_vapor_barrier)
 
 spray_foam <- clean_audit_data|>
   select(recommendations_ranking_spray_foam_basement_crawlspace_walls)|>
+<<<<<<< HEAD
   mutate(spray_foam = str_detect(recommendations_ranking_spray_foam_basement_crawlspace_walls, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+=======
+  mutate(spray_foam = str_detect(recommendations_ranking_spray_foam_basement_crawlspace_walls, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
   select(-recommendations_ranking_spray_foam_basement_crawlspace_walls)
 
 attic_air_sealing_and_insulation <- clean_audit_data|>
   select(recommendations_ranking_attic_insulation_and_air_sealing)|>
+<<<<<<< HEAD
   mutate(attic_air_sealing_and_insulation = str_detect(recommendations_ranking_attic_insulation_and_air_sealing, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+=======
+  mutate(attic_air_sealing_and_insulation = str_detect(recommendations_ranking_attic_insulation_and_air_sealing, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
   select(-recommendations_ranking_attic_insulation_and_air_sealing)
 
 wall_stud_insulation <- clean_audit_data|>
   select(recommendations_ranking_blown_in_cellulose_wall_insulation)|>
-  mutate(wall_stud_insulation = str_detect(recommendations_ranking_blown_in_cellulose_wall_insulation, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(wall_stud_insulation = str_detect(recommendations_ranking_blown_in_cellulose_wall_insulation, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_blown_in_cellulose_wall_insulation)
 
 continuous_wall_insulation <- clean_audit_data|>
   select(recommendations_ranking_continuous_exterior_wall_insulation)|>
-  mutate(continuous_wall_insulation = str_detect(recommendations_ranking_continuous_exterior_wall_insulation, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(continuous_wall_insulation = str_detect(recommendations_ranking_continuous_exterior_wall_insulation, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_continuous_exterior_wall_insulation)
 
 electrical_panel <- clean_audit_data|>
   select(recommendations_ranking_electrical_panel_upgrade)|>
-  mutate(electrical_panel = str_detect(recommendations_ranking_electrical_panel_upgrade, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(electrical_panel = str_detect(recommendations_ranking_electrical_panel_upgrade, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_electrical_panel_upgrade)
 
 airsource_hp <- clean_audit_data|>
   select(recommendations_ranking_air_source_heat_pump)|>
-  mutate(airsource_hp = str_detect(recommendations_ranking_air_source_heat_pump, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(airsource_hp = str_detect(recommendations_ranking_air_source_heat_pump, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_air_source_heat_pump)
 
 ev <- clean_audit_data|>
   select(recommendations_ranking_ev_and_charger)|>
+<<<<<<< HEAD
   mutate(ev = str_detect(recommendations_ranking_ev_and_charger, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+=======
+  mutate(ev = str_detect(recommendations_ranking_ev_and_charger, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
   select(-recommendations_ranking_ev_and_charger)
 
 solar <- clean_audit_data|>
   select(recommendations_ranking_solar)|>
-  mutate(solar = str_detect(recommendations_ranking_solar, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  mutate(solar = str_detect(recommendations_ranking_solar, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_solar)
 
 pipe_insulation <- clean_audit_data|>
   select(recommendations_ranking_pipe_insulation)|>
+<<<<<<< HEAD
   mutate(other = str_detect(recommendations_ranking_pipe_insulation, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
   select(-recommendations_ranking_pipe_insulation)
 
 surge_protection <- clean_audit_data|>
   select(recommendations_ranking_whole_house_surge_protection)|>
   mutate(other = str_detect(recommendations_ranking_whole_house_surge_protection, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+=======
+  mutate(pipe_insulation = str_detect(recommendations_ranking_pipe_insulation, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
+  select(-recommendations_ranking_pipe_insulation)
+
+whole_house_surge_protection <- clean_audit_data|>
+  select(recommendations_ranking_whole_house_surge_protection)|>
+  mutate(whole_house_surge_protection = str_detect(recommendations_ranking_whole_house_surge_protection, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
   select(-recommendations_ranking_whole_house_surge_protection)
 
 misc_air_sealing <- clean_audit_data|>
   select(recommendations_ranking_misc_air_sealing)|>
+<<<<<<< HEAD
   mutate(other = str_detect(recommendations_ranking_misc_air_sealing, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
   select(-recommendations_ranking_misc_air_sealing)
 
@@ -958,6 +1145,86 @@ other3 <- clean_audit_data|>
   select(recommendations_ranking_other_3)|>
   mutate(other = str_detect(recommendations_ranking_other_3, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
   select(-recommendations_ranking_other_3)
+=======
+  mutate(misc_air_sealing = str_detect(recommendations_ranking_misc_air_sealing, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
+  select(-recommendations_ranking_misc_air_sealing)
+
+other_1 <- clean_audit_data|>
+  select(recommendations_ranking_other_1)|>
+  mutate(other_1 = str_detect(recommendations_ranking_other_1, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
+  select(-recommendations_ranking_other_1)
+
+other_2 <- clean_audit_data|>
+  select(recommendations_ranking_other_2)|>
+  mutate(other_2 = str_detect(recommendations_ranking_other_2, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
+  select(-recommendations_ranking_other_2)
+
+other_3 <- clean_audit_data|>
+  select(recommendations_ranking_other_3)|>
+  mutate(other_3 = str_detect(recommendations_ranking_other_3, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
+  select(-recommendations_ranking_other_3)
+
+```
+
+```{r}
+#| label: set up automatic recomendation stock text 
+#| echo: false
+
+a_refriginator <- ranked_recommendations[5, ]
+
+a_freezer <- ranked_recommendations[6, ]
+
+a_induction_stove <- ranked_recommendations[7, ]
+
+a_vapor_barrier <- ranked_recommendations[12, ]
+
+a_spray_foam <- ranked_recommendations[13, ]
+
+a_attic_insulation <- ranked_recommendations[14, ]
+
+a_blow_in_cellulose <- ranked_recommendations[15, ]
+
+a_continuous_exterior_insulation <- ranked_recommendations[16, ]
+
+a_electrical_panel_upgrade <- ranked_recommendations[17, ]
+
+a_air_source_heat_pump <- ranked_recommendations[18, ]
+
+a_ev_and_charger <- ranked_recommendations[19, ]
+
+a_other_1 <- ranked_recommendations[21, ]
+
+a_leds <- ranked_recommendations[3, ]
+
+a_shower_heads <- ranked_recommendations[2, ]
+
+a_furnice_boiler_tune_up <- ranked_recommendations[1, ]
+
+a_window_dressers <- ranked_recommendations[4, ]
+
+a_heat_pump_water_heater <- ranked_recommendations[8, ]
+
+a_gutters <- ranked_recommendations[9, ]
+
+a_bathroom_fan <- ranked_recommendations[10, ]
+
+a_kitchen_fan <- ranked_recommendations[11, ]
+
+a_solar <- ranked_recommendations[20, ]
+
+a_pipe_insulation <- ranked_recommendations[22, ]
+
+a_whole_house_surge_protection <- ranked_recommendations[23, ]
+
+a_misc_air_sealing <- ranked_recommendations[24, ]
+
+a_other_2 <- ranked_recommendations[25, ]
+
+a_other_3 <- ranked_recommendations[26, ]
+
+
+  
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 ```
 
 ```{r}
@@ -967,19 +1234,46 @@ other3 <- clean_audit_data|>
 
 
 if(furnice_boiler_tune_up == TRUE){
-  cat("### Furnice/boiler tune up
+  cat("### Furnace/Boiler Tune up
+  
 *Problem*
 
+<<<<<<< HEAD
 ** Auditor to describe.
+=======
+** Auditor to describe.**
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 *Recommendation*
 
 Have the furnace and flue inspected and adjusted by a licensed professional. This should be available from your oil or propane delivery company.
 
+<<<<<<< HEAD
 *Estimated Costs/Benefits/Incentives*
 
 A tune-up can improve the efficiency of your furnace/boiler, confirm that it is exhausting properly, and identify areas of concern before they become urgent. If you have a service contract with your fuel delivery company, an annual tune-up is usually included.
 
+=======
+")
+}else{
+  cat("")
+}
+
+if(furnice_boiler_tune_up == TRUE){
+  cat(a_furnice_boiler_tune_up$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(furnice_boiler_tune_up == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+
+A tune-up can improve the efficiency of your furnace/boiler, confirm that it is exhausting properly, and identify areas of concern before they become urgent. If you have a service contract with your fuel delivery company, an annual tune-up is usually included. 
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 ")
 }else{
   cat("")
@@ -1002,17 +1296,39 @@ Your shower heads use more water and energy than high-efficiency shower heads, t
 
 *Recommendation*
 
+<<<<<<< HEAD
 Install high-efficiency shower heads to reduce the amount of water and energy to heat the water used when showering. We recommend 1.5 gallon per minute shower heads that will save a gallon or more of water for every minute spent in the shower.
 
 *Estimated Costs/Benefits/Incentives*
 
 A typical family will save ~10,000 gallons of water per year and over $100 per year in water heating costs. We provide these for free and have several styles for you to choose from; contact us for some if we did not give you any during the audit.
+=======
+Install high-efficiency shower heads to reduce the amount of water and energy to heat the water used when showering.
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 ")
 }else{
   cat("")
   }
 
+if(high_efficiency_shower_heads == TRUE){
+  cat(a_shower_heads$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(high_efficiency_shower_heads == TRUE){
+  cat(" We recommend 1.5 gallon per minute shower heads that will save a gallon or more of water for every minute spent in the shower. 
+
+*Estimated Cost/Benefits/Incentives*
+
+A typical family will save ~10,000 gallons of water per year and over $100 per year in water heating costs. We provide these for free and have several styles for you to choose from; contact us for some if we did not give you any during the audit.
+")
+}else{
+  cat("")
+  }
 ```
 
 ```{r}
@@ -1032,10 +1348,32 @@ Your lighting uses more energy than LED bulbs would. Halogen and incandescent li
 
 Switch your light bulbs to LED light bulbs. LEDs use 80% less energy than incandescent light bulbs which can significantly reduce your electricity bill. 
 
+<<<<<<< HEAD
 *Estimated Costs/Benefits/Incentives*
 
 We provide free LED light bulbs; contact us for some if we did not give you any during the audit. Depending on usage, LEDs can save more than $50 a year.
 
+=======
+")
+}else{
+  cat("")
+}
+
+if(led == TRUE){
+  cat(a_leds$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(led == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+
+We provide free LED light bulbs; contact us for some if we did not give you any during the audit. Depending on usage, LEDs can save more than $50 a year.
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 ")
 }else{
   cat("")
@@ -1066,6 +1404,34 @@ Insulating window inserts save 5-10% of your heating costs at less than 1/10th t
 Households that order inserts are expected to participate in the Community Build where the inserts are made. You can sign up for a 4-hour shift and learn the simple steps in the insert-building process (no previous experience required, no power tools). Each job has “jigs” that make the job easier to do and ensure uniform quality. You will be trained at the beginning of your shift on how to do your task. Volunteering for multiple shifts is encouraged! Mid-shift snacks and a meal are provided to all participants.
 If you would like to participate, please contact us so we can discuss how the program works and which windows you’d like inserts for. 
 
+<<<<<<< HEAD
+=======
+WindowDressers insulating window inserts help air-seal windows and reduce heat loss and gain. There will be a WindowDresser community build on Great Cranberry Island from November 9th through 14th. Sign up at https://windowdressers.org/sign-up-for-inserts/ There will be a WindowDressers community build in Eastport from November 18th through 25th. Contact Pete to sign up: 207-214-4751 or EastportMEEnergy@gmail.com
+
+
+")
+}else{
+  cat("")
+}
+
+if(window_dressers == TRUE){
+  cat(a_window_dressers$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(window_dressers == TRUE){
+  cat("WindowDressers are transparent and let in light while stopping drafts. Each insert is made of a custom-made pine frame wrapped on each side with tightly sealed, clear polyolefin film, creating an airspace between the two layers for additional insulation. The insert is finished with a compressible foam weather seal. The foam allows enough give for the inserts to be easily slid into place in the fall and removed in the spring while holding firmly enough to provide a tight, friction-based seal. The inserts are installed inside your existing window frame with no fasteners required and last 5-10 years. They are most effective in the winter, but depending on the window's exposure, they can sometimes be used in the summer to keep the house cooler.
+
+*Estimated Cost/Benefits/Incentives*
+
+Insulating window inserts save 5-10% of your heating costs at less than 1/10th the cost of replacement windows. The overall project cost will depend on the number and size of window inserts. Example prices for 2024: small (20 x 36”) - $36 for natural pine frame, $46 for white; medium (30 x 52”) - $50 for natural pine frame, $64 for white; large (44 x 68”) - $67 for natural pine frame, $88 for white. Adjusted pricing for lower-income households is available from WindowDressers upon request. If plastic is damaged, it can be replaced for $15. 
+Households that order inserts are expected to participate in the Community Build where the inserts are made. You can sign up for a 4-hour shift and learn the simple steps in the insert-building process (no previous experience required, no power tools). Each job has “jigs” that make the job easier to do and ensure uniform quality. You will be trained at the beginning of your shift on how to do your task. Volunteering for multiple shifts is encouraged! Mid-shift snacks and a meal are provided to all participants.
+If you would like to participate, please contact us so we can discuss how the program works and which windows you’d like inserts for. 
+
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 ")
 }else{
   cat("")
@@ -1084,16 +1450,45 @@ if( refrigerator == TRUE){
   
 *Problem*
 
+<<<<<<< HEAD
 Your refrigerator uses more energy than newer models. **Ideally, the auditor notes the annual energy consumption (kWh) of the existing fridge compared to a new model of similar size. 
+=======
+Your refrigerator uses more energy than newer models. **Ideally, the auditor notes the annual energy consumption (kWh) of the existing fridge compared to a new model of similar size.** 
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 *Recommendation*
 
 Replace your refrigerator with a new, EnergyStar certified fridge. Look at the Energy Guide label to compare the energy use of new refrigerators. 
 
+<<<<<<< HEAD
 *Estimated Costs/Benefits/Incentives*
 
 If you are able to afford the upfront cost of purchasing a new refrigerator, you will recoup significant savings in the long run. Whenever you need to buy a new appliance, consider EnergyStar certified models, which use less energy and are cheaper to run. Remember, it doesn’t save energy if you relocate your existing refrigerator to the basement or garage and continue using it.
 ** Ideally, auditor locates similar volume fridge online to calculate monthly savings and payback period compared to kill-a-watt meter reading for current refrigerator. “This example refrigerator would save $XX in electricity each month and pay for itself within XX months.”
+=======
+")
+}else{
+  cat("")
+}
+
+if(refrigerator == TRUE){
+  cat(a_refriginator$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(refrigerator == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+
+If you are able to afford the upfront cost of purchasing a new refrigerator, you will recoup significant savings in the long run. Whenever you need to buy a new appliance, consider EnergyStar certified models, which use less energy and are cheaper to run. Remember, it doesn’t save energy if you relocate your existing refrigerator to the basement or garage and continue using it.
+
+** Ideally, auditor locates similar volume fridge online to calculate monthly savings and payback period compared to kill-a-watt meter reading for current refrigerator. “This example refrigerator would save $XX in electricity each month and pay for itself within XX months.”**
+
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 ")
 }else{
@@ -1118,11 +1513,35 @@ Your freezer uses more energy than newer models. Consider how the cost of runnin
 
 Replace your freezer with a new, EnergyStar certified freezer. Look at the Energy Guide label to compare the energy use of new freezers.
 
+<<<<<<< HEAD
 *Estimated Costs/Benefits/Incentives*
+=======
+")
+}else{
+  cat("")
+}
+
+if(freezer == TRUE){
+  cat(a_freezer$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(freezer == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 If you are able to afford the upfront cost of purchasing a new freezer, you will recoup significant savings in the long run. Whenever you need to buy a new appliance, consider EnergyStar certified models, which use electricity and are cheaper to run. 
 ** Ideally, auditor locates similar volume freezer online to calculate monthly savings and payback period compared to kill-a-watt meter reading for current  freezer. “This example freezer would save $XX in electricity each month and pay for itself within XX months.”
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 ")
 }else{
   cat("")
@@ -1146,10 +1565,34 @@ Your gas range has the potential to release propane, carbon monoxide, and combus
 
 Induction cooking appliances are more efficient and safer than electric or gas ones. There is no risk of carbon monoxide or other harmful combustion gases, and the surface doesn’t heat up without a pot or pan on it.
 
+<<<<<<< HEAD
 *Estimated Costs/Benefits/Incentives*
 
 Currently, Efficiency Maine does not offer a rebate for induction stoves. If you’re interested in trying out induction cooking but don’t want to replace your kitchen stove, consider buying a portable induction cooktop, which costs less than $100.
 
+=======
+")
+}else{
+  cat("")
+}
+
+if(induction_stove == TRUE){
+  cat(a_induction_stove$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(induction_stove == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+
+Currently, Efficiency Maine does not offer a rebate for induction stoves. If you’re interested in trying out induction cooking but don’t want to replace your kitchen stove, consider buying a portable induction cooktop, which costs less than $100.
+
+
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 ")
 }else{
   cat("")
@@ -1167,6 +1610,7 @@ if( heatpwh == TRUE){
   
 *Problem*
 
+<<<<<<< HEAD
 ** Auditor to describe depending on what their current system is. 
 
 *Recommendation*
@@ -1176,6 +1620,34 @@ Install a heat pump water heater to provide your hot water for cooking and bathi
 *Estimated Costs/Benefits/Incentives*
 
 A heat pump water heater uses 70% less electricity than a standard electric water heater. Depending on your income, Efficiency Maine offers a no-cost program for low-income households, or a rebate of up to $1,000 for everyone else, making the equipment cost as little as $400 plus installation. The rebate can be combined with a federal tax credit of 30% of the remaining cost. For more information, you can call Efficiency Maine at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their website: https://www.efficiencymaine.com/at-home/heat-pump-water-heater-program/
+=======
+** Auditor to describe depending on what their current system is. **
+
+*Recommendation*
+
+Install a heat pump water heater to provide your hot water for cooking and bathing. This is the most efficient way to heat water and will save hundreds of dollars a year compared to electric resistance, heating oil or propane hot water. It will also help to dehumidify while it's running. If your current water heater burns oil or propane, this will also remove a source of combustion gases from your house.
+
+")
+}else{
+  cat("")
+}
+
+if(heatpwh == TRUE){
+  cat(a_heat_pump_water_heater$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(heatpwh == TRUE){
+  cat(" We also recommend setting the temperature on the water heater at 130°F for more efficient operation.
+
+*Estimated Cost/Benefits/Incentives*
+
+A heat pump water heater uses 70% less electricity than a standard electric water heater. Depending on your income, Efficiency Maine offers a no-cost program for low-income households, or a rebate of up to $1,000 for everyone else, making the equipment cost as little as $400 plus installation. The rebate can be combined with a federal tax credit of 30% of the remaining cost. For more information, you can call Efficiency Maine at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their website: https://www.efficiencymaine.com/at-home/heat-pump-water-heater-program/ 
+
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 ")
 }else{
   cat("")
@@ -1193,16 +1665,42 @@ if( gutters == TRUE){
   
 *Problem*
 
+<<<<<<< HEAD
 The house has no gutters, so water runs off your roof and directly onto the ground next to your house. Water that splashes off the ground can damage the exterior of your house. Runoff that is absorbed into the ground can seep into the basement/crawlspace, causing moisture issues there and throughout your house. 
+=======
+The house has no gutters, so water runs off your roof and directly onto the ground next to your house. Water that splashes off the ground can damage the exterior of your house. Runoff that is absorbed into the ground can seep into the basement/crawlspace, causing moisture issues there and throughout your house.
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 *Recommendation*
 
 Install gutters and downspouts that divert water at least six feet away from the foundation and to where the ground slopes away from the house.
 
+<<<<<<< HEAD
 *Estimated Costs/Benefits/Incentives*
 
 Adding gutters would mitigate moisture damage and save you from having to replace/fix other parts of the house.
 
+=======
+")
+}else{
+  cat("")
+}
+
+if(gutters == TRUE){
+  cat(a_gutters$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(gutters == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+
+Adding gutters would mitigate moisture damage and save you from having to replace/fix other parts of the house. 
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 ")
 }else{
   cat("")
@@ -1224,11 +1722,35 @@ Currently, there is no bathroom exhaust fan, so moisture from the shower, toilet
 
 *Recommendation*
 
+<<<<<<< HEAD
 Bathroom exhaust fans should be rated for at least 80 cubic feet per minute (CFM) if there is a shower. We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise. They should be installed before the attic is air-sealed and insulated. The fan needs to be ducted outside, so it does not add moisture into the attic.
 
 *Estimated Costs/Benefits/Incentives*
 The typical fan is around $130 plus the cost of installation.
 
+=======
+Bathroom exhaust fans should be rated for at least 80 cubic feet per minute (CFM) if there is a shower. We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise.
+
+")
+}else{
+  cat("")
+}
+
+if(bathroom_exhaust_fan == TRUE){
+  cat(a_bathroom_fan$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(bathroom_exhaust_fan == TRUE){
+  cat(" They should be installed before the attic is air-sealed and insulated. The fan needs to be ducted outside, so it does not add moisture into the attic.
+
+*Estimated Cost/Benefits/Incentives*
+
+The typical fan is around $130 plus the cost of installation.
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 ")
 }else{
   cat("")
@@ -1252,9 +1774,31 @@ Currently, there is no kitchen exhaust fan, so fumes, smoke, and moisture from c
 
 We recommend a kitchen exhaust fan to remove harmful combustion gases from your home, which should be rated for at least 100 cubic feet per minute (CFM). A fan can also help with moisture concerns. A kitchen fan should be ducted to the outdoors. If the ductwork will run through the attic, it should be installed before the attic is air-sealed and insulated.
 
+<<<<<<< HEAD
 *Estimated Costs/Benefits/Incentives*
 Kitchen range hoods typically cost $150 or more; installation costs depend on the complexity of the exhaust ducting.
 
+=======
+")
+}else{
+  cat("")
+}
+
+if(kitchen_exhaust_fan == TRUE){
+  cat(a_kitchen_fan$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(kitchen_exhaust_fan == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+
+Kitchen range hoods typically cost $150 or more; installation costs depend on the complexity of the exhaust ducting.
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 ")
 }else{
   cat("")
@@ -1276,13 +1820,39 @@ There is excess moisture in the basement/crawlspace, which is evaporating out of
 
 *Recommendation*
 
+<<<<<<< HEAD
 Install a vapor barrier on the basement floor to stop moisture from entering the basement and house. Vapor barriers typically consist of either reinforced plastic sheeting or EPDM rubber membrane over a ‘dimple mat’ that allows for drainage below the vapor barrier and prevents rocks from puncturing it. If the basement/crawlspace walls are going to be spray foamed, we recommend the foam go all the way to the floor and overlap the vapor barrier to create a continuous air and moisture barrier. 
 
 *Estimated Costs/Benefits/Incentives*
+=======
+Install a vapor barrier on the basement floor to stop moisture from entering the basement and house. 
+
+")
+}else{
+  cat("")
+}
+
+if(vapor_barrier == TRUE){
+  cat(a_vapor_barrier$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(vapor_barrier == TRUE){
+  cat(" Vapor barriers typically consist of either reinforced plastic sheeting or EPDM rubber membrane over a ‘dimple mat’ that allows for drainage below the vapor barrier and prevents rocks from puncturing it. If the basement/crawlspace walls are going to be spray foamed, we recommend the foam go all the way to the floor and overlap the vapor barrier to create a continuous air and moisture barrier.
+
+*Estimated Cost/Benefits/Incentives*
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 Efficiency Maine rebates will cover vapor barriers up to 25% of a weatherization project cost, if done as part of a larger insulation project. Efficiency Maine rebates and other incentives for insulation work can fund up to 80% of the project cost, up to $9,200 when combined with federal tax credits. You can call them at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their webpage about insulation rebates: https://www.efficiencymaine.com/at-home/insulation-rebates-after-7-31-2023/
 Most insulation companies install spray foam and vapor barriers. We recommend doing insulation and air sealing work in the basement and attic at the same time and with the same contractor to save money and time and take full advantage of the Efficiency Maine rebates.
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 ")
 }else{
   cat("")
@@ -1296,7 +1866,7 @@ Most insulation companies install spray foam and vapor barriers. We recommend do
 
 
 if( spray_foam == TRUE){
-  cat("### Spray foam basement walls
+  cat("### Spray foam Basement Walls
   
 *Problem*
 
@@ -1304,10 +1874,34 @@ The basement/crawlspace is uninsulated and used for mechanical equipment and plu
 
 *Recommendation*
 
+<<<<<<< HEAD
 Install spray foam on the basement/crawlspace walls to prevent moisture infiltration and reduce heat loss. In older homes, most heat loss is due to air leakage. Air sealing is particularly important in the basement or crawlspace (and attic). As warm air rises and leaks out the top of your home, cold air is pulled in at the bottom. This is called the ‘stack effect’, and is more pronounced in taller homes. Thus, air sealing is necessary anywhere gaps allow air to move into your house through the basement/crawlspace.
 Spray foam should be applied 2-3 inches thick on the walls to seal and insulate them. It is often ideal to install a vapor barrier at the same time as the spray foam insulation. Spray foam generally requires a layer of intumescent (fire-rated) paint over it to meet fire code.
 
 *Estimated Costs/Benefits/Incentives*
+=======
+Install spray foam on the basement/crawlspace walls to prevent moisture infiltration and reduce heat loss.
+
+")
+}else{
+  cat("")
+}
+
+if(spray_foam == TRUE){
+  cat(a_spray_foam$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(spray_foam == TRUE){
+  cat(" In older homes, most heat loss is due to air leakage. Air sealing is particularly important in the basement or crawlspace (and attic). As warm air rises and leaks out the top of your home, cold air is pulled in at the bottom. This is called the ‘stack effect’, and is more pronounced in taller homes. Thus, air sealing is necessary anywhere gaps allow air to move into your house through the basement/crawlspace. 
+
+Spray foam should be applied 2-3 inches thick on the walls to seal and insulate them. It is often ideal to install a vapor barrier at the same time as the spray foam insulation. Spray foam generally requires a layer of intumescent (fire-rated) paint over it to meet fire code.
+
+*Estimated Cost/Benefits/Incentives*
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 Installation of spray foam insulation will cost around $5-7 per square foot. Efficiency Maine rebates and other incentives for insulation work can fund up to 80% of the project cost, up to $9,200 when combined with federal tax credits. You can call them at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their webpage about insulation rebates: https://www.efficiencymaine.com/at-home/insulation-rebates-after-7-31-2023/ 
 Most insulation companies install spray foam and vapor barriers. We recommend discussing insulation and air sealing work in the basement, walls, and attic with contractors at the same time to save money and time and take full advantage of the Efficiency Maine rebates.
@@ -1325,7 +1919,7 @@ Most insulation companies install spray foam and vapor barriers. We recommend di
 
 
 if(attic_air_sealing_and_insulation == TRUE){
-  cat("### Attic air sealing and insulation
+  cat("### Attic Insulation and Air Sealing
   
 *Problem*
 
@@ -1336,7 +1930,28 @@ The attic is uninsulated or is missing insulation and the attic could also benef
 Air seal the attic and insulate it to at least R-60 (18” of loose-fill cellulose insulation). COA has been installing 24” (R-80) of cellulose insulation in attics on our campus. Before the attic is insulated, ensure that any needed bathroom and kitchen fans are installed and that all fans are properly vented to the outside.
 In older homes, most heat loss is due to air leakage. Air sealing is particularly important in the attic (and basement or crawlspace). As warm air rises and leaks out the top of your home, cold air is pulled in at the bottom. This is called the ‘stack effect’, and is more pronounced in taller homes. Thus, air sealing is necessary anywhere gaps allow air to move between your house and the attic. This typically includes gaps around the chimney, electrical penetrations, and wall top plates. 
 
+<<<<<<< HEAD
 *Estimated Costs/Benefits/Incentives*
+=======
+
+")
+}else{
+  cat("")
+}
+
+if(attic_air_sealing_and_insulation == TRUE){
+  cat(a_attic_insulation$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(attic_air_sealing_and_insulation == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 Efficiency Maine rebates and other incentives for insulation work can fund up to 80% of the project cost, up to $9,200 when combined with federal tax credits. You can call them at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their webpage about insulation rebates: https://www.efficiencymaine.com/at-home/insulation-rebates-after-7-31-2023/   
 We recommend discussing insulation and air sealing work in the basement, walls, and attic with contractors at the same time to save money and time and take full advantage of the Efficiency Maine rebates.
@@ -1354,7 +1969,7 @@ We recommend discussing insulation and air sealing work in the basement, walls, 
 
 
 if( wall_stud_insulation== TRUE){
-  cat("### Wall stud insulation
+  cat("### Blow-in cellulose wall insulation
   
 *Problem*
 
@@ -1362,9 +1977,31 @@ The walls of the house are uninsulated, which is a significant source of heat lo
 
 *Recommendation*
 
+<<<<<<< HEAD
 Insulate the wall stud cavities with dense packed, blown-in cellulose insulation. In balloon-framed homes, this can often be done from the attic, otherwise it can be done by drilling holes into the wall cavities from either the inside or outside.
 
 *Estimated Costs/Benefits/Incentives*
+=======
+Insulate the wall stud cavities with dense packed, blown-in cellulose insulation.
+
+")
+}else{
+  cat("")
+}
+
+if(wall_stud_insulation == TRUE){
+  cat(a_blow_in_cellulose$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(wall_stud_insulation == TRUE){
+  cat(" In balloon-framed homes, this can often be done from the attic, otherwise it can be done by drilling holes into the wall cavities from either the inside or outside.
+
+*Estimated Cost/Benefits/Incentives*
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 Efficiency Maine rebates and other incentives for insulation work can fund up to 80% of the project cost, up to $9,200 when combined with federal tax credits. You can call them at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their webpage about insulation rebates: https://www.efficiencymaine.com/at-home/insulation-rebates-after-7-31-2023/   
 This could be combined with other insulation work using the same contractor to save money and time and take full advantage of the Efficiency Maine rebates.
@@ -1382,12 +2019,13 @@ This could be combined with other insulation work using the same contractor to s
 
 
 if( continuous_wall_insulation== TRUE){
-  cat("### Continuous wall insulation
+  cat("### Continuous exterior wall insulation
   
 *Problem*
 
 There isn’t continuous insulation between the siding and the exterior walls of the house. Continuous insulation helps create a complete thermal boundary for your house, and it is now an energy code requirement for new houses.
 
+<<<<<<< HEAD
 *Recommendation*
 
 Add a continuous layer of insulation and potentially replace the air and moisture barrier once it becomes time to replace the siding. Add continuous insulation (R-6 or more) under the new siding to keep the house warmer in the winter and cooler in the summer. We recommend TimberHP TimberBoard insulation (produced in Madison, Maine) or Rockwool Comfortboard, but foam board can also be used. Before installing exterior insulation, the contractor can check if insulation is needed between the interior wall studs.
@@ -1396,6 +2034,33 @@ Add a continuous layer of insulation and potentially replace the air and moistur
 
 Efficiency Maine rebates and other incentives for insulation work can fund up to 80% of the project cost, up to $9,200 when combined with federal tax credits. You can call them at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their webpage about insulation rebates: https://www.efficiencymaine.com/at-home/insulation-rebates-after-7-31-2023/   
 This could be combined with other insulation work using the same contractor to save money and time and take full advantage of the Efficiency Maine rebates.
+=======
+
+*Recommendation*
+
+Add a continuous layer of insulation and potentially replace the air and moisture barrier once it becomes time to replace the siding.
+
+")
+}else{
+  cat("")
+}
+
+if(continuous_wall_insulation == TRUE){
+  cat(a_continuous_exterior_insulation$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(continuous_wall_insulation == TRUE){
+  cat(" Add continuous insulation (R-6 or more) under the new siding to keep the house warmer in the winter and cooler in the summer. We recommend TimberHP TimberBoard insulation (produced in Madison, Maine) or Rockwool Comfortboard, but foam board can also be used. Before installing exterior insulation, the contractor can check if insulation is needed between the interior wall studs.
+
+*Estimated Cost/Benefits/Incentives*
+
+Efficiency Maine rebates and other incentives for insulation work can fund up to 80% of the project cost, up to $9,200 when combined with federal tax credits. You can call them at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their webpage about insulation rebates: https://www.efficiencymaine.com/at-home/insulation-rebates-after-7-31-2023/   
+This could be combined with other insulation work using the same contractor to save money and time and take full advantage of the Efficiency Maine rebates. 
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 ")
 }else{
@@ -1414,6 +2079,7 @@ if( electrical_panel == TRUE){
   
 *Problem*
 
+<<<<<<< HEAD
 ** Auditor to describe.
 
 *Recommendation*
@@ -1423,6 +2089,33 @@ As you add electrical appliances to your home, it may become necessary to rRepla
 *Estimated Costs/Benefits/Incentives*
 
 Costs of electrical components needed to support residential energy upgrades – including panels, sub-panels, branch circuits, and feeders – qualify for a 30% nonrefundable tax credit (up to $600 per item) if they have a capacity of 200 amps or more. This is also a good opportunity for an electrician to install whole-house surge protection, which costs $100-$400. Here are some options: https://www.popularmechanics.com/home/interior-projects/g43140886/best-whole-house-surge-protectors/
+=======
+** Auditor to describe.**
+
+*Recommendation*
+
+Replace your existing electrical panel to increase the capacity to 200 amps (and address potential safety hazards).
+
+")
+}else{
+  cat("")
+}
+
+if(electrical_panel == TRUE){
+  cat(a_electrical_panel_upgrade$Description
+    
+    )
+}else{
+  cat("")
+  }
+
+if(electrical_panel == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+
+Costs of electrical components needed to support residential energy upgrades – including panels, sub-panels, branch circuits, and feeders – qualify for a 30% nonrefundable tax credit (up to $600 per item) if they have a capacity of 200 amps or more. This is a also good opportunity for an electrician to install whole-house surge protection, which costs $100-$400. Here are some options: https://www.popularmechanics.com/home/interior-projects/g43140886/best-whole-house-surge-protectors/
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 ")
 }else{
   cat("")
@@ -1436,7 +2129,7 @@ Costs of electrical components needed to support residential energy upgrades –
 
 
 if( airsource_hp == TRUE){
-  cat("### Air source heat pump(s)
+  cat("### Air Source Heat Pump
   
 *Problem*
 
@@ -1444,9 +2137,31 @@ Combustion heating equipment is expensive, inefficient, and has the potential to
 
 *Recommendation*
 
+<<<<<<< HEAD
 Install air source heat pumps and whole-house surge protection. Air source heat pumps can be up to 300% efficient and heat, cool, and dehumidify your house. A qualified installer will help determine what size system to install and where. Whole-house surge protection will protect your appliances and heat pumps from being damaged by an electrical surge.
 
 *Estimated Costs/Benefits/Incentives*
+=======
+Install air source heat pumps and whole-house surge protection.
+
+")
+}else{
+  cat("")
+}
+
+if(airsource_hp == TRUE){
+  cat(a_air_source_heat_pump$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(airsource_hp == TRUE){
+  cat(" Air source heat pumps can be up to 300% efficient and heat, cool, and dehumidify your house. A qualified installer will help determine what size system to install and where. Whole-house surge protection will protect your appliances and heat pumps from being damaged by an electrical surge.
+
+*Estimated Cost/Benefits/Incentives*
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 Efficiency Maine rebates can fund up to 80% of the project cost (depending on income level) to install heat pumps, and federal tax credits can cover 30% of the remaining cost (up to $2,000 per year). You can call Efficiency Maine at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their website: https://www.efficiencymaine.com/at-home/whole-home-heat-pump-incentives/ 
 A whole-house surge protection device costs $100-$400 and needs to be installed by an electrician. Here are some options: https://www.popularmechanics.com/home/interior-projects/g43140886/best-whole-house-surge-protectors/
@@ -1473,7 +2188,27 @@ Transportation, and particularly personal vehicles, are the leading cause of emi
 
 An electric vehicle will eliminate your gas costs and reduce fossil fuel dependence. A 2020 study by Consumer Reports found that lifetime ownership costs were significantly lower for EVs, saving between $6,000 - $10,000 over their lifetimes.
 
+<<<<<<< HEAD
 *Estimated Costs/Benefits/Incentives*
+=======
+")
+}else{
+  cat("")
+}
+
+if(ev == TRUE){
+  cat(a_ev_and_charger$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if( ev == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
 
 You can review current state and federal financial incentives for electric vehicles here: https://www.electricforall.org/rebates-incentives/
 ")
@@ -1493,6 +2228,7 @@ if( solar == TRUE){
   
 *Problem*
 
+<<<<<<< HEAD
 ** Auditor to describe (or remove this section).
 
 *Recommendation*
@@ -1507,6 +2243,32 @@ There is a 30% federal tax credit and financing options are available. Battery b
 The State of Maine is working on a solar and battery funding initiative. It is still in the planning stages, but you can find more information here:
 https://www.maine.gov/energy/initiatives/infrastructure/solar-for-all
 
+=======
+** Auditor to describe (or remove this section).**
+
+*Recommendation*
+
+Rooftop solar can supply most or all of your home electrical demands. Contact a solar company for pricing and details specific to your house.
+
+")
+}else{
+  cat("")
+}
+
+if(solar == TRUE){
+  cat(a_solar$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(solar == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+
+There is a 30% federal tax credit and financing options are available. Battery backup is needed for solar to work during a power outage.
 ")
 }else{
   cat("")
@@ -1514,11 +2276,249 @@ https://www.maine.gov/energy/initiatives/infrastructure/solar-for-all
 ```
 
 ```{r}
-#| label: Pipe Insulation
+#| label: pipe insulation recommendation
 #| echo: false
 #| results: asis
 
 
+if(pipe_insulation == TRUE){
+  cat("### Pipe Insulation
+  
+*Problem*
+
+Uninsulated water pipes are responsible for heat loss and excess moisture (from condensation) in your basement/crawlspace.
+
+*Recommendation*
+
+Insulate both hot and cold water pipes that are uninsulated in the basement/crawlspace. This will save energy and prevent condensation.
+")
+}else{
+  cat("")
+}
+
+if(pipe_insulation == TRUE){
+  cat(a_pipe_insulation$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(pipe_insulation == TRUE){
+  cat("We recommend foam pipe insulation made of polyethylene or neoprene. 
+
+*Estimated Cost/Benefits/Incentives*
+
+Insulating water pipes can save 2%-4% on hot water bills and increase the temperature of the water while reducing the time it takes for hot water to reach your tap. Materials cost around $100-200, depending on the length of pipe to insulate. Many people find this to be an easy project to do themselves.
+")
+}else{
+  cat("")
+  }
+```
+
+```{r}
+#| label: whole house surge protection recommendation
+#| echo: false
+#| results: asis
+
+
+if( whole_house_surge_protection == TRUE){
+  cat("### Whole House Surge Protection
+  
+*Problem*
+
+Your house does not have whole-house surge protection. This will protect your large electrical appliances from damage in the case of an electrical surge. Heat pumps, heat pump water heaters, and other electronics are particularly sensitive to electrical surges. 
+
+*Recommendation*
+
+Upgrade your electrical panel to add whole-house surge protection.
+")
+}else{
+  cat("")
+}
+
+if(whole_house_surge_protection == TRUE){
+  cat(a_whole_house_surge_protection$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(whole_house_surge_protection == TRUE){
+  cat("This will help to protect your heat pumps, heat pump water heater, refrigerator, well pump, and other electronics from damage due to lightning or other electrical surges. 
+
+*Estimated Cost/Benefits/Incentives*
+
+The device costs $100-$400 and needs to be installed by an electrician. Here are some options: https://www.popularmechanics.com/home/interior-projects/g43140886/best-whole-house-surge-protectors/
+")
+}else{
+  cat("")
+  }
+```
+
+```{r}
+#| label: misc air sealing recommendation
+#| echo: false
+#| results: asis
+
+
+if( misc_air_sealing == TRUE){
+  cat("### Misc. Air Sealing
+  
+*Problem*
+
+During the blower door test, we noted sources of air leakage in the living areas of your house. **Auditor to detail customized findings. **
+
+*Recommendation*
+
+We recommend sealing air leaks and weatherstripping exterior doors. In older homes, most heat loss is due to air leakage. WindowDressers insulating window inserts can also help reduce air leakage.
+
+")
+}else{
+  cat("")
+}
+
+if(misc_air_sealing == TRUE){
+  cat(a_misc_air_sealing$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(misc_air_sealing == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+
+Air sealing the air leaks we identified around the living areas of your house can be a DIY solution to lower energy use, or an insulation contractor can seal the leaks when they come to your house for a larger project. Please address any moisture concerns before undertaking significant air sealing efforts.
+")
+}else{
+  cat("")
+  }
+```
+
+```{r}
+#| label: other 1 recommendation
+#| echo: false
+#| results: asis
+
+
+if( other_1 == TRUE){
+  cat("### Other 1
+  
+*Problem*
+
+*Recommendation*
+
+")
+}else{
+  cat("")
+}
+
+if(other_1 == TRUE){
+  cat(a_other_1$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(other_1 == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+")
+}else{
+  cat("")
+  }
+```
+
+```{r}
+#| label: other 2 recommendation
+#| echo: false
+#| results: asis
+
+
+if( other_2 == TRUE){
+  cat("### Other 2
+  
+*Problem*
+
+*Recommendation*
+
+")
+}else{
+  cat("")
+}
+
+if(other_2 == TRUE){
+  cat(a_other_2$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(other_2 == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+")
+}else{
+  cat("")
+  }
+```
+
+```{r}
+#| label: other 3 recommendation
+#| echo: false
+#| results: asis
+
+
+if( other_3 == TRUE){
+  cat("### Other 3
+  
+*Problem*
+
+*Recommendation*
+
+")
+}else{
+  cat("")
+}
+
+if(other_3 == TRUE){
+  cat(a_other_3$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(other_3 == TRUE){
+  cat("
+
+*Estimated Cost/Benefits/Incentives*
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
+")
+}else{
+  cat("")
+  }
+```
+
+```{r}
+<<<<<<< HEAD
+#| label: Pipe Insulation
+=======
+#| label: additional resources recommendation
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
+#| echo: false
+#| results: asis
+
+
+<<<<<<< HEAD
 if( pipe_insulation == TRUE){
   cat("### Pipe Insulation
   
@@ -1619,3 +2619,20 @@ Air sealing and insulating ductwork is eligible for a non-refundable federal tax
   cat("")
   }
 ```
+=======
+cat("## Additional Resources
+
+Many home efficiency upgrades are eligible for Efficiency Maine rebates and federal tax credits. Financial incentives vary based on income level and type of occupancy. An overview of all state rebates and federal tax credits can be found here: https://www.efficiencymaine.com/at-home/ 
+
+You can search for Efficiency Maine registered contractors here: https://www.efficiencymaine.com/at-home/vendor-locator/ 
+
+Our Maine Energy Upgrade Program team is willing and able to help you sort out the details of incentives and recommend contractors who have done quality work. 
+
+**As part of our program, we plan to coordinate with homeowners and contractors to bundle multiple projects together to reduce costs. We will also pay for barging costs for materials, contractor vehicles, and other necessary equipment to make energy upgrades. To qualify for our program, homes must install either a heat pump or heat pump water heater in addition to any other improvements.
+")
+```
+
+
+
+
+>>>>>>> a1822e243850a568cecd198b104e05dcf1695702
