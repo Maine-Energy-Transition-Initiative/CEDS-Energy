@@ -67,7 +67,7 @@ clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
 #| warning: false
 #select only recomendations to make separate data frame
 pivot_recommendations <- clean_audit_data |>
-  select(c(recommendations_ranking_furnace_boiler_tune_up:recommendations_ranking_other_3, recommendations_ranking_ductwork_air_sealing_and_insulation))
+  select(c(recommendations_ranking_furnace_boiler_tune_up:recommendations_ranking_other_3, recommendations_ranking_ductwork_air_sealing_and_insulation, recommendations_ranking_misc_air_sealing_and_insulation))
 
 #pivot teh data to be displayed vertically
 pivot_recommendations <- pivot_recommendations |>
@@ -790,24 +790,24 @@ all_blower_door['Description'] <- c("CFM50 describes how many cubic feet per min
 #| label: ACH/CFM/ELA/N-factor calculations
 #| echo: false
 
-#ACH50 calculation
-ach50_calculated <- clean_audit_data |>
-  select(c(cfm50, volume_of_conditioned_space_cubic_feet))
+table_3_4 <-clean_audit_data|>
+  select(cfm50)
 
-ach50_calculated$new <- as.numeric(ach50_calculated$cfm50) * 60 / as.numeric(ach50_calculated$volume_of_conditioned_space_cubic_feet)
+table_3_4<- as.data.frame(as.numeric(table_3_4))
+
+#ACH50 calculation
+
+table_3_4$ACH50_cal <- as.numeric(clean_audit_data$cfm50) * 60 / as.numeric(clean_audit_data$volume_of_conditioned_space_cubic_feet)
 
 #Equivalent leakage area calculation
 
-ela_calculated <- clean_audit_data|>
-  select(cfm50)
-
-ela_calculated$new <- as.numeric(ela_calculated$cfm50) / 10
+table_3_4$equi_leak_area_cal <- as.numeric(clean_audit_data$cfm50) / 10
 
 #N-factor calculation
 
 n_factor_calculated <- clean_audit_data |>
-  select(exposure_of_the_house, number_of_floors,)|>
-  mutate(n_factor_y = case_when(
+  select(exposure_of_the_house, number_of_floors)|>
+  mutate(n_factor_cal = case_when(
     exposure_of_the_house == "Low" & number_of_floors == 1 ~ 22.2,
     exposure_of_the_house == "Low" & number_of_floors == 1.5 ~ 20.0,
     exposure_of_the_house == "Low" & number_of_floors == 2 ~ 17.8,
@@ -820,10 +820,33 @@ n_factor_calculated <- clean_audit_data |>
     exposure_of_the_house == "High" & number_of_floors == 1.5 ~ 15.0,
     exposure_of_the_house == "High" & number_of_floors == 2 ~ 13.3,
     exposure_of_the_house == "High" & number_of_floors == 3 ~ 11.7))
+  
 
-#CFM natural calculation
+
+#CFM natural calculation (Do I need to even calculate it)
+
+#table_3_4$CFMnatural_cal <- as.numeric(n_factor_calculated$n_factor_cal)/ as.numeric(clean_audit_data$cfm50)
+
 
 #ACH natural calculation
+
+table_3_4$ACHnatural_cal <- as.numeric(table_3_4$ACH50_cal)/ as.numeric(n_factor_calculated$n_factor_cal)
+
+#Clean the data frame
+
+table_3_4 <- cbind(table_3_4, n_factor_calculated)|>
+  select(-c(5,6,7))|>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Info", 
+    values_to = "Values")
+
+#table_3_4[3, 2] = paste0(table_3_4$equi_leak_area_cal, " under natural conditions.")
+
+table_3_4 <- table_3_4|>
+  mutate(Info = recode(Info,  "as.numeric(table_3_4)" = "CFM50:", "ACH50_cal" = "ACH50:","equi_leak_area_cal" = "Equivalent leakage area:","ACHnatural_cal" = "ACHnatural:" ))
+
+table_3_4['Description'] <- c("CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.", "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.","This is the area (in square inches) equivalent to all of the air leaks in the house combined.","Accounting for the volume of the home, this means that the house exchanges –% of its air every hour. Over one day, the house goes through – complete air changes.")
 
 ```
 
@@ -836,7 +859,7 @@ To find leaks, we used an infrared camera to check for unusually hot and cold sp
 Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.
 
 ```{r}
-#| label: 3.4 blower door table
+#| label: 3.4 blower door table display
 #| eval: true
 #| echo: false
 gt_all_blower_door <- gt(all_blower_door) |>
@@ -876,7 +899,7 @@ gt_all_attic <- gt(all_attic) |>
       )),
     locations = cells_body()
   )
-  #use it in all table to get rid of the column lables
+  #use it in all table to get rid of the column labels
   #cols_label(
    # Info = "",
    # Values = ""
@@ -1096,10 +1119,10 @@ whole_house_surge_protection <- clean_audit_data|>
   mutate(whole_house_surge_protection = str_detect(recommendations_ranking_whole_house_surge_protection, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_whole_house_surge_protection)
 
-misc_air_sealing <- clean_audit_data|>
-  select(recommendations_ranking_misc_air_sealing)|>
-  mutate(misc_air_sealing = str_detect(recommendations_ranking_misc_air_sealing, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
-  select(-recommendations_ranking_misc_air_sealing)
+diy_air_sealing <- clean_audit_data|>
+  select(recommendations_ranking_diy_air_sealing)|>
+  mutate(diy_air_sealing = str_detect(recommendations_ranking_diy_air_sealing, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_diy_air_sealing)
 
 duck_air_sealing_and_insulation <- clean_audit_data|>
   select(recommendations_ranking_ductwork_air_sealing_and_insulation)|>
@@ -1172,7 +1195,7 @@ a_pipe_insulation <- recommendations_googlesheets[22, ]
 
 a_whole_house_surge_protection <- recommendations_googlesheets[23, ]
 
-a_misc_air_sealing <- recommendations_googlesheets[24, ]
+a_diy_air_sealing <- recommendations_googlesheets[24, ]
 
 a_duct_air_sealing <- recommendations_googlesheets[27,]
 
@@ -2038,13 +2061,13 @@ The device costs $100-$400 and needs to be installed by an electrician. Here are
 ```
 
 ```{r}
-#| label: misc air sealing recommendation
+#| label: diy air sealing recommendation
 #| echo: false
 #| results: asis
 
 
-if( misc_air_sealing == TRUE){
-  cat("### Misc. Air Sealing
+if( diy_air_sealing == TRUE){
+  cat("### diy. Air Sealing
   
 *Problem*
 
@@ -2055,15 +2078,15 @@ During the blower door test, we noted sources of air leakage in the living areas
   cat("")
 }
 
-if(misc_air_sealing == TRUE){
-  cat(a_misc_air_sealing$Description
+if(diy_air_sealing == TRUE){
+  cat(a_diy_air_sealing$Description
     
   )
 }else{
   cat("")
   }
 
-if(misc_air_sealing == TRUE){
+if(diy_air_sealing == TRUE){
   cat("
 
 *Estimated Cost/Benefits/Incentives*
@@ -2224,13 +2247,13 @@ The device costs $100-$400 and needs to be installed by an electrician. Here are
 ```
 
 ```{r}
-#| label: Misc. Air Sealing
+#| label: diy. Air Sealing
 #| echo: false
 #| results: asis
 
 
-if( misc_air_sealing == TRUE){
-  cat("### Misc. Air Sealing
+if( diy_air_sealing == TRUE){
+  cat("### diy. Air Sealing
   
 *Problem*
 
@@ -2241,13 +2264,13 @@ During the blower door test, we noted sources of air leakage in the living areas
   cat("")
 }
 
-if( misc_air_sealing == TRUE){
-  cat(a_misc_air_sealing$Description)
+if( diy_air_sealing == TRUE){
+  cat(a_diy_air_sealing$Description)
 }else{
   cat("")
 }
 
-if(misc_air_sealing == TRUE){
+if(diy_air_sealing == TRUE){
   cat("*Estimated Costs/Benefits/Incentives*
 
 Air sealing the air leaks we identified around the living areas of your house can be a DIY solution to lower energy use, or an insulation contractor can seal the leaks when they come to your house for a larger project. Please address any moisture concerns before undertaking significant air sealing efforts.
