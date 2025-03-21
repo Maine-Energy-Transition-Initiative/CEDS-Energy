@@ -801,7 +801,7 @@ table_3_4$ACH50_cal <- as.numeric(clean_audit_data$cfm50) * 60 / as.numeric(clea
 
 #Equivalent leakage area calculation
 
-table_3_4$equi_leak_area_cal <- as.numeric(clean_audit_data$cfm50) / 10
+table_3_4$equi_leak_area_cal <- (as.numeric(clean_audit_data$cfm50) / 10)
 
 #N-factor calculation
 
@@ -832,6 +832,9 @@ n_factor_calculated <- clean_audit_data |>
 
 table_3_4$ACHnatural_cal <- as.numeric(table_3_4$ACH50_cal)/ as.numeric(n_factor_calculated$n_factor_cal)
 
+table_3_4 <- table_3_4|>
+ mutate(across(where(~ is.numeric(.)), ~ round(., 1)))
+
 #Clean the data frame
 
 table_3_4 <- cbind(table_3_4, n_factor_calculated)|>
@@ -841,12 +844,23 @@ table_3_4 <- cbind(table_3_4, n_factor_calculated)|>
     names_to = "Info", 
     values_to = "Values")
 
-#table_3_4[3, 2] = paste0(table_3_4$equi_leak_area_cal, " under natural conditions.")
+equi_leak_area <- table_3_4[3,]
+equi_leak_area <- table_3_4[3,]|>
+  mutate(Values= paste0(equi_leak_area$Values, " under natural conditions. TEST"))
 
 table_3_4 <- table_3_4|>
-  mutate(Info = recode(Info,  "as.numeric(table_3_4)" = "CFM50:", "ACH50_cal" = "ACH50:","equi_leak_area_cal" = "Equivalent leakage area:","ACHnatural_cal" = "ACHnatural:" ))
+  rbind(equi_leak_area)
+
+table_3_4 <- table_3_4[-3,]
+  
+table_3_4 <- table_3_4|>
+  mutate(Info = recode(Info,  "as.numeric(table_3_4)" = "CFM50:", "ACH50_cal" = "ACH50:","equi_leak_area_cal" = "Equivalent leakage area:","ACHnatural_cal" = "ACHnatural:" ))|>
+  arrange(factor(Info, levels = c('CFM50:', 'ACH50:', 'Equivalent leakage area:', 'ACHnatural:')))
 
 table_3_4['Description'] <- c("CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.", "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.","This is the area (in square inches) equivalent to all of the air leaks in the house combined.","Accounting for the volume of the home, this means that the house exchanges –% of its air every hour. Over one day, the house goes through – complete air changes.")
+
+
+
 
 ```
 
@@ -862,7 +876,18 @@ Air leaks are a big source of heat gain in warm weather and heat loss in cold we
 #| label: 3.4 blower door table display
 #| eval: true
 #| echo: false
-gt_all_blower_door <- gt(all_blower_door) |>
+#gt_all_blower_door <- gt(all_blower_door) |>
+  #tab_options(table.width = pct(100))|>
+ # cols_width(
+   # Info ~ px(150),
+ #   Values ~ px(100),
+#    Description ~ px(400)
+#  )|>
+# tab_options(column_labels.hidden = TRUE)
+
+#gt_all_blower_door
+
+gt_all_blower_door_auto <- gt(table_3_4) |>
   tab_options(table.width = pct(100))|>
   cols_width(
     Info ~ px(150),
@@ -871,7 +896,7 @@ gt_all_blower_door <- gt(all_blower_door) |>
   )|>
  tab_options(column_labels.hidden = TRUE)
 
-gt_all_blower_door
+gt_all_blower_door_auto
 ```
 
 Using a thermal imaging camera, we looked for major air leakage locations and thermal bridging, where heat is bypassing the insulation. There was evidence of ….
