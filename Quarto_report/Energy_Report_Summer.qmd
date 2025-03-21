@@ -269,38 +269,6 @@ all_basics <- double_other |>
 ```
 
 ```{r}
-#| label: setup exterior data 3.2
-#| echo: false
-
-exterior_3.2 <- clean_audit_data|>
-  select(roof_type, roof_age, condition_of_the_roof, orientation_of_the_primary_roof_faces, comment_about_condition_of_the_roof, existing_moisture_control_strategies, condition_of_moisture_control_strategies, comments_about_existing_moisture_control_strategies,siding_type, comment_about_condition_of_the_siding, condition_of_the_siding)|>
-  
-  #remove values with N/A
-  #mutate(select() str_detect(`Energy Sources`, pattern = #"[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))
-  
-  #join information into one column for roof type in 3.2
-  mutate('Roof type:'= paste0(roof_type, "in ",  condition_of_the_roof ,"condition. ", comment_about_condition_of_the_roof))|>
-  
-  #join information into one column for moisture control in 3.2
-  mutate('Moisture control:' = paste0("Current moisture control strategies: ", existing_moisture_control_strategies,'.  These were in ',condition_of_moisture_control_strategies, ' condition .',comments_about_existing_moisture_control_strategies))|>
-  
-  #join information into one column for siding in 3.2
-  mutate('Siding:' = paste0(siding_type,' in ', condition_of_the_siding, ' condition. ', comment_about_condition_of_the_siding))|>
-  
-  #delete unwanted columns, the once that were used to create joined columns
-  select(-c(1,3,5:11))|>
-  
-  #pivot horizontal columns to be displayed vertical in the rows
-  pivot_longer(cols = everything() ,
-    names_to = "Info" ,
-    values_to = "Values")|>
-  
-  #rename the columns as they need to be displayed
-  mutate(Info = recode(Info,  roof_age = 'Roof age:', orientation_of_the_primary_roof_faces = 'Orientation:'))
-
-```
-
-```{r}
 #| label: setup interior/living spaces for 3.3
 #| echo: false
 
@@ -335,42 +303,39 @@ mutate(stock_framing = case_when( framing_type == "Balloon" ~ 'The framing type 
   arrange(factor(Info, levels = c('Walls:')))
 ```
 
-
-
 ```{r}
-#| label: setup siding old
+#| label: setup exterior doors
 #| echo: false
-#| eval: false
+#| eval: true
 
-siding <- exterior |>
-  select('Siding type', 'Condition of the siding?', 'Comment about condition of the siding') |>
-  mutate(Info = paste(`Siding type`,'in ', `Condition of the siding?`, 'condition .', `Comment about condition of the siding`))#|>
 
-siding <- siding[, -c(1:3)]
+exterior_doors <-clean_audit_data|>
+  select(door_s_type_1, door_s_type_2, door_s_type_3, door_s_material_1, door_s_material_2, door_s_material_3, number_of_doors_of_this_type_1, number_of_doors_of_this_type_2, number_of_doors_of_this_type_3, total_door_area_of_this_type_1, total_door_area_of_this_type_2, total_door_area_of_this_type_3, condition_fit_of_the_doors_of_this_type_1, condition_fit_of_the_doors_of_this_type_2, condition_fit_of_the_doors_of_this_type_3)
 
-siding <- siding|>
-  pivot_longer(cols = Info ,
+doors_test <- exterior_doors|>
+  mutate(Value = paste0(number_of_doors_of_this_type_1 ,door_s_type_1, door_s_material_1, condition_fit_of_the_doors_of_this_type_1, total_door_area_of_this_type_1))
+
+exterior_doors <- exterior_doors|>
+  mutate_all(~replace(., is.na(.), 0))
+
+exterior_doors <- if (exterior_doors$number_of_doors_of_this_type_3 >= 1) {
+  mutate(exterior_doors, Values = paste0("There are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_1, " condition, totaling ", total_door_area_of_this_type_1, " square feet", "Furthermore there are ",number_of_doors_of_this_type_2, " ",door_s_type_2," ", door_s_material_2, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_2, " condition, totaling ", total_door_area_of_this_type_2, " square feet. Moreover there are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_1, " condition, totaling ", total_door_area_of_this_type_1, " square feet"))
+} else if (exterior_doors$number_of_doors_of_this_type_2 >= 1) {
+  mutate(exterior_doors, Values = paste0("There are ",number_of_doors_of_this_type_2, " ",door_s_type_2," ", door_s_material_2, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_2, " condition, totaling ", total_door_area_of_this_type_2, " square feet. Moreover there are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_1, " condition, totaling ", total_door_area_of_this_type_1, " square feet"))
+} else if (exterior_doors$number_of_doors_of_this_type_1 >= 1) {
+  mutate(exterior_doors, Values = paste0("There are ",number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_1, " condition, totaling ", total_door_area_of_this_type_1, " square feet"))
+} else {
+  mutate(exterior_doors, Values = paste0("There are no exterior doors"))
+}
+
+exterior_doors <- exterior_doors|>
+  select(-c(1:15))
+
+exterior_doors <- exterior_doors|>
+  pivot_longer(cols = Values ,
     names_to = "Info" ,
     values_to = "Values")|>
-  mutate(Info = recode(Info,  'Info' = 'Siding:',))
-```
-
-```{r}
-#| label: setup exterior doors old
-#| echo: false
-#| eval: false
-
-doors <- exterior |>
-  select('Door(s) type | 1', 'Number of doors of this type | 1', 'Total door area of this type | 1') |>
-  mutate(Info = paste(`Number of doors of this type | 1`, `Door(s) type | 1`,'door. Totaling ', `Total door area of this type | 1`, 'square feet.'))#|>
-
-doors <- doors[, -c(1:3)]
-
-doors <- doors|>
-  pivot_longer(cols = Info ,
-    names_to = "Info" ,
-    values_to = "Values")|>
-  mutate(Info = recode(Info,  'Info' = 'Exterior doors:',))
+  mutate(Info = recode(Info,  'Values' = 'Exterior doors:',))
 ```
 
 ```{r}
@@ -406,19 +371,12 @@ windows[windows$Info %like% "double", ]
 #  mutate(Info = recode(Info,  'Info' = 'Windows:',))
 ```
 
+
+
 ```{r}
-#| label: 3.2 table setup old
+#| label: 3.4 data set up old 
 #| echo: false
 #| eval: false
-
-all_exterior <- roof_type_all |>
-  rbind(roof_moisture_control, siding, doors, windows )#|>
-  #arrange(factor(Info, levels = c('Date Built', 'Foundation Type', 'Attic', 'Number of floors', 'Square footage of conditioned space', 'Volume of conditioned space (cubic feet)','Ambient Carbon Monoxide reading')))
-```
-
-```{r}
-#| label: 3.4 data set up
-#| echo: false
 blower_door_leakage <- energy_test_googlesheets|>
   select( "Equivalent leakage area")|>
   mutate(`Equivalent leakage area` = paste0(`Equivalent leakage area`, " under natural conditions."))
@@ -711,6 +669,38 @@ gt_all_basics
 ### Exterior
 
 ```{r}
+#| label: setup exterior data 3.2
+#| echo: false
+
+exterior_3.2 <- clean_audit_data|>
+  select(roof_type, roof_age, condition_of_the_roof, orientation_of_the_primary_roof_faces, comment_about_condition_of_the_roof, existing_moisture_control_strategies, condition_of_moisture_control_strategies, comments_about_existing_moisture_control_strategies,siding_type, comment_about_condition_of_the_siding, condition_of_the_siding)|>
+  
+  #remove values with N/A
+  #mutate(select() str_detect(`Energy Sources`, pattern = #"[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))
+  
+  #join information into one column for roof type in 3.2
+  mutate('Roof type:'= paste0(roof_type, "in ",  condition_of_the_roof ,"condition. ", comment_about_condition_of_the_roof))|>
+  
+  #join information into one column for moisture control in 3.2
+  mutate('Moisture control:' = paste0("Current moisture control strategies: ", existing_moisture_control_strategies,'.  These were in ',condition_of_moisture_control_strategies, ' condition .',comments_about_existing_moisture_control_strategies))|>
+  
+  #join information into one column for siding in 3.2
+  mutate('Siding:' = paste0(siding_type,' in ', condition_of_the_siding, ' condition. ', comment_about_condition_of_the_siding))|>
+  
+  #delete unwanted columns, the once that were used to create joined columns
+  select(-c(1,3,5:11))|>
+  
+  #pivot horizontal columns to be displayed vertical in the rows
+  pivot_longer(cols = everything() ,
+    names_to = "Info" ,
+    values_to = "Values")|>
+  
+  #rename the columns as they need to be displayed
+  mutate(Info = recode(Info,  roof_age = 'Roof age:', orientation_of_the_primary_roof_faces = 'Orientation:'))
+
+```
+
+```{r}
 #| label: 3.2 Exterior table
 #| eval: true
 #| echo: false
@@ -732,7 +722,6 @@ gt_exterior_3.2 <- gt(exterior_3.2) |>
 
 gt_exterior_3.2
 
-#kableExtra::kable(all_exterior)
 ```
 
 ### Interior/Living space
