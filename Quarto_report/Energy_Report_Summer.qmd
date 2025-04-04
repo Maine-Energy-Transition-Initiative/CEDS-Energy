@@ -67,7 +67,7 @@ clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
 #| warning: false
 #select only recomendations to make separate data frame
 pivot_recommendations <- clean_audit_data |>
-  select(c(recommendations_ranking_furnace_boiler_tune_up:recommendations_ranking_other_3, recommendations_ranking_ductwork_air_sealing_and_insulation, recommendations_ranking_misc_air_sealing_and_insulation))
+  select(c(recommendations_ranking_furnace_boiler_tune_up:recommendations_ranking_other_3, recommendations_ranking_ductwork_air_sealing_and_insulation, recommendations_ranking_misc_air_sealing_and_insulation, recommendations_ranking_replace_windows, recommendations_ranking_replace_doors))
 
 #pivot teh data to be displayed vertically
 pivot_recommendations <- pivot_recommendations |>
@@ -312,18 +312,17 @@ mutate(stock_framing = case_when( framing_type == "Balloon" ~ 'The framing type 
 exterior_doors <-clean_audit_data|>
   select(door_s_type_1, door_s_type_2, door_s_type_3, door_s_material_1, door_s_material_2, door_s_material_3, number_of_doors_of_this_type_1, number_of_doors_of_this_type_2, number_of_doors_of_this_type_3, total_door_area_of_this_type_1, total_door_area_of_this_type_2, total_door_area_of_this_type_3, condition_fit_of_the_doors_of_this_type_1, condition_fit_of_the_doors_of_this_type_2, condition_fit_of_the_doors_of_this_type_3)
 
-doors_test <- exterior_doors|>
-  mutate(Value = paste0(number_of_doors_of_this_type_1 ,door_s_type_1, door_s_material_1, condition_fit_of_the_doors_of_this_type_1, total_door_area_of_this_type_1))
+
 
 exterior_doors <- exterior_doors|>
   mutate_all(~replace(., is.na(.), 0))
 
 exterior_doors <- if (exterior_doors$number_of_doors_of_this_type_3 >= 1) {
-  mutate(exterior_doors, Values = paste0("There are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_1, " condition, totaling ", total_door_area_of_this_type_1, " square feet", "Furthermore there are ",number_of_doors_of_this_type_2, " ",door_s_type_2," ", door_s_material_2, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_2, " condition, totaling ", total_door_area_of_this_type_2, " square feet. Moreover there are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_1, " condition, totaling ", total_door_area_of_this_type_1, " square feet"))
+  mutate(exterior_doors, Values = paste0("There are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_1, " condition, totaling ", total_door_area_of_this_type_1, " square feet.", "Furthermore there are ",number_of_doors_of_this_type_2, " ",door_s_type_2," ", door_s_material_2, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_2, " condition, totaling ", total_door_area_of_this_type_2, " square feet. Moreover there are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_1, " condition, totaling ", total_door_area_of_this_type_1, " square feet."))
 } else if (exterior_doors$number_of_doors_of_this_type_2 >= 1) {
-  mutate(exterior_doors, Values = paste0("There are ",number_of_doors_of_this_type_2, " ",door_s_type_2," ", door_s_material_2, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_2, " condition, totaling ", total_door_area_of_this_type_2, " square feet. Moreover there are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_1, " condition, totaling ", total_door_area_of_this_type_1, " square feet"))
+  mutate(exterior_doors, Values = paste0("There are ",number_of_doors_of_this_type_2, " ",door_s_type_2," ", door_s_material_2, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_2, " condition, totaling ", total_door_area_of_this_type_2, " square feet. Moreover there are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_1, " condition, totaling ", total_door_area_of_this_type_1, " square feet."))
 } else if (exterior_doors$number_of_doors_of_this_type_1 >= 1) {
-  mutate(exterior_doors, Values = paste0("There are ",number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_1, " condition, totaling ", total_door_area_of_this_type_1, " square feet"))
+  mutate(exterior_doors, Values = paste0("There are ",number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. In ", condition_fit_of_the_doors_of_this_type_1, " condition, totaling ", total_door_area_of_this_type_1, " square feet."))
 } else {
   mutate(exterior_doors, Values = paste0("There are no exterior doors"))
 }
@@ -341,34 +340,37 @@ exterior_doors <- exterior_doors|>
 ```{r}
 #| label: windows setup
 #| echo: false
-#| eval: false
+#| eval: true
 
-windows <- clean_audit_data |>
-  select(how_many_windows_of_this_type_there_are_1, number_of_panes_in_windows_of_this_type_and_material_1_single, number_of_panes_in_windows_of_this_type_and_material_1_double, number_of_panes_in_windows_of_this_type_and_material_1_triple)|>
-  pivot_longer(cols = everything(),
-   names_to = "Info" ,
-   values_to = "Values") #|>
- #filter(!is.na(Values))
 
-windows_vector <- windows$Info
+exterior_windows <-clean_audit_data|>
+  select(how_many_windows_of_this_type_there_are_1, how_many_windows_of_this_type_there_are_2, how_many_windows_of_this_type_there_are_3, how_many_windows_of_this_type_there_are_4, how_many_windows_of_this_type_there_are_5, number_of_panes_1, number_of_panes_2, number_of_panes_3, number_of_panes_4, number_of_panes_5, material_of_the_windows_1, material_of_the_windows_2, material_of_the_windows_3, material_of_the_windows_4, material_of_the_windows_5, condition_of_the_windows_of_this_type_1, condition_of_the_windows_this_type_2, condition_of_the_windows_this_type_3, condition_of_the_windows_this_type_4, condition_of_the_windows_this_type_5, total_windows_areas_of_this_type_1, total_windows_areas_of_this_type_2, total_windows_areas_of_this_type_3, total_windows_areas_of_this_type_4, total_windows_areas_of_this_type_5)
 
-windows_vector_test <- str_detect(windows_vector, "double")
+exterior_windows <- exterior_windows|>
+  mutate_all(~replace(., is.na(.), 0))
 
-if(all(windows_vector_test == c(F,T))) 
-{"Combo1"} else {windows$Values = paste0(windows$Values, " double glazed")}
-  
+exterior_windows <- if (exterior_windows$how_many_windows_of_this_type_there_are_5 >= 1) {
+  mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. In ", condition_of_the_windows_of_this_type_1, " condition, totaling ", total_windows_areas_of_this_type_1, " square feet. Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. In ", condition_of_the_windows_this_type_2, " condition, totaling ", total_windows_areas_of_this_type_2, " square feet. Furthermore there are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. In ", condition_of_the_windows_this_type_3, " condition, totaling ", total_windows_areas_of_this_type_3, " square feet. Also there are ", , how_many_windows_of_this_type_there_are_4, " ", number_of_panes_4, " paned ", material_of_the_windows_4, " windows. In ", condition_of_the_windows_this_type_4, " condition, totaling ", total_windows_areas_of_this_type_4, " square feet. At last there are " , how_many_windows_of_this_type_there_are_5, " ", number_of_panes_5, " paned ", material_of_the_windows_5, " windows. In ", condition_of_the_windows_this_type_5, " condition, totaling ", total_windows_areas_of_this_type_5, " square feet."))
+} else if (exterior_windows$how_many_windows_of_this_type_there_are_4 >= 1) {
+  mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. In ", condition_of_the_windows_of_this_type_1, " condition, totaling ", total_windows_areas_of_this_type_1, " square feet. Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. In ", condition_of_the_windows_this_type_2, " condition, totaling ", total_windows_areas_of_this_type_2, " square feet. Furthermore there are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. In ", condition_of_the_windows_this_type_3, " condition, totaling ", total_windows_areas_of_this_type_3, " square feet. Also there are ", , how_many_windows_of_this_type_there_are_4, " ", number_of_panes_4, " paned ", material_of_the_windows_4, " windows. In ", condition_of_the_windows_this_type_4, " condition, totaling ", total_windows_areas_of_this_type_4, " square feet."))
+} else if (exterior_windows$how_many_windows_of_this_type_there_are_3 >= 1) {
+  mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. In ", condition_of_the_windows_of_this_type_1, " condition, totaling ", total_windows_areas_of_this_type_1, " square feet. Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. In ", condition_of_the_windows_this_type_2, " condition, totaling ", total_windows_areas_of_this_type_2, " square feet. Furthermore there are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. In ", condition_of_the_windows_this_type_3, " condition, totaling ", total_windows_areas_of_this_type_3, " square feet."))
+} else if (exterior_windows$how_many_windows_of_this_type_there_are_2 >= 1) {
+  mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. In ", condition_of_the_windows_of_this_type_1, " condition, totaling ", total_windows_areas_of_this_type_1, " square feet. Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. In ", condition_of_the_windows_this_type_2, " condition, totaling ", total_windows_areas_of_this_type_2, " square feet."))
+} else if (exterior_windows$how_many_windows_of_this_type_there_are_1 >= 1) {
+  mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. In ", condition_of_the_windows_of_this_type_1, " condition, totaling ", total_windows_areas_of_this_type_1, " square feet."))
+} else {
+  mutate(exterior_windows, Values = paste0("There are no exterior windows"))
+}
 
-#install.packages("data.table")
-library(data.table)
-windows[windows$Info %like% "double", ]
+exterior_windows <- exterior_windows|>
+  select(-c(1:25))
 
-#windows <- windows[, -c(1:7)]
-
-#windows <- windows|>
-  #pivot_longer(cols = Info ,
-  #  names_to = "Info" ,
- #   values_to = "Values")|>
-#  mutate(Info = recode(Info,  'Info' = 'Windows:',))
+exterior_windows <- exterior_windows|>
+  pivot_longer(cols = Values ,
+    names_to = "Info" ,
+    values_to = "Values")|>
+  mutate(Info = recode(Info,  'Values' = 'Exterior windows:',))
 ```
 
 
@@ -696,7 +698,12 @@ exterior_3.2 <- clean_audit_data|>
     values_to = "Values")|>
   
   #rename the columns as they need to be displayed
-  mutate(Info = recode(Info,  roof_age = 'Roof age:', orientation_of_the_primary_roof_faces = 'Orientation:'))
+  mutate(Info = recode(Info,  roof_age = 'Roof age:', orientation_of_the_primary_roof_faces = 'Orientation:'))|>
+  
+  #bind rows with the exterior doors and windows
+  rbind(exterior_doors, exterior_windows)
+
+  
 
 ```
 
@@ -887,6 +894,60 @@ gt_all_blower_door_auto <- gt(table_3_4) |>
 
 gt_all_blower_door_auto
 ```
+
+```{r}
+
+
+
+
+```
+
+
+```{r}
+#| label: ACHnatural ggplot chart
+#| eval: false
+#| echo: false
+#| warning: false
+
+#make ACH natural separated from other values
+
+ACHnatural_ggplot <- table_3_4[-c(1:3),]
+ACHnatural_ggplot$Values<- as.numeric(ACHnatural_ggplot$Values)
+
+ggplot(Building_Audit, aes(y=1))+
+  geom_bar(width=0.5, fill ="#F5F5DC")+ #add8e6
+  #scale_fill_gradient(low="#FF8888",high="#FF0000")+ #it should be working idk why it doesn't
+   geom_vline(xintercept = ACHnatural_ggplot$Values, #move this to before previous x intercepts
+                linetype=1, colour="#59D2FE", size= 3)+ #(maybe have coditional color? red if ACHn is to big blue if it's ok)
+  #scale_x_reverse()+
+  geom_vline(xintercept= c(0, 0.04, 0.35, 0.41, 0.6,1), size= 1.3, ylim)+
+ 
+  
+#The vline text lables
+  geom_text(aes(x=ACHnatural_ggplot$Values, label="Your Home", y=1.15), nudge_x= -0.03, colour="#59D2FE", angle=90, size = 5, ) + #move this to the legend
+  geom_text(aes(x=0, label="", y=1), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
+  geom_text(aes(x=0.04, label="Passive House", y=1), nudge_x= -0.02, colour="black", angle=90, size = 5, fontface="bold") +
+  geom_text(aes(x=0.35, label="Very Tight Mechanical \nVentilation Needed", y=1), nudge_x= -0.05, colour="black", angle=90, size = 5, fontface="bold") +
+  geom_text(aes(x=0.41, label="Tight", y=1), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
+  geom_text(aes(x=0.6, label="Leaky", y=1), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
+  geom_text(aes(x=1, label="Very Leaky", y=1), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
+  
+#The vline text values 
+  geom_text(aes(x=ACHnatural_ggplot$Values, label=ACHnatural_ggplot$Values, y=0.85), nudge_x= -0.03, colour="#59D2FE", angle=90, size = 5) + #move this to the legend
+  geom_text(aes(x=0, label="0", y=0.8), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
+  geom_text(aes(x=0.04, label="0.04", y=0.8), nudge_x= -0.02, colour="black", angle=90, size = 5, fontface="bold") +
+  geom_text(aes(x=0.35, label="0.35", y=0.8), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
+  geom_text(aes(x=0.41, label="0.41", y=0.8), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
+  geom_text(aes(x=0.6, label="0.6", y=0.8), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
+  geom_text(aes(x=1, label="1", y=0.8), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
+  theme_void()
+  
+ggsave("graph_test8_0_40.png", width=15, height=5)
+
+
+
+```
+
 
 Using a thermal imaging camera, we looked for major air leakage locations and thermal bridging, where heat is bypassing the insulation. There was evidence of ….
 
