@@ -53,10 +53,13 @@ all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets
 
 energy_test_googlesheets <- all_energy_test_googlesheets[1, ]
 
-#Load Recommendation Info
-recommendations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c")
-
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
+
+#Load Recommendation Info
+recommendations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 1 )
+
+#Load Conditional Recommendation Info
+conditional_recommedations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 2)
 
 ```
 
@@ -544,7 +547,6 @@ A blower door test measures the air tightness of a building. We used a specializ
 
 chapter_1.5_header <- clean_audit_data |>
   mutate(combustion_fuels = str_detect(energy_sources, pattern = "[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))
-  
 
 energy_sources_googlesheets <- clean_audit_data |>
   mutate(combustion_propane = str_detect(energy_sources, pattern = "Propane"))
@@ -628,7 +630,7 @@ if(energy_sources_googlesheets$combustion_propane == TRUE){
 
 ## Summary of Recommendations
 
-We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found later in this report.
+We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report. These are organized from the least expensive/most cost-effective and easiest interventions to ones that are more challenging to implement.
 
 ```{r}
 #| label: 2. summery table
@@ -895,26 +897,21 @@ gt_all_blower_door_auto <- gt(table_3_4) |>
 gt_all_blower_door_auto
 ```
 
-```{r}
-
-
-
-
-```
 
 
 ```{r}
 #| label: ACHnatural ggplot chart
-#| eval: false
+#| eval: true
 #| echo: false
 #| warning: false
+#| output: false
 
 #make ACH natural separated from other values
 
 ACHnatural_ggplot <- table_3_4[-c(1:3),]
 ACHnatural_ggplot$Values<- as.numeric(ACHnatural_ggplot$Values)
 
-ggplot(Building_Audit, aes(y=1))+
+ggplot(ACHnatural_ggplot, aes(y=1))+
   geom_bar(width=0.5, fill ="#F5F5DC")+ #add8e6
   #scale_fill_gradient(low="#FF8888",high="#FF0000")+ #it should be working idk why it doesn't
    geom_vline(xintercept = ACHnatural_ggplot$Values, #move this to before previous x intercepts
@@ -940,14 +937,15 @@ ggplot(Building_Audit, aes(y=1))+
   geom_text(aes(x=0.41, label="0.41", y=0.8), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
   geom_text(aes(x=0.6, label="0.6", y=0.8), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
   geom_text(aes(x=1, label="1", y=0.8), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
-  theme_void()
-  
-ggsave("graph_test8_0_40.png", width=15, height=5)
+  theme_void() 
+
+ggsave("achnatural_ggplot1.png", width=15, height=5)
 
 
 
 ```
 
+![](achnatural_ggplot1.png)
 
 Using a thermal imaging camera, we looked for major air leakage locations and thermal bridging, where heat is bypassing the insulation. There was evidence of ….
 
@@ -1079,6 +1077,8 @@ gt_all_energy_bills
 
 ## Recommendations
 
+These recommendations are organized from the least expensive/most cost-effective and easiest interventions to ones that are more challenging to implement.
+
 ```{r}
 #| label: setup data for recommendations 4.0
 #| echo: false
@@ -1185,9 +1185,9 @@ solar <- clean_audit_data|>
   select(-recommendations_ranking_solar)
 
 pipe_insulation <- clean_audit_data|>
-  select(recommendations_ranking_pipe_insulation)#|>
-  #mutate(pipe_insulation = str_detect(recommendations_ranking_pipe_insulation, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
- # select(-recommendations_ranking_pipe_insulation)
+  select(recommendations_ranking_pipe_insulation)|>
+  mutate(pipe_insulation = str_detect(recommendations_ranking_pipe_insulation, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
+  select(-recommendations_ranking_pipe_insulation)
 
 whole_house_surge_protection <- clean_audit_data|>
   select(recommendations_ranking_whole_house_surge_protection)|>
@@ -1203,6 +1203,8 @@ duck_air_sealing_and_insulation <- clean_audit_data|>
   select(recommendations_ranking_ductwork_air_sealing_and_insulation)|>
   mutate(duck_air_sealing_and_insulation = str_detect(recommendations_ranking_ductwork_air_sealing_and_insulation, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21"))|>
   select(-recommendations_ranking_ductwork_air_sealing_and_insulation)
+
+#Need to add windows and doors and change all numbers to 28 range.
 
 other_1 <- clean_audit_data|>
   select(recommendations_ranking_other_1)|>
@@ -1278,6 +1280,38 @@ a_other_2 <- recommendations_googlesheets[25, ]
 
 a_other_3 <- recommendations_googlesheets[26, ]
 ```
+
+```{r}
+#| label: automatic conditioned recomendation stock text set up
+#| echo: false
+#| eval: false
+
+residency_type <- clean_audit_data|>
+  select(type_of_the_residence)
+
+primery_residence <- residency_type |>
+  mutate(type_of_the_residence = str_detect(type_of_the_residence, pattern = "Primary Residence"))
+
+secondary_residence_heated <- residency_type |>
+  mutate(type_of_the_residence = str_detect(type_of_the_residence, pattern = "Secondary Residence, heated year-round"))
+
+secondary_residence_not_heated <- residency_type |>
+  mutate(type_of_the_residence = str_detect(type_of_the_residence, pattern = "Secondary Residence, not heated year-round"))
+
+
+auto_furnice_boiler_tune <- conditional_recommedations_googlesheets|>
+  slice(1:3)
+
+
+auto_furnice_boiler_tune <- if (primery_residence == TRUE) {
+  mutate(auto_furnice_boiler_tune, Description = paste0("Test1"))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_furnice_boiler_tune, Description = paste0("Test2"))
+} else {
+  mutate(auto_furnice_boiler_tune, Description = paste0("Test3"))
+}
+```
+
 
 ```{r}
 #| label: furnace boiler tune up recommendation
