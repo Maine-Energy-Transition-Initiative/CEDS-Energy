@@ -58,8 +58,8 @@ clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
 #Load Recommendation Info
 recommendations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 1 )
 
-#Load Conditional Recommendation Info
-conditional_recommedations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 2)
+#Load estimated Recommendation Info
+estimated_recommedations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 2)
 
 ```
 
@@ -1084,9 +1084,9 @@ These recommendations are organized from the least expensive/most cost-effective
 #| echo: false
 #| eval: true
 
-furnice_boiler_tune_up <- clean_audit_data|>
+furnace_boiler_tune_up <- clean_audit_data|>
   select(recommendations_ranking_furnace_boiler_tune_up)|>
-  mutate(furnice_boiler_tune_up = str_detect(recommendations_ranking_furnace_boiler_tune_up, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
+  mutate(furnace_boiler_tune_up = str_detect(recommendations_ranking_furnace_boiler_tune_up, pattern = "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26"))|>
   select(-recommendations_ranking_furnace_boiler_tune_up)
 
 high_efficiency_shower_heads<- clean_audit_data|>
@@ -1224,71 +1224,78 @@ other_3 <- clean_audit_data|>
 ```
 
 ```{r}
-#| label: set up automatic recomendation stock text 
+#| label: automatic recomendation description text set up 
 #| echo: false
-a_refriginator <-  recommendations_googlesheets[5, ]
+auto_refriginator <-  recommendations_googlesheets[5, ]
 
-a_freezer <- recommendations_googlesheets[6,]
+auto_freezer <- recommendations_googlesheets[6,]
 
-a_induction_stove <- recommendations_googlesheets[7, ]
+auto_induction_stove <- recommendations_googlesheets[7, ]
 
-a_vapor_barrier <- recommendations_googlesheets[12, ]
+auto_vapor_barrier <- recommendations_googlesheets[12, ]
 
-a_spray_foam <- recommendations_googlesheets[13, ]
+auto_spray_foam <- recommendations_googlesheets[13, ]
 
-a_attic_insulation <- recommendations_googlesheets[14, ]
+auto_attic_insulation <- recommendations_googlesheets[14, ]
 
-a_blow_in_cellulose <- recommendations_googlesheets[15, ]
+auto_blow_in_cellulose <- recommendations_googlesheets[15, ]
 
-a_continuous_exterior_insulation <- recommendations_googlesheets[16, ]
+auto_continuous_exterior_insulation <- recommendations_googlesheets[16, ]
 
-a_electrical_panel_upgrade <- recommendations_googlesheets[17, ]
+auto_electrical_panel_upgrade <- recommendations_googlesheets[17, ]
 
-a_air_source_heat_pump <- recommendations_googlesheets[18, ]
+auto_air_source_heat_pump <- recommendations_googlesheets[18, ]
 
-a_ev_and_charger <- recommendations_googlesheets[19, ]
+auto_ev_and_charger <- recommendations_googlesheets[19, ]
 
-a_other_1 <- recommendations_googlesheets[21, ]
+auto_other_1 <- recommendations_googlesheets[21, ]
 
-a_leds <- recommendations_googlesheets[3, ]
+auto_leds <- recommendations_googlesheets[3, ]
 
-a_shower_heads <- recommendations_googlesheets[2, ]
+auto_shower_heads <- recommendations_googlesheets[2, ]
 
-a_furnice_boiler_tune_up <- recommendations_googlesheets[1, ]
+auto_furnace_boiler_tune_up <- recommendations_googlesheets[1, ]
 
-a_window_dressers <- recommendations_googlesheets[4, ]
+auto_window_dressers <- recommendations_googlesheets[4, ]
 
-a_heat_pump_water_heater <- recommendations_googlesheets[8, ]
+auto_heat_pump_water_heater <- recommendations_googlesheets[8, ]
 
-a_gutters <- recommendations_googlesheets[9, ]
+auto_gutters <- recommendations_googlesheets[9, ]
 
-a_bathroom_fan <- recommendations_googlesheets[10, ]
+auto_bathroom_fan <- recommendations_googlesheets[10, ]
 
-a_kitchen_fan <- recommendations_googlesheets[11, ]
+auto_kitchen_fan <- recommendations_googlesheets[11, ]
 
-a_solar <- recommendations_googlesheets[20, ]
+auto_solar <- recommendations_googlesheets[20, ]
 
-a_pipe_insulation <- recommendations_googlesheets[22, ]
+auto_pipe_insulation <- recommendations_googlesheets[22, ]
 
-a_whole_house_surge_protection <- recommendations_googlesheets[23, ]
+auto_whole_house_surge_protection <- recommendations_googlesheets[23, ]
 
-a_diy_air_sealing <- recommendations_googlesheets[24, ]
+auto_diy_air_sealing <- recommendations_googlesheets[24, ]
 
-a_duct_air_sealing <- recommendations_googlesheets[27,]
+auto_duct_air_sealing <- recommendations_googlesheets[27,]
 
-a_other_2 <- recommendations_googlesheets[25, ]
+auto_other_2 <- recommendations_googlesheets[25, ]
 
-a_other_3 <- recommendations_googlesheets[26, ]
+auto_other_3 <- recommendations_googlesheets[26, ]
+
+auto_misc_air_sealing_insulation <- recommendations_googlesheets[28, ]
+
+auto_replace_windows <- recommendations_googlesheets[29, ]
+
+auto_replace_doors <- recommendations_googlesheets[30, ]
 ```
 
 ```{r}
-#| label: automatic conditioned recomendation stock text set up
+#| label: automatic estimates/costs for recomendation stock text set up
 #| echo: false
-#| eval: false
+#| eval: true
 
 residency_type <- clean_audit_data|>
   select(type_of_the_residence)
 
+#identify the type of residence
 primery_residence <- residency_type |>
   mutate(type_of_the_residence = str_detect(type_of_the_residence, pattern = "Primary Residence"))
 
@@ -1298,18 +1305,457 @@ secondary_residence_heated <- residency_type |>
 secondary_residence_not_heated <- residency_type |>
   mutate(type_of_the_residence = str_detect(type_of_the_residence, pattern = "Secondary Residence, not heated year-round"))
 
-
-auto_furnice_boiler_tune <- conditional_recommedations_googlesheets|>
+#slice all the recommendations 
+auto_furnace_boiler_tune_estimates <- estimated_recommedations_googlesheets|>
   slice(1:3)
 
+auto_shower_heads_estimates <-estimated_recommedations_googlesheets|>
+  slice(4:6)
 
-auto_furnice_boiler_tune <- if (primery_residence == TRUE) {
-  mutate(auto_furnice_boiler_tune, Description = paste0("Test1"))
+auto_LED_s_estimates  <- estimated_recommedations_googlesheets|>
+  slice(7:9)
+
+auto_window_dresserds_estimates <- estimated_recommedations_googlesheets|>
+  slice(10:12)
+
+auto_refriginator_estimates <- estimated_recommedations_googlesheets|>
+  slice(13:15)
+
+auto_freezer_estimates <- estimated_recommedations_googlesheets|>
+  slice(16:18)
+
+auto_induction_stove_estimates <- estimated_recommedations_googlesheets|>
+  slice(19:21)
+
+auto_heat_pump_water_heater_estimates <- estimated_recommedations_googlesheets|>
+  slice(22:24)
+
+auto_gutters_estimates <- estimated_recommedations_googlesheets|>
+  slice(25:27)
+
+auto_bathroom_fan_estimates <- estimated_recommedations_googlesheets|>
+  slice(28:30)
+
+auto_kitchen_fan_estimates  <- estimated_recommedations_googlesheets|>
+  slice(31:33)
+
+auto_vapor_barrier_estimates  <- estimated_recommedations_googlesheets|>
+  slice(34:36)
+
+auto_spray_foam_estimates  <- estimated_recommedations_googlesheets|>
+  slice(37:39)
+
+auto_attic_air_sealing_insulation_estimates  <- estimated_recommedations_googlesheets|>
+  slice(40:42)
+
+auto_blow_in_cellulose_estimates  <- estimated_recommedations_googlesheets|>
+  slice(43:45)
+
+auto_continuous_exterior_insulation_estimates  <- estimated_recommedations_googlesheets|>
+  slice(46:48)
+
+auto_electrical_panel_upgrade_estimates <- estimated_recommedations_googlesheets|>
+  slice(49:51)
+
+auto_air_source_heat_pump_estimates  <- estimated_recommedations_googlesheets|>
+  slice(52:54)
+
+auto_ev_and_charger_estimates <- estimated_recommedations_googlesheets|>
+  slice(55:57)
+
+auto_solar_estimates <- estimated_recommedations_googlesheets|>
+  slice(58:60)
+
+auto_whole_house_surge_protection_estimates <- estimated_recommedations_googlesheets|>
+  slice(61:63)
+
+auto_pipe_insulation_estimates <- estimated_recommedations_googlesheets|>
+  slice(64:66)
+
+auto_diy_air_sealing <- estimated_recommedations_googlesheets|>
+  slice(67:69)
+
+auto_other_1_estimates <- estimated_recommedations_googlesheets|>
+  slice(70:72)
+
+auto_other_2_estimates <- estimated_recommedations_googlesheets|>
+  slice(73:75)
+
+auto_other_3_estimates <- estimated_recommedations_googlesheets|>
+  slice(76:78)
+
+auto_duct_air_sealing_insulation_estimates <- estimated_recommedations_googlesheets|>
+  slice(79:81)
+
+auto_misc_air_sealing_insulation_estimates  <- estimated_recommedations_googlesheets|>
+  slice(82:84)
+
+auto_replace_windows_estimates <- estimated_recommedations_googlesheets|>
+  slice(85:87)
+
+auto_replace_doors_estimates <- estimated_recommedations_googlesheets|>
+  slice(88:90)
+
+#automate the correct description
+auto_furnace_boiler_tune_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_furnace_boiler_tune_estimates, Description = paste0(auto_furnace_boiler_tune_estimates[1,4]))
 } else if (secondary_residence_heated == TRUE) {
-  mutate(auto_furnice_boiler_tune, Description = paste0("Test2"))
+  mutate(auto_furnace_boiler_tune_estimates, Description = paste0(auto_furnace_boiler_tune_estimates[2,4]))
 } else {
-  mutate(auto_furnice_boiler_tune, Description = paste0("Test3"))
+  mutate(auto_furnace_boiler_tune_estimates, Description = paste0(auto_furnace_boiler_tune_estimates[3,4]))
 }
+
+auto_shower_heads_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_shower_heads_estimates, Description = paste0(auto_shower_heads_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_shower_heads_estimates, Description = paste0(auto_shower_heads_estimates[2,4]))
+} else {
+  mutate(auto_shower_heads_estimates, Description = paste0(auto_shower_heads_estimates[3,4]))
+}
+
+auto_LED_s_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_LED_s_estimates, Description = paste0(auto_LED_s_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_LED_s_estimates, Description = paste0(auto_LED_s_estimates[2,4]))
+} else {
+  mutate(auto_LED_s_estimates, Description = paste0(auto_LED_s_estimates[3,4]))
+}
+
+auto_window_dresserds_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_window_dresserds_estimates, Description = paste0(auto_window_dresserds_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_window_dresserds_estimates, Description = paste0(auto_window_dresserds_estimates[2,4]))
+} else {
+  mutate(auto_window_dresserds_estimates, Description = paste0(auto_window_dresserds_estimates[3,4]))
+}
+
+auto_refriginator_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_refriginator_estimates, Description = paste0(auto_refriginator_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_refriginator_estimates, Description = paste0(auto_refriginator_estimates[2,4]))
+} else {
+  mutate(auto_refriginator_estimates, Description = paste0(auto_refriginator_estimates[3,4]))
+}
+
+auto_freezer_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_freezer_estimates, Description = paste0(auto_freezer_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_freezer_estimates, Description = paste0(auto_freezer_estimates[2,4]))
+} else {
+  mutate(auto_freezer_estimates, Description = paste0(auto_freezer_estimates[3,4]))
+}
+
+auto_induction_stove_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_induction_stove_estimates, Description = paste0(auto_induction_stove_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_induction_stove_estimates, Description = paste0(auto_induction_stove_estimates[2,4]))
+} else {
+  mutate(auto_induction_stove_estimates, Description = paste0(auto_induction_stove_estimates[3,4]))
+}
+
+auto_heat_pump_water_heater_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_heat_pump_water_heater_estimates, Description = paste0(auto_heat_pump_water_heater_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_heat_pump_water_heater_estimates, Description = paste0(auto_heat_pump_water_heater_estimates[2,4]))
+} else {
+  mutate(auto_heat_pump_water_heater_estimates, Description = paste0(auto_heat_pump_water_heater_estimates[3,4]))
+}
+
+auto_gutters_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_gutters_estimates, Description = paste0(auto_gutters_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_gutters_estimates, Description = paste0(auto_gutters_estimates[2,4]))
+} else {
+  mutate(auto_gutters_estimates, Description = paste0(auto_gutters_estimates[3,4]))
+}
+
+auto_bathroom_fan_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_bathroom_fan_estimates, Description = paste0(auto_bathroom_fan_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_bathroom_fan_estimates, Description = paste0(auto_bathroom_fan_estimates[2,4]))
+} else {
+  mutate(auto_bathroom_fan_estimates, Description = paste0(auto_bathroom_fan_estimates[3,4]))
+}
+
+auto_kitchen_fan_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_kitchen_fan_estimates, Description = paste0(auto_kitchen_fan_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_kitchen_fan_estimates, Description = paste0(auto_kitchen_fan_estimates[2,4]))
+} else {
+  mutate(auto_kitchen_fan_estimates, Description = paste0(auto_kitchen_fan_estimates[3,4]))
+}
+
+auto_vapor_barrier_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_vapor_barrier_estimates, Description = paste0(auto_vapor_barrier_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_vapor_barrier_estimates, Description = paste0(auto_vapor_barrier_estimates[2,4]))
+} else {
+  mutate(auto_vapor_barrier_estimates, Description = paste0(auto_vapor_barrier_estimates[3,4]))
+}
+
+auto_spray_foam_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_spray_foam_estimates, Description = paste0(auto_spray_foam_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_spray_foam_estimates, Description = paste0(auto_spray_foam_estimates[2,4]))
+} else {
+  mutate(auto_spray_foam_estimates, Description = paste0(auto_spray_foam_estimates[3,4]))
+}
+
+auto_attic_air_sealing_insulation_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_attic_air_sealing_insulation_estimates, Description = paste0(auto_attic_air_sealing_insulation_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_attic_air_sealing_insulation_estimates, Description = paste0(auto_attic_air_sealing_insulation_estimates[2,4]))
+} else {
+  mutate(auto_attic_air_sealing_insulation_estimates, Description = paste0(auto_attic_air_sealing_insulation_estimates[3,4]))
+}
+
+auto_blow_in_cellulose_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_blow_in_cellulose_estimates, Description = paste0(auto_blow_in_cellulose_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_blow_in_cellulose_estimates, Description = paste0(auto_blow_in_cellulose_estimates[2,4]))
+} else {
+  mutate(auto_blow_in_cellulose_estimates, Description = paste0(auto_blow_in_cellulose_estimates[3,4]))
+}
+
+auto_continuous_exterior_insulation_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_continuous_exterior_insulation_estimates, Description = paste0(auto_continuous_exterior_insulation_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_continuous_exterior_insulation_estimates, Description = paste0(auto_continuous_exterior_insulation_estimates[2,4]))
+} else {
+  mutate(auto_continuous_exterior_insulation_estimates, Description = paste0(auto_continuous_exterior_insulation_estimates[3,4]))
+}
+
+auto_electrical_panel_upgrade_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_electrical_panel_upgrade_estimates, Description = paste0(auto_electrical_panel_upgrade_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_electrical_panel_upgrade_estimates, Description = paste0(auto_electrical_panel_upgrade_estimates[2,4]))
+} else {
+  mutate(auto_electrical_panel_upgrade_estimates, Description = paste0(auto_electrical_panel_upgrade_estimates[3,4]))
+}
+
+auto_air_source_heat_pump_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_air_source_heat_pump_estimates, Description = paste0(auto_air_source_heat_pump_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_air_source_heat_pump_estimates, Description = paste0(auto_air_source_heat_pump_estimates[2,4]))
+} else {
+  mutate(auto_air_source_heat_pump_estimates, Description = paste0(auto_air_source_heat_pump_estimates[3,4]))
+}
+
+auto_ev_and_charger_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_ev_and_charger_estimates, Description = paste0(auto_ev_and_charger_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_ev_and_charger_estimates, Description = paste0(auto_ev_and_charger_estimates[2,4]))
+} else {
+  mutate(auto_ev_and_charger_estimates, Description = paste0(auto_ev_and_charger_estimates[3,4]))
+}
+
+auto_solar_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_solar_estimates, Description = paste0(auto_solar_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_solar_estimates, Description = paste0(auto_solar_estimates[2,4]))
+} else {
+  mutate(auto_solar_estimates, Description = paste0(auto_solar_estimates[3,4]))
+}
+
+auto_whole_house_surge_protection_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_whole_house_surge_protection_estimates, Description = paste0(auto_whole_house_surge_protection_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_whole_house_surge_protection_estimates, Description = paste0(auto_whole_house_surge_protection_estimates[2,4]))
+} else {
+  mutate(auto_whole_house_surge_protection_estimates, Description = paste0(auto_whole_house_surge_protection_estimates[3,4]))
+}
+
+auto_pipe_insulation_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_pipe_insulation_estimates, Description = paste0(auto_pipe_insulation_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_pipe_insulation_estimates, Description = paste0(auto_pipe_insulation_estimates[2,4]))
+} else {
+  mutate(auto_pipe_insulation_estimates, Description = paste0(auto_pipe_insulation_estimates[3,4]))
+}
+
+auto_diy_air_sealing <- if (primery_residence == TRUE) {
+  mutate(auto_diy_air_sealing, Description = paste0(auto_diy_air_sealing[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_diy_air_sealing, Description = paste0(auto_diy_air_sealing[2,4]))
+} else {
+  mutate(auto_diy_air_sealing, Description = paste0(auto_diy_air_sealing[3,4]))
+}
+
+auto_other_1_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_other_1_estimates, Description = paste0(auto_other_1_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_other_1_estimates, Description = paste0(auto_other_1_estimates[2,4]))
+} else {
+  mutate(auto_other_1_estimates, Description = paste0(auto_other_1_estimates[3,4]))
+}
+
+auto_other_2_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_other_2_estimates, Description = paste0(auto_other_2_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_other_2_estimates, Description = paste0(auto_other_2_estimates[2,4]))
+} else {
+  mutate(auto_other_2_estimates, Description = paste0(auto_other_2_estimates[3,4]))
+}
+
+auto_other_3_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_other_3_estimates, Description = paste0(auto_other_3_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_other_3_estimates, Description = paste0(auto_other_3_estimates[2,4]))
+} else {
+  mutate(auto_other_3_estimates, Description = paste0(auto_other_3_estimates[3,4]))
+}
+
+auto_duct_air_sealing_insulation_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_duct_air_sealing_insulation_estimates, Description = paste0(auto_duct_air_sealing_insulation_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_duct_air_sealing_insulation_estimates, Description = paste0(auto_duct_air_sealing_insulation_estimates[2,4]))
+} else {
+  mutate(auto_duct_air_sealing_insulation_estimates, Description = paste0(auto_duct_air_sealing_insulation_estimates[3,4]))
+}
+
+auto_misc_air_sealing_insulation_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_misc_air_sealing_insulation_estimates, Description = paste0(auto_misc_air_sealing_insulation_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_misc_air_sealing_insulation_estimates, Description = paste0(auto_misc_air_sealing_insulation_estimates[2,4]))
+} else {
+  mutate(auto_misc_air_sealing_insulation_estimates, Description = paste0(auto_misc_air_sealing_insulation_estimates[3,4]))
+}
+
+auto_replace_windows_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_replace_windows_estimates, Description = paste0(auto_replace_windows_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_replace_windows_estimates, Description = paste0(auto_replace_windows_estimates[2,4]))
+} else {
+  mutate(auto_replace_windows_estimates, Description = paste0(auto_replace_windows_estimates[3,4]))
+}
+
+auto_replace_doors_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_replace_doors_estimates, Description = paste0(auto_replace_doors_estimates[1,4]))
+} else if (secondary_residence_heated == TRUE) {
+  mutate(auto_replace_doors_estimates, Description = paste0(auto_replace_doors_estimates[2,4]))
+} else {
+  mutate(auto_replace_doors_estimates, Description = paste0(auto_replace_doors_estimates[3,4]))
+}
+#remove not needed columns and rows
+auto_furnace_boiler_tune_estimates <- auto_furnace_boiler_tune_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_shower_heads_estimates <- auto_shower_heads_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_LED_s_estimates <- auto_LED_s_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_window_dresserds_estimates <- auto_window_dresserds_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_refriginator_estimates <- auto_refriginator_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_freezer_estimates <- auto_freezer_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_induction_stove_estimates <- auto_induction_stove_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_heat_pump_water_heater_estimates <- auto_heat_pump_water_heater_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_gutters_estimates <- auto_gutters_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_bathroom_fan_estimates <- auto_bathroom_fan_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_kitchen_fan_estimates <- auto_kitchen_fan_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_vapor_barrier_estimates <- auto_vapor_barrier_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_spray_foam_estimates <- auto_spray_foam_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_attic_air_sealing_insulation_estimates <- auto_attic_air_sealing_insulation_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_blow_in_cellulose_estimates <- auto_blow_in_cellulose_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_continuous_exterior_insulation_estimates <- auto_continuous_exterior_insulation_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_electrical_panel_upgrade_estimates <- auto_electrical_panel_upgrade_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_air_source_heat_pump_estimates <- auto_air_source_heat_pump_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_ev_and_charger_estimates <- auto_ev_and_charger_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_solar_estimates <- auto_solar_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_whole_house_surge_protection_estimates <- auto_whole_house_surge_protection_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_pipe_insulation_estimates <- auto_pipe_insulation_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_diy_air_sealing <- auto_diy_air_sealing |>
+  head(1)|>
+  select(Description)
+
+auto_other_1_estimates <- auto_other_1_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_other_2_estimates <- auto_other_2_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_other_3_estimates <- auto_other_3_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_duct_air_sealing_insulation_estimates <- auto_duct_air_sealing_insulation_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_misc_air_sealing_insulation_estimates <- auto_misc_air_sealing_insulation_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_replace_windows_estimates <- auto_replace_windows_estimates |>
+  head(1)|>
+  select(Description)
+
+auto_replace_doors_estimates <- auto_replace_doors_estimates |>
+  head(1)|>
+  select(Description)
 ```
 
 
@@ -1319,35 +1765,34 @@ auto_furnice_boiler_tune <- if (primery_residence == TRUE) {
 #| results: asis
 
 
-if(furnice_boiler_tune_up == TRUE){
+if(furnace_boiler_tune_up == TRUE){
   cat("### Furnace/Boiler Tune up
   
 *Problem*
 
 ** Auditor to describe.**
 
-*Recommendation* "
+*Recommendation*
 
-)
+")
+
 }else{
   cat("")
 }
 
-if(furnice_boiler_tune_up == TRUE){
-  cat(a_furnice_boiler_tune_up$Description
+if(furnace_boiler_tune_up == TRUE){
+  cat(auto_furnace_boiler_tune_up$Description
   )
 }else{
   cat("")
   }
 
-if(furnice_boiler_tune_up == TRUE){
+if(furnace_boiler_tune_up == TRUE){
   cat("
 
 *Estimated Cost/Benefits/Incentives*
 
-A tune-up can improve the efficiency of your furnace/boiler, confirm that it is exhausting properly, and identify areas of concern before they become urgent. If you have a service contract with your fuel delivery company, an annual tune-up is usually included. 
-
-")
+", auto_furnace_boiler_tune_estimates$Description)
 }else{
   cat("")
   }
@@ -1367,13 +1812,15 @@ if( high_efficiency_shower_heads == TRUE){
 
 Your shower heads use more water and energy than high-efficiency shower heads, thus costing you more money than necessary. Older shower heads use 2.5 gallons or more every minute, which wastes thousands of gallons of water each year and costs you money for every extra gallon of water heated. 
 
-*Recommendation* ")
+*Recommendation* 
+
+")
 }else{
   cat("")
   }
 
 if(high_efficiency_shower_heads == TRUE){
-  cat(a_shower_heads$Description
+  cat(auto_shower_heads$Description
     
   )
 }else{
@@ -2422,6 +2869,27 @@ Air sealing and insulating ductwork is eligible for a non-refundable federal tax
   cat("")
   }
 
+```
+
+```{r}
+#| label: Misc Air Sealing and Insulation
+#| echo: false
+#| results: asis
+#| 
+```
+
+```{r}
+#| label: Replace Windows
+#| echo: false
+#| results: asis
+#| 
+```
+
+```{r}
+#| label: Replace Doors
+#| echo: false
+#| results: asis
+#| 
 ```
 
 ```{r}
