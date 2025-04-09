@@ -61,6 +61,9 @@ recommendations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets
 #Load estimated Recommendation Info
 estimated_recommedations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 2)
 
+#Additional Resources Info
+additional_resources_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 3)
+
 ```
 
 
@@ -2664,7 +2667,9 @@ if( diy_air_sealing == TRUE){
   
 *Problem*
 
-During the blower door test, we noted sources of air leakage in the living areas of your house. **Auditor to detail customized findings. **
+During the blower door test, we noted sources of air leakage in the living areas of your house. 
+
+**Auditor to detail customized findings. **
 
 *Recommendation*
 
@@ -2945,24 +2950,59 @@ if(replace_doors == TRUE){
 
 ```
 
+## Additional Resources
+
 ```{r}
-#| label: Additional Resources
+#| label: All homes
 #| echo: false
 #| results: asis
-#| 
-cat("## Additional Resources
 
-Many home efficiency upgrades are eligible for Efficiency Maine rebates and federal tax credits. Financial incentives vary based on income level and type of occupancy. An overview of all state rebates and federal tax credits can be found here: https://www.efficiencymaine.com/at-home/ 
+all_homes_additional_res <- additional_resources_googlesheets[1, 2]
 
-You can search for Efficiency Maine registered contractors here: https://www.efficiencymaine.com/at-home/vendor-locator/ 
-
-Our Maine Energy Upgrade Program team is willing and able to help you sort out the details of incentives and recommend contractors who have done quality work. 
-
-**As part of our program, we plan to coordinate with homeowners and contractors to bundle multiple projects together to reduce costs. We will also pay for barging costs for materials, contractor vehicles, and other necessary equipment to make energy upgrades. To qualify for our program, homes must install either a heat pump or heat pump water heater in addition to any other improvements.
-")
+cat(all_homes_additional_res$`Language for report`)
 ```
 
+```{r}
+#| label: Homeowner is Maine resident
+#| echo: false
+#| results: asis
 
+maine_residency <- clean_audit_data|>
+  select(is_the_homeowner_a_maine_resident)|>
+  mutate('Is Homeowner Maine resident' = str_detect(is_the_homeowner_a_maine_resident, pattern = "Yes"))|>
+  select(-is_the_homeowner_a_maine_resident)
+
+maine_residency_desc <- additional_resources_googlesheets[2,2]
+
+if(maine_residency == TRUE){
+  cat(maine_residency_desc$`Language for report`)
+}else{
+  cat("")
+  } 
+```
+
+```{r}
+#| label: Location Cranberry Eastport or None
+#| echo: false
+#| results: asis
+
+location <- clean_audit_data |>
+  select(home_address)|>
+  mutate(location = case_when(str_detect(home_address, "04625|04646") ~ 1, str_detect(home_address, "04631|04667") ~ 2, ))|>
+  select(-home_address)
+
+location_cranberry <- additional_resources_googlesheets[4,2]
+
+location_sipayik_eastport <- additional_resources_googlesheets[3,2]
+
+if (location == 1) {
+  cat(location_cranberry$`Language for report`)
+} else if (location == 2) {
+  cat(location_sipayik_eastport$`Language for report`)
+} else {
+  cat("")
+}
+```
 
 
 
