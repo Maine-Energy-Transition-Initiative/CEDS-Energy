@@ -7,8 +7,10 @@ format:
     number-sections: true
     number-depth: 3
     number-offset: 0
-    mainfont: Calibri
-    monofont: Calibri
+    mainfont: Arial
+    monofont: Arial
+    reference-doc: custom-reference-doc.docx
+    
 css: styles.css
 tbl-colwidths: [75,25]
 editor: source
@@ -602,20 +604,6 @@ if(energy_sources_googlesheets$combustion_propane == TRUE){
   cat("")
 }
 
-#else if (clean_audit_data$combustionst2 == TRUE) {
-  #cat("We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home.")
-#}  else if (clean_audit_data$combustionst3 == TRUE) {
- # cat("We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home.")
-#}  else if #(clean_audit_data$combustionst4 == TRUE) {
-  #cat("We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, as well as conducted combustion safety tests. This included measuring for carbon monoxide and testing that flue gases are properly exhausting from the home.")
-#} else if (clean_audit_data$combustionst1 == FALSE) {
- # cat("We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, but we were unable to perform combustion safety tests.")
-#}  else if (clean_audit_data$combustionst2 == FALSE) {
- # cat("We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, but we were unable to perform combustion safety tests.")
-#}  else if (clean_audit_data$combustionst3 == FALSE) {
- # cat("We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, but we were unable to perform combustion safety tests.")
-#}  else if (clean_audit_data$combustionst4 == FALSE) {
- # cat("We assessed combustion appliances that burn fossil fuels such as propane, heating oil, or kerosene. These include furnaces, boilers, water heaters, and gas ovens. We visually inspected the combustion appliance(s) in your home, but we were unable to perform combustion safety tests.")
 ```
 
 ```{r}
