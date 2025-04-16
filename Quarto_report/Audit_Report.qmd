@@ -42,6 +42,7 @@ library(gt)
 library(tibble)
 library(kableExtra)
 library(janitor)
+library(flextable)
 
 ```
 
