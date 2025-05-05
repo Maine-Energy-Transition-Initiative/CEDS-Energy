@@ -53,7 +53,7 @@ library(janitor)
 #Load Audit Data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[1, ]
+energy_test_googlesheets <- all_energy_test_googlesheets[21, ]
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
 
@@ -1761,7 +1761,6 @@ auto_replace_doors_estimates <- auto_replace_doors_estimates |>
   head(1)|>
   select(Description)
 ```
-
 
 ```{r}
 #| label: furnace boiler tune up recommendation
