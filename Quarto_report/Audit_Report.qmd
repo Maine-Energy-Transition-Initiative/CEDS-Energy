@@ -10,6 +10,7 @@ format:
     mainfont: Arial
     monofont: Arial
     reference-doc: custom-reference-doc.docx
+    resluts: asis
     
 css: styles.css
 tbl-colwidths: [75,25]
@@ -49,6 +50,7 @@ library(janitor)
 #| echo: false
 #| warning: false
 #| eval: true
+
 #Load Audit Data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
@@ -59,24 +61,26 @@ clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
 #Load Recommendation Info
 recommendations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 1 )
 
+sect_4_problem_text_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 2)
+
+sect_4_rec_text_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 3)
+
 #Load estimated Recommendation Info
-estimated_recommedations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 2)
+estimated_recommedations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 4)
 
 #Additional Resources Info
-additional_resources_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 3)
-
+additional_resources_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 5)
 ```
-
 
 ```{r}
 #| label: setup rank recommendations data
 #| echo: false
 #| warning: false
-#select only recomendations to make separate data frame
+#select only recommendations to make separate data frame
 pivot_recommendations <- clean_audit_data |>
   select(c(recommendations_ranking_furnace_boiler_tune_up:recommendations_ranking_other_3, recommendations_ranking_ductwork_air_sealing_and_insulation, recommendations_ranking_misc_air_sealing_and_insulation, recommendations_ranking_replace_windows, recommendations_ranking_replace_doors))
 
-#pivot teh data to be displayed vertically
+#pivot the data to be displayed vertically
 pivot_recommendations <- pivot_recommendations |>
   pivot_longer(cols = everything(),
     names_to = "Rec_from_google_form", 
@@ -90,6 +94,21 @@ ranked_clean_recommendations <- recommendations_googlesheets |>
   select(-Rank)
 
 ```
+
+```{r}
+#| label: arrange section 4 text
+#| echo: false
+#| warning: false
+
+ranked_sect_4_problem_text <- sect_4_problem_text_googlesheets |>
+  bind_cols(pivot_recommendations)|>
+  select(-c(Rec_from_google_form))|>
+  arrange(as.numeric(Rank))|>
+  filter(Rank != 0)|>
+  select(-Rank)
+
+```
+
 
 ```{r}
 #| label: Setup basics data
@@ -380,8 +399,6 @@ exterior_windows <- exterior_windows|>
   mutate(Info = recode(Info,  'Values' = 'Exterior windows:',))
 ```
 
-
-
 ```{r}
 #| label: 3.4 data set up old 
 #| echo: false
@@ -410,7 +427,6 @@ all_blower_door <- blower_door|>
 
 all_blower_door['Description'] <- c("CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.", "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.","This is the area (in square inches) equivalent to all of the air leaks in the house combined.","Accounting for the volume of the home, this means that the house exchanges –% of its air every hour. Over one day, the house goes through – complete air changes.")
 ```
-
 
 ```{r}
 #| label: attic data for 3.5
@@ -886,8 +902,6 @@ gt_all_blower_door_auto <- gt(table_3_4) |>
 
 gt_all_blower_door_auto
 ```
-
-
 
 ```{r}
 #| label: ACHnatural ggplot chart
@@ -2794,7 +2808,6 @@ if(other_3 == TRUE){
   } 
 ```
 
-
 ```{r}
 #| label: Ductwork Air Sealing and Insulation
 #| echo: false
@@ -2990,5 +3003,74 @@ if (location == 1) {
 }
 ```
 
+## Section Four Tests
+
+```{r}
+#| label: Section 4 test
+#| echo: false
+#| results: asis
+
+# for (i in 1:length(ranked_sect_4_problem_text)) {
+#   cat(ranked_sect_4_problem_text$Problem)
+# }
+
+# Create a vector filled with random normal values
+
+name.vec <- as.vector(ranked_sect_4_problem_text$Problem) 
+
+name.vec2 <- as.vector(ranked_sect_4_problem_text$Problem)
+#u1 <- rnorm(30)
+#print("This loop calculates the square of the first 10 elements of vector u1")
+
+# # Initialize `usq`
+# usq <- ""
+
+for (i in 1: nrow(ranked_sect_4_problem_text)) {
+    # i-th element of `u1` squared into `i`-th position of `usq`
+   
+    cat("###", ranked_sect_4_problem_text$Recommendations[i] , "\n")
+}
+
+# if( window_dressers == TRUE){
+#   cat(ranked_sect_4_problem_text)
+# }else{
+#   cat("")
+# }
+# 
+# if(window_dressers == TRUE){
+#   cat(auto_window_dressers$Description
+#     
+#   )
+# }else{
+#   cat("")
+#   }
+# 
+# if(window_dressers == TRUE){
+#   cat("
+# *Estimated Cost/Benefits/Incentives*
+# 
+# ",auto_window_dresserds_estimates$Description)
+# }else{
+#   cat("")
+#   }
+
+df <- data.frame(
+  Name = c("Alice", "Bob", "Carol", "Dave", "Eve", "Frank"),
+  Score = c(90, 85, 88, 92, 95, 87)
+)
+
+# Specific rows to print
+rows_to_print <- c(2, 4, 6)
+
+for (i in rows_to_print) {
+  cat("Row", i, ": Name =", df$Name[i], ", Score =", df$Score[i], "\n
+      
+      ")
+}
+# cat("###", ranked_sect_4_problem_text$Recommendations[i] , "\n"
+#      ,
+#   
+# "*Problem*", i ,"\n")
+```
 
 
