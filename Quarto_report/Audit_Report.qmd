@@ -7,10 +7,8 @@ format:
     number-sections: true
     number-depth: 3
     number-offset: 0
-    mainfont: Arial
-    monofont: Arial
     reference-doc: custom-reference-doc.docx
-    resluts: asis
+    results: asis
     
 css: styles.css
 tbl-colwidths: [75,25]
@@ -45,6 +43,7 @@ library(kableExtra)
 library(janitor)
 ```
 
+
 ```{r}
 #| label: load googlesheets data
 #| echo: false
@@ -54,7 +53,7 @@ library(janitor)
 #Load Audit Data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[21, ]
+energy_test_googlesheets <- all_energy_test_googlesheets[1, ] #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
 
@@ -121,11 +120,11 @@ energy_cost_quantity <- energy_test_googlesheets |>
 
   #select other data that is numbers
 double_other <- clean_audit_data |>
-  select( date_built, number_of_floors, volume_of_conditioned_space_cubic_feet, square_footage_of_conditioned_space, ambient_carbon_monoxide_reading)|>
+  select( date_built, number_of_floors, volume_of_conditioned_space_cubic_feet, square_footage_of_conditioned_space, ambient_carbon_monoxide_reading, foundation_type)|>
   pivot_longer(cols = everything(),
     names_to = "Info", 
     values_to = "Values")|>
-  mutate(Info = recode(Info, date_built = 'Date Built', number_of_floors = 'Number of floors', square_footage_of_conditioned_space = 'Square footage of conditioned space', volume_of_conditioned_space_cubic_feet = 'Volume of conditioned space (cubic feet)', ambient_carbon_monoxide_reading = 'Ambient Carbon Monoxide reading (ppm)'))
+  mutate(Info = recode(Info, date_built = 'Date Built:', number_of_floors = 'Number of floors', square_footage_of_conditioned_space = 'Square footage of conditioned space:', volume_of_conditioned_space_cubic_feet = 'Volume of conditioned space:', ambient_carbon_monoxide_reading = 'Ambient Carbon Monoxide reading:', foundation_type = 'Foundation Type:'))
 
 
 ```
@@ -138,7 +137,7 @@ attic_basics <- energy_test_googlesheets |>
   select( `Attic insulation type`, `Quality of attic insulation's installation? Assess worst part of installation.`, `Thickness of the attic insulation (inches), at the thinnest location`)|>
   #join the data into one row
   mutate(Attic_all = paste(`Attic insulation type`, ",", `Thickness of the attic insulation (inches), at the thinnest location`, "inches"))|>
-  mutate(Info = 'Attic',
+  mutate(Info = 'Attic:',
         .before =`Attic insulation type`)
 
   #remove unwanted rows
@@ -290,8 +289,8 @@ names(annual_totals) <- c('Info', 'Values')
 #| echo: false
 
 all_basics <- double_other |>
-  rbind(attic_basics,annual_totals )|> #character_other,
-  arrange(factor(Info, levels = c('Date Built', 'Foundation Type', 'Attic', 'Number of floors', 'Square footage of conditioned space', 'Volume of conditioned space (cubic feet)','Ambient Carbon Monoxide reading')))
+  rbind(attic_basics )|> #character_other,
+  arrange(factor(Info, levels = c('Date Built:', 'Foundation Type:', 'Attic:', 'Number of floors', 'Square footage of conditioned space:', 'Volume of conditioned space:','Ambient Carbon Monoxide reading:')))
 ```
 
 ```{r}
@@ -525,11 +524,13 @@ Homeowner(s): `r clean_audit_data$homeowner_s`
 
 Address: `r clean_audit_data$home_address`
 
+Owner Contact: `r clean_audit_data$homeowner_s_contact`
+
 Auditors: `r clean_audit_data$names_of_the_auditors`
 
-Contact: mdicommunityenergy\@coa.edu, (802) 266-0301
+Contact: David Gibson, dgibson\@coa.edu, (802) 266-0301
 
-Date: `r format(Sys.time(), '%B %e %Y')`
+Report Date: `r format(Sys.time(), '%B %e, %Y')`
 
 ------------------------------------------------------------------------
 
@@ -537,7 +538,8 @@ We conducted an energy assessment of your home on `r clean_audit_data$date_of_au
 
 ------------------------------------------------------------------------
 
-![](images/Logos-together.png)
+
+![](images/Logos-together.png){fig-align="center"}
 
 **Add here the table of content: in Word go to references and add table of content, in Docs go to the insert and on the bottom add the table of context**
 
@@ -643,11 +645,17 @@ We recommend the following upgrades for your home. Detailed information about th
 #| eval: true
 #| echo: false
 gt_ranked_recommendations <- gt(ranked_clean_recommendations) |>
-  tab_options(table.width = pct(100))|>
+  tab_options(table.width = pct(100),
+              table.font.size = 12,)|>
   cols_width(
     Recommendations ~ px(200),
     Description ~ px(450)
-  )
+  )|>
+  opt_table_font(
+  font = list("Aptos"),
+  size = 16,
+  
+)
 
 gt_ranked_recommendations
 ```
@@ -661,7 +669,8 @@ gt_ranked_recommendations
 #| eval: true
 #| echo: false
 gt_all_basics <- gt(all_basics) |>
-  tab_options(table.width = pct(100))|>
+  tab_options(table.width = pct(100),
+              table.font.size = 12,)|>
   cols_width(
     Info ~ px(200),
     Values ~ px(450)
@@ -3007,7 +3016,7 @@ if (location == 1) {
 
 ```{r}
 #| label: Section 4 test
-#| echo: false
+#| echo: true
 #| results: asis
 
 # for (i in 1:length(ranked_sect_4_problem_text)) {
