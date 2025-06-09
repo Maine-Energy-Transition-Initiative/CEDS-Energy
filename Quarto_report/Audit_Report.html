@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -32,7 +66,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="Audit_Report_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="Audit_Report_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Audit_Report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Audit_Report_files/libs/bootstrap/bootstrap-3dc9094430be18c8a5aac800159ef30a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Audit_Report_files/libs/bootstrap/bootstrap-1bc8a17f135ab3d594c857e9f48e611b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -64,15 +98,20 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Homeowner(s): Test</p>
-<p>Address: 199 Test Rd, Cranberry Isles Maine, 04631</p>
-<p>Auditors: Rudy Lukasevics</p>
-<p>Contact: mdicommunityenergy@coa.edu, (802) 266-0301</p>
-<p>Date: April 11 2025</p>
+<p>Homeowner(s): David Gibson</p>
+<p>Address: 105 Eden Street, Bar Harbor, ME 04609</p>
+<p>Owner Contact: dgibson@coa.edu</p>
+<p>Auditors: David Gibson, Helen Lloyd, Mabon Young</p>
+<p>Contact: David Gibson, dgibson@coa.edu, (802) 266-0301</p>
+<p>Report Date: June 9, 2025</p>
 <hr>
-<p>We conducted an energy assessment of your home on 5/26/2024. This report will tell you what we did, what we found, and what we suggest for your home. These suggestions include information on incentives and financing to make improvements more affordable.</p>
+<p>We conducted an energy assessment of your home on 6/9/2025. This report will tell you what we did, what we found, and what we suggest for your home. These suggestions include information on incentives and financing to make improvements more affordable.</p>
 <hr>
-<p><img src="images/Logos-together.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Logos-together.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
 <p><strong>Add here the table of content: in Word go to references and add table of content, in Docs go to the insert and on the bottom add the table of context</strong></p>
 <section id="summary-of-your-audit" class="level2">
 <h2 class="anchored" data-anchor-id="summary-of-your-audit">Summary of your Audit</h2>
@@ -102,23 +141,23 @@ ul.task-list li input[type="checkbox"] {
 <p>We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report. These are organized from the least expensive/most cost-effective and easiest interventions to ones that are more challenging to implement.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fbpxrqonuj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fbpxrqonuj table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+<div id="ikpvxxkezy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ikpvxxkezy table {
+  font-family: Aptos, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fbpxrqonuj thead, #fbpxrqonuj tbody, #fbpxrqonuj tfoot, #fbpxrqonuj tr, #fbpxrqonuj td, #fbpxrqonuj th {
+#ikpvxxkezy thead, #ikpvxxkezy tbody, #ikpvxxkezy tfoot, #ikpvxxkezy tr, #ikpvxxkezy td, #ikpvxxkezy th {
   border-style: none;
 }
 
-#fbpxrqonuj p {
+#ikpvxxkezy p {
   margin: 0;
   padding: 0;
 }
 
-#fbpxrqonuj .gt_table {
+#ikpvxxkezy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -144,12 +183,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#fbpxrqonuj .gt_caption {
+#ikpvxxkezy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fbpxrqonuj .gt_title {
+#ikpvxxkezy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -161,7 +200,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#fbpxrqonuj .gt_subtitle {
+#ikpvxxkezy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -173,7 +212,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#fbpxrqonuj .gt_heading {
+#ikpvxxkezy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -185,13 +224,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#fbpxrqonuj .gt_bottom_border {
+#ikpvxxkezy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fbpxrqonuj .gt_col_headings {
+#ikpvxxkezy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -206,7 +245,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#fbpxrqonuj .gt_col_heading {
+#ikpvxxkezy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -226,7 +265,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#fbpxrqonuj .gt_column_spanner_outer {
+#ikpvxxkezy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -238,15 +277,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#fbpxrqonuj .gt_column_spanner_outer:first-child {
+#ikpvxxkezy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fbpxrqonuj .gt_column_spanner_outer:last-child {
+#ikpvxxkezy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fbpxrqonuj .gt_column_spanner {
+#ikpvxxkezy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -258,11 +297,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#fbpxrqonuj .gt_spanner_row {
+#ikpvxxkezy .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fbpxrqonuj .gt_group_heading {
+#ikpvxxkezy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -288,7 +327,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#fbpxrqonuj .gt_empty_group_heading {
+#ikpvxxkezy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -303,15 +342,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#fbpxrqonuj .gt_from_md > :first-child {
+#ikpvxxkezy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fbpxrqonuj .gt_from_md > :last-child {
+#ikpvxxkezy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fbpxrqonuj .gt_row {
+#ikpvxxkezy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -330,7 +369,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#fbpxrqonuj .gt_stub {
+#ikpvxxkezy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -343,7 +382,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#fbpxrqonuj .gt_stub_row_group {
+#ikpvxxkezy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -357,15 +396,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#fbpxrqonuj .gt_row_group_first td {
+#ikpvxxkezy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fbpxrqonuj .gt_row_group_first th {
+#ikpvxxkezy .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fbpxrqonuj .gt_summary_row {
+#ikpvxxkezy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -375,16 +414,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#fbpxrqonuj .gt_first_summary_row {
+#ikpvxxkezy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fbpxrqonuj .gt_first_summary_row.thick {
+#ikpvxxkezy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fbpxrqonuj .gt_last_summary_row {
+#ikpvxxkezy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -394,7 +433,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#fbpxrqonuj .gt_grand_summary_row {
+#ikpvxxkezy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -404,7 +443,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#fbpxrqonuj .gt_first_grand_summary_row {
+#ikpvxxkezy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -414,7 +453,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#fbpxrqonuj .gt_last_grand_summary_row_top {
+#ikpvxxkezy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -424,11 +463,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#fbpxrqonuj .gt_striped {
+#ikpvxxkezy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fbpxrqonuj .gt_table_body {
+#ikpvxxkezy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -437,7 +476,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#fbpxrqonuj .gt_footnotes {
+#ikpvxxkezy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -451,7 +490,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#fbpxrqonuj .gt_footnote {
+#ikpvxxkezy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -460,7 +499,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#fbpxrqonuj .gt_sourcenotes {
+#ikpvxxkezy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -474,7 +513,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#fbpxrqonuj .gt_sourcenote {
+#ikpvxxkezy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -482,72 +521,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#fbpxrqonuj .gt_left {
+#ikpvxxkezy .gt_left {
   text-align: left;
 }
 
-#fbpxrqonuj .gt_center {
+#ikpvxxkezy .gt_center {
   text-align: center;
 }
 
-#fbpxrqonuj .gt_right {
+#ikpvxxkezy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fbpxrqonuj .gt_font_normal {
+#ikpvxxkezy .gt_font_normal {
   font-weight: normal;
 }
 
-#fbpxrqonuj .gt_font_bold {
+#ikpvxxkezy .gt_font_bold {
   font-weight: bold;
 }
 
-#fbpxrqonuj .gt_font_italic {
+#ikpvxxkezy .gt_font_italic {
   font-style: italic;
 }
 
-#fbpxrqonuj .gt_super {
+#ikpvxxkezy .gt_super {
   font-size: 65%;
 }
 
-#fbpxrqonuj .gt_footnote_marks {
+#ikpvxxkezy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fbpxrqonuj .gt_asterisk {
+#ikpvxxkezy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fbpxrqonuj .gt_indent_1 {
+#ikpvxxkezy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fbpxrqonuj .gt_indent_2 {
+#ikpvxxkezy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fbpxrqonuj .gt_indent_3 {
+#ikpvxxkezy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fbpxrqonuj .gt_indent_4 {
+#ikpvxxkezy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fbpxrqonuj .gt_indent_5 {
+#ikpvxxkezy .gt_indent_5 {
   text-indent: 25px;
 }
 
-#fbpxrqonuj .katex-display {
+#ikpvxxkezy .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#fbpxrqonuj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ikpvxxkezy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -561,56 +600,16 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" headers="Recommendations">WindowDressers</td>
-<td class="gt_row gt_left" headers="Description">WindowDressers insulating window inserts help air-seal windows and reduce heat loss and gain.</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Recommendations">Gutters</td>
-<td class="gt_row gt_left" headers="Description">Install gutters and downspouts that divert water at least six feet away from the foundation and to where the ground slopes away from the house.</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Recommendations">Furnace/Boiler Tune-up</td>
-<td class="gt_row gt_left" headers="Description">Have the furnace/boiler and flue inspected and adjusted by a licensed professional. This should be available from your fuel delivery company.</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Recommendations">Induction Stove/Oven</td>
-<td class="gt_row gt_left" headers="Description">Induction cooking appliances are more efficient and safer than electric or gas ones. There is no risk of carbon monoxide or other harmful combustion gases, and the surface doesn’t heat up without a pot or pan on it.</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Recommendations">High-efficiency Shower Head(s)</td>
-<td class="gt_row gt_left" headers="Description">Install high-efficiency shower heads to reduce the amount of water and energy to heat the water used when showering.</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Recommendations">Freezer</td>
-<td class="gt_row gt_left" headers="Description">Replace your freezer with a new, EnergyStar certified freezer. Look at the Energy Guide label to compare the energy use of new freezers.</td>
-</tr>
-<tr class="odd">
 <td class="gt_row gt_left" headers="Recommendations">LEDs</td>
 <td class="gt_row gt_left" headers="Description">Switch your light bulbs to LED light bulbs. LEDs use 80% less energy than incandescent light bulbs which can significantly reduce your electricity bill.</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="Recommendations">Heat Pump Water Heater</td>
-<td class="gt_row gt_left" headers="Description">Install a heat pump water heater to provide your hot water for cooking and bathing. This is the most efficient way to heat water and will save hundreds of dollars a year compared to electric resistance, heating oil, or propane hot water. It will also help to dehumidify while it's running. If your current water heater burns oil or propane, this will also remove a source of combustion gases from your home.</td>
+<td class="gt_row gt_left" headers="Recommendations">WindowDressers</td>
+<td class="gt_row gt_left" headers="Description">WindowDressers insulating window inserts help air-seal windows and reduce heat loss and gain.</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="Recommendations">Refrigerator</td>
-<td class="gt_row gt_left" headers="Description">Replace your refrigerator with a new, EnergyStar certified fridge. Look at the Energy Guide label to compare the energy use of new refrigerators.</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Recommendations">Bathroom Exhaust Fan(s)</td>
-<td class="gt_row gt_left" headers="Description">Bathroom exhaust fans should be rated for at least 80 cubic feet per minute (CFM) if there is a shower. We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise.</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Recommendations">Kitchen Exhaust Fan</td>
-<td class="gt_row gt_left" headers="Description">A kitchen exhaust fan will remove harmful combustion gases from your home and should be rated for at least 100 cubic feet per minute (CFM). A fan can also help with moisture concerns.</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Recommendations">Vapor Barrier</td>
-<td class="gt_row gt_left" headers="Description">Install a vapor barrier on the basement floor to stop moisture from entering the basement and house.</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Recommendations">Spray Foam Basement/Crawlspace Walls</td>
-<td class="gt_row gt_left" headers="Description">Install spray foam on the basement/crawlspace walls to prevent moisture infiltration and reduce heat loss.</td>
+<td class="gt_row gt_left" headers="Recommendations">Gutters</td>
+<td class="gt_row gt_left" headers="Description">Install gutters and downspouts that divert water at least six feet away from the foundation and to where the ground slopes away from the house.</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Recommendations">Attic Air Sealing and Insulation</td>
@@ -629,52 +628,28 @@ ul.task-list li input[type="checkbox"] {
 <td class="gt_row gt_left" headers="Description">Consult with an electrician about replacing your existing electrical panel with a 200 amp panel as you add electrical appliances to your home.</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="Recommendations">Air Source Heat Pump</td>
-<td class="gt_row gt_left" headers="Description">Install air source heat pumps and whole-house surge protection.</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Recommendations">EV+Charger</td>
-<td class="gt_row gt_left" headers="Description">An electric vehicle will eliminate your gas costs and reduce fossil fuel dependence. A 2020 study by Consumer Reports found that lifetime ownership costs were significantly lower for EVs, saving between $6,000 - $10,000 over their lifetimes.</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Recommendations">Solar</td>
-<td class="gt_row gt_left" headers="Description">Rooftop solar can supply most or all of your home electrical demands. Contact a solar company for pricing and details specific to your home.</td>
-</tr>
-<tr class="odd">
 <td class="gt_row gt_left" headers="Recommendations">Whole-House Surge Protection</td>
 <td class="gt_row gt_left" headers="Description">Upgrade your electrical panel to add whole-house surge protection.</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Recommendations">Pipe Insulation</td>
-<td class="gt_row gt_left" headers="Description">Insulate both hot and cold water pipes that are uninsulated in the basement/crawlspace. This will save energy and prevent condensation.</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Recommendations">DIY Air Sealing</td>
 <td class="gt_row gt_left" headers="Description">Seal easy-to-access air leaks and weatherstrip exterior doors.</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="Recommendations">Ductwork Air Sealing and Insulation</td>
-<td class="gt_row gt_left" headers="Description">Air seal and insulate all of the supply and return ductwork running through the basement/crawlspace.</td>
+<td class="gt_row gt_left" headers="Recommendations">Replace Windows</td>
+<td class="gt_row gt_left" headers="Description">Replace single-paned windows with double- or triple-paned windows and ensure the frames are airsealed. We recommend installing windows that are Energy Star certified for 'Northern' climate.</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="Recommendations">Other 1</td>
-<td class="gt_row gt_left" headers="Description">TYPE HERE 1</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Recommendations">Other 2</td>
-<td class="gt_row gt_left" headers="Description">TYPE HERE 2</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="Recommendations">Misc. Air Sealing and Insulation</td>
-<td class="gt_row gt_left" headers="Description">Air seal and insulate [insert auditor description - bay window, bulkhead door, chase, kneewall, anything else that is unique to the home and not otherwise covered in another recommendation]</td>
-</tr>
-<tr class="even">
 <td class="gt_row gt_left" headers="Recommendations">Replace Doors</td>
 <td class="gt_row gt_left" headers="Description">Replace uninsulated exterior doors and ensure new doors are insulated and properly weatherstripped. We recommend installing doors that are Energy Star certified for 'Northern' climate.</td>
 </tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Recommendations">Other 1</td>
+<td class="gt_row gt_left" headers="Description">TYPE HERE 1</td>
+</tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="Recommendations">Replace Windows</td>
-<td class="gt_row gt_left" headers="Description">Replace single-paned windows with double- or triple-paned windows and ensure the frames are airsealed. We recommend installing windows that are Energy Star certified for 'Northern' climate.</td>
+<td class="gt_row gt_left" headers="Recommendations">Other 2</td>
+<td class="gt_row gt_left" headers="Description">TYPE HERE 2</td>
 </tr>
 </tbody>
 </table>
@@ -689,30 +664,30 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="basics">Basics</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="hzlyrrfcow" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hzlyrrfcow table {
+<div id="kyhckurbqo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kyhckurbqo table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hzlyrrfcow thead, #hzlyrrfcow tbody, #hzlyrrfcow tfoot, #hzlyrrfcow tr, #hzlyrrfcow td, #hzlyrrfcow th {
+#kyhckurbqo thead, #kyhckurbqo tbody, #kyhckurbqo tfoot, #kyhckurbqo tr, #kyhckurbqo td, #kyhckurbqo th {
   border-style: none;
 }
 
-#hzlyrrfcow p {
+#kyhckurbqo p {
   margin: 0;
   padding: 0;
 }
 
-#hzlyrrfcow .gt_table {
+#kyhckurbqo .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: normal;
   font-style: normal;
   background-color: #FFFFFF;
@@ -731,12 +706,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#hzlyrrfcow .gt_caption {
+#kyhckurbqo .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hzlyrrfcow .gt_title {
+#kyhckurbqo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -748,7 +723,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#hzlyrrfcow .gt_subtitle {
+#kyhckurbqo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -760,7 +735,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#hzlyrrfcow .gt_heading {
+#kyhckurbqo .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -772,13 +747,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#hzlyrrfcow .gt_bottom_border {
+#kyhckurbqo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hzlyrrfcow .gt_col_headings {
+#kyhckurbqo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -793,7 +768,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#hzlyrrfcow .gt_col_heading {
+#kyhckurbqo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -813,7 +788,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#hzlyrrfcow .gt_column_spanner_outer {
+#kyhckurbqo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -825,15 +800,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#hzlyrrfcow .gt_column_spanner_outer:first-child {
+#kyhckurbqo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hzlyrrfcow .gt_column_spanner_outer:last-child {
+#kyhckurbqo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hzlyrrfcow .gt_column_spanner {
+#kyhckurbqo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -845,11 +820,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#hzlyrrfcow .gt_spanner_row {
+#kyhckurbqo .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hzlyrrfcow .gt_group_heading {
+#kyhckurbqo .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -875,7 +850,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#hzlyrrfcow .gt_empty_group_heading {
+#kyhckurbqo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -890,15 +865,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#hzlyrrfcow .gt_from_md > :first-child {
+#kyhckurbqo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hzlyrrfcow .gt_from_md > :last-child {
+#kyhckurbqo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hzlyrrfcow .gt_row {
+#kyhckurbqo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -917,7 +892,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#hzlyrrfcow .gt_stub {
+#kyhckurbqo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -930,7 +905,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#hzlyrrfcow .gt_stub_row_group {
+#kyhckurbqo .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -944,15 +919,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#hzlyrrfcow .gt_row_group_first td {
+#kyhckurbqo .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hzlyrrfcow .gt_row_group_first th {
+#kyhckurbqo .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hzlyrrfcow .gt_summary_row {
+#kyhckurbqo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -962,16 +937,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#hzlyrrfcow .gt_first_summary_row {
+#kyhckurbqo .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hzlyrrfcow .gt_first_summary_row.thick {
+#kyhckurbqo .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hzlyrrfcow .gt_last_summary_row {
+#kyhckurbqo .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -981,7 +956,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#hzlyrrfcow .gt_grand_summary_row {
+#kyhckurbqo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -991,7 +966,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#hzlyrrfcow .gt_first_grand_summary_row {
+#kyhckurbqo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1001,7 +976,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#hzlyrrfcow .gt_last_grand_summary_row_top {
+#kyhckurbqo .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1011,11 +986,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#hzlyrrfcow .gt_striped {
+#kyhckurbqo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hzlyrrfcow .gt_table_body {
+#kyhckurbqo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1024,7 +999,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#hzlyrrfcow .gt_footnotes {
+#kyhckurbqo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1038,7 +1013,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#hzlyrrfcow .gt_footnote {
+#kyhckurbqo .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1047,7 +1022,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#hzlyrrfcow .gt_sourcenotes {
+#kyhckurbqo .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1061,7 +1036,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#hzlyrrfcow .gt_sourcenote {
+#kyhckurbqo .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1069,72 +1044,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#hzlyrrfcow .gt_left {
+#kyhckurbqo .gt_left {
   text-align: left;
 }
 
-#hzlyrrfcow .gt_center {
+#kyhckurbqo .gt_center {
   text-align: center;
 }
 
-#hzlyrrfcow .gt_right {
+#kyhckurbqo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hzlyrrfcow .gt_font_normal {
+#kyhckurbqo .gt_font_normal {
   font-weight: normal;
 }
 
-#hzlyrrfcow .gt_font_bold {
+#kyhckurbqo .gt_font_bold {
   font-weight: bold;
 }
 
-#hzlyrrfcow .gt_font_italic {
+#kyhckurbqo .gt_font_italic {
   font-style: italic;
 }
 
-#hzlyrrfcow .gt_super {
+#kyhckurbqo .gt_super {
   font-size: 65%;
 }
 
-#hzlyrrfcow .gt_footnote_marks {
+#kyhckurbqo .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hzlyrrfcow .gt_asterisk {
+#kyhckurbqo .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hzlyrrfcow .gt_indent_1 {
+#kyhckurbqo .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hzlyrrfcow .gt_indent_2 {
+#kyhckurbqo .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hzlyrrfcow .gt_indent_3 {
+#kyhckurbqo .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hzlyrrfcow .gt_indent_4 {
+#kyhckurbqo .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hzlyrrfcow .gt_indent_5 {
+#kyhckurbqo .gt_indent_5 {
   text-indent: 25px;
 }
 
-#hzlyrrfcow .katex-display {
+#kyhckurbqo .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#hzlyrrfcow div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kyhckurbqo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1142,27 +1117,31 @@ ul.task-list li input[type="checkbox"] {
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" headers="Info">Date Built</td>
-<td class="gt_row gt_left" headers="Values">1800</td>
+<td class="gt_row gt_left" headers="Info">Date Built:</td>
+<td class="gt_row gt_left" headers="Values">NA</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="Info">Attic</td>
-<td class="gt_row gt_left" headers="Values">Batts of Fiberglass , 5 inches</td>
+<td class="gt_row gt_left" headers="Info">Foundation Type:</td>
+<td class="gt_row gt_left" headers="Values">Crawlspace</td>
 </tr>
 <tr class="odd">
+<td class="gt_row gt_left" headers="Info">Attic:</td>
+<td class="gt_row gt_left" headers="Values">Loose Cellulose , 2 inches</td>
+</tr>
+<tr class="even">
 <td class="gt_row gt_left" headers="Info">Number of floors</td>
 <td class="gt_row gt_left" headers="Values">1</td>
 </tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Info">Square footage of conditioned space:</td>
+<td class="gt_row gt_left" headers="Values">202</td>
+</tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="Info">Square footage of conditioned space</td>
-<td class="gt_row gt_left" headers="Values">2086</td>
+<td class="gt_row gt_left" headers="Info">Volume of conditioned space:</td>
+<td class="gt_row gt_left" headers="Values">1870</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="Info">Volume of conditioned space (cubic feet)</td>
-<td class="gt_row gt_left" headers="Values">17176</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="Info">Ambient Carbon Monoxide reading (ppm)</td>
+<td class="gt_row gt_left" headers="Info">Ambient Carbon Monoxide reading:</td>
 <td class="gt_row gt_left" headers="Values">0</td>
 </tr>
 </tbody>
@@ -1176,23 +1155,23 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="exterior">Exterior</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="mvhvtulqed" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mvhvtulqed table {
+<div id="pwuithport" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pwuithport table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mvhvtulqed thead, #mvhvtulqed tbody, #mvhvtulqed tfoot, #mvhvtulqed tr, #mvhvtulqed td, #mvhvtulqed th {
+#pwuithport thead, #pwuithport tbody, #pwuithport tfoot, #pwuithport tr, #pwuithport td, #pwuithport th {
   border-style: none;
 }
 
-#mvhvtulqed p {
+#pwuithport p {
   margin: 0;
   padding: 0;
 }
 
-#mvhvtulqed .gt_table {
+#pwuithport .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1218,12 +1197,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#mvhvtulqed .gt_caption {
+#pwuithport .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mvhvtulqed .gt_title {
+#pwuithport .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1235,7 +1214,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#mvhvtulqed .gt_subtitle {
+#pwuithport .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1247,7 +1226,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#mvhvtulqed .gt_heading {
+#pwuithport .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1259,13 +1238,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#mvhvtulqed .gt_bottom_border {
+#pwuithport .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mvhvtulqed .gt_col_headings {
+#pwuithport .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1280,7 +1259,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#mvhvtulqed .gt_col_heading {
+#pwuithport .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1300,7 +1279,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#mvhvtulqed .gt_column_spanner_outer {
+#pwuithport .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1312,15 +1291,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#mvhvtulqed .gt_column_spanner_outer:first-child {
+#pwuithport .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mvhvtulqed .gt_column_spanner_outer:last-child {
+#pwuithport .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mvhvtulqed .gt_column_spanner {
+#pwuithport .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1332,11 +1311,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#mvhvtulqed .gt_spanner_row {
+#pwuithport .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mvhvtulqed .gt_group_heading {
+#pwuithport .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1362,7 +1341,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#mvhvtulqed .gt_empty_group_heading {
+#pwuithport .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1377,15 +1356,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#mvhvtulqed .gt_from_md > :first-child {
+#pwuithport .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mvhvtulqed .gt_from_md > :last-child {
+#pwuithport .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mvhvtulqed .gt_row {
+#pwuithport .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1404,7 +1383,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#mvhvtulqed .gt_stub {
+#pwuithport .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1417,7 +1396,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#mvhvtulqed .gt_stub_row_group {
+#pwuithport .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1431,15 +1410,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#mvhvtulqed .gt_row_group_first td {
+#pwuithport .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mvhvtulqed .gt_row_group_first th {
+#pwuithport .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mvhvtulqed .gt_summary_row {
+#pwuithport .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1449,16 +1428,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#mvhvtulqed .gt_first_summary_row {
+#pwuithport .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mvhvtulqed .gt_first_summary_row.thick {
+#pwuithport .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mvhvtulqed .gt_last_summary_row {
+#pwuithport .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1468,7 +1447,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#mvhvtulqed .gt_grand_summary_row {
+#pwuithport .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1478,7 +1457,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#mvhvtulqed .gt_first_grand_summary_row {
+#pwuithport .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1488,7 +1467,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#mvhvtulqed .gt_last_grand_summary_row_top {
+#pwuithport .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1498,11 +1477,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#mvhvtulqed .gt_striped {
+#pwuithport .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mvhvtulqed .gt_table_body {
+#pwuithport .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1511,7 +1490,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#mvhvtulqed .gt_footnotes {
+#pwuithport .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1525,7 +1504,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#mvhvtulqed .gt_footnote {
+#pwuithport .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1534,7 +1513,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#mvhvtulqed .gt_sourcenotes {
+#pwuithport .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1548,7 +1527,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#mvhvtulqed .gt_sourcenote {
+#pwuithport .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1556,72 +1535,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#mvhvtulqed .gt_left {
+#pwuithport .gt_left {
   text-align: left;
 }
 
-#mvhvtulqed .gt_center {
+#pwuithport .gt_center {
   text-align: center;
 }
 
-#mvhvtulqed .gt_right {
+#pwuithport .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mvhvtulqed .gt_font_normal {
+#pwuithport .gt_font_normal {
   font-weight: normal;
 }
 
-#mvhvtulqed .gt_font_bold {
+#pwuithport .gt_font_bold {
   font-weight: bold;
 }
 
-#mvhvtulqed .gt_font_italic {
+#pwuithport .gt_font_italic {
   font-style: italic;
 }
 
-#mvhvtulqed .gt_super {
+#pwuithport .gt_super {
   font-size: 65%;
 }
 
-#mvhvtulqed .gt_footnote_marks {
+#pwuithport .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mvhvtulqed .gt_asterisk {
+#pwuithport .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mvhvtulqed .gt_indent_1 {
+#pwuithport .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mvhvtulqed .gt_indent_2 {
+#pwuithport .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mvhvtulqed .gt_indent_3 {
+#pwuithport .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mvhvtulqed .gt_indent_4 {
+#pwuithport .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mvhvtulqed .gt_indent_5 {
+#pwuithport .gt_indent_5 {
   text-indent: 25px;
 }
 
-#mvhvtulqed .katex-display {
+#pwuithport .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#mvhvtulqed div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#pwuithport div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1630,31 +1609,31 @@ ul.task-list li input[type="checkbox"] {
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info">Roof age:</td>
-<td class="gt_row gt_left" headers="Values">10</td>
+<td class="gt_row gt_left" headers="Values">NA</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Info">Orientation:</td>
-<td class="gt_row gt_left" headers="Values">Northeast/Southwest</td>
+<td class="gt_row gt_left" headers="Values">East/West</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info">Roof type:</td>
-<td class="gt_row gt_left" headers="Values">Asphalt Shinglesin faircondition. Some of the shingles are flipped up but overall fine.</td>
+<td class="gt_row gt_left" headers="Values">Asphalt Shinglesin faircondition. NA</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Info">Moisture control:</td>
-<td class="gt_row gt_left" headers="Values">Current moisture control strategies: gutters. These were in poor condition .Only on some sides of the building partially.</td>
+<td class="gt_row gt_left" headers="Values">Current moisture control strategies: NA. These were in NA condition .NA</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info">Siding:</td>
-<td class="gt_row gt_left" headers="Values">wood shingles in fair condition. Some of the siding has recently been replaced and some is old with water damage or moss growing on it.</td>
+<td class="gt_row gt_left" headers="Values">wood siding in fair condition. paint chipping off</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Info">Exterior doors:</td>
-<td class="gt_row gt_left" headers="Values">There are 3 insulated wood exterior doors. In fair condition, totaling 53 square feet.</td>
+<td class="gt_row gt_left" headers="Values">There are 1 insulated wood exterior doors. In poor condition, totaling 18.3 square feet.</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info">Exterior windows:</td>
-<td class="gt_row gt_left" headers="Values">There are 8 single paned wood windows. In fair condition, totaling 54 square feet. Moreover there are 7 double paned wood windows. In fair condition, totaling 81 square feet.</td>
+<td class="gt_row gt_left" headers="Values">There are 4 single paned wood windows. In poor condition, totaling 58 square feet.</td>
 </tr>
 </tbody>
 </table>
@@ -1667,23 +1646,23 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="interiorliving-space">Interior/Living space</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="gveifihyes" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gveifihyes table {
+<div id="fodlkatrpi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fodlkatrpi table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gveifihyes thead, #gveifihyes tbody, #gveifihyes tfoot, #gveifihyes tr, #gveifihyes td, #gveifihyes th {
+#fodlkatrpi thead, #fodlkatrpi tbody, #fodlkatrpi tfoot, #fodlkatrpi tr, #fodlkatrpi td, #fodlkatrpi th {
   border-style: none;
 }
 
-#gveifihyes p {
+#fodlkatrpi p {
   margin: 0;
   padding: 0;
 }
 
-#gveifihyes .gt_table {
+#fodlkatrpi .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1709,12 +1688,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#gveifihyes .gt_caption {
+#fodlkatrpi .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gveifihyes .gt_title {
+#fodlkatrpi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1726,7 +1705,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#gveifihyes .gt_subtitle {
+#fodlkatrpi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1738,7 +1717,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#gveifihyes .gt_heading {
+#fodlkatrpi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1750,13 +1729,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#gveifihyes .gt_bottom_border {
+#fodlkatrpi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gveifihyes .gt_col_headings {
+#fodlkatrpi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1771,7 +1750,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#gveifihyes .gt_col_heading {
+#fodlkatrpi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1791,7 +1770,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#gveifihyes .gt_column_spanner_outer {
+#fodlkatrpi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1803,15 +1782,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#gveifihyes .gt_column_spanner_outer:first-child {
+#fodlkatrpi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gveifihyes .gt_column_spanner_outer:last-child {
+#fodlkatrpi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gveifihyes .gt_column_spanner {
+#fodlkatrpi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1823,11 +1802,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#gveifihyes .gt_spanner_row {
+#fodlkatrpi .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gveifihyes .gt_group_heading {
+#fodlkatrpi .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1853,7 +1832,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#gveifihyes .gt_empty_group_heading {
+#fodlkatrpi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1868,15 +1847,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#gveifihyes .gt_from_md > :first-child {
+#fodlkatrpi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gveifihyes .gt_from_md > :last-child {
+#fodlkatrpi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gveifihyes .gt_row {
+#fodlkatrpi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1895,7 +1874,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#gveifihyes .gt_stub {
+#fodlkatrpi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1908,7 +1887,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gveifihyes .gt_stub_row_group {
+#fodlkatrpi .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1922,15 +1901,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#gveifihyes .gt_row_group_first td {
+#fodlkatrpi .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gveifihyes .gt_row_group_first th {
+#fodlkatrpi .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gveifihyes .gt_summary_row {
+#fodlkatrpi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1940,16 +1919,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gveifihyes .gt_first_summary_row {
+#fodlkatrpi .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gveifihyes .gt_first_summary_row.thick {
+#fodlkatrpi .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gveifihyes .gt_last_summary_row {
+#fodlkatrpi .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1959,7 +1938,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#gveifihyes .gt_grand_summary_row {
+#fodlkatrpi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1969,7 +1948,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gveifihyes .gt_first_grand_summary_row {
+#fodlkatrpi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1979,7 +1958,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#gveifihyes .gt_last_grand_summary_row_top {
+#fodlkatrpi .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1989,11 +1968,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#gveifihyes .gt_striped {
+#fodlkatrpi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gveifihyes .gt_table_body {
+#fodlkatrpi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2002,7 +1981,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#gveifihyes .gt_footnotes {
+#fodlkatrpi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2016,7 +1995,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#gveifihyes .gt_footnote {
+#fodlkatrpi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2025,7 +2004,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gveifihyes .gt_sourcenotes {
+#fodlkatrpi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2039,7 +2018,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#gveifihyes .gt_sourcenote {
+#fodlkatrpi .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2047,72 +2026,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gveifihyes .gt_left {
+#fodlkatrpi .gt_left {
   text-align: left;
 }
 
-#gveifihyes .gt_center {
+#fodlkatrpi .gt_center {
   text-align: center;
 }
 
-#gveifihyes .gt_right {
+#fodlkatrpi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gveifihyes .gt_font_normal {
+#fodlkatrpi .gt_font_normal {
   font-weight: normal;
 }
 
-#gveifihyes .gt_font_bold {
+#fodlkatrpi .gt_font_bold {
   font-weight: bold;
 }
 
-#gveifihyes .gt_font_italic {
+#fodlkatrpi .gt_font_italic {
   font-style: italic;
 }
 
-#gveifihyes .gt_super {
+#fodlkatrpi .gt_super {
   font-size: 65%;
 }
 
-#gveifihyes .gt_footnote_marks {
+#fodlkatrpi .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gveifihyes .gt_asterisk {
+#fodlkatrpi .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gveifihyes .gt_indent_1 {
+#fodlkatrpi .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gveifihyes .gt_indent_2 {
+#fodlkatrpi .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gveifihyes .gt_indent_3 {
+#fodlkatrpi .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gveifihyes .gt_indent_4 {
+#fodlkatrpi .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gveifihyes .gt_indent_5 {
+#fodlkatrpi .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gveifihyes .katex-display {
+#fodlkatrpi .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gveifihyes div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fodlkatrpi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2121,19 +2100,19 @@ ul.task-list li input[type="checkbox"] {
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info">Walls:</td>
-<td class="gt_row gt_left" headers="Values">The framing type of the home is balloon framing, which means the wall cavities extend the full height of the building (from the foundation to the roof). Often the wall cavities are interconnected with the floor and ceiling cavities. This framing type can create connected passageways for air to leave the house and rodents to enter the house. There is UNKNOWN insulation NA inches thick in NA condition. NA</td>
+<td class="gt_row gt_left" headers="Values">The framing type of the home is balloon framing, which means the wall cavities extend the full height of the building (from the foundation to the roof). Often the wall cavities are interconnected with the floor and ceiling cavities. This framing type can create connected passageways for air to leave the house and rodents to enter the house. There is Loose Cellulose, Uninsulated insulation 4 inches thick in excellent condition. cellulose not present everywhere</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Info">Living room:</td>
-<td class="gt_row gt_left" headers="Values">Two large sliding doors on either side of the main hall that have cavities that go straight to the attic.</td>
+<td class="gt_row gt_left" headers="Values">NA</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info">Bathroom(s):</td>
-<td class="gt_row gt_left" headers="Values">Small electric heater in the wall.</td>
+<td class="gt_row gt_left" headers="Values">NA</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Info">Kitchen:</td>
-<td class="gt_row gt_left" headers="Values">Fridge used 8.9 kWh in 60 minutes. Deep Fridge used 1.8 kWh in 60 minutes. Industrial vent hood and gas range. Also, a wood cook stove.</td>
+<td class="gt_row gt_left" headers="Values">NA used NA kWh in NA minutes. NA used NA kWh in NA minutes. NA</td>
 </tr>
 </tbody>
 </table>
@@ -2150,23 +2129,23 @@ ul.task-list li input[type="checkbox"] {
 <p>Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="wjjapntitj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wjjapntitj table {
+<div id="ufzsvuvnpp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ufzsvuvnpp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wjjapntitj thead, #wjjapntitj tbody, #wjjapntitj tfoot, #wjjapntitj tr, #wjjapntitj td, #wjjapntitj th {
+#ufzsvuvnpp thead, #ufzsvuvnpp tbody, #ufzsvuvnpp tfoot, #ufzsvuvnpp tr, #ufzsvuvnpp td, #ufzsvuvnpp th {
   border-style: none;
 }
 
-#wjjapntitj p {
+#ufzsvuvnpp p {
   margin: 0;
   padding: 0;
 }
 
-#wjjapntitj .gt_table {
+#ufzsvuvnpp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2192,12 +2171,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#wjjapntitj .gt_caption {
+#ufzsvuvnpp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wjjapntitj .gt_title {
+#ufzsvuvnpp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2209,7 +2188,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#wjjapntitj .gt_subtitle {
+#ufzsvuvnpp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2221,7 +2200,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#wjjapntitj .gt_heading {
+#ufzsvuvnpp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2233,13 +2212,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#wjjapntitj .gt_bottom_border {
+#ufzsvuvnpp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wjjapntitj .gt_col_headings {
+#ufzsvuvnpp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2254,7 +2233,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#wjjapntitj .gt_col_heading {
+#ufzsvuvnpp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2274,7 +2253,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#wjjapntitj .gt_column_spanner_outer {
+#ufzsvuvnpp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2286,15 +2265,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#wjjapntitj .gt_column_spanner_outer:first-child {
+#ufzsvuvnpp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wjjapntitj .gt_column_spanner_outer:last-child {
+#ufzsvuvnpp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wjjapntitj .gt_column_spanner {
+#ufzsvuvnpp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2306,11 +2285,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#wjjapntitj .gt_spanner_row {
+#ufzsvuvnpp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wjjapntitj .gt_group_heading {
+#ufzsvuvnpp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2336,7 +2315,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#wjjapntitj .gt_empty_group_heading {
+#ufzsvuvnpp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2351,15 +2330,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#wjjapntitj .gt_from_md > :first-child {
+#ufzsvuvnpp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wjjapntitj .gt_from_md > :last-child {
+#ufzsvuvnpp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wjjapntitj .gt_row {
+#ufzsvuvnpp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2378,7 +2357,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#wjjapntitj .gt_stub {
+#ufzsvuvnpp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2391,7 +2370,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#wjjapntitj .gt_stub_row_group {
+#ufzsvuvnpp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2405,15 +2384,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#wjjapntitj .gt_row_group_first td {
+#ufzsvuvnpp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wjjapntitj .gt_row_group_first th {
+#ufzsvuvnpp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wjjapntitj .gt_summary_row {
+#ufzsvuvnpp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2423,16 +2402,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#wjjapntitj .gt_first_summary_row {
+#ufzsvuvnpp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wjjapntitj .gt_first_summary_row.thick {
+#ufzsvuvnpp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wjjapntitj .gt_last_summary_row {
+#ufzsvuvnpp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2442,7 +2421,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#wjjapntitj .gt_grand_summary_row {
+#ufzsvuvnpp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2452,7 +2431,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#wjjapntitj .gt_first_grand_summary_row {
+#ufzsvuvnpp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2462,7 +2441,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#wjjapntitj .gt_last_grand_summary_row_top {
+#ufzsvuvnpp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2472,11 +2451,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#wjjapntitj .gt_striped {
+#ufzsvuvnpp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wjjapntitj .gt_table_body {
+#ufzsvuvnpp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2485,7 +2464,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#wjjapntitj .gt_footnotes {
+#ufzsvuvnpp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2499,7 +2478,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#wjjapntitj .gt_footnote {
+#ufzsvuvnpp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2508,7 +2487,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#wjjapntitj .gt_sourcenotes {
+#ufzsvuvnpp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2522,7 +2501,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#wjjapntitj .gt_sourcenote {
+#ufzsvuvnpp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2530,72 +2509,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#wjjapntitj .gt_left {
+#ufzsvuvnpp .gt_left {
   text-align: left;
 }
 
-#wjjapntitj .gt_center {
+#ufzsvuvnpp .gt_center {
   text-align: center;
 }
 
-#wjjapntitj .gt_right {
+#ufzsvuvnpp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wjjapntitj .gt_font_normal {
+#ufzsvuvnpp .gt_font_normal {
   font-weight: normal;
 }
 
-#wjjapntitj .gt_font_bold {
+#ufzsvuvnpp .gt_font_bold {
   font-weight: bold;
 }
 
-#wjjapntitj .gt_font_italic {
+#ufzsvuvnpp .gt_font_italic {
   font-style: italic;
 }
 
-#wjjapntitj .gt_super {
+#ufzsvuvnpp .gt_super {
   font-size: 65%;
 }
 
-#wjjapntitj .gt_footnote_marks {
+#ufzsvuvnpp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wjjapntitj .gt_asterisk {
+#ufzsvuvnpp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wjjapntitj .gt_indent_1 {
+#ufzsvuvnpp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wjjapntitj .gt_indent_2 {
+#ufzsvuvnpp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wjjapntitj .gt_indent_3 {
+#ufzsvuvnpp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wjjapntitj .gt_indent_4 {
+#ufzsvuvnpp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wjjapntitj .gt_indent_5 {
+#ufzsvuvnpp .gt_indent_5 {
   text-indent: 25px;
 }
 
-#wjjapntitj .katex-display {
+#ufzsvuvnpp .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#wjjapntitj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ufzsvuvnpp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2604,22 +2583,22 @@ ul.task-list li input[type="checkbox"] {
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info">CFM50:</td>
-<td class="gt_row gt_left" headers="Values">2126</td>
+<td class="gt_row gt_left" headers="Values">910</td>
 <td class="gt_row gt_left" headers="Description">CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Info">ACH50:</td>
-<td class="gt_row gt_left" headers="Values">7.4</td>
+<td class="gt_row gt_left" headers="Values">29.2</td>
 <td class="gt_row gt_left" headers="Description">ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info">Equivalent leakage area:</td>
-<td class="gt_row gt_left" headers="Values">212.6 under natural conditions. TEST</td>
+<td class="gt_row gt_left" headers="Values">91 under natural conditions. TEST</td>
 <td class="gt_row gt_left" headers="Description">This is the area (in square inches) equivalent to all of the air leaks in the house combined.</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Info">ACHnatural:</td>
-<td class="gt_row gt_left" headers="Values">0.4</td>
+<td class="gt_row gt_left" headers="Values">1.6</td>
 <td class="gt_row gt_left" headers="Description">Accounting for the volume of the home, this means that the house exchanges –% of its air every hour. Over one day, the house goes through – complete air changes.</td>
 </tr>
 </tbody>
@@ -2635,23 +2614,23 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="attic-1">Attic</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="llnjnjbcvb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#llnjnjbcvb table {
+<div id="rznpmwmsve" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rznpmwmsve table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#llnjnjbcvb thead, #llnjnjbcvb tbody, #llnjnjbcvb tfoot, #llnjnjbcvb tr, #llnjnjbcvb td, #llnjnjbcvb th {
+#rznpmwmsve thead, #rznpmwmsve tbody, #rznpmwmsve tfoot, #rznpmwmsve tr, #rznpmwmsve td, #rznpmwmsve th {
   border-style: none;
 }
 
-#llnjnjbcvb p {
+#rznpmwmsve p {
   margin: 0;
   padding: 0;
 }
 
-#llnjnjbcvb .gt_table {
+#rznpmwmsve .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2677,12 +2656,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#llnjnjbcvb .gt_caption {
+#rznpmwmsve .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#llnjnjbcvb .gt_title {
+#rznpmwmsve .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2694,7 +2673,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#llnjnjbcvb .gt_subtitle {
+#rznpmwmsve .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2706,7 +2685,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#llnjnjbcvb .gt_heading {
+#rznpmwmsve .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2718,13 +2697,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#llnjnjbcvb .gt_bottom_border {
+#rznpmwmsve .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#llnjnjbcvb .gt_col_headings {
+#rznpmwmsve .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2739,7 +2718,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#llnjnjbcvb .gt_col_heading {
+#rznpmwmsve .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2759,7 +2738,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#llnjnjbcvb .gt_column_spanner_outer {
+#rznpmwmsve .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2771,15 +2750,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#llnjnjbcvb .gt_column_spanner_outer:first-child {
+#rznpmwmsve .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#llnjnjbcvb .gt_column_spanner_outer:last-child {
+#rznpmwmsve .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#llnjnjbcvb .gt_column_spanner {
+#rznpmwmsve .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2791,11 +2770,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#llnjnjbcvb .gt_spanner_row {
+#rznpmwmsve .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#llnjnjbcvb .gt_group_heading {
+#rznpmwmsve .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2821,7 +2800,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#llnjnjbcvb .gt_empty_group_heading {
+#rznpmwmsve .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2836,15 +2815,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#llnjnjbcvb .gt_from_md > :first-child {
+#rznpmwmsve .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#llnjnjbcvb .gt_from_md > :last-child {
+#rznpmwmsve .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#llnjnjbcvb .gt_row {
+#rznpmwmsve .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2863,7 +2842,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#llnjnjbcvb .gt_stub {
+#rznpmwmsve .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2876,7 +2855,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#llnjnjbcvb .gt_stub_row_group {
+#rznpmwmsve .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2890,15 +2869,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#llnjnjbcvb .gt_row_group_first td {
+#rznpmwmsve .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#llnjnjbcvb .gt_row_group_first th {
+#rznpmwmsve .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#llnjnjbcvb .gt_summary_row {
+#rznpmwmsve .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2908,16 +2887,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#llnjnjbcvb .gt_first_summary_row {
+#rznpmwmsve .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#llnjnjbcvb .gt_first_summary_row.thick {
+#rznpmwmsve .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#llnjnjbcvb .gt_last_summary_row {
+#rznpmwmsve .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2927,7 +2906,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#llnjnjbcvb .gt_grand_summary_row {
+#rznpmwmsve .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2937,7 +2916,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#llnjnjbcvb .gt_first_grand_summary_row {
+#rznpmwmsve .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2947,7 +2926,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#llnjnjbcvb .gt_last_grand_summary_row_top {
+#rznpmwmsve .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2957,11 +2936,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#llnjnjbcvb .gt_striped {
+#rznpmwmsve .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#llnjnjbcvb .gt_table_body {
+#rznpmwmsve .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2970,7 +2949,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#llnjnjbcvb .gt_footnotes {
+#rznpmwmsve .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2984,7 +2963,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#llnjnjbcvb .gt_footnote {
+#rznpmwmsve .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2993,7 +2972,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#llnjnjbcvb .gt_sourcenotes {
+#rznpmwmsve .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3007,7 +2986,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#llnjnjbcvb .gt_sourcenote {
+#rznpmwmsve .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3015,72 +2994,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#llnjnjbcvb .gt_left {
+#rznpmwmsve .gt_left {
   text-align: left;
 }
 
-#llnjnjbcvb .gt_center {
+#rznpmwmsve .gt_center {
   text-align: center;
 }
 
-#llnjnjbcvb .gt_right {
+#rznpmwmsve .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#llnjnjbcvb .gt_font_normal {
+#rznpmwmsve .gt_font_normal {
   font-weight: normal;
 }
 
-#llnjnjbcvb .gt_font_bold {
+#rznpmwmsve .gt_font_bold {
   font-weight: bold;
 }
 
-#llnjnjbcvb .gt_font_italic {
+#rznpmwmsve .gt_font_italic {
   font-style: italic;
 }
 
-#llnjnjbcvb .gt_super {
+#rznpmwmsve .gt_super {
   font-size: 65%;
 }
 
-#llnjnjbcvb .gt_footnote_marks {
+#rznpmwmsve .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#llnjnjbcvb .gt_asterisk {
+#rznpmwmsve .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#llnjnjbcvb .gt_indent_1 {
+#rznpmwmsve .gt_indent_1 {
   text-indent: 5px;
 }
 
-#llnjnjbcvb .gt_indent_2 {
+#rznpmwmsve .gt_indent_2 {
   text-indent: 10px;
 }
 
-#llnjnjbcvb .gt_indent_3 {
+#rznpmwmsve .gt_indent_3 {
   text-indent: 15px;
 }
 
-#llnjnjbcvb .gt_indent_4 {
+#rznpmwmsve .gt_indent_4 {
   text-indent: 20px;
 }
 
-#llnjnjbcvb .gt_indent_5 {
+#rznpmwmsve .gt_indent_5 {
   text-indent: 25px;
 }
 
-#llnjnjbcvb .katex-display {
+#rznpmwmsve .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#llnjnjbcvb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#rznpmwmsve div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3089,15 +3068,15 @@ ul.task-list li input[type="checkbox"] {
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">Area (sq ft):</td>
-<td class="gt_row gt_left" headers="Values" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">2086</td>
+<td class="gt_row gt_left" headers="Values" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">202</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Info" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">Insulation type:</td>
-<td class="gt_row gt_left" headers="Values" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">Batts of Fiberglass</td>
+<td class="gt_row gt_left" headers="Values" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">Loose Cellulose</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">Insulation condition:</td>
-<td class="gt_row gt_left" headers="Values" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">Partially</td>
+<td class="gt_row gt_left" headers="Values" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">Fair</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Info" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">Air sealing:</td>
@@ -3105,11 +3084,11 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">Other observations:</td>
-<td class="gt_row gt_left" headers="Values" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">The attic is only partially insulated. Yes NA</td>
+<td class="gt_row gt_left" headers="Values" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">entire attic insulated, depth varies from 4 to 2 inches, area around chimney not insulated or sealed Yes squirrels living in attic</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Info" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">Ventilation:</td>
-<td class="gt_row gt_left" headers="Values" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">Yes</td>
+<td class="gt_row gt_left" headers="Values" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">NA</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info" style="border-left-width: 2px; border-left-style: solid; border-left-color: #000; border-right-width: 2px; border-right-style: solid; border-right-color: #000; border-top-width: 2px; border-top-style: solid; border-top-color: #000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000">Ducts:</td>
@@ -3126,23 +3105,23 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="basement-1">Basement</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="xiooyfwafx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xiooyfwafx table {
+<div id="gfjcolvluv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gfjcolvluv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xiooyfwafx thead, #xiooyfwafx tbody, #xiooyfwafx tfoot, #xiooyfwafx tr, #xiooyfwafx td, #xiooyfwafx th {
+#gfjcolvluv thead, #gfjcolvluv tbody, #gfjcolvluv tfoot, #gfjcolvluv tr, #gfjcolvluv td, #gfjcolvluv th {
   border-style: none;
 }
 
-#xiooyfwafx p {
+#gfjcolvluv p {
   margin: 0;
   padding: 0;
 }
 
-#xiooyfwafx .gt_table {
+#gfjcolvluv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3168,12 +3147,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#xiooyfwafx .gt_caption {
+#gfjcolvluv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xiooyfwafx .gt_title {
+#gfjcolvluv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3185,7 +3164,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#xiooyfwafx .gt_subtitle {
+#gfjcolvluv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3197,7 +3176,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#xiooyfwafx .gt_heading {
+#gfjcolvluv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3209,13 +3188,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#xiooyfwafx .gt_bottom_border {
+#gfjcolvluv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xiooyfwafx .gt_col_headings {
+#gfjcolvluv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3230,7 +3209,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#xiooyfwafx .gt_col_heading {
+#gfjcolvluv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3250,7 +3229,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#xiooyfwafx .gt_column_spanner_outer {
+#gfjcolvluv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3262,15 +3241,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#xiooyfwafx .gt_column_spanner_outer:first-child {
+#gfjcolvluv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xiooyfwafx .gt_column_spanner_outer:last-child {
+#gfjcolvluv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xiooyfwafx .gt_column_spanner {
+#gfjcolvluv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3282,11 +3261,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#xiooyfwafx .gt_spanner_row {
+#gfjcolvluv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xiooyfwafx .gt_group_heading {
+#gfjcolvluv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3312,7 +3291,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#xiooyfwafx .gt_empty_group_heading {
+#gfjcolvluv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3327,15 +3306,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#xiooyfwafx .gt_from_md > :first-child {
+#gfjcolvluv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xiooyfwafx .gt_from_md > :last-child {
+#gfjcolvluv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xiooyfwafx .gt_row {
+#gfjcolvluv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3354,7 +3333,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#xiooyfwafx .gt_stub {
+#gfjcolvluv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3367,7 +3346,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xiooyfwafx .gt_stub_row_group {
+#gfjcolvluv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3381,15 +3360,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#xiooyfwafx .gt_row_group_first td {
+#gfjcolvluv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xiooyfwafx .gt_row_group_first th {
+#gfjcolvluv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xiooyfwafx .gt_summary_row {
+#gfjcolvluv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3399,16 +3378,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xiooyfwafx .gt_first_summary_row {
+#gfjcolvluv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xiooyfwafx .gt_first_summary_row.thick {
+#gfjcolvluv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xiooyfwafx .gt_last_summary_row {
+#gfjcolvluv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3418,7 +3397,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#xiooyfwafx .gt_grand_summary_row {
+#gfjcolvluv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3428,7 +3407,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xiooyfwafx .gt_first_grand_summary_row {
+#gfjcolvluv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3438,7 +3417,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#xiooyfwafx .gt_last_grand_summary_row_top {
+#gfjcolvluv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3448,11 +3427,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#xiooyfwafx .gt_striped {
+#gfjcolvluv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xiooyfwafx .gt_table_body {
+#gfjcolvluv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3461,7 +3440,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#xiooyfwafx .gt_footnotes {
+#gfjcolvluv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3475,7 +3454,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#xiooyfwafx .gt_footnote {
+#gfjcolvluv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3484,7 +3463,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xiooyfwafx .gt_sourcenotes {
+#gfjcolvluv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3498,7 +3477,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#xiooyfwafx .gt_sourcenote {
+#gfjcolvluv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3506,72 +3485,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xiooyfwafx .gt_left {
+#gfjcolvluv .gt_left {
   text-align: left;
 }
 
-#xiooyfwafx .gt_center {
+#gfjcolvluv .gt_center {
   text-align: center;
 }
 
-#xiooyfwafx .gt_right {
+#gfjcolvluv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xiooyfwafx .gt_font_normal {
+#gfjcolvluv .gt_font_normal {
   font-weight: normal;
 }
 
-#xiooyfwafx .gt_font_bold {
+#gfjcolvluv .gt_font_bold {
   font-weight: bold;
 }
 
-#xiooyfwafx .gt_font_italic {
+#gfjcolvluv .gt_font_italic {
   font-style: italic;
 }
 
-#xiooyfwafx .gt_super {
+#gfjcolvluv .gt_super {
   font-size: 65%;
 }
 
-#xiooyfwafx .gt_footnote_marks {
+#gfjcolvluv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xiooyfwafx .gt_asterisk {
+#gfjcolvluv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xiooyfwafx .gt_indent_1 {
+#gfjcolvluv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xiooyfwafx .gt_indent_2 {
+#gfjcolvluv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xiooyfwafx .gt_indent_3 {
+#gfjcolvluv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xiooyfwafx .gt_indent_4 {
+#gfjcolvluv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xiooyfwafx .gt_indent_5 {
+#gfjcolvluv .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xiooyfwafx .katex-display {
+#gfjcolvluv .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xiooyfwafx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#gfjcolvluv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3580,23 +3559,23 @@ ul.task-list li input[type="checkbox"] {
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info">Area (sq ft):</td>
-<td class="gt_row gt_left" headers="Values">NA</td>
+<td class="gt_row gt_left" headers="Values">202</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Info">Inuslation type:</td>
-<td class="gt_row gt_left" headers="Values">Batts of Fiberglass</td>
+<td class="gt_row gt_left" headers="Values">Uninsulated</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info">Insulation condition:</td>
-<td class="gt_row gt_left" headers="Values">PoorThe insulation is along the floor joists however it is only in some parts and is falling out. It is effectively uninsulated.</td>
+<td class="gt_row gt_left" headers="Values">NANA</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Info">Insulation of appliances:</td>
-<td class="gt_row gt_left" headers="Values">Appliances not insulated, Ducts/pipes not insulated</td>
+<td class="gt_row gt_left" headers="Values">No appliances</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info">Moisture Control:</td>
-<td class="gt_row gt_left" headers="Values">NAin NAcondition. Only on some sides of the building partially.</td>
+<td class="gt_row gt_left" headers="Values">NAin NAcondition. NA</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Info">Ducts:</td>
@@ -3617,23 +3596,23 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="electrical-and-mechanical-systems">Electrical and Mechanical Systems</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="zlohdtrqnw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zlohdtrqnw table {
+<div id="zivijvlihg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zivijvlihg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zlohdtrqnw thead, #zlohdtrqnw tbody, #zlohdtrqnw tfoot, #zlohdtrqnw tr, #zlohdtrqnw td, #zlohdtrqnw th {
+#zivijvlihg thead, #zivijvlihg tbody, #zivijvlihg tfoot, #zivijvlihg tr, #zivijvlihg td, #zivijvlihg th {
   border-style: none;
 }
 
-#zlohdtrqnw p {
+#zivijvlihg p {
   margin: 0;
   padding: 0;
 }
 
-#zlohdtrqnw .gt_table {
+#zivijvlihg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3659,12 +3638,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#zlohdtrqnw .gt_caption {
+#zivijvlihg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zlohdtrqnw .gt_title {
+#zivijvlihg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3676,7 +3655,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#zlohdtrqnw .gt_subtitle {
+#zivijvlihg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3688,7 +3667,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#zlohdtrqnw .gt_heading {
+#zivijvlihg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3700,13 +3679,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#zlohdtrqnw .gt_bottom_border {
+#zivijvlihg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zlohdtrqnw .gt_col_headings {
+#zivijvlihg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3721,7 +3700,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#zlohdtrqnw .gt_col_heading {
+#zivijvlihg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3741,7 +3720,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#zlohdtrqnw .gt_column_spanner_outer {
+#zivijvlihg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3753,15 +3732,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#zlohdtrqnw .gt_column_spanner_outer:first-child {
+#zivijvlihg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zlohdtrqnw .gt_column_spanner_outer:last-child {
+#zivijvlihg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zlohdtrqnw .gt_column_spanner {
+#zivijvlihg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3773,11 +3752,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#zlohdtrqnw .gt_spanner_row {
+#zivijvlihg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zlohdtrqnw .gt_group_heading {
+#zivijvlihg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3803,7 +3782,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#zlohdtrqnw .gt_empty_group_heading {
+#zivijvlihg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3818,15 +3797,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#zlohdtrqnw .gt_from_md > :first-child {
+#zivijvlihg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zlohdtrqnw .gt_from_md > :last-child {
+#zivijvlihg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zlohdtrqnw .gt_row {
+#zivijvlihg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3845,7 +3824,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#zlohdtrqnw .gt_stub {
+#zivijvlihg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3858,7 +3837,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#zlohdtrqnw .gt_stub_row_group {
+#zivijvlihg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3872,15 +3851,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#zlohdtrqnw .gt_row_group_first td {
+#zivijvlihg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zlohdtrqnw .gt_row_group_first th {
+#zivijvlihg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zlohdtrqnw .gt_summary_row {
+#zivijvlihg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3890,16 +3869,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#zlohdtrqnw .gt_first_summary_row {
+#zivijvlihg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zlohdtrqnw .gt_first_summary_row.thick {
+#zivijvlihg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zlohdtrqnw .gt_last_summary_row {
+#zivijvlihg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3909,7 +3888,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#zlohdtrqnw .gt_grand_summary_row {
+#zivijvlihg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3919,7 +3898,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#zlohdtrqnw .gt_first_grand_summary_row {
+#zivijvlihg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3929,7 +3908,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#zlohdtrqnw .gt_last_grand_summary_row_top {
+#zivijvlihg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3939,11 +3918,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#zlohdtrqnw .gt_striped {
+#zivijvlihg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zlohdtrqnw .gt_table_body {
+#zivijvlihg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3952,7 +3931,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#zlohdtrqnw .gt_footnotes {
+#zivijvlihg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3966,7 +3945,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#zlohdtrqnw .gt_footnote {
+#zivijvlihg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3975,7 +3954,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#zlohdtrqnw .gt_sourcenotes {
+#zivijvlihg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3989,7 +3968,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#zlohdtrqnw .gt_sourcenote {
+#zivijvlihg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3997,72 +3976,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#zlohdtrqnw .gt_left {
+#zivijvlihg .gt_left {
   text-align: left;
 }
 
-#zlohdtrqnw .gt_center {
+#zivijvlihg .gt_center {
   text-align: center;
 }
 
-#zlohdtrqnw .gt_right {
+#zivijvlihg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zlohdtrqnw .gt_font_normal {
+#zivijvlihg .gt_font_normal {
   font-weight: normal;
 }
 
-#zlohdtrqnw .gt_font_bold {
+#zivijvlihg .gt_font_bold {
   font-weight: bold;
 }
 
-#zlohdtrqnw .gt_font_italic {
+#zivijvlihg .gt_font_italic {
   font-style: italic;
 }
 
-#zlohdtrqnw .gt_super {
+#zivijvlihg .gt_super {
   font-size: 65%;
 }
 
-#zlohdtrqnw .gt_footnote_marks {
+#zivijvlihg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zlohdtrqnw .gt_asterisk {
+#zivijvlihg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zlohdtrqnw .gt_indent_1 {
+#zivijvlihg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zlohdtrqnw .gt_indent_2 {
+#zivijvlihg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zlohdtrqnw .gt_indent_3 {
+#zivijvlihg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zlohdtrqnw .gt_indent_4 {
+#zivijvlihg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zlohdtrqnw .gt_indent_5 {
+#zivijvlihg .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zlohdtrqnw .katex-display {
+#zivijvlihg .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zlohdtrqnw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zivijvlihg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -4071,7 +4050,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="Info">Electrical panel:</td>
-<td class="gt_row gt_left" headers="Values">The electrical panel has and amperage of 200. There are 0 unused breaker spaces. NA</td>
+<td class="gt_row gt_left" headers="Values">The electrical panel has and amperage of 30. There are NA unused breaker spaces. no breaker panel, old fuse box in attic</td>
 </tr>
 </tbody>
 </table>
@@ -4084,23 +4063,23 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="energy-bills">Energy Bills</h3>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fjwehdestn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fjwehdestn table {
+<div id="jwzjvcoxhe" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jwzjvcoxhe table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fjwehdestn thead, #fjwehdestn tbody, #fjwehdestn tfoot, #fjwehdestn tr, #fjwehdestn td, #fjwehdestn th {
+#jwzjvcoxhe thead, #jwzjvcoxhe tbody, #jwzjvcoxhe tfoot, #jwzjvcoxhe tr, #jwzjvcoxhe td, #jwzjvcoxhe th {
   border-style: none;
 }
 
-#fjwehdestn p {
+#jwzjvcoxhe p {
   margin: 0;
   padding: 0;
 }
 
-#fjwehdestn .gt_table {
+#jwzjvcoxhe .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -4126,12 +4105,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#fjwehdestn .gt_caption {
+#jwzjvcoxhe .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fjwehdestn .gt_title {
+#jwzjvcoxhe .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4143,7 +4122,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#fjwehdestn .gt_subtitle {
+#jwzjvcoxhe .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4155,7 +4134,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#fjwehdestn .gt_heading {
+#jwzjvcoxhe .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4167,13 +4146,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#fjwehdestn .gt_bottom_border {
+#jwzjvcoxhe .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fjwehdestn .gt_col_headings {
+#jwzjvcoxhe .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4188,7 +4167,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#fjwehdestn .gt_col_heading {
+#jwzjvcoxhe .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4208,7 +4187,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#fjwehdestn .gt_column_spanner_outer {
+#jwzjvcoxhe .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4220,15 +4199,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#fjwehdestn .gt_column_spanner_outer:first-child {
+#jwzjvcoxhe .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fjwehdestn .gt_column_spanner_outer:last-child {
+#jwzjvcoxhe .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fjwehdestn .gt_column_spanner {
+#jwzjvcoxhe .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4240,11 +4219,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#fjwehdestn .gt_spanner_row {
+#jwzjvcoxhe .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fjwehdestn .gt_group_heading {
+#jwzjvcoxhe .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4270,7 +4249,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#fjwehdestn .gt_empty_group_heading {
+#jwzjvcoxhe .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4285,15 +4264,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#fjwehdestn .gt_from_md > :first-child {
+#jwzjvcoxhe .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fjwehdestn .gt_from_md > :last-child {
+#jwzjvcoxhe .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fjwehdestn .gt_row {
+#jwzjvcoxhe .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4312,7 +4291,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#fjwehdestn .gt_stub {
+#jwzjvcoxhe .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4325,7 +4304,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#fjwehdestn .gt_stub_row_group {
+#jwzjvcoxhe .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4339,15 +4318,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#fjwehdestn .gt_row_group_first td {
+#jwzjvcoxhe .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fjwehdestn .gt_row_group_first th {
+#jwzjvcoxhe .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fjwehdestn .gt_summary_row {
+#jwzjvcoxhe .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4357,16 +4336,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#fjwehdestn .gt_first_summary_row {
+#jwzjvcoxhe .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fjwehdestn .gt_first_summary_row.thick {
+#jwzjvcoxhe .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fjwehdestn .gt_last_summary_row {
+#jwzjvcoxhe .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4376,7 +4355,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#fjwehdestn .gt_grand_summary_row {
+#jwzjvcoxhe .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4386,7 +4365,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#fjwehdestn .gt_first_grand_summary_row {
+#jwzjvcoxhe .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4396,7 +4375,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#fjwehdestn .gt_last_grand_summary_row_top {
+#jwzjvcoxhe .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4406,11 +4385,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#fjwehdestn .gt_striped {
+#jwzjvcoxhe .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fjwehdestn .gt_table_body {
+#jwzjvcoxhe .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4419,7 +4398,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#fjwehdestn .gt_footnotes {
+#jwzjvcoxhe .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4433,7 +4412,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#fjwehdestn .gt_footnote {
+#jwzjvcoxhe .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4442,7 +4421,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#fjwehdestn .gt_sourcenotes {
+#jwzjvcoxhe .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4456,7 +4435,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#fjwehdestn .gt_sourcenote {
+#jwzjvcoxhe .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4464,86 +4443,92 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#fjwehdestn .gt_left {
+#jwzjvcoxhe .gt_left {
   text-align: left;
 }
 
-#fjwehdestn .gt_center {
+#jwzjvcoxhe .gt_center {
   text-align: center;
 }
 
-#fjwehdestn .gt_right {
+#jwzjvcoxhe .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fjwehdestn .gt_font_normal {
+#jwzjvcoxhe .gt_font_normal {
   font-weight: normal;
 }
 
-#fjwehdestn .gt_font_bold {
+#jwzjvcoxhe .gt_font_bold {
   font-weight: bold;
 }
 
-#fjwehdestn .gt_font_italic {
+#jwzjvcoxhe .gt_font_italic {
   font-style: italic;
 }
 
-#fjwehdestn .gt_super {
+#jwzjvcoxhe .gt_super {
   font-size: 65%;
 }
 
-#fjwehdestn .gt_footnote_marks {
+#jwzjvcoxhe .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fjwehdestn .gt_asterisk {
+#jwzjvcoxhe .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fjwehdestn .gt_indent_1 {
+#jwzjvcoxhe .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fjwehdestn .gt_indent_2 {
+#jwzjvcoxhe .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fjwehdestn .gt_indent_3 {
+#jwzjvcoxhe .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fjwehdestn .gt_indent_4 {
+#jwzjvcoxhe .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fjwehdestn .gt_indent_5 {
+#jwzjvcoxhe .gt_indent_5 {
   text-indent: 25px;
 }
 
-#fjwehdestn .katex-display {
+#jwzjvcoxhe .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#fjwehdestn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#jwzjvcoxhe div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 
-<table class="gt_table caption-top" data-quarto-postprocess="true" style="table-layout:fixed;width:100%;" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_col_headings header">
 <th id="Type" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Type</th>
-<th id="kWh/gallons/cords/tonns" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">kWh/gallons/cords/tonns</th>
+<th id="kWh/gallons/cords/tonns" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">kWh/gallons/cords/tonns</th>
 <th id="Type2" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Type2</th>
-<th id="Cost-(USD)" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Cost (USD)</th>
+<th id="Cost-(USD)" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Cost (USD)</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Type">Propane</td>
+<td class="gt_row gt_right" headers="kWh/gallons/cords/tonns">90</td>
+<td class="gt_row gt_left" headers="Type2">cost_in_dollars_propane</td>
+<td class="gt_row gt_right" headers="Cost (USD)">165</td>
+</tr>
 </tbody>
 </table>
 
@@ -4555,23 +4540,6 @@ ul.task-list li input[type="checkbox"] {
 <section id="recommendations" class="level2">
 <h2 class="anchored" data-anchor-id="recommendations">Recommendations</h2>
 <p>These recommendations are organized from the least expensive/most cost-effective and easiest interventions to ones that are more challenging to implement.</p>
-<section id="furnaceboiler-tune-up" class="level3">
-<h3 class="anchored" data-anchor-id="furnaceboiler-tune-up">Furnace/Boiler Tune up</h3>
-<p><em>Problem</em></p>
-<p><strong>Auditor to describe</strong></p>
-<p><em>Recommendation</em></p>
-<p>Have the furnace/boiler and flue inspected and adjusted by a licensed professional. This should be available from your fuel delivery company.</p>
-<p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>Test 2 A tune-up can improve the efficiency of your furnace/boiler, confirm that it is exhausting properly, and identify areas of concern before they become urgent. If you have a service contract with your fuel delivery company, an annual tune-up is usually included.</p>
-</section>
-<section id="high-efficiency-shower-heads" class="level3">
-<h3 class="anchored" data-anchor-id="high-efficiency-shower-heads">High efficiency shower head(s)</h3>
-<p><em>Problem</em></p>
-<p>Your shower heads use more water and energy than high-efficiency shower heads, thus costing you more money than necessary. Older shower heads use 2.5 gallons or more every minute, which wastes thousands of gallons of water each year and costs you money for every extra gallon of water heated.</p>
-<p><em>Recommendation</em></p>
-<p>Install high-efficiency shower heads to reduce the amount of water and energy to heat the water used when showering. <em>Estimated Cost/Benefits/Incentives</em></p>
-<p>A typical family will save ~10,000 gallons of water per year and over $100 per year in water heating costs. We provide these for free and have several styles for you to choose from; contact us for some if we did not give you any during the audit.</p>
-</section>
 <section id="leds" class="level3">
 <h3 class="anchored" data-anchor-id="leds">LEDs</h3>
 <p><em>Problem</em></p>
@@ -4587,49 +4555,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Your windows are a source of heat loss, reduce your comfort due to cold surface temperatures, and may also cause moisture condensation or frost in the winter.</p>
 <p><em>Recommendation</em></p>
 <p>WindowDressers insulating window inserts help air-seal windows and reduce heat loss and gain. <em>Estimated Cost/Benefits/Incentives</em></p>
-<p>Insulating window inserts save 5-10% of your heating costs at less than 1/10th the cost of replacement windows. The overall project cost will depend on the number and size of window inserts. Example prices for the 2024 season were: small (20 x 36”) - $36 for natural pine frame, $46 for white; medium (30 x 52”) - $50 for natural pine frame, $64 for white; large (44 x 68”) - $67 for natural pine frame, $88 for white. Adjusted pricing for lower-income households is available from WindowDressers upon request. If plastic is damaged, it can be replaced for $15.</p>
-<p>Households that order inserts are expected to participate in the Community Build where the inserts are made. You can sign up for a 4-hour shift and learn the simple steps in the insert-building process (no previous experience required, no power tools). Each job has “jigs” that make the job easier to do and ensure uniform quality. You will be trained at the beginning of your shift on how to do your task. Volunteering for multiple shifts is encouraged! Mid-shift snacks and a meal are provided to all participants.</p>
-<p>If you would like to participate, please contact us so we can discuss how the program works and which windows you’d like inserts for.</p>
-</section>
-<section id="refrigerator" class="level3">
-<h3 class="anchored" data-anchor-id="refrigerator">Refrigerator</h3>
-<p><em>Problem</em></p>
-<p>Your refrigerator uses more energy than newer models.</p>
-<p><strong>Ideally, the auditor notes the annual energy consumption (kWh) of the existing fridge compared to a new model of similar size</strong></p>
-<p><em>Recommendation</em></p>
-<p>Replace your refrigerator with a new, EnergyStar certified fridge. Look at the Energy Guide label to compare the energy use of new refrigerators.</p>
-<p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>If you are able to afford the upfront cost of purchasing a new refrigerator, you will recoup significant savings in the long run. Whenever you need to buy a new appliance, consider EnergyStar certified models, which use less energy and are cheaper to run. Remember, it doesn’t save energy if you relocate your existing refrigerator to the basement or garage and continue using it.</p>
-<p><strong>Ideally, auditor locates similar volume fridge online to calculate monthly savings and payback period compared to kill-a-watt meter reading for current refrigerator. “This example refrigerator would save $XX in electricity each month and pay for itself within XX months</strong></p>
-</section>
-<section id="freezer" class="level3">
-<h3 class="anchored" data-anchor-id="freezer">Freezer</h3>
-<p><em>Problem</em></p>
-<p>Your freezer uses more energy than newer models. Consider how the cost of running the freezer compares to the benefits of keeping it on.</p>
-<p><strong>Ideally, the auditor notes the annual energy consumption (kWh) of the existing freezer compared to a new model of similar size</strong></p>
-<p><em>Recommendation</em></p>
-<p>Replace your freezer with a new, EnergyStar certified freezer. Look at the Energy Guide label to compare the energy use of new freezers.</p>
-<p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>If you are able to afford the upfront cost of purchasing a new freezer, you will recoup significant savings in the long run. Whenever you need to buy a new appliance, consider EnergyStar certified models, which use electricity and are cheaper to run.</p>
-<p><strong>Ideally, auditor locates similar volume freezer online to calculate monthly savings and payback period compared to kill-a-watt meter reading for current freezer. “This example freezer would save $XX in electricity each month and pay for itself within XX months.”</strong></p>
-</section>
-<section id="induction-stoveoven" class="level3">
-<h3 class="anchored" data-anchor-id="induction-stoveoven">Induction Stove/Oven</h3>
-<p><em>Problem</em></p>
-<p>Your gas range has the potential to release propane, carbon monoxide, and combustion gases into your house. Gas ranges are also inefficient at transferring heat to your food at 32% efficiency, compared to 85% efficiency for induction cooktops.</p>
-<p><em>Recommendation</em></p>
-<p>Induction cooking appliances are more efficient and safer than electric or gas ones. There is no risk of carbon monoxide or other harmful combustion gases, and the surface doesn’t heat up without a pot or pan on it.</p>
-<p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>Currently, Efficiency Maine does not offer a rebate for induction stoves. If you’re interested in trying out induction cooking but don’t want to replace your kitchen stove, consider buying a portable induction cooktop, which costs less than $100.</p>
-</section>
-<section id="heat-pump-water-heater" class="level3">
-<h3 class="anchored" data-anchor-id="heat-pump-water-heater">Heat Pump Water Heater</h3>
-<p><em>Problem</em></p>
-<p><strong>Auditor to describe depending on what their current system is</strong></p>
-<p><em>Recommendation</em></p>
-<p>Install a heat pump water heater to provide your hot water for cooking and bathing. This is the most efficient way to heat water and will save hundreds of dollars a year compared to electric resistance, heating oil, or propane hot water. It will also help to dehumidify while it’s running. If your current water heater burns oil or propane, this will also remove a source of combustion gases from your home.</p>
-<p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>A heat pump water heater uses 70% less electricity than a standard electric water heater. Efficiency Maine offers a rebate of up to $950, making the equipment cost as little as $400 plus installation. The rebate can be combined with a nonrefundable federal tax credit of 30% of the remaining cost of the unit and labor, subject to an annual maximum benefit of $2,000 (shared with other energy property, like heat pumps). For more information, you can call Efficiency Maine at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their website: https://www.efficiencymaine.com/at-home/heat-pump-water-heater-program/</p>
+<p><strong>Reconsider this recommendation</strong></p>
 </section>
 <section id="gutters" class="level3">
 <h3 class="anchored" data-anchor-id="gutters">Gutters</h3>
@@ -4640,42 +4566,6 @@ ul.task-list li input[type="checkbox"] {
 <p><em>Estimated Cost/Benefits/Incentives</em></p>
 <p>Adding gutters would mitigate moisture damage and save you from having to replace/fix other parts of the house.</p>
 </section>
-<section id="bathroom-exhaust-fans" class="level3">
-<h3 class="anchored" data-anchor-id="bathroom-exhaust-fans">Bathroom exhaust fan(s)</h3>
-<p><em>Problem</em></p>
-<p>Currently, there is no bathroom exhaust fan, so moisture from the shower, toilet, and sink remains in the house, which can cause moisture issues such as mold.</p>
-<p><em>Recommendation</em></p>
-<p>Bathroom exhaust fans should be rated for at least 80 cubic feet per minute (CFM) if there is a shower. We recommend Panasonic WhisperQuiet or similar fans that don’t create excess noise.</p>
-<p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>The typical fan is around $130 plus the cost of installation.</p>
-</section>
-<section id="kitchen-exhaust-fans" class="level3">
-<h3 class="anchored" data-anchor-id="kitchen-exhaust-fans">Kitchen exhaust fan(s)</h3>
-<p><em>Problem</em></p>
-<p>Currently, there is no kitchen exhaust fan, so fumes, smoke, and moisture from cooking stay in the house which can cause health concerns.</p>
-<p><em>Recommendation</em></p>
-<p>A kitchen exhaust fan will remove harmful combustion gases from your home and should be rated for at least 100 cubic feet per minute (CFM). A fan can also help with moisture concerns.</p>
-<p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>Kitchen range hoods typically cost $150 or more; installation costs depend on the complexity of the exhaust ducting.</p>
-</section>
-<section id="vapor-barrier" class="level3">
-<h3 class="anchored" data-anchor-id="vapor-barrier">Vapor Barrier</h3>
-<p><em>Problem</em></p>
-<p>There is excess moisture in the basement/crawlspace, which is evaporating out of the ground. This moisture can enter the house and cause mold, mildew, rot, and air quality issues.</p>
-<p><em>Recommendation</em></p>
-<p>Install a vapor barrier on the basement floor to stop moisture from entering the basement and house.</p>
-<p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>Efficiency Maine rebates will cover vapor barriers up to 25% of a weatherization project cost, if done as part of a larger insulation project. Most insulation companies can install spray foam and vapor barriers together. Insulation projects in second homes that are heated year round are eligible for an Efficiency Maine rebate of 40% of project cost up to the $4,000 lifetime limit per building. You can call them at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their webpage about insulation rebates: https://www.efficiencymaine.com/at-home/insulation-rebates/</p>
-</section>
-<section id="spray-foam-basement-walls" class="level3">
-<h3 class="anchored" data-anchor-id="spray-foam-basement-walls">Spray foam Basement Walls</h3>
-<p><em>Problem</em></p>
-<p>The basement/crawlspace is uninsulated and used for mechanical equipment and plumbing. The walls are porous and allow moisture into the house and rapidly conduct heat out of the space.</p>
-<p><em>Recommendation</em></p>
-<p>Install spray foam on the basement/crawlspace walls to prevent moisture infiltration and reduce heat loss.</p>
-<p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>Insulation projects in second homes that are heated year round are eligible for an Efficiency Maine rebate of 40% of project cost up to the $4,000 lifetime limit per building. You can call them at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their webpage about insulation rebates: https://www.efficiencymaine.com/at-home/insulation-rebates/</p>
-</section>
 <section id="attic-insulation-and-air-sealing" class="level3">
 <h3 class="anchored" data-anchor-id="attic-insulation-and-air-sealing">Attic Insulation and Air Sealing</h3>
 <p><em>Problem</em></p>
@@ -4683,7 +4573,7 @@ ul.task-list li input[type="checkbox"] {
 <p><em>Recommendation</em></p>
 <p>Air seal the attic and insulate it to at least R-60 (18” of loose-fill cellulose insulation).</p>
 <p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>Insulation projects in second homes that are heated year round are eligible for an Efficiency Maine rebate of 40% of project cost up to the $4,000 lifetime limit per building. You can call them at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their webpage about insulation rebates: https://www.efficiencymaine.com/at-home/insulation-rebates/</p>
+<p>Insulation projects are not eligible for federal or state funding in second homes that are not heated year round.</p>
 </section>
 <section id="blow-in-cellulose-wall-insulation" class="level3">
 <h3 class="anchored" data-anchor-id="blow-in-cellulose-wall-insulation">Blow-in cellulose wall insulation</h3>
@@ -4691,7 +4581,7 @@ ul.task-list li input[type="checkbox"] {
 <p>The walls of the house are uninsulated, which is a significant source of heat loss.</p>
 <p><em>Recommendation</em></p>
 <p>Insulate the wall stud cavities with dense packed, blown-in cellulose insulation. <em>Estimated Cost/Benefits/Incentives</em></p>
-<p>Insulation projects in second homes that are heated year round are eligible for an Efficiency Maine rebate of 40% of project cost up to the $4,000 lifetime limit per building. You can call them at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their webpage about insulation rebates: https://www.efficiencymaine.com/at-home/insulation-rebates/</p>
+<p>Insulation projects are not eligible for federal or state funding in second homes that are not heated year round.</p>
 </section>
 <section id="continuous-exterior-wall-insulation" class="level3">
 <h3 class="anchored" data-anchor-id="continuous-exterior-wall-insulation">Continuous exterior wall insulation</h3>
@@ -4700,7 +4590,7 @@ ul.task-list li input[type="checkbox"] {
 <p><em>Recommendation</em></p>
 <p>Add a continuous layer of insulation and potentially replace the air and moisture barrier once it becomes time to replace the siding.</p>
 <p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>Insulation projects in second homes that are heated year round are eligible for an Efficiency Maine rebate of 40% of project cost up to the $4,000 lifetime limit per building. You can call them at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their webpage about insulation rebates: https://www.efficiencymaine.com/at-home/insulation-rebates/</p>
+<p>Insulation projects are not eligible for federal or state funding in second homes that are not heated year round.</p>
 </section>
 <section id="electrical-panel-upgrade" class="level3">
 <h3 class="anchored" data-anchor-id="electrical-panel-upgrade">Electrical Panel Upgrade</h3>
@@ -4710,42 +4600,6 @@ ul.task-list li input[type="checkbox"] {
 <p>Consult with an electrician about replacing your existing electrical panel with a 200 amp panel as you add electrical appliances to your home.</p>
 <p><em>Estimated Cost/Benefits/Incentives</em></p>
 <p>Costs of electrical components needed to support residential energy upgrades – including panels, sub-panels, branch circuits, and feeders – qualify for a 30% nonrefundable tax credit (up to $600 per item) if they have a capacity of 200 amps or more. An electrical panel upgrades also provides a good opportunity for an electrician to install whole-house surge protection, which costs $100-$400. Here are some options: https://www.popularmechanics.com/home/interior-projects/g43140886/best-whole-house-surge-protectors/</p>
-</section>
-<section id="air-source-heat-pump" class="level3">
-<h3 class="anchored" data-anchor-id="air-source-heat-pump">Air Source Heat Pump</h3>
-<p><em>Problem</em></p>
-<p>Combustion heating equipment is expensive, inefficient, and has the potential to release harmful combustion gases like carbon monoxide into the home.</p>
-<p><em>Recommendation</em></p>
-<p>Install air source heat pumps and whole-house surge protection.</p>
-<p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>Efficiency Maine rebates can fund $1,000 per unit up to a lifetime limit per housing unit for $3,000 (depending on income level) to install heat pumps in second homes. The rebate can be combined with a nonrefundable federal tax credit of 30% of the remaining cost of the unit and labor, subject to an annual maximum benefit of $2,000 (shared with other energy property, like a heat pump water heater). You can call Efficiency Maine at 866-376-2463 (Monday to Friday, 8:00 am to 5:00 pm) or visit their website: https://www.efficiencymaine.com/at-home/residential-heat-pump-incentives/</p>
-</section>
-<section id="electric-vehicle-and-charger" class="level3">
-<h3 class="anchored" data-anchor-id="electric-vehicle-and-charger">Electric Vehicle and charger</h3>
-<p><em>Problem</em></p>
-<p>Transportation, and particularly personal vehicles, are the leading cause of emissions in Maine. When you are planning to purchase a new vehicle, please consider a plug-in hybrid or all-electric vehicle.</p>
-<p><em>Recommendation</em></p>
-<p>An electric vehicle will eliminate your gas costs and reduce fossil fuel dependence. A 2020 study by Consumer Reports found that lifetime ownership costs were significantly lower for EVs, saving between $6,000 - $10,000 over their lifetimes.</p>
-<p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>You can review current state and federal financial incentives for electric vehicles here: https://www.electricforall.org/rebates-incentives/</p>
-</section>
-<section id="solar" class="level3">
-<h3 class="anchored" data-anchor-id="solar">Solar</h3>
-<p><em>Problem</em></p>
-<p><strong>Auditor to describe (or remove this section)</strong></p>
-<p><em>Recommendation</em></p>
-<p>Rooftop solar can supply most or all of your home electrical demands. Contact a solar company for pricing and details specific to your home.</p>
-<p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>There is a 30% nonrefundable federal tax credit if you don’t rent your second home to others. Financing options are available. Battery backup is needed for solar to work during a power outage. Information on the federal tax credit: https://www.energy.gov/sites/default/files/2023-03/Homeowners_Guide_to_the_Federal_Tax_Credit_for_Solar_PV.pdf</p>
-</section>
-<section id="pipe-insulation" class="level3">
-<h3 class="anchored" data-anchor-id="pipe-insulation">Pipe Insulation</h3>
-<p><em>Problem</em></p>
-<p>Uninsulated water pipes are responsible for heat loss and excess moisture (from condensation) in your basement/crawlspace.</p>
-<p><em>Recommendation</em></p>
-<p>Insulate both hot and cold water pipes that are uninsulated in the basement/crawlspace. This will save energy and prevent condensation.</p>
-<p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p>Insulating water pipes can save 2%-4% on hot water bills and increase the temperature of the water while reducing the time it takes for hot water to reach your tap. Materials cost around $100-200, depending on the length of pipe to insulate. Many people find this to be an easy project to do themselves.</p>
 </section>
 <section id="whole-house-surge-protection" class="level3">
 <h3 class="anchored" data-anchor-id="whole-house-surge-protection">Whole House Surge Protection</h3>
@@ -4771,7 +4625,7 @@ ul.task-list li input[type="checkbox"] {
 <p><em>Recommendation</em></p>
 <p>Upgrade your electrical panel to add whole-house surge protection.</p>
 <p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p><strong>Auditor to describe. Secondary residence, heated year-round</strong></p>
+<p><strong>Auditor to describe. Secondary residence, not heated year-round</strong></p>
 </section>
 <section id="other-2" class="level3">
 <h3 class="anchored" data-anchor-id="other-2">Other 2</h3>
@@ -4779,23 +4633,7 @@ ul.task-list li input[type="checkbox"] {
 <p><em>Recommendation</em></p>
 <p>TYPE HERE 2</p>
 <p><em>Estimated Cost/Benefits/Incentives</em></p>
-<p><strong>Auditor to describe. Secondary residence, heated year-round</strong></p>
-</section>
-<section id="ductwork-air-sealing-and-insulation" class="level3">
-<h3 class="anchored" data-anchor-id="ductwork-air-sealing-and-insulation">Ductwork Air Sealing and Insulation</h3>
-<p><em>Problem</em></p>
-<p>The furnace supply ductwork running through the basement would be more efficient if it were air sealed and insulated. The heated air from the furnace loses a lot of heat to the surroundings on its way to the living space.</p>
-<p><em>Recommendation</em></p>
-<p>Air seal and insulate all of the supply and return ductwork running through the basement/crawlspace.<em>Estimated Costs/Benefits/Incentives</em></p>
-<p>Ductwork insulation projects are not eligible for federal or state funding in second homes.</p>
-</section>
-<section id="misc.-air-sealing-and-insulation" class="level3">
-<h3 class="anchored" data-anchor-id="misc.-air-sealing-and-insulation">Misc. Air Sealing and Insulation</h3>
-<p><em>Problem</em></p>
-<p><strong>Need a description for the problem</strong></p>
-<p><em>Recommendation</em></p>
-<p>Air seal and insulate [insert auditor description - bay window, bulkhead door, chase, kneewall, anything else that is unique to the home and not otherwise covered in another recommendation]<em>Estimated Costs/Benefits/Incentives</em></p>
-<p>As part of a larger insulation project in a second home that is heated year round, this work may be eligible for Efficiency Maine rebates and other incentives for insulation work, up to 40% of the overall cost to weatherize your home (subject to a lifetime limit per building).</p>
+<p><strong>Auditor to describe. Secondary residence, not heated year-round</strong></p>
 </section>
 <section id="replace-windows" class="level3">
 <h3 class="anchored" data-anchor-id="replace-windows">Replace Windows</h3>
@@ -4816,11 +4654,117 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="additional-resources" class="level2">
 <h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
-<p>Many home efficiency upgrades are eligible for Efficiency Maine rebates and federal tax credits. Financial incentives vary based on income level and type of occupancy. An overview of all state rebates and federal tax credits can be found here: https://www.efficiencymaine.com/at-home/</p>
-<p>You can search for Efficiency Maine registered contractors here: https://www.efficiencymaine.com/at-home/vendor-locator/</p>
+<p>Many home efficiency upgrades are eligible for Efficiency Maine rebates and federal tax credits. Financial incentives vary based on income level and type of occupancy. An overview of all state rebates and federal tax credits can be found here: https://www.efficiencymaine.com/at-home/.</p>
+<p>You can search for Efficiency Maine registered contractors here: https://www.efficiencymaine.com/at-home/vendor-locator/.</p>
 <p>We recommend discussing a whole-home plan for insulation and air sealing work in the basement, walls, and attic with contractors to determine how to best sequence the work to take full advantage of the Efficiency Maine rebates (which are subject to lifetime maximums) and nonrefundable federal tax credits (which are subject to annual maximums).</p>
-<p>Efficiency Maine also offers home energy loans to help homeowners who are Maine residents pay for energy and related health and safety upgrades. There are no fees and interest rates for multi-year loans are between 5.99% (max $7,500) and 7.99% (max $25,000), depending on income level. Low- and moderate-income homeowners who borrow the full $7,500 and pay it back over 10 years will pay a monthly cost of $83. There is also a 1-year, 0% APR option. To learn more or apply, call 866-376-2463 or visit https://www.efficiencymaine.com/home-energy-loans/</p>
-<p>Our Maine Energy Upgrade Program team is willing and able to help you sort out the details of incentives and recommend contractors who have done quality work. As part of our program, we are coordinating with homeowners and contractors to bundle multiple projects to reduce costs. To qualify for our program, homes must install either a heat pump or heat pump water heater in addition to any other improvements.</p>
+<p>Efficiency Maine also offers home energy loans to help homeowners who are Maine residents pay for energy and related health and safety upgrades. There are no fees, and interest rates for multi-year loans are between 5.99% (max $7,500) and 7.99% (max $25,000), depending on income level. Low- and moderate-income homeowners who borrow the full $7,500 and pay it back over 10 years will pay a monthly cost of $83. There is also a 1-year, 0% APR option. To learn more or apply, call 866-376-2463 or visit https://www.efficiencymaine.com/home-energy-loans/</p>
+</section>
+<section id="section-four-tests" class="level2">
+<h2 class="anchored" data-anchor-id="section-four-tests">Section Four Tests</h2>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for (i in 1:length(ranked_sect_4_problem_text)) {</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   cat(ranked_sect_4_problem_text$Problem)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector filled with random normal values</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>name.vec <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(ranked_sect_4_problem_text<span class="sc">$</span>Problem) </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>name.vec2 <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(ranked_sect_4_problem_text<span class="sc">$</span>Problem)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#u1 &lt;- rnorm(30)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#print("This loop calculates the square of the first 10 elements of vector u1")</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># # Initialize `usq`</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># usq &lt;- ""</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span> <span class="fu">nrow</span>(ranked_sect_4_problem_text)) {</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># i-th element of `u1` squared into `i`-th position of `usq`</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"###"</span>, ranked_sect_4_problem_text<span class="sc">$</span>Recommendations[i] , <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="leds-1" class="level3">
+<h3 class="anchored" data-anchor-id="leds-1">LEDs</h3>
+</section>
+<section id="windowdressers" class="level3">
+<h3 class="anchored" data-anchor-id="windowdressers">WindowDressers</h3>
+</section>
+<section id="gutters-1" class="level3">
+<h3 class="anchored" data-anchor-id="gutters-1">Gutters</h3>
+</section>
+<section id="attic-air-sealing-and-insulation" class="level3">
+<h3 class="anchored" data-anchor-id="attic-air-sealing-and-insulation">Attic Air Sealing and Insulation</h3>
+</section>
+<section id="blown-in-cellulose-wall-insulation" class="level3">
+<h3 class="anchored" data-anchor-id="blown-in-cellulose-wall-insulation">Blown-in Cellulose Wall Insulation</h3>
+</section>
+<section id="continuous-exterior-wall-insulation-1" class="level3">
+<h3 class="anchored" data-anchor-id="continuous-exterior-wall-insulation-1">Continuous Exterior Wall Insulation</h3>
+</section>
+<section id="electrical-panel-upgrade-1" class="level3">
+<h3 class="anchored" data-anchor-id="electrical-panel-upgrade-1">Electrical Panel Upgrade</h3>
+</section>
+<section id="whole-house-surge-protection-1" class="level3">
+<h3 class="anchored" data-anchor-id="whole-house-surge-protection-1">Whole-House Surge Protection</h3>
+</section>
+<section id="diy-air-sealing-1" class="level3">
+<h3 class="anchored" data-anchor-id="diy-air-sealing-1">DIY Air Sealing</h3>
+</section>
+<section id="replace-windows-1" class="level3">
+<h3 class="anchored" data-anchor-id="replace-windows-1">Replace Windows</h3>
+</section>
+<section id="replace-doors-1" class="level3">
+<h3 class="anchored" data-anchor-id="replace-doors-1">Replace Doors</h3>
+</section>
+<section id="other-1-1" class="level3">
+<h3 class="anchored" data-anchor-id="other-1-1">Other 1</h3>
+</section>
+<section id="other-2-1" class="level3">
+<h3 class="anchored" data-anchor-id="other-2-1">Other 2</h3>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if( window_dressers == TRUE){</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   cat(ranked_sect_4_problem_text)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># }else{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   cat("")</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># if(window_dressers == TRUE){</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   cat(auto_window_dressers$Description</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># }else{</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   cat("")</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   }</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># if(window_dressers == TRUE){</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   cat("</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># *Estimated Cost/Benefits/Incentives*</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># ",auto_window_dresserds_estimates$Description)</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># }else{</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#   cat("")</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#   }</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">Name =</span> <span class="fu">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Carol"</span>, <span class="st">"Dave"</span>, <span class="st">"Eve"</span>, <span class="st">"Frank"</span>),</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">Score =</span> <span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">85</span>, <span class="dv">88</span>, <span class="dv">92</span>, <span class="dv">95</span>, <span class="dv">87</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Specific rows to print</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>rows_to_print <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> rows_to_print) {</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Row"</span>, i, <span class="st">": Name ="</span>, df<span class="sc">$</span>Name[i], <span class="st">", Score ="</span>, df<span class="sc">$</span>Score[i], <span class="st">"</span><span class="sc">\n</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="st">      </span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="st">      "</span>)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Row 2 : Name = Bob , Score = 85</p>
+<pre><code>  Row 4 : Name = Dave , Score = 92 
+
+
+  Row 6 : Name = Frank , Score = 87 </code></pre>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cat("###", ranked_sect_4_problem_text$Recommendations[i] , "\n"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#      ,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># "*Problem*", i ,"\n")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
 </section>
 
 </main>
