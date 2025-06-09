@@ -43,7 +43,6 @@ library(kableExtra)
 library(janitor)
 ```
 
-
 ```{r}
 #| label: load googlesheets data
 #| echo: false
@@ -53,7 +52,7 @@ library(janitor)
 #Load Audit Data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[1, ] #to load the correct house subtract 1 from the row number in Google sheet
+energy_test_googlesheets <- all_energy_test_googlesheets[21, ] #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
 
@@ -107,7 +106,6 @@ ranked_sect_4_problem_text <- sect_4_problem_text_googlesheets |>
   select(-Rank)
 
 ```
-
 
 ```{r}
 #| label: Setup basics data
@@ -537,7 +535,6 @@ Report Date: `r format(Sys.time(), '%B %e, %Y')`
 We conducted an energy assessment of your home on `r clean_audit_data$date_of_audit`. This report will tell you what we did, what we found, and what we suggest for your home. These suggestions include information on incentives and financing to make improvements more affordable.
 
 ------------------------------------------------------------------------
-
 
 ![](images/Logos-together.png){fig-align="center"}
 
@@ -3081,5 +3078,3 @@ for (i in rows_to_print) {
 #   
 # "*Problem*", i ,"\n")
 ```
-
-
