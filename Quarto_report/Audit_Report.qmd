@@ -3,7 +3,7 @@ title: "Energy Audit Report"
 format:
   html: default
   pdf: default
-  docx:
+  docx: 
     number-sections: true
     number-depth: 3
     number-offset: 0
@@ -972,7 +972,7 @@ gt_all_attic <- gt(all_attic) |>
     Values ~ px(450),
   )|>
   tab_options(column_labels.hidden = TRUE)|>
-  tab_options(table.font.size = 100)|>
+  tab_options(table.font.size = 12)|>
   tab_style(
     style = list(
       cell_borders(
@@ -1249,7 +1249,7 @@ replace_doors <- clean_audit_data|>
 ```{r}
 #| label: automatic recomendation description text set up 
 #| echo: false
-auto_refriginator <-  recommendations_googlesheets[5, ]
+auto_refrigerator <-  recommendations_googlesheets[5, ]
 
 auto_freezer <- recommendations_googlesheets[6,]
 
@@ -1341,7 +1341,7 @@ auto_LED_s_estimates  <- estimated_recommedations_googlesheets|>
 auto_window_dresserds_estimates <- estimated_recommedations_googlesheets|>
   slice(10:12)
 
-auto_refriginator_estimates <- estimated_recommedations_googlesheets|>
+auto_refrigerator_estimates <- estimated_recommedations_googlesheets|>
   slice(13:15)
 
 auto_freezer_estimates <- estimated_recommedations_googlesheets|>
@@ -1452,12 +1452,12 @@ auto_window_dresserds_estimates <- if (primery_residence == TRUE) {
   mutate(auto_window_dresserds_estimates, Description = paste0(auto_window_dresserds_estimates[3,4]))
 }
 
-auto_refriginator_estimates <- if (primery_residence == TRUE) {
-  mutate(auto_refriginator_estimates, Description = paste0(auto_refriginator_estimates[1,4]))
+auto_refrigerator_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_refrigerator_estimates, Description = paste0(auto_refrigerator_estimates[1,4]))
 } else if (secondary_residence_heated == TRUE) {
-  mutate(auto_refriginator_estimates, Description = paste0(auto_refriginator_estimates[2,4]))
+  mutate(auto_refrigerator_estimates, Description = paste0(auto_refrigerator_estimates[2,4]))
 } else {
-  mutate(auto_refriginator_estimates, Description = paste0(auto_refriginator_estimates[3,4]))
+  mutate(auto_refrigerator_estimates, Description = paste0(auto_refrigerator_estimates[3,4]))
 }
 
 auto_freezer_estimates <- if (primery_residence == TRUE) {
@@ -1676,7 +1676,7 @@ auto_window_dresserds_estimates <- auto_window_dresserds_estimates |>
   head(1)|>
   select(Description)
 
-auto_refriginator_estimates <- auto_refriginator_estimates |>
+auto_refrigerator_estimates <- auto_refrigerator_estimates |>
   head(1)|>
   select(Description)
 
@@ -1964,7 +1964,7 @@ Your refrigerator uses more energy than newer models.
 }
 
 if(refrigerator == TRUE){
-  cat(auto_refriginator$Description
+  cat(auto_refrigerator$Description
     
   )
 }else{
@@ -1976,7 +1976,7 @@ if(refrigerator == TRUE){
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_refriginator_estimates$Description)
+", auto_refrigerator_estimates$Description)
 }else{
   cat("")
 }
@@ -2994,7 +2994,7 @@ if(maine_residency == TRUE){
 
 location <- clean_audit_data |>
   select(home_address)|>
-  mutate(location = case_when(str_detect(home_address, "04625|04646") ~ 1, str_detect(home_address, "04631|04667") ~ 2, ))|>
+  mutate(location = case_when(str_detect(home_address, "04625|04646|04609") ~ 1, str_detect(home_address, "04631|04667") ~ 2, ))|>
   select(-home_address)
 
 location_cranberry <- additional_resources_googlesheets[4,2]
@@ -3014,7 +3014,7 @@ if (location == 1) {
 
 ```{r}
 #| label: Section 4 test
-#| echo: true
+#| echo: false
 #| results: asis
 
 # for (i in 1:length(ranked_sect_4_problem_text)) {
@@ -3061,16 +3061,16 @@ for (i in 1: nrow(ranked_sect_4_problem_text)) {
 #   cat("")
 #   }
 
-df <- data.frame(
-  Name = c("Alice", "Bob", "Carol", "Dave", "Eve", "Frank"),
-  Score = c(90, 85, 88, 92, 95, 87)
-)
+#df <- data.frame(
+ # Name = c("Alice", "Bob", "Carol", "Dave", "Eve", "Frank"),
+  #Score = c(90, 85, 88, 92, 95, 87)
+#)
 
 # Specific rows to print
-rows_to_print <- c(2, 4, 6)
+#rows_to_print <- c(2, 4, 6)
 
-for (i in rows_to_print) {
-  cat("Row", i, ": Name =", df$Name[i], ", Score =", df$Score[i], "\n
+#for (i in rows_to_print) {
+ # cat("Row", i, ": Name =", df$Name[i], ", Score =", df$Score[i], "\n
       
       ")
 }
