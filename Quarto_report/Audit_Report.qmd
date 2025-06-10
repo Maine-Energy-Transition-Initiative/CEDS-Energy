@@ -2990,6 +2990,7 @@ if(maine_residency == TRUE){
 #| label: Location Cranberry Eastport or None
 #| echo: false
 #| results: asis
+#| eval: false
 
 location <- clean_audit_data |>
   select(home_address)|>
