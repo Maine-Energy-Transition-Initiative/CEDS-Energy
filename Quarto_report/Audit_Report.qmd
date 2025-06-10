@@ -1672,7 +1672,7 @@ auto_LED_s_estimates <- auto_LED_s_estimates |>
   head(1)|>
   select(Description)
 
-auto_window_dresserds_estimates <- auto_window_dresserds_estimates |>
+auto_window_dressers_estimates <- auto_window_dressers_estimates |>
   head(1)|>
   select(Description)
 
@@ -1934,7 +1934,7 @@ if(window_dressers == TRUE){
   cat("
 *Estimated Cost/Benefits/Incentives*
 
-",auto_window_dresserds_estimates$Description)
+",auto_window_dressers_estimates$Description)
 }else{
   cat("")
   }
@@ -3056,7 +3056,7 @@ for (i in 1: nrow(ranked_sect_4_problem_text)) {
 #   cat("
 # *Estimated Cost/Benefits/Incentives*
 # 
-# ",auto_window_dresserds_estimates$Description)
+# ",auto_window_dressers_estimates$Description)
 # }else{
 #   cat("")
 #   }
