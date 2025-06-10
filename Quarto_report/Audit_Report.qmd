@@ -1249,65 +1249,65 @@ replace_doors <- clean_audit_data|>
 ```{r}
 #| label: automatic recomendation description text set up 
 #| echo: false
-auto_refrigerator <-  recommendations_googlesheets[5, ]
+auto_refrigerator <-  sect_4_rec_text_googlesheets[5, ]
 
-auto_freezer <- recommendations_googlesheets[6,]
+auto_freezer <- sect_4_rec_text_googlesheets[6,]
 
-auto_induction_stove <- recommendations_googlesheets[7, ]
+auto_induction_stove <- sect_4_rec_text_googlesheets[7, ]
 
-auto_vapor_barrier <- recommendations_googlesheets[12, ]
+auto_vapor_barrier <- sect_4_rec_text_googlesheets[12, ]
 
-auto_spray_foam <- recommendations_googlesheets[13, ]
+auto_spray_foam <- sect_4_rec_text_googlesheets[13, ]
 
-auto_attic_insulation <- recommendations_googlesheets[14, ]
+auto_attic_insulation <- sect_4_rec_text_googlesheets[14, ]
 
-auto_blow_in_cellulose <- recommendations_googlesheets[15, ]
+auto_blow_in_cellulose <- sect_4_rec_text_googlesheets[15, ]
 
-auto_continuous_exterior_insulation <- recommendations_googlesheets[16, ]
+auto_continuous_exterior_insulation <- sect_4_rec_text_googlesheets[16, ]
 
-auto_electrical_panel_upgrade <- recommendations_googlesheets[17, ]
+auto_electrical_panel_upgrade <- sect_4_rec_text_googlesheets[17, ]
 
-auto_air_source_heat_pump <- recommendations_googlesheets[18, ]
+auto_air_source_heat_pump <- sect_4_rec_text_googlesheets[18, ]
 
-auto_ev_and_charger <- recommendations_googlesheets[19, ]
+auto_ev_and_charger <- sect_4_rec_text_googlesheets[19, ]
 
-auto_other_1 <- recommendations_googlesheets[21, ]
+auto_other_1 <- sect_4_rec_text_googlesheets[21, ]
 
-auto_leds <- recommendations_googlesheets[3, ]
+auto_leds <- sect_4_rec_text_googlesheets[3, ]
 
-auto_shower_heads <- recommendations_googlesheets[2, ]
+auto_shower_heads <- sect_4_rec_text_googlesheets[2, ]
 
-auto_furnace_boiler_tune_up <- recommendations_googlesheets[1, ]
+auto_furnace_boiler_tune_up <- sect_4_rec_text_googlesheets[1, ]
 
-auto_window_dressers <- recommendations_googlesheets[4, ]
+auto_window_dressers <- sect_4_rec_text_googlesheets[4, ]
 
-auto_heat_pump_water_heater <- recommendations_googlesheets[8, ]
+auto_heat_pump_water_heater <- sect_4_rec_text_googlesheets[8, ]
 
-auto_gutters <- recommendations_googlesheets[9, ]
+auto_gutters <- sect_4_rec_text_googlesheets[9, ]
 
-auto_bathroom_fan <- recommendations_googlesheets[10, ]
+auto_bathroom_fan <- sect_4_rec_text_googlesheets[10, ]
 
-auto_kitchen_fan <- recommendations_googlesheets[11, ]
+auto_kitchen_fan <- sect_4_rec_text_googlesheets[11, ]
 
-auto_solar <- recommendations_googlesheets[20, ]
+auto_solar <- sect_4_rec_text_googlesheets[20, ]
 
-auto_pipe_insulation <- recommendations_googlesheets[22, ]
+auto_pipe_insulation <- sect_4_rec_text_googlesheets[22, ]
 
-auto_whole_house_surge_protection <- recommendations_googlesheets[23, ]
+auto_whole_house_surge_protection <- sect_4_rec_text_googlesheets[23, ]
 
-auto_diy_air_sealing <- recommendations_googlesheets[24, ]
+auto_diy_air_sealing <- sect_4_rec_text_googlesheets[24, ]
 
-auto_duct_air_sealing <- recommendations_googlesheets[27,]
+auto_duct_air_sealing <- sect_4_rec_text_googlesheets[27,]
 
-auto_other_2 <- recommendations_googlesheets[25, ]
+auto_other_2 <- sect_4_rec_text_googlesheets[25, ]
 
-auto_other_3 <- recommendations_googlesheets[26, ]
+auto_other_3 <- sect_4_rec_text_googlesheets[26, ]
 
-auto_misc_air_sealing_insulation <- recommendations_googlesheets[28, ]
+auto_misc_air_sealing_insulation <- sect_4_rec_text_googlesheets[28, ]
 
-auto_replace_windows <- recommendations_googlesheets[29, ]
+auto_replace_windows <- sect_4_rec_text_googlesheets[29, ]
 
-auto_replace_doors <- recommendations_googlesheets[30, ]
+auto_replace_doors <- sect_4_rec_text_googlesheets[30, ]
 ```
 
 ```{r}
