@@ -1338,7 +1338,7 @@ auto_shower_heads_estimates <-estimated_recommedations_googlesheets|>
 auto_LED_s_estimates  <- estimated_recommedations_googlesheets|>
   slice(7:9)
 
-auto_window_dresserds_estimates <- estimated_recommedations_googlesheets|>
+auto_window_dressers_estimates <- estimated_recommedations_googlesheets|>
   slice(10:12)
 
 auto_refrigerator_estimates <- estimated_recommedations_googlesheets|>
@@ -1444,12 +1444,12 @@ auto_LED_s_estimates <- if (primery_residence == TRUE) {
   mutate(auto_LED_s_estimates, Description = paste0(auto_LED_s_estimates[3,4]))
 }
 
-auto_window_dresserds_estimates <- if (primery_residence == TRUE) {
-  mutate(auto_window_dresserds_estimates, Description = paste0(auto_window_dresserds_estimates[1,4]))
+auto_window_dressers_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_window_dressers_estimates, Description = paste0(auto_window_dressers_estimates[1,4]))
 } else if (secondary_residence_heated == TRUE) {
-  mutate(auto_window_dresserds_estimates, Description = paste0(auto_window_dresserds_estimates[2,4]))
+  mutate(auto_window_dressers_estimates, Description = paste0(auto_window_dressers_estimates[2,4]))
 } else {
-  mutate(auto_window_dresserds_estimates, Description = paste0(auto_window_dresserds_estimates[3,4]))
+  mutate(auto_window_dressers_estimates, Description = paste0(auto_window_dressers_estimates[3,4]))
 }
 
 auto_refrigerator_estimates <- if (primery_residence == TRUE) {
