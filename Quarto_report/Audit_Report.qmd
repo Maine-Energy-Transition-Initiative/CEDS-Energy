@@ -3,7 +3,7 @@ title: "Energy Audit Report"
 format:
   html: default
   pdf: default
-  docx:
+  docx: 
     number-sections: true
     number-depth: 3
     number-offset: 0
@@ -972,7 +972,7 @@ gt_all_attic <- gt(all_attic) |>
     Values ~ px(450),
   )|>
   tab_options(column_labels.hidden = TRUE)|>
-  tab_options(table.font.size = 100)|>
+  tab_options(table.font.size = 12)|>
   tab_style(
     style = list(
       cell_borders(
@@ -1249,65 +1249,65 @@ replace_doors <- clean_audit_data|>
 ```{r}
 #| label: automatic recomendation description text set up 
 #| echo: false
-auto_refriginator <-  recommendations_googlesheets[5, ]
+auto_refrigerator <-  sect_4_rec_text_googlesheets[5, ]
 
-auto_freezer <- recommendations_googlesheets[6,]
+auto_freezer <- sect_4_rec_text_googlesheets[6,]
 
-auto_induction_stove <- recommendations_googlesheets[7, ]
+auto_induction_stove <- sect_4_rec_text_googlesheets[7, ]
 
-auto_vapor_barrier <- recommendations_googlesheets[12, ]
+auto_vapor_barrier <- sect_4_rec_text_googlesheets[12, ]
 
-auto_spray_foam <- recommendations_googlesheets[13, ]
+auto_spray_foam <- sect_4_rec_text_googlesheets[13, ]
 
-auto_attic_insulation <- recommendations_googlesheets[14, ]
+auto_attic_insulation <- sect_4_rec_text_googlesheets[14, ]
 
-auto_blow_in_cellulose <- recommendations_googlesheets[15, ]
+auto_blow_in_cellulose <- sect_4_rec_text_googlesheets[15, ]
 
-auto_continuous_exterior_insulation <- recommendations_googlesheets[16, ]
+auto_continuous_exterior_insulation <- sect_4_rec_text_googlesheets[16, ]
 
-auto_electrical_panel_upgrade <- recommendations_googlesheets[17, ]
+auto_electrical_panel_upgrade <- sect_4_rec_text_googlesheets[17, ]
 
-auto_air_source_heat_pump <- recommendations_googlesheets[18, ]
+auto_air_source_heat_pump <- sect_4_rec_text_googlesheets[18, ]
 
-auto_ev_and_charger <- recommendations_googlesheets[19, ]
+auto_ev_and_charger <- sect_4_rec_text_googlesheets[19, ]
 
-auto_other_1 <- recommendations_googlesheets[21, ]
+auto_other_1 <- sect_4_rec_text_googlesheets[21, ]
 
-auto_leds <- recommendations_googlesheets[3, ]
+auto_leds <- sect_4_rec_text_googlesheets[3, ]
 
-auto_shower_heads <- recommendations_googlesheets[2, ]
+auto_shower_heads <- sect_4_rec_text_googlesheets[2, ]
 
-auto_furnace_boiler_tune_up <- recommendations_googlesheets[1, ]
+auto_furnace_boiler_tune_up <- sect_4_rec_text_googlesheets[1, ]
 
-auto_window_dressers <- recommendations_googlesheets[4, ]
+auto_window_dressers <- sect_4_rec_text_googlesheets[4, ]
 
-auto_heat_pump_water_heater <- recommendations_googlesheets[8, ]
+auto_heat_pump_water_heater <- sect_4_rec_text_googlesheets[8, ]
 
-auto_gutters <- recommendations_googlesheets[9, ]
+auto_gutters <- sect_4_rec_text_googlesheets[9, ]
 
-auto_bathroom_fan <- recommendations_googlesheets[10, ]
+auto_bathroom_fan <- sect_4_rec_text_googlesheets[10, ]
 
-auto_kitchen_fan <- recommendations_googlesheets[11, ]
+auto_kitchen_fan <- sect_4_rec_text_googlesheets[11, ]
 
-auto_solar <- recommendations_googlesheets[20, ]
+auto_solar <- sect_4_rec_text_googlesheets[20, ]
 
-auto_pipe_insulation <- recommendations_googlesheets[22, ]
+auto_pipe_insulation <- sect_4_rec_text_googlesheets[22, ]
 
-auto_whole_house_surge_protection <- recommendations_googlesheets[23, ]
+auto_whole_house_surge_protection <- sect_4_rec_text_googlesheets[23, ]
 
-auto_diy_air_sealing <- recommendations_googlesheets[24, ]
+auto_diy_air_sealing <- sect_4_rec_text_googlesheets[24, ]
 
-auto_duct_air_sealing <- recommendations_googlesheets[27,]
+auto_duct_air_sealing <- sect_4_rec_text_googlesheets[27,]
 
-auto_other_2 <- recommendations_googlesheets[25, ]
+auto_other_2 <- sect_4_rec_text_googlesheets[25, ]
 
-auto_other_3 <- recommendations_googlesheets[26, ]
+auto_other_3 <- sect_4_rec_text_googlesheets[26, ]
 
-auto_misc_air_sealing_insulation <- recommendations_googlesheets[28, ]
+auto_misc_air_sealing_insulation <- sect_4_rec_text_googlesheets[28, ]
 
-auto_replace_windows <- recommendations_googlesheets[29, ]
+auto_replace_windows <- sect_4_rec_text_googlesheets[29, ]
 
-auto_replace_doors <- recommendations_googlesheets[30, ]
+auto_replace_doors <- sect_4_rec_text_googlesheets[30, ]
 ```
 
 ```{r}
@@ -1338,10 +1338,10 @@ auto_shower_heads_estimates <-estimated_recommedations_googlesheets|>
 auto_LED_s_estimates  <- estimated_recommedations_googlesheets|>
   slice(7:9)
 
-auto_window_dresserds_estimates <- estimated_recommedations_googlesheets|>
+auto_window_dressers_estimates <- estimated_recommedations_googlesheets|>
   slice(10:12)
 
-auto_refriginator_estimates <- estimated_recommedations_googlesheets|>
+auto_refrigerator_estimates <- estimated_recommedations_googlesheets|>
   slice(13:15)
 
 auto_freezer_estimates <- estimated_recommedations_googlesheets|>
@@ -1444,20 +1444,20 @@ auto_LED_s_estimates <- if (primery_residence == TRUE) {
   mutate(auto_LED_s_estimates, Description = paste0(auto_LED_s_estimates[3,4]))
 }
 
-auto_window_dresserds_estimates <- if (primery_residence == TRUE) {
-  mutate(auto_window_dresserds_estimates, Description = paste0(auto_window_dresserds_estimates[1,4]))
+auto_window_dressers_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_window_dressers_estimates, Description = paste0(auto_window_dressers_estimates[1,4]))
 } else if (secondary_residence_heated == TRUE) {
-  mutate(auto_window_dresserds_estimates, Description = paste0(auto_window_dresserds_estimates[2,4]))
+  mutate(auto_window_dressers_estimates, Description = paste0(auto_window_dressers_estimates[2,4]))
 } else {
-  mutate(auto_window_dresserds_estimates, Description = paste0(auto_window_dresserds_estimates[3,4]))
+  mutate(auto_window_dressers_estimates, Description = paste0(auto_window_dressers_estimates[3,4]))
 }
 
-auto_refriginator_estimates <- if (primery_residence == TRUE) {
-  mutate(auto_refriginator_estimates, Description = paste0(auto_refriginator_estimates[1,4]))
+auto_refrigerator_estimates <- if (primery_residence == TRUE) {
+  mutate(auto_refrigerator_estimates, Description = paste0(auto_refrigerator_estimates[1,4]))
 } else if (secondary_residence_heated == TRUE) {
-  mutate(auto_refriginator_estimates, Description = paste0(auto_refriginator_estimates[2,4]))
+  mutate(auto_refrigerator_estimates, Description = paste0(auto_refrigerator_estimates[2,4]))
 } else {
-  mutate(auto_refriginator_estimates, Description = paste0(auto_refriginator_estimates[3,4]))
+  mutate(auto_refrigerator_estimates, Description = paste0(auto_refrigerator_estimates[3,4]))
 }
 
 auto_freezer_estimates <- if (primery_residence == TRUE) {
@@ -1672,11 +1672,11 @@ auto_LED_s_estimates <- auto_LED_s_estimates |>
   head(1)|>
   select(Description)
 
-auto_window_dresserds_estimates <- auto_window_dresserds_estimates |>
+auto_window_dressers_estimates <- auto_window_dressers_estimates |>
   head(1)|>
   select(Description)
 
-auto_refriginator_estimates <- auto_refriginator_estimates |>
+auto_refrigerator_estimates <- auto_refrigerator_estimates |>
   head(1)|>
   select(Description)
 
@@ -1934,7 +1934,7 @@ if(window_dressers == TRUE){
   cat("
 *Estimated Cost/Benefits/Incentives*
 
-",auto_window_dresserds_estimates$Description)
+",auto_window_dressers_estimates$Description)
 }else{
   cat("")
   }
@@ -1964,7 +1964,7 @@ Your refrigerator uses more energy than newer models.
 }
 
 if(refrigerator == TRUE){
-  cat(auto_refriginator$Description
+  cat(auto_refrigerator$Description
     
   )
 }else{
@@ -1976,7 +1976,7 @@ if(refrigerator == TRUE){
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_refriginator_estimates$Description)
+", auto_refrigerator_estimates$Description)
 }else{
   cat("")
 }
@@ -2994,7 +2994,7 @@ if(maine_residency == TRUE){
 
 location <- clean_audit_data |>
   select(home_address)|>
-  mutate(location = case_when(str_detect(home_address, "04625|04646") ~ 1, str_detect(home_address, "04631|04667") ~ 2, ))|>
+  mutate(location = case_when(str_detect(home_address, "04625|04646|04609") ~ 1, str_detect(home_address, "04631|04667") ~ 2, ))|>
   select(-home_address)
 
 location_cranberry <- additional_resources_googlesheets[4,2]
@@ -3014,7 +3014,7 @@ if (location == 1) {
 
 ```{r}
 #| label: Section 4 test
-#| echo: true
+#| echo: false
 #| results: asis
 
 # for (i in 1:length(ranked_sect_4_problem_text)) {
@@ -3056,21 +3056,21 @@ for (i in 1: nrow(ranked_sect_4_problem_text)) {
 #   cat("
 # *Estimated Cost/Benefits/Incentives*
 # 
-# ",auto_window_dresserds_estimates$Description)
+# ",auto_window_dressers_estimates$Description)
 # }else{
 #   cat("")
 #   }
 
-df <- data.frame(
-  Name = c("Alice", "Bob", "Carol", "Dave", "Eve", "Frank"),
-  Score = c(90, 85, 88, 92, 95, 87)
-)
+#df <- data.frame(
+ # Name = c("Alice", "Bob", "Carol", "Dave", "Eve", "Frank"),
+  #Score = c(90, 85, 88, 92, 95, 87)
+#)
 
 # Specific rows to print
-rows_to_print <- c(2, 4, 6)
+#rows_to_print <- c(2, 4, 6)
 
-for (i in rows_to_print) {
-  cat("Row", i, ": Name =", df$Name[i], ", Score =", df$Score[i], "\n
+#for (i in rows_to_print) {
+ # cat("Row", i, ": Name =", df$Name[i], ", Score =", df$Score[i], "\n
       
       ")
 }
