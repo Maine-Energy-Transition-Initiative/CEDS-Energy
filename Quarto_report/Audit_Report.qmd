@@ -53,7 +53,7 @@ library(janitor)
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
 
-energy_test_googlesheets <- all_energy_test_googlesheets[16, ] #to load the correct house subtract 1 from the row number in Google sheet
+energy_test_googlesheets <- all_energy_test_googlesheets[14, ] #to load the correct house subtract 1 from the row number in Google sheet
 
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
