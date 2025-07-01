@@ -52,9 +52,7 @@ library(janitor)
 #Load Audit Data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-
 energy_test_googlesheets <- all_energy_test_googlesheets[18, ] #to load the correct house subtract 1 from the row number in Google sheet
-
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
 
@@ -2781,9 +2779,9 @@ if(other_2 == TRUE){
 ```
 
 ```{r}
- #| label: other 3 recommendation
- #| echo: false
- #| results: asis
+#| label: other 3 recommendation
+#| echo: false
+#| results: asis
 
 
 if( other_3 == TRUE){
@@ -3018,6 +3016,7 @@ if (location == 1) {
 ```{r}
 #| label: Section 4 test
 #| echo: false
+#| eval: false
 #| results: asis
 
 # for (i in 1:length(ranked_sect_4_problem_text)) {
