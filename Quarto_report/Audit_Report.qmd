@@ -487,7 +487,7 @@ all_basement <- clean_audit_data|>
   
   #rename the columns as they need to be displayed
   mutate(Info = recode(Info,  area_of_basement_crawlspace_ground_square_feet = 'Area (sq ft):', insulation_of_appliances_in_basement_crawlspace = 'Insulation of appliances:', 	
-basement_crawlspace_insulation_type = 'Inuslation type:'))|>
+basement_crawlspace_insulation_type = 'Insulation type:'))|>
   
   #arrange the rows in correct order
   arrange(factor(Info, levels = c('Area (sq ft):','Inuslation type:', 'Insulation condition:')))
@@ -958,7 +958,8 @@ ggsave("achnatural_ggplot1.png", width=15, height=5)
 ![](achnatural_ggplot1.png)
 
 Using a thermal imaging camera, we looked for major air leakage locations and thermal bridging. Thermal bridging occurs when heat enters or leaves a house through material that lets heat through more easily than the house’s insulation. This often occurs with wall studs and ceiling joists.
-We conducted the audit in the summer, when the air outside the house is hotter than inside the house. Therefore, the warmer (red, orange and yellow) areas in the thermal pictures below show where air leakage is taking place as these are the areas where hot air from the outside is being pulled into the cooler house.
+
+We conducted the audit in the summer, when the air outside the house is hotter than inside the house. Therefore, the warmer (red, orange, and yellow) areas in the thermal pictures below show where air leakage is taking place, as these are the areas where hot air from the outside is being pulled into the cooler house.
 
 ### Attic
 
