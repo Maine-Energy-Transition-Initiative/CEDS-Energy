@@ -54,7 +54,7 @@ library(tidyr)
 #Load Audit Data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[33, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[32, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -469,15 +469,25 @@ attic_double <- energy_test_googlesheets|>
     values_to = "Values")
 
 attic_character <- energy_test_googlesheets|>
-  select(`Attic Area`, `Does attic have air sealing?`, `Comment about air sealing`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Is there ductwork in the attic?`, `Comment about condition of the ductwork in the attic`,`Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Attic insulation type`, `Thickness of the attic insulation (inches), at the thinnest location`)|>
+  select(`Attic Area`, `Does attic have air sealing?`, `Comment about air sealing`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Is there ductwork in the attic?`, `Comment about condition of the ductwork in the attic`,`Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Attic insulation type`, `Thickness of the attic insulation (inches), at the thinnest location`, `Attic hatch insulation type`, `Thickness of the attic hatch insulation (inches), at the thinnest location`, `Quality of attic hatch insulation's installation? Assess worst part of installation.`, `Are there any interior features?`, `Quality of attic insulation's installation? Assess worst part of installation.`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Pitch of primary roof face (degrees)`, `Are bathroom and kitchen exhaust fans being vented to outside?`)|>
   
   mutate(`Area:` = paste0(`Attic Area`, " ft²")) |>
   
   mutate(`Insulation Type:` = paste0("The attic is insulated with ", `Attic insulation type`, " insulation. The insulation is ", `Thickness of the attic insulation (inches), at the thinnest location`, " inches thick.")) |>
   
-  mutate(`Air sealing:` = paste0("The attic is ",`Does attic have air sealing?`,". ",`Comment about air sealing`))|>
+  mutate(`Insulation Condition:` = paste0("The insulation is in ", `Quality of attic insulation's installation? Assess worst part of installation.`, " condition. ", `Any additional comments on attic insulation, e.g., is the entire attic insulated?`)) |>
   
-  mutate(`Other observations:` = paste(`Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`))|>
+  mutate(`Pitch of Primary Roof Face:` = paste0("The pitch of the primary roof face is ", `Pitch of primary roof face (degrees)`, " degrees.")) |>
+  
+  mutate(`Exhaust Ducts:` = paste0("Exhaust ducts from bathroom and kitchen fans are ", `Are bathroom and kitchen exhaust fans being vented to outside?`, " . Venting exhaust fans to outside is important so that they do not add potentially harmful moisture into the attic space and so they can function properly.")) |>
+  
+  mutate(`R-Value:` = paste0("The thickness and condition of the insulation give the insulation an R-value of R-DECIDE per inch. This gives the attic a total R-value of R-CALCULATE. For comparison, current Maine building code requires an attic R-value of R-60, and we typically recommend at least R-80 in attics to keep the house warm in the winter and cool in the summer.")) |>
+  
+  mutate(`Air Sealing:` = paste0("The attic is ",`Does attic have air sealing?`,". ",`Comment about air sealing`))|>
+  
+  mutate(`Attic Hatch:` = paste0("The attic hatch is insulated with ", `Attic hatch insulation type`, " insulation that is ", `Thickness of the attic hatch insulation (inches), at the thinnest location`, " inches thick. The insulation is in ", `Quality of attic hatch insulation's installation? Assess worst part of installation.`, " condition and the hatch is **air sealed / not air sealed**.")) |>
+  
+  mutate(`Other observations:` = paste(`Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Are there any interior features?`))|>
   
   mutate(`Ventilation:` = paste0("The attic is ventilated by ", `Attic ventilation type?`, ". Attic ventilation is important to keep the attic space and insulation dry and in good condition."))|>
   
@@ -490,34 +500,23 @@ attic_character <- attic_character|>
   names_to = "Info",
    values_to = "Values")
 
-# New rows to add
-new_rows <- tibble(
-  Info = c("R-value", "Attic Hatch", "Exhaust Ducts"),
-  Values = NA_character_
-)
-
 # Combine, relabel, and reorder
-all_attic <- bind_rows(attic_double, attic_character, new_rows) |>
-  mutate(
-    Info = recode(
-      Info,
-      "Quality of attic insulation's installation? Assess worst part of installation." = "Insulation condition:"
-    )
-  ) |>
+all_attic <- bind_rows(attic_double, attic_character) |>
   mutate(
     Info = factor(
       Info,
       levels = c(
         "Area:",
+        "Pitch of Primary Roof Face:",
         "Insulation Type:",
-        "Insulation condition:",
-        "R-value",
-        "Attic Hatch",
-        "Air sealing:",
+        "Insulation Condition:",
+        "R-Value:",
+        "Air Sealing:",
+        "Attic Hatch:",
         "Ventilation:",
-        "Exhaust Ducts",
+        "Exhaust Ducts:",
         "Ducts:",
-        "Other observations:"
+        "Other Observations:"
       )
     )
   ) |>
