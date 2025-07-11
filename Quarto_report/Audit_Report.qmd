@@ -341,7 +341,7 @@ mutate(stock_framing = case_when( framing_type == "Balloon" ~ 'The house has bal
 
   
   #join information into one column for kitchen in 3.3
-  mutate('Kitchen:'= paste0(which_appliance_did_you_measure_1, " used ", k_wh_reading_1, " kWh in ", time_passed_since_installation_of_kilowatt_meter_1, " minutes. ", which_appliance_did_you_measure_2, " used ", k_wh_reading_2, " kWh in ", time_passed_since_installation_of_kilowatt_meter_2, " minutes. ", general_comment_about_the_kitchen ))|>
+  mutate('Kitchen:'= paste0('During the audit we measured the electricity consumption of the ',which_appliance_did_you_measure_1, ". It used ", k_wh_reading_1, " kWh in ", time_passed_since_installation_of_kilowatt_meter_1, " hours. We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. The ", which_appliance_did_you_measure_2, " used ", k_wh_reading_2, " kWh in ", time_passed_since_installation_of_kilowatt_meter_2, " hours.  We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. ", general_comment_about_the_kitchen ))|>
   
   #delete unwanted columns, the once that were used to create joined columns
   select(-c(1:9, 12:19))|>
