@@ -336,7 +336,7 @@ all_interior <- clean_audit_data|>
 mutate(stock_framing = case_when( framing_type == "Balloon" ~ 'The house has balloon framing, which means the wall cavities extend the full height of the building (from the foundation to the roof). These wall cavities are often interconnected with the floor and ceiling cavities. This framing type can create connected passageways for air to leave the house and rodents to enter the house. ', framing_type == "Platform" ~ 'The house has platform framing, which means that wall cavities do not extend the full height of the building, but are instead separated by floors. ', TRUE ~ 'NA'))|>
 
  #join information into one column for stud insulation in 3.3
-  mutate('Walls:'= paste0( stock_framing, "There is ", wall_stud_insulation_type, " insulation ", thickness_of_the_wall_stud_insulation, " inches thick in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, " condition. ", any_additional_comments_on_wall_stud_insulation))|>
+  mutate('Walls:'= paste0( stock_framing, "The exterior walls are insulated with ", wall_stud_insulation_type, " insulation. This insulation is ", thickness_of_the_wall_stud_insulation, " inches thick and in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, " condition. ", "This gives the exterior walls an R-value of around CALCULATE. A material’s R-value tells us how good it is at stopping heat flow, the bigger the number, the better. For comparison, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. ", any_additional_comments_on_wall_stud_insulation))|>
    
 
   
