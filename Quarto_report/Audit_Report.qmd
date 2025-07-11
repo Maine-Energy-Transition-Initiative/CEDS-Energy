@@ -469,11 +469,19 @@ attic_double <- energy_test_googlesheets|>
     values_to = "Values")
 
 attic_character <- energy_test_googlesheets|>
-  select(`Does attic have air sealing?`, `Comment about air sealing`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Is there ductwork in the attic?`, `Comment about condition of the ductwork in the attic`,`Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Attic insulation type`)|>
-  mutate(`Air sealing:` = paste0("There is ",`Does attic have air sealing?`,"air sealing. ",`Comment about air sealing`))|>
+  select(`Attic Area`, `Does attic have air sealing?`, `Comment about air sealing`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Is there ductwork in the attic?`, `Comment about condition of the ductwork in the attic`,`Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Attic insulation type`, `Thickness of the attic insulation (inches), at the thinnest location`)|>
+  
+  mutate(`Area:` = paste0(`Attic Area`, " ft²")) |>
+  
+  mutate(`Insulation Type:` = paste0("The attic is insulated with ", `Attic insulation type`, " insulation. The insulation is ", `Thickness of the attic insulation (inches), at the thinnest location`, " inches thick.")) |>
+  
+  mutate(`Air sealing:` = paste0("The attic is ",`Does attic have air sealing?`,". ",`Comment about air sealing`))|>
+  
   mutate(`Other observations:` = paste(`Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`))|>
-  mutate(`Ventilation:` = `Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`)|>
-  mutate(`Ducts:` = `Is there ductwork in the attic?`, `Comment about condition of the ductwork in the attic`)
+  
+  mutate(`Ventilation:` = paste0("The attic is ventilated by ", `Attic ventilation type?`, ". Attic ventilation is important to keep the attic space and insulation dry and in good condition."))|>
+  
+  mutate(`Ducts:` = paste0(`Is there ductwork in the attic?`, ". ", `Comment about condition of the ductwork in the attic`))
 
 attic_character <- attic_character[, -c(1:9)]
   
@@ -482,10 +490,40 @@ attic_character <- attic_character|>
   names_to = "Info",
    values_to = "Values")
 
-all_attic <- attic_double|>
-  rbind(attic_character)|>
-  arrange((factor(Info, levels = c("Attic Area","Attic insulation type", "Quality of attic insulation's installation? Assess worst part of installation.", "Air sealing:","Other observations:","Ventilation:","Ducts:" ))))|>
-  mutate(Info = recode(Info,"Attic Area" = "Area:","Attic insulation type" = "Insulation type:", "Quality of attic insulation's installation? Assess worst part of installation." = "Insulation condition:"  ))#|>
+# New rows to add
+new_rows <- tibble(
+  Info = c("R-value", "Attic Hatch", "Exhaust Ducts"),
+  Values = NA_character_
+)
+
+# Combine, relabel, and reorder
+all_attic <- bind_rows(attic_double, attic_character, new_rows) |>
+  mutate(
+    Info = recode(
+      Info,
+      "Quality of attic insulation's installation? Assess worst part of installation." = "Insulation condition:"
+    )
+  ) |>
+  mutate(
+    Info = factor(
+      Info,
+      levels = c(
+        "Area:",
+        "Insulation Type:",
+        "Insulation condition:",
+        "R-value",
+        "Attic Hatch",
+        "Air sealing:",
+        "Ventilation:",
+        "Exhaust Ducts",
+        "Ducts:",
+        "Other observations:"
+      )
+    )
+  ) |>
+  arrange(Info) |>
+  filter(!is.na(Info))
+
   #filter(str_detect(Values, pattern = "No"))
 ```
 
@@ -858,7 +896,7 @@ table_3_4 <- table_3_4 |>
     ACHnatural = round(ACHnatural, 1)
   )
 
-# Pivot longer BEFORE mutating 'Values'
+# Pivot longer
 table_3_4 <- table_3_4 |>
   select(CFM50, ACH50, EquivalentLeakageArea, ACHnatural) |>
   pivot_longer(
@@ -867,13 +905,13 @@ table_3_4 <- table_3_4 |>
     values_to = "Values"
   )
 
-# ⚠️ Extract numeric ACHnatural BEFORE formatting Values
+# Extract numeric ACHnatural value
 ACHnatural <- as.numeric(table_3_4$Values[table_3_4$Info == "ACHnatural"])
 
 # Calculate percentage
 percentage <- round(ACHnatural * 100, 1)
 
-# Now format 'Values' column and relabel
+# Format 'Values' column and relabel
 table_3_4 <- table_3_4 |>
   mutate(
     Values = case_when(
@@ -990,7 +1028,7 @@ ggsave("achnatural_ggplot1.png", width=15, height=5)
 
 Using a thermal imaging camera, we looked for major air leakage locations and thermal bridging. Thermal bridging occurs when heat enters or leaves a house through material that lets heat through more easily than the house’s insulation. This often occurs with wall studs and ceiling joists.
 
-We conducted the audit in the summer, when the air outside the house is hotter than inside the house. Therefore, the warmer (red, orange, and yellow) areas in the thermal pictures below show where air leakage is taking place, as these are the areas where hot air from the outside is being pulled into the cooler house.
+We conducted the audit in the summer, when the air outside the house is hotter than inside the house. Therefore, the warmer (red, orange, and yellow) areas in the thermal pictures below show where air leakage and thermal bridgin are taking place, as these are the areas where hot air and heat from the outside are being pulled into the cooler house.
 
 ### Attic
 
