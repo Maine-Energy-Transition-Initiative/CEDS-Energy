@@ -42,6 +42,7 @@ library(tibble)
 library(kableExtra)
 library(janitor)
 library(scales)
+library(tidyr)
 ```
 
 ```{r}
@@ -434,7 +435,7 @@ exterior_windows <- exterior_windows|>
 #| eval: false
 blower_door_leakage <- energy_test_googlesheets|>
   select( "Equivalent leakage area")|>
-  mutate(`Equivalent leakage area` = paste0(`Equivalent leakage area`, " in²."))
+  mutate("Equivalent leakage area" = paste0("Equivalent leakage area", ' in².'))
 
 #blower_door_leakage <-blower_door_leakage[,-c(1)]
 
@@ -804,116 +805,6 @@ gt_all_interior
 
 ### Blower Door / Air Leakage Test
 
-```{r}
-#| label: blower door data set up for 3.4
-#| echo: false
-
-#old set up wiht manual entry to googlespreadsheet
-blower_door_leakage <- energy_test_googlesheets|>
-  select( "Equivalent leakage area")|>
-  mutate(`Equivalent leakage area` = paste0(`Equivalent leakage area`, " under natural conditions."))
-
-#blower_door_leakage <-blower_door_leakage[,-c(1)]
-
-blower_door_leakage <-blower_door_leakage|>
-  pivot_longer(c("Equivalent leakage area"),
-    names_to = "Info", 
-    values_to = "Values")
-
-blower_door <- energy_test_googlesheets|>
-  select(c("CFM50", "ACH50","ACHn", ))|> #there is another column "Comments about air leakage"
-  pivot_longer(c("CFM50", "ACH50","ACHn"),
-    names_to = "Info", 
-    values_to = "Values")
-
-all_blower_door <- blower_door|>
-  rbind(blower_door_leakage)|>
-  mutate(Info = recode(Info,  "CFM50" = "CFM50:", "ACH50" = "ACH50:","Equivalent leakage area" = "Equivalent leakage area:","ACHn" = "ACHnatural:" ))|>
-  arrange(factor(Info, levels = c('CFM50:', 'ACH50:', 'Equivalent leakage area:', 'ACHnatural:')))
-
-all_blower_door['Description'] <- c("CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.", "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.","This is the area (in square inches) equivalent to all of the air leaks in the house combined.","Accounting for the volume of the home, this means that the house exchanges –% of its air every hour. Over one day, the house goes through – complete air changes.")
-
-
-```
-
-```{r}
-#| label: ACH/CFM/ELA/N-factor calculations
-#| echo: false
-
-table_3_4 <-clean_audit_data|>
-  select(cfm50)
-
-table_3_4<- as.data.frame(as.numeric(table_3_4))
-
-#ACH50 calculation
-
-table_3_4$ACH50_cal <- as.numeric(clean_audit_data$cfm50) * 60 / as.numeric(clean_audit_data$volume_of_conditioned_space_cubic_feet)
-
-#Equivalent leakage area calculation
-
-table_3_4$equi_leak_area_cal <- (as.numeric(clean_audit_data$cfm50) / 10)
-
-#N-factor calculation
-
-n_factor_calculated <- clean_audit_data |>
-  select(exposure_of_the_house, number_of_floors)|>
-  mutate(n_factor_cal = case_when(
-    exposure_of_the_house == "Low" & number_of_floors == 1 ~ 22.2,
-    exposure_of_the_house == "Low" & number_of_floors == 1.5 ~ 20.0,
-    exposure_of_the_house == "Low" & number_of_floors == 2 ~ 17.8,
-    exposure_of_the_house == "Low" & number_of_floors == 3 ~ 15.5,
-    exposure_of_the_house == "Moderate" & number_of_floors == 1 ~ 18.5,
-    exposure_of_the_house == "Moderate" & number_of_floors == 1.5 ~ 16.7,
-    exposure_of_the_house == "Moderate" & number_of_floors == 2 ~ 14.8,
-    exposure_of_the_house == "Moderate" & number_of_floors == 3 ~ 13.0,
-    exposure_of_the_house == "High" & number_of_floors == 1 ~ 16.7,
-    exposure_of_the_house == "High" & number_of_floors == 1.5 ~ 15.0,
-    exposure_of_the_house == "High" & number_of_floors == 2 ~ 13.3,
-    exposure_of_the_house == "High" & number_of_floors == 3 ~ 11.7))
-  
-
-
-#CFM natural calculation (Do I need to even calculate it)
-
-#table_3_4$CFMnatural_cal <- as.numeric(n_factor_calculated$n_factor_cal)/ as.numeric(clean_audit_data$cfm50)
-
-
-#ACH natural calculation
-
-table_3_4$ACHnatural_cal <- as.numeric(table_3_4$ACH50_cal)/ as.numeric(n_factor_calculated$n_factor_cal)
-
-table_3_4 <- table_3_4|>
- mutate(across(where(~ is.numeric(.)), ~ round(., 1)))
-
-#Clean the data frame
-
-table_3_4 <- cbind(table_3_4, n_factor_calculated)|>
-  select(-c(5,6,7))|>
-  pivot_longer(
-    cols = everything(),
-    names_to = "Info", 
-    values_to = "Values")
-
-equi_leak_area <- table_3_4[3,]
-equi_leak_area <- table_3_4[3,]|>
-  mutate(Values= paste0(equi_leak_area$Values, " under natural conditions. TEST"))
-
-table_3_4 <- table_3_4|>
-  rbind(equi_leak_area)
-
-table_3_4 <- table_3_4[-3,]
-  
-table_3_4 <- table_3_4|>
-  mutate(Info = recode(Info,  "as.numeric(table_3_4)" = "CFM50:", "ACH50_cal" = "ACH50:","equi_leak_area_cal" = "Equivalent leakage area:","ACHnatural_cal" = "ACHnatural:" ))|>
-  arrange(factor(Info, levels = c('CFM50:', 'ACH50:', 'Equivalent leakage area:', 'ACHnatural:')))
-
-table_3_4['Description'] <- c("CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.", "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.","This is the area (in square inches) equivalent to all of the air leaks in the house combined.","Accounting for the volume of the home, this means that the house exchanges –% of its air every hour. Over one day, the house goes through – complete air changes.")
-
-
-
-
-```
-
 A blower door test simulates a 20mph wind hitting your house from all sides.
 
 To run the test, we used a large fan in an exterior door to depressurize your house. As air is pulled out through the fan, an equal volume of air is pulled in through all of the gaps, cracks, and air leaks throughout the house. This allows us to determine the volume of air leakage into the house and to locate bigger air leaks.
@@ -923,30 +814,111 @@ To find leaks, we used an infrared camera to check for unusually hot and cold sp
 Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.
 
 ```{r}
-#| label: 3.4 blower door table display
+#| label: 3.4 blower door table set up
 #| eval: true
 #| echo: false
-#gt_all_blower_door <- gt(all_blower_door) |>
-  #tab_options(table.width = pct(100))|>
- # cols_width(
-   # Info ~ px(150),
- #   Values ~ px(100),
-#    Description ~ px(400)
-#  )|>
-# tab_options(column_labels.hidden = TRUE)
+# Calculate blower door metrics
+table_3_4 <- clean_audit_data |>
+  transmute(
+    CFM50 = as.numeric(cfm50),
+    ACH50 = CFM50 * 60 / as.numeric(volume_of_conditioned_space_cubic_feet),
+    EquivalentLeakageArea = CFM50 / 10
+  )
 
-#gt_all_blower_door
+# Calculate N-factor
+n_factor_calculated <- clean_audit_data |>
+  transmute(
+    exposure_of_the_house,
+    number_of_floors,
+    NFactor = case_when(
+      exposure_of_the_house == "Low" & number_of_floors == 1 ~ 22.2,
+      exposure_of_the_house == "Low" & number_of_floors == 1.5 ~ 20.0,
+      exposure_of_the_house == "Low" & number_of_floors == 2 ~ 17.8,
+      exposure_of_the_house == "Low" & number_of_floors == 3 ~ 15.5,
+      exposure_of_the_house == "Moderate" & number_of_floors == 1 ~ 18.5,
+      exposure_of_the_house == "Moderate" & number_of_floors == 1.5 ~ 16.7,
+      exposure_of_the_house == "Moderate" & number_of_floors == 2 ~ 14.8,
+      exposure_of_the_house == "Moderate" & number_of_floors == 3 ~ 13.0,
+      exposure_of_the_house == "High" & number_of_floors == 1 ~ 16.7,
+      exposure_of_the_house == "High" & number_of_floors == 1.5 ~ 15.0,
+      exposure_of_the_house == "High" & number_of_floors == 2 ~ 13.3,
+      exposure_of_the_house == "High" & number_of_floors == 3 ~ 11.7
+    )
+  )
+
+# Combine and calculate ACHnatural
+table_3_4 <- table_3_4 |>
+  bind_cols(n_factor_calculated["NFactor"]) |>
+  mutate(
+    ACHnatural = ACH50 / NFactor,
+    CFM50 = round(CFM50, 0),
+    ACH50 = round(ACH50, 0),
+    EquivalentLeakageArea = round(EquivalentLeakageArea, 0),
+    ACHnatural = round(ACHnatural, 1)
+  )
+
+# Pivot longer and relabel
+table_3_4 <- table_3_4 |>
+  select(CFM50, ACH50, EquivalentLeakageArea, ACHnatural) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Info",
+    values_to = "Values"
+  ) |>
+  mutate(
+    # Add unit and note to leakage area
+    Values = case_when(
+      Info == "EquivalentLeakageArea" ~ paste0(Values, " in²"),
+      TRUE ~ as.character(Values)
+    ),
+    Info = recode(
+      Info,
+      CFM50 = "CFM50:",
+      ACH50 = "ACH50:",
+      EquivalentLeakageArea = "Equivalent leakage area:",
+      ACHnatural = "ACHnatural:"
+    ),
+    Info = factor(Info, levels = c("CFM50:", "ACH50:", "Equivalent leakage area:", "ACHnatural:"))
+  )
+
+# Add descriptions
+table_3_4$Description <- c(
+  "CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.",
+  "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.",
+  "This is the area equivalent to all of the air leaks in the house combined.",
+  "Accounting for the volume of the home, this means that the house exchanges –% of its air every hour. Over one day, the house goes through – complete air changes."
+)
+
+```
+
+
+```{r}
+#| label: 3.5 blower door table display
+#| eval: true
+#| echo: false
 
 gt_all_blower_door_auto <- gt(table_3_4) |>
-  tab_options(table.width = pct(100))|>
   cols_width(
     Info ~ px(150),
     Values ~ px(100),
     Description ~ px(400)
-  )|>
- tab_options(column_labels.hidden = TRUE)
+  ) |>
+  cols_align(align = "left", columns = everything()) |>
+  cols_label(
+    Info = "",
+    Values = "",
+    Description = ""
+  ) |>
+  tab_options(
+    table.width = pct(100),
+    table.font.size = px(11),
+    data_row.padding = px(4),
+    column_labels.hidden = TRUE,
+    table.align = "left"
+  )
 
 gt_all_blower_door_auto
+
 ```
 
 ```{r}
