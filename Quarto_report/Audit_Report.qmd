@@ -561,37 +561,113 @@ all_attic <- bind_rows(attic_double, attic_character) |>
 #| label: basement data for 3.6
 #| echo: false
 
-all_basement <- clean_audit_data|>
+all_basement <- clean_audit_data |>
   
-  #select all the columns that have information about the basement/crawlspace
-  select(is_there_ductwork_in_the_basement_crawlspace, comment_about_ductwork_condition_in_the_basement_crawlspace, comment_about_the_basement_crawlspace_insulation, hazards_basement_crawlspace, any_hazards_or_mold_moisture_asbestos_present_in_the_basement_crawlspace, describe_the_hazards_or_mold_moisture_in_basement_crawlspace, quality_of_the_basement_crawlspace_insulations_installation_assess_worst_part_of_installation, moisture_and_mold_control_strategies, basement_crawlspace_insulation_type, insulation_of_appliances_in_basement_crawlspace, area_of_basement_crawlspace_ground_square_feet, thickness_of_basement_crawlspace_insulation, basement_crawlspace_net_wall_area, condition_of_moisture_control_strategies_in_the_basement_crawlspace, comments_about_existing_moisture_control_strategies )|>
+# select columns about basement/crawlspace
+  select(
+    is_there_ductwork_in_the_basement_crawlspace,
+    comment_about_ductwork_condition_in_the_basement_crawlspace,
+    comment_about_the_basement_crawlspace_insulation,
+    hazards_basement_crawlspace,
+    any_hazards_or_mold_moisture_asbestos_present_in_the_basement_crawlspace,
+    describe_the_hazards_or_mold_moisture_in_basement_crawlspace,
+    quality_of_the_basement_crawlspace_insulations_installation_assess_worst_part_of_installation,
+    moisture_and_mold_control_strategies,
+    basement_crawlspace_insulation_type,
+    insulation_of_appliances_in_basement_crawlspace,
+    area_of_basement_crawlspace_ground_square_feet,
+    thickness_of_basement_crawlspace_insulation,
+    basement_crawlspace_net_wall_area,
+    condition_of_moisture_control_strategies_in_the_basement_crawlspace,
+    comments_about_existing_moisture_control_strategies
+  ) |>
   
-  #join information into one column for moisture control in 3.6
-  mutate(`Moisture Control:` = paste0(moisture_and_mold_control_strategies, "in ",condition_of_moisture_control_strategies_in_the_basement_crawlspace,"condition. ", comments_about_existing_moisture_control_strategies))|>
+# create rows
+  mutate(
+    `Area:` = paste0(area_of_basement_crawlspace_ground_square_feet, " ft²"),
+    
+    `Wall Area:` = paste0(basement_crawlspace_net_wall_area, " ft²"),
+    
+    `Insulation Type:` = paste0(
+      "The **basement / crawlspace** is insulated with ",
+      basement_crawlspace_insulation_type,
+      " insulation. The insulation is ",
+      thickness_of_basement_crawlspace_insulation,
+      " inches thick."
+    ),
+    
+    `Insulation Condition:` = paste0(
+      "The insulation is in ",
+      quality_of_the_basement_crawlspace_insulations_installation_assess_worst_part_of_installation,
+      " condition. ",
+      comment_about_the_basement_crawlspace_insulation
+    ),
+    
+    `R-Value:` = paste0(
+      "The thickness and condition of the insulation gives the insulation an R-value of R-DECIDE per inch. This gives the **basement / crawlspace** a total R-value of R-CALCULATE."
+    ),
+    
+    `Moisture Control:` = paste0(
+      "There is ",
+      moisture_and_mold_control_strategies,
+      " to control moisture. These are in ",
+      condition_of_moisture_control_strategies_in_the_basement_crawlspace,
+      " condition. ",
+      comments_about_existing_moisture_control_strategies,
+      ". Moisture control is important as moisture in the **basement / crawlspace** evaporates into the house where it can cause moisture damage such as mold. It is also important to protect appliances in the **basement / crawlspace**."
+    ),
+    
+    `Appliance Insulation:` = paste0(
+      "The ",
+      insulation_of_appliances_in_basement_crawlspace,
+      " DELETE WHAT DOESN'T APPLY. Insulating ductwork is important to prevent the air from losing heat as it travels through it. Insulating both hot and cold water pipes is important to stop the water from losing heat as it travels through the pipes and to prevent condensation. Uninsulated **ductwork / pipes** increase your heating bill."
+    ),
+    
+    `Ducts:` = paste0(
+      is_there_ductwork_in_the_basement_crawlspace,
+      " in the **basement / crawlspace**. ",
+      comment_about_ductwork_condition_in_the_basement_crawlspace
+    ),
+    
+    `Other Observations:` = paste0(
+      "There is ",
+      hazards_basement_crawlspace,
+      describe_the_hazards_or_mold_moisture_in_basement_crawlspace
+    )
+  ) |>
   
-  #join information into one column for ducts in 3.6
-  mutate(`Ducts:` = paste0(is_there_ductwork_in_the_basement_crawlspace,comment_about_ductwork_condition_in_the_basement_crawlspace))|>
+# select columns
+  select(
+    `Area:`,
+    `Wall Area:`,
+    `Insulation Type:`,
+    `Insulation Condition:`,
+    `R-Value:`,
+    `Moisture Control:`,
+    `Appliance Insulation:`,
+    `Ducts:`,
+    `Other Observations:`
+  ) |>
   
-  #join information into one column for insulation condition in 3.6
-  mutate(`Insulation condition:` = paste0(quality_of_the_basement_crawlspace_insulations_installation_assess_worst_part_of_installation, comment_about_the_basement_crawlspace_insulation))|>
-  
-  #join information into one column for other observations in 3.6
-  mutate(`Other observations:` = paste0("There is ", hazards_basement_crawlspace, describe_the_hazards_or_mold_moisture_in_basement_crawlspace))|>
-  
-  #delete unwanted columns, the once that were used to create joined columns
-  select(-c(1:8, 12:15))|>
-  
-  #pivot horizontal columns to be displayed vertical in the rows
-  pivot_longer(, cols = everything(),
+# pivot to long format
+  pivot_longer(
+    cols = everything(),
     names_to = "Info",
-    values_to = "Values")|>
+    values_to = "Values"
+  ) |>
   
-  #rename the columns as they need to be displayed
-  mutate(Info = recode(Info,  area_of_basement_crawlspace_ground_square_feet = 'Area:', insulation_of_appliances_in_basement_crawlspace = 'Insulation of appliances:', 	
-basement_crawlspace_insulation_type = 'Insulation type:'))|>
-  
-  #arrange the rows in correct order
-  arrange(factor(Info, levels = c('Area:','Inuslation type:', 'Insulation condition:')))
+# arrange
+  arrange(factor(Info, levels = c(
+    "Area:",
+    "Wall Area:",
+    "Insulation Type:",
+    "Insulation Condition:",
+    "R-Value:",
+    "Moisture Control:",
+    "Appliance Insulation:",
+    "Ducts:",
+    "Other Observations:"
+  )))
 
 ```
 
