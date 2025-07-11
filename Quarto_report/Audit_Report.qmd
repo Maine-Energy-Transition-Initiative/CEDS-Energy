@@ -23,7 +23,7 @@ params:
 #| echo: false
 #| warning: false
 
-#Attach Packages
+# load packages
 library(readr)
 library(here)
 library(dplyr)
@@ -43,6 +43,7 @@ library(kableExtra)
 library(janitor)
 library(scales)
 library(tidyr)
+
 ```
 
 ```{r}
@@ -51,7 +52,7 @@ library(tidyr)
 #| warning: false
 #| eval: true
 
-#Load Audit Data
+# load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
 energy_test_googlesheets <- all_energy_test_googlesheets[32, ] 
@@ -59,24 +60,26 @@ energy_test_googlesheets <- all_energy_test_googlesheets[32, ]
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
 
-#Load Recommendation Info
+# load recommendations info
 recommendations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 1 )
 
 sect_4_problem_text_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 2)
 
 sect_4_rec_text_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 3)
 
-#Load estimated Recommendation Info
+# load estimated recommendation info
 estimated_recommedations_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 4)
 
-#Additional Resources Info
+# load additional resources info
 additional_resources_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/1Fyc65ybuRoQoYVWC3yNA_os7pPTD1vaKKcWS3ZRB7UU/edit?usp=sharing", col_types = "c", sheet = 5)
+
 ```
 
 ```{r}
 #| label: setup rank recommendations data
 #| echo: false
 #| warning: false
+
 #select only recommendations to make separate data frame
 pivot_recommendations <- clean_audit_data |>
   select(c(recommendations_ranking_furnace_boiler_tune_up:recommendations_ranking_other_3, recommendations_ranking_ductwork_air_sealing_and_insulation, recommendations_ranking_misc_air_sealing_and_insulation, recommendations_ranking_replace_windows, recommendations_ranking_replace_doors))
@@ -115,11 +118,12 @@ ranked_sect_4_problem_text <- sect_4_problem_text_googlesheets |>
 #| echo: false
 #| warning: false
 #| eval: true
-#select only basic data that use numbers
+
+# select only numerical basic data
 energy_cost_quantity <- energy_test_googlesheets |>
   select(`Gallons of Heating Oil`,`Cost in Dollars (Heating Oil)`,`Gallons of Kerosene`,`Cost in Dollars (Kerosene)`,`Gallons of Propane`,`Cost in Dollars (Propane)`,`kWh of Electricity`,`Cost in Dollars (Electricity)`,`Cords of Firewood`,`Cost in Dollars (Firewood)`,`Tons of pellets`,`Cost in Dollars (Pellets)`,`Write the quantity and measuring unit`, `Cost in Dollars (Other)` )
 
-  #select other data that is numbers
+  # select other numerical data
 double_other <- clean_audit_data |>
   select(
     date_built,
@@ -129,52 +133,57 @@ double_other <- clean_audit_data |>
     ambient_carbon_monoxide_reading,
     foundation_type
   ) |>
-  pivot_longer(
+  
+    pivot_longer(
     cols = everything(),
     names_to = "Info", 
     values_to = "Values"
   ) |>
-  mutate(
-    Info = recode(
-      Info,
-      date_built = 'Date Built:',
-      number_of_floors = 'Number of floors:',
-      square_footage_of_conditioned_space = 'Square footage of conditioned space:',
-      volume_of_conditioned_space_cubic_feet = 'Volume of conditioned space:',
-      ambient_carbon_monoxide_reading = 'Ambient Carbon Monoxide reading:',
-      foundation_type = 'Foundation Type:'
+  
+      mutate(
+        Info = recode(
+         Info,
+          date_built = 'Date Built:',
+          number_of_floors = 'Number of floors:',
+          square_footage_of_conditioned_space = 'Square footage of conditioned space:',
+          volume_of_conditioned_space_cubic_feet = 'Volume of conditioned space:',
+          ambient_carbon_monoxide_reading = 'Ambient Carbon Monoxide reading:',
+          foundation_type = 'Foundation Type:'
     ),
-    Info = factor(Info, levels = c(
-      'Date Built:',
-      'Foundation Type:',
-      'Number of floors:',
-      'Square footage of conditioned space:',
-      'Volume of conditioned space:',
-      'Ambient Carbon Monoxide reading:'
+        Info = factor(Info, levels = c(
+          'Date Built:',
+          'Foundation Type:',
+          'Number of floors:',
+          'Square footage of conditioned space:',
+          'Volume of conditioned space:',
+          'Ambient Carbon Monoxide reading:'
     )),
-    Values = case_when(
-      Info == 'Square footage of conditioned space:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft²"),
-      Info == 'Volume of conditioned space:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft³"),
-      TRUE ~ as.character(Values)
-    )
-  )
+        Values = case_when(
+          Info == 'Square footage of conditioned space:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft²"),
+          Info == 'Volume of conditioned space:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft³"),
+          TRUE ~ as.character(Values)
+    ))
+
 ```
 
 ```{r}
 #| label: attic data for basics
 #| echo: false
-  #select all the data that is basic related to attic
+  
+#select all attic data for basics
 attic_basics <- energy_test_googlesheets |>
   select( `Attic insulation type`, `Quality of attic insulation's installation? Assess worst part of installation.`, `Thickness of the attic insulation (inches), at the thinnest location`)|>
-  #join the data into one row
-  mutate(Attic_all = paste(`Attic insulation type`, ",", `Thickness of the attic insulation (inches), at the thinnest location`, "inches"))|>
-  mutate(Info = 'Attic:',
-        .before =`Attic insulation type`)
 
-  #remove unwanted rows
+#join the data into one row
+    mutate(Attic_all = paste(`Attic insulation type`, ",", `Thickness of the attic insulation (inches), at the thinnest location`, "inches"))|>
+  
+      mutate(Info = 'Attic:',
+          .before =`Attic insulation type`)
+
+#remove unwanted rows
 attic_basics <- attic_basics[,-c(2,3,4)]
   
-  #rename the column heading
+#rename the column heading
 names(attic_basics) <- c('Info', 'Values')
   
 
@@ -184,78 +193,87 @@ names(attic_basics) <- c('Info', 'Values')
 #| label: setup energy sources gallons
 #| echo: false
 
-  #select amount and pivot the energy sources using gallons 
+#select amount and pivot the energy sources using gallons 
 gallon_sources <- energy_cost_quantity |>
   select('Gallons of Heating Oil', 'Gallons of Propane', 'Gallons of Kerosene')|>
-  pivot_longer(cols = c('Gallons of Heating Oil', 'Gallons of Propane', 'Gallons of Kerosene' ),
-    names_to = "Source", 
-    values_to = "Amount")
+    pivot_longer(cols = c('Gallons of Heating Oil', 'Gallons of Propane', 'Gallons of Kerosene' ),
+      names_to = "Source", 
+      values_to = "Amount")
 
 #select cost and pivot the energy sources using gallons 
 gallon_cost <- energy_cost_quantity|>
   select('Cost in Dollars (Heating Oil)', 'Cost in Dollars (Propane)', 'Cost in Dollars (Kerosene)')|>
-  pivot_longer(cols = c('Cost in Dollars (Heating Oil)', 'Cost in Dollars (Propane)', 'Cost in Dollars (Kerosene)'),
-    names_to = "Source_Cost", 
-    values_to = "Dollars")
+    pivot_longer(cols = c('Cost in Dollars (Heating Oil)', 'Cost in Dollars (Propane)', 'Cost in Dollars (Kerosene)'),
+      names_to = "Source_Cost", 
+      values_to = "Dollars")
 
-  #filter sources that are not present in the house 
+#filter sources that are not present in the house 
 annual_totals_gallon <- gallon_sources |>
   cbind(gallon_cost) |>
-  filter(Amount != is.na(NA))|>
-  mutate(Anual_Totals = paste0(`Amount`, " Gallons,", `Dollars`, "USD"))
+    filter(Amount != is.na(NA))|>
+      mutate(Anual_Totals = paste0(`Amount`, " Gallons,", `Dollars`, "USD"))
 
+# make rows
 annual_totals_gallon <- annual_totals_gallon |>
   mutate(Source = recode(Source,  'Gallons of Heating Oil' = 'Annual heating oil usage from bills:', 'Gallons of Propane' = 'Annual propane usage from bills:', 'Gallons of Kerosene' = 'Annual kerosene usage from the bills:'))
 
+# remove unwanted rows
 annual_totals_gallon <- annual_totals_gallon[, -c(2,3,4)]
+
 ```
 
 ```{r}
 #| label: setup energy sources kWh
 #| echo: false
+
 kWh_sources <- energy_cost_quantity |>
   select('kWh of Electricity')|>
-  pivot_longer(cols = c('kWh of Electricity'),
-    names_to = "Source", 
-    values_to = "Amount")
+    pivot_longer(cols = c('kWh of Electricity'),
+      names_to = "Source", 
+      values_to = "Amount")
 
 kWh_cost <- energy_cost_quantity|>
   select('kWh of Electricity')|>
-  pivot_longer(cols = c('kWh of Electricity'),
-    names_to = "Source_Cost", 
-    values_to = "Dollars")
+    pivot_longer(cols = c('kWh of Electricity'),
+      names_to = "Source_Cost", 
+      values_to = "Dollars")
 
 annual_totals_kWh <- kWh_sources |>
   cbind(gallon_cost) |>
-  filter(Amount != is.na(NA))|>
-  mutate(Anual_Totals = paste(`Amount`, " kWh,", `Dollars`, "USD"))|>
-  mutate(Source = recode(Source,  'kWh of Electricity' = 'Annual electricity usage from bills:',))
+    filter(Amount != is.na(NA))|>
+      mutate(Anual_Totals = paste(`Amount`, " kWh,", `Dollars`, "USD"))|>
+        mutate(Source = recode(Source,  'kWh of Electricity' = 'Annual electricity usage from bills:',))
 
+#remove unwanted rows
 annual_totals_kWh <- annual_totals_kWh[, -c(2,3,4)]
+
 ```
 
 ```{r}
 #| label: setup energy sources cords
 #| echo: false
+
 cords_sources <- energy_cost_quantity |>
   select('Cords of Firewood')|>
-  pivot_longer(cols = c('Cords of Firewood'),
-    names_to = "Source", 
-    values_to = "Amount")
+    pivot_longer(cols = c('Cords of Firewood'),
+      names_to = "Source", 
+      values_to = "Amount")
 
 cords_cost <- energy_cost_quantity|>
   select('Cords of Firewood')|>
-  pivot_longer(cols = c('Cords of Firewood'),
-    names_to = "Source_Cost", 
-    values_to = "Dollars")
+    pivot_longer(cols = c('Cords of Firewood'),
+      names_to = "Source_Cost", 
+      values_to = "Dollars")
 
 annual_totals_cords <- cords_sources |>
   cbind(cords_cost) |>
-  filter(Amount != is.na(NA))|>
-  mutate(Anual_Totals = paste(`Amount`, " Cords,", `Dollars`, "USD"))|>
-   mutate(Source = recode(Source, 'Cords of Firewood' = 'Annual firewood usage from bills:',))
+    filter(Amount != is.na(NA))|>
+      mutate(Anual_Totals = paste(`Amount`, " Cords,", `Dollars`, "USD"))|>
+        mutate(Source = recode(Source, 'Cords of Firewood' = 'Annual firewood usage from bills:',))
 
+# remove unwanted rows
 annual_totals_cords <- annual_totals_cords[, -c(2,3,4)]
+
 ```
 
 ```{r}
@@ -263,47 +281,52 @@ annual_totals_cords <- annual_totals_cords[, -c(2,3,4)]
 #| echo: false
 tons_sources <- energy_cost_quantity |>
   select('Tons of pellets')|>
-  pivot_longer(cols = c('Tons of pellets'),
-    names_to = "Source", 
-    values_to = "Amount")
+    pivot_longer(cols = c('Tons of pellets'),
+      names_to = "Source", 
+      values_to = "Amount")
 
 tons_cost <- energy_cost_quantity|>
   select('Tons of pellets')|>
-  pivot_longer(cols = c('Tons of pellets'),
-    names_to = "Source_Cost", 
-    values_to = "Dollars")
+    pivot_longer(cols = c('Tons of pellets'),
+      names_to = "Source_Cost", 
+      values_to = "Dollars")
 
 annual_totals_tons <- tons_sources |>
   cbind(tons_cost) |>
-  filter(Amount != is.na(NA))|>
-  mutate(Anual_Totals = paste(`Amount`, " Tons,", `Dollars`, "USD"))|>
-   mutate(Source = recode(Source,  'Tons of pellets' = 'Annual pellets usage from bills:',))
+    filter(Amount != is.na(NA))|>
+      mutate(Anual_Totals = paste(`Amount`, " Tons,", `Dollars`, "USD"))|>
+        mutate(Source = recode(Source,  'Tons of pellets' = 'Annual pellets usage from bills:',))
 
+#remove unwanted rows
 annual_totals_tons <- annual_totals_tons[, -c(2,3,4)]
+
 ```
 
 ```{r}
 #| label: setup energy sources other
 #| echo: false
+
 other_sources <- energy_cost_quantity |>
   select('Write the quantity and measuring unit')|>
-  pivot_longer(cols = c('Write the quantity and measuring unit'),
-    names_to = "Source", 
-    values_to = "Amount")
+    pivot_longer(cols = c('Write the quantity and measuring unit'),
+      names_to = "Source", 
+      values_to = "Amount")
 
 other_cost <- energy_cost_quantity|>
   select('Write the quantity and measuring unit')|>
-  pivot_longer(cols = c('Write the quantity and measuring unit'),
-    names_to = "Source_Cost", 
-    values_to = "Dollars")
+    pivot_longer(cols = c('Write the quantity and measuring unit'),
+      names_to = "Source_Cost", 
+      values_to = "Dollars")
 
 annual_totals_other <- other_sources |>
   cbind(other_cost) |>
-  filter(Amount != is.na(NA))|>
-  mutate(Anual_Totals = paste(`Amount`, `Dollars`, "USD"))|>
-  mutate(Source = recode(Source,  'Write the quantity and measuring unit' = 'Other annual energy usage from bills:',))
+    filter(Amount != is.na(NA))|>
+      mutate(Anual_Totals = paste(`Amount`, `Dollars`, "USD"))|>
+        mutate(Source = recode(Source,  'Write the quantity and measuring unit' = 'Other annual energy usage from bills:',))
 
+# remove unwanted rows
 annual_totals_other <- annual_totals_other[, -c(2,3,4)]
+
 ```
 
 ```{r}
@@ -313,15 +336,18 @@ annual_totals <- annual_totals_kWh|>
   rbind(annual_totals_gallon, annual_totals_cords, annual_totals_tons )
 
 names(annual_totals) <- c('Info', 'Values')
+
 ```
 
 ```{r}
 #| label: all basics
 #| echo: false
 
+# set up basics table
 all_basics <- double_other |>
-  rbind(attic_basics )|> #character_other,
-  arrange(factor(Info, levels = c('Date Built:', 'Foundation Type:', 'Attic:', 'Number of floors:', 'Square footage of conditioned space:', 'Volume of conditioned space:','Ambient Carbon Monoxide reading:')))
+  rbind(attic_basics )|>
+    arrange(factor(Info, levels = c('Date Built:', 'Foundation Type:', 'Attic:', 'Number of floors:', 'Square footage of conditioned space:', 'Volume of conditioned space:','Ambient Carbon Monoxide reading:')))
+
 ```
 
 ```{r}
@@ -330,7 +356,7 @@ all_basics <- double_other |>
 
 all_interior <- clean_audit_data|>
   
-  #select all the columns that have information about the interior/living spaces
+#select all columns that have information about interior/living spaces
   select(wall_stud_insulation_type, thickness_of_the_wall_stud_insulation, quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, any_additional_comments_on_wall_stud_insulation, wall_continuous_insulation_type, thickness_of_the_wall_continuous_insulation, quality_of_wall_continuous_insulations_installation_assess_worst_part_of_installation, any_additional_comments_on_wall_continuous_insulation, framing_type, general_comment_about_the_living_room, general_comment_about_the_bathroom_s, general_comment_about_the_kitchen, k_wh_reading_1, k_wh_reading_2, time_passed_since_installation_of_kilowatt_meter_1, time_passed_since_installation_of_kilowatt_meter_2, which_appliance_did_you_measure_1, which_appliance_did_you_measure_2)|>
   
   #make conditional stock framing description
