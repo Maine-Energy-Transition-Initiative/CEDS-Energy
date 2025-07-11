@@ -817,6 +817,7 @@ Air leaks are a big source of heat gain in warm weather and heat loss in cold we
 #| label: 3.4 blower door table set up
 #| eval: true
 #| echo: false
+
 # Calculate blower door metrics
 table_3_4 <- clean_audit_data |>
   transmute(
@@ -857,16 +858,24 @@ table_3_4 <- table_3_4 |>
     ACHnatural = round(ACHnatural, 1)
   )
 
-# Pivot longer and relabel
+# Pivot longer BEFORE mutating 'Values'
 table_3_4 <- table_3_4 |>
   select(CFM50, ACH50, EquivalentLeakageArea, ACHnatural) |>
   pivot_longer(
     cols = everything(),
     names_to = "Info",
     values_to = "Values"
-  ) |>
+  )
+
+# ⚠️ Extract numeric ACHnatural BEFORE formatting Values
+ACHnatural <- as.numeric(table_3_4$Values[table_3_4$Info == "ACHnatural"])
+
+# Calculate percentage
+percentage <- round(ACHnatural * 100, 1)
+
+# Now format 'Values' column and relabel
+table_3_4 <- table_3_4 |>
   mutate(
-    # Add unit and note to leakage area
     Values = case_when(
       Info == "EquivalentLeakageArea" ~ paste0(Values, " in²"),
       TRUE ~ as.character(Values)
@@ -881,13 +890,21 @@ table_3_4 <- table_3_4 |>
     Info = factor(Info, levels = c("CFM50:", "ACH50:", "Equivalent leakage area:", "ACHnatural:"))
   )
 
-# Add descriptions
+# Add the description vector with the dynamic percentage
 table_3_4$Description <- c(
   "CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.",
   "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.",
   "This is the area equivalent to all of the air leaks in the house combined.",
-  "Accounting for the volume of the home, this means that the house exchanges –% of its air every hour. Over one day, the house goes through – complete air changes."
+  paste0(
+    "Accounting for the volume of the home, this means that the house exchanges ",
+    percentage, 
+    "% of its air every hour. Over one day, the house goes through ", 
+    round(ACHnatural * 24, 0), 
+    " complete air changes."
+  )
 )
+
+
 
 ```
 
