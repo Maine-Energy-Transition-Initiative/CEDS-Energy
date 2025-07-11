@@ -433,11 +433,12 @@ exterior_windows <- exterior_windows|>
 #| label: 3.4 data set up old 
 #| echo: false
 #| eval: false
+
+
 blower_door_leakage <- energy_test_googlesheets|>
   select( "Equivalent leakage area")|>
-  mutate("Equivalent leakage area" = paste0("Equivalent leakage area", ' in².'))
+    mutate("Equivalent leakage area" = paste0("Equivalent leakage area", ' in².'))
 
-#blower_door_leakage <-blower_door_leakage[,-c(1)]
 
 blower_door_leakage <-blower_door_leakage|>
   pivot_longer(c("Equivalent leakage area"),
@@ -445,14 +446,14 @@ blower_door_leakage <-blower_door_leakage|>
     values_to = "Values")
 
 blower_door <- energy_test_googlesheets|>
-  select(c("CFM50", "ACH50","ACHn", ))|> #there is another column "Comments about air leakage"
-  pivot_longer(c("CFM50", "ACH50","ACHn"),
+  select(c("CFM50", "ACH50","ACHn", "Comments about air leakage" ))|> #there is another column "Comments about air leakage"
+  pivot_longer(c("CFM50", "ACH50","ACHn", , "Comments about air leakage"),
     names_to = "Info", 
     values_to = "Values")
 
 all_blower_door <- blower_door|>
   rbind(blower_door_leakage)|>
-  mutate(Info = recode(Info,  "CFM50" = "CFM50:", "ACH50" = "ACH50:","Equivalent leakage area" = "Equivalent leakage area:","ACHn" = "ACHnatural:" ))|>
+  mutate(Info = recode(Info,  "CFM50" = "CFM50:", "ACH50" = "ACH50:","Equivalent leakage area" = "Equivalent leakage area:","ACHn" = "ACHnatural:", "Comments about air leakage" = "Comments About Air Leakge:" ))|>
   arrange(factor(Info, levels = c('CFM50:', 'ACH50:', 'Equivalent leakage area:', 'ACHnatural:')))
 
 all_blower_door['Description'] <- c("CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.", "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.","This is the area equivalent to all of the air leaks in the house combined.","Accounting for the volume of the home, this means that the house exchanges –% of its air every hour. Over one day, the house goes through – complete air changes.")
@@ -462,37 +463,43 @@ all_blower_door['Description'] <- c("CFM50 describes how many cubic feet per min
 #| label: attic data for 3.5
 #| echo: false
 
+# pivot
 attic_double <- energy_test_googlesheets|>
-  select(`Attic Area`)|> # `Thickness of the attic insulation (inches), at the thinnest location`
+  select(`Attic Area`)|> 
   pivot_longer(c(`Attic Area`),
     names_to = "Info",
     values_to = "Values")
 
+# select all attic questions
 attic_character <- energy_test_googlesheets|>
   select(`Attic Area`, `Does attic have air sealing?`, `Comment about air sealing`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Is there ductwork in the attic?`, `Comment about condition of the ductwork in the attic`,`Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Attic insulation type`, `Thickness of the attic insulation (inches), at the thinnest location`, `Attic hatch insulation type`, `Thickness of the attic hatch insulation (inches), at the thinnest location`, `Quality of attic hatch insulation's installation? Assess worst part of installation.`, `Are there any interior features?`, `Quality of attic insulation's installation? Assess worst part of installation.`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Pitch of primary roof face (degrees)`, `Are bathroom and kitchen exhaust fans being vented to outside?`)|>
   
-  mutate(`Area:` = paste0(`Attic Area`, " ft²")) |>
   
-  mutate(`Insulation Type:` = paste0("The attic is insulated with ", `Attic insulation type`, " insulation. The insulation is ", `Thickness of the attic insulation (inches), at the thinnest location`, " inches thick.")) |>
+# create all rows for table
+    mutate(`Area:` = paste0(`Attic Area`, " ft²")) |>
   
-  mutate(`Insulation Condition:` = paste0("The insulation is in ", `Quality of attic insulation's installation? Assess worst part of installation.`, " condition. ", `Any additional comments on attic insulation, e.g., is the entire attic insulated?`)) |>
+      mutate(`Insulation Type:` = paste0("The attic is insulated with ", `Attic insulation type`, " insulation. The insulation is ", `Thickness of the attic insulation (inches), at the thinnest location`, " inches thick.")) |>
   
-  mutate(`Pitch of Primary Roof Face:` = paste0("The pitch of the primary roof face is ", `Pitch of primary roof face (degrees)`, " degrees.")) |>
+        mutate(`Insulation Condition:` = paste0("The insulation is in ", `Quality of attic insulation's installation? Assess worst part of installation.`, " condition. ", `Any additional comments on attic insulation, e.g., is the entire attic insulated?`)) |>
   
-  mutate(`Exhaust Ducts:` = paste0("Exhaust ducts from bathroom and kitchen fans are ", `Are bathroom and kitchen exhaust fans being vented to outside?`, " . Venting exhaust fans to outside is important so that they do not add potentially harmful moisture into the attic space and so they can function properly.")) |>
+          mutate(`Pitch of Primary Roof Face:` = paste0("The pitch of the primary roof face is ", `Pitch of primary roof face (degrees)`, " degrees.")) |>
   
-  mutate(`R-Value:` = paste0("The thickness and condition of the insulation give the insulation an R-value of R-DECIDE per inch. This gives the attic a total R-value of R-CALCULATE. For comparison, current Maine building code requires an attic R-value of R-60, and we typically recommend at least R-80 in attics to keep the house warm in the winter and cool in the summer.")) |>
+            mutate(`Exhaust Ducts:` = paste0("Exhaust ducts from bathroom and kitchen fans are ", `Are bathroom and kitchen exhaust fans being vented to outside?`, " . Venting exhaust fans to outside is important so that they do not add potentially harmful moisture into the attic space and so they can function properly.")) |>
   
-  mutate(`Air Sealing:` = paste0("The attic is ",`Does attic have air sealing?`,". ",`Comment about air sealing`))|>
+              mutate(`R-Value:` = paste0("The thickness and condition of the insulation give the insulation an R-value of R-DECIDE per inch. This gives the attic a total R-value of R-CALCULATE. For comparison, current Maine building code requires an attic R-value of R-60, and we typically recommend at least R-80 in attics to keep the house warm in the winter and cool in the summer.")) |>
   
-  mutate(`Attic Hatch:` = paste0("The attic hatch is insulated with ", `Attic hatch insulation type`, " insulation that is ", `Thickness of the attic hatch insulation (inches), at the thinnest location`, " inches thick. The insulation is in ", `Quality of attic hatch insulation's installation? Assess worst part of installation.`, " condition and the hatch is **air sealed / not air sealed**.")) |>
+                mutate(`Air Sealing:` = paste0("The attic is ",`Does attic have air sealing?`,". ",`Comment about air sealing`))|>
   
-  mutate(`Other observations:` = paste(`Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Are there any interior features?`))|>
+                  mutate(`Attic Hatch:` = paste0("The attic hatch is insulated with ", `Attic hatch insulation type`, " insulation that is ", `Thickness of the attic hatch insulation (inches), at the thinnest location`, " inches thick. The insulation is in ", `Quality of attic hatch insulation's installation? Assess worst part of installation.`, " condition and the hatch is **air sealed / not air sealed**.")) |>
   
-  mutate(`Ventilation:` = paste0("The attic is ventilated by ", `Attic ventilation type?`, ". Attic ventilation is important to keep the attic space and insulation dry and in good condition."))|>
+                    mutate(`Other observations:` = paste(`Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Are there any interior features?`))|>
   
-  mutate(`Ducts:` = paste0(`Is there ductwork in the attic?`, ". ", `Comment about condition of the ductwork in the attic`))
+                      mutate(`Ventilation:` = paste0("The attic is ventilated by ", `Attic ventilation type?`, ". Attic ventilation is important to keep the attic space and insulation dry and in good condition."))|>
+  
+                        mutate(`Ducts:` = paste0(`Is there ductwork in the attic?`, ". ", `Comment about condition of the ductwork in the attic`))
 
+
+# format table
 attic_character <- attic_character[, -c(1:9)]
   
 attic_character <- attic_character|>
@@ -500,7 +507,7 @@ attic_character <- attic_character|>
   names_to = "Info",
    values_to = "Values")
 
-# Combine, relabel, and reorder
+# set order
 all_attic <- bind_rows(attic_double, attic_character) |>
   mutate(
     Info = factor(
@@ -520,10 +527,8 @@ all_attic <- bind_rows(attic_double, attic_character) |>
       )
     )
   ) |>
-  arrange(Info) |>
-  filter(!is.na(Info))
-
-  #filter(str_detect(Values, pattern = "No"))
+    arrange(Info) |>
+      filter(!is.na(Info))
 ```
 
 ```{r}
@@ -857,10 +862,13 @@ Air leaks are a big source of heat gain in warm weather and heat loss in cold we
 
 # Calculate blower door metrics
 table_3_4 <- clean_audit_data |>
+  select(`cfm50`, `comments_about_air_leakage`, `volume_of_conditioned_space_cubic_feet`) |>
+  
   transmute(
     CFM50 = as.numeric(cfm50),
     ACH50 = CFM50 * 60 / as.numeric(volume_of_conditioned_space_cubic_feet),
-    EquivalentLeakageArea = CFM50 / 10
+    EquivalentLeakageArea = CFM50 / 10,
+    commentsairleaks = comments_about_air_leakage
   )
 
 # Calculate N-factor
@@ -892,12 +900,14 @@ table_3_4 <- table_3_4 |>
     CFM50 = round(CFM50, 0),
     ACH50 = round(ACH50, 0),
     EquivalentLeakageArea = round(EquivalentLeakageArea, 0),
-    ACHnatural = round(ACHnatural, 1)
+    ACHnatural = round(ACHnatural, 1),
+    commentsairleaks = commentsairleaks
   )
 
 # Pivot longer
 table_3_4 <- table_3_4 |>
-  select(CFM50, ACH50, EquivalentLeakageArea, ACHnatural) |>
+  select(CFM50, ACH50, EquivalentLeakageArea, ACHnatural, commentsairleaks) |>
+  mutate(across(everything(), as.character)) |>
   pivot_longer(
     cols = everything(),
     names_to = "Info",
@@ -922,9 +932,10 @@ table_3_4 <- table_3_4 |>
       CFM50 = "CFM50:",
       ACH50 = "ACH50:",
       EquivalentLeakageArea = "Equivalent leakage area:",
-      ACHnatural = "ACHnatural:"
+      ACHnatural = "ACHnatural:",
+      commentsairleaks = "Comments About Air Leakage:"
     ),
-    Info = factor(Info, levels = c("CFM50:", "ACH50:", "Equivalent leakage area:", "ACHnatural:"))
+    Info = factor(Info, levels = c("CFM50:", "ACH50:", "Equivalent leakage area:", "ACHnatural:", "Comments About Air Leakage:"))
   )
 
 # Add the description vector with the dynamic percentage
@@ -937,9 +948,9 @@ table_3_4$Description <- c(
     percentage, 
     "% of its air every hour. Over one day, the house goes through ", 
     round(ACHnatural * 24, 0), 
-    " complete air changes."
+    " complete air changes."),
+  "Move somewhere else in this section, just putting it here for now so it makes it into the report."
   )
-)
 
 
 
