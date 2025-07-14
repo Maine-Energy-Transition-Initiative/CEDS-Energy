@@ -28,6 +28,7 @@ if (!requireNamespace("flextable", quietly = TRUE)) {
   install.packages("flextable")
 }
 library(flextable)
+library(officer)
 library(readr)
 library(here)
 library(dplyr)
@@ -817,6 +818,8 @@ We recommend the following upgrades for your home. Detailed information about th
 #| echo: false
 #| warning: false
 
+my_border <- fp_border(color = "black", width = 1)
+
 ft_summary_recs <- flextable(ranked_clean_recommendations) |>
   set_table_properties(width = 0.8, layout = "fixed") |> 
   
@@ -836,7 +839,12 @@ ft_summary_recs <- flextable(ranked_clean_recommendations) |>
   padding(padding.top = 4,
           padding.bottom = 4,
           padding.left = 4,
-          padding.right = 4)
+          padding.right = 4) |>
+
+  border_remove() |>
+  border_outer(border = my_border) |> 
+  border_inner_h(border = my_border) |>
+  border_inner_v(border = my_border)
 
 ft_summary_recs
 
@@ -853,7 +861,10 @@ ft_summary_recs
 #| eval: true
 #| echo: false
 
+my_border <- fp_border(color = "black", width = 1)
+
 ft_all_basics <- flextable(all_basics) |>
+  delete_part(part = "header") |>
   set_table_properties(width = 0.8, layout = "fixed") |> 
   
   # Set font and size
@@ -872,7 +883,12 @@ ft_all_basics <- flextable(all_basics) |>
   padding(padding.top = 4,
           padding.bottom = 4,
           padding.left = 4,
-          padding.right = 4)
+          padding.right = 4) |>
+
+  border_remove() |>
+  border_outer(border = my_border) |> 
+  border_inner_h(border = my_border) |>
+  border_inner_v(border = my_border)
 
 ft_all_basics
 ```
@@ -918,24 +934,39 @@ exterior_3.2 <- clean_audit_data|>
 #| label: 3.2 Exterior table
 #| eval: true
 #| echo: false
-gt_exterior_3.2 <- gt(exterior_3.2) |>
-  tab_options(table.width = pct(100))|>
-  cols_width(
-    Info ~ px(200),
-    Values ~ px(450)
-  )|>
-  tab_options(column_labels.hidden = TRUE)#|>
-  #tab_style(
-    #style = cell_borders(
-     # sides = "all",
-     # color = "blue",
-     # weight = px(3)
-   # ),
-   # locations = list(cells_column_labels())
- # )
 
-gt_exterior_3.2
 
+my_border <- fp_border(color = "black", width = 1)
+
+ft_exterior <- flextable(exterior_3.2) |>
+  delete_part(part = "header") |>
+  set_table_properties(width = 0.8, layout = "fixed") |> 
+  
+  # Set font and size
+  fontsize(size = 11, part = "all") |>
+  font(fontname = "Arial", part = "all") |>
+  
+  # Align text left and top
+  align(align = "left", part = "all") |>
+  valign(valign = "top", part = "all") |>
+  
+  # Column widths
+  width(j = ~Info, width = 2) |>
+  width(j = ~Values, width = 4) |>
+  
+  # Enable padding (in pts)
+  padding(padding.top = 4,
+          padding.bottom = 4,
+          padding.left = 4,
+          padding.right = 4) |>
+
+  border_remove() |>
+  border_outer(border = my_border) |> 
+  border_inner_h(border = my_border) |>
+  border_inner_v(border = my_border)
+
+
+ft_exterior
 ```
 
 ### Interior/Living space
@@ -944,15 +975,37 @@ gt_exterior_3.2
 #| label: 3.3 interior
 #| eval: true
 #| echo: false
-gt_all_interior <- gt(all_interior) |>
-  tab_options(table.width = pct(100))|>
-  cols_width(
-    Info ~ px(150),
-    Values ~ px(100)
-  )|>
-  tab_options(column_labels.hidden = TRUE)
 
-gt_all_interior
+my_border <- fp_border(color = "black", width = 1)
+
+ft_interior <- flextable(all_interior) |>
+  delete_part(part = "header") |>
+  set_table_properties(width = 0.8, layout = "fixed") |> 
+  
+  # Set font and size
+  fontsize(size = 11, part = "all") |>
+  font(fontname = "Arial", part = "all") |>
+  
+  # Align text left and top
+  align(align = "left", part = "all") |>
+  valign(valign = "top", part = "all") |>
+  
+  # Column widths
+  width(j = ~Info, width = 2) |>
+  width(j = ~Values, width = 4) |>
+  
+  # Enable padding (in pts)
+  padding(padding.top = 4,
+          padding.bottom = 4,
+          padding.left = 4,
+          padding.right = 4) |>
+
+  border_remove() |>
+  border_outer(border = my_border) |> 
+  border_inner_h(border = my_border) |>
+  border_inner_v(border = my_border)
+
+ft_interior
 ```
 
 ### Blower Door / Air Leakage Test
@@ -1072,27 +1125,37 @@ table_3_4$Description <- c(
 #| eval: true
 #| echo: false
 
-gt_all_blower_door_auto <- gt(table_3_4) |>
-  cols_width(
-    Info ~ px(150),
-    Values ~ px(100),
-    Description ~ px(400)
-  ) |>
-  cols_align(align = "left", columns = everything()) |>
-  cols_label(
-    Info = "",
-    Values = "",
-    Description = ""
-  ) |>
-  tab_options(
-    table.width = pct(100),
-    table.font.size = px(11),
-    data_row.padding = px(4),
-    column_labels.hidden = TRUE,
-    table.align = "left"
-  )
+my_border <- fp_border(color = "black", width = 1)
 
-gt_all_blower_door_auto
+ft_blower_door <- flextable(table_3_4) |>
+  delete_part(part = "header") |>
+  set_table_properties(width = 0.8, layout = "fixed") |> 
+  
+  # Set font and size
+  fontsize(size = 11, part = "all") |>
+  font(fontname = "Arial", part = "all") |>
+  
+  # Align text left and top
+  align(align = "left", part = "all") |>
+  valign(valign = "top", part = "all") |>
+  
+  # Column widths
+  width(j = ~Info, width = 1) |>
+  width(j = ~Values, width = 1) |>
+  width(j = ~Description, width = 4) |>
+  
+  # Enable padding (in pts)
+  padding(padding.top = 4,
+          padding.bottom = 4,
+          padding.left = 4,
+          padding.right = 4) |>
+
+  border_remove() |>
+  border_outer(border = my_border) |> 
+  border_inner_h(border = my_border) |>
+  border_inner_v(border = my_border)
+
+ft_blower_door
 
 ```
 
