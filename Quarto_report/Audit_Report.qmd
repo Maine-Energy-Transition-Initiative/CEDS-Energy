@@ -55,7 +55,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[32, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[25, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -1167,6 +1167,7 @@ gt_all_attic
 #| label: 3.6 basement/crawlspace table
 #| eval: true
 #| echo: false
+
 gt_all_basement <- gt(all_basement) |>
   tab_options(table.width = pct(100))|>
   cols_width(
@@ -1182,70 +1183,123 @@ gt_all_basement
 
 ```{r}
 #| label: setup 3.7 table
+#| eval: true
 #| echo: false
 
-all_electrical_mechanical <- clean_audit_data|>
+all_electrical_mechanical <- clean_audit_data |>
   
-# select only needed columns
+  # select only needed columns
   select(
     amperage_of_breaker_panel, 
     number_of_unused_breaker_spaces, 
     comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage, 
-    name_1,
-    name_2,
-    name_3,
-    fuel_type_1,
-    location_1,
-    ventilation_1,
+    name_1, name_2, name_3,
+    fuel_type_1, fuel_type_2, fuel_type_3,
+    location_1, location_2, location_3,
+    ventilation_1, ventilation_2, ventilation_3,
+    worst_case_did_the_appliance_pass_spillage_test_1,
+    worst_case_did_the_appliance_pass_spillage_test_2,
+    worst_case_did_the_appliance_pass_spillage_test_3,
+    efficiency_percent_1, efficiency_percent_2, efficiency_percent_3,
+    air_free_co_reading_ppm_1, air_free_co_reading_ppm_2, air_free_co_reading_ppm_3,
+    could_you_perform_combustion_safety_tests_in_worst_case_scenario_1,
+    could_you_perform_combustion_safety_tests_in_worst_case_scenario_2,
+    could_you_perform_combustion_safety_tests_in_worst_case_scenario_3,
     write_everything_about_other_appliances
-    )|>
+  ) |>
   
-# join information into one column for breaker panel in 3.7
-  mutate('Electrical Panel:'= paste0(
-    "The electrical panel has and  amperage of ", 
+  # join information into one column for breaker panel in 3.7
+  mutate(`Electrical Panel:` = paste0(
+    "The electrical panel has an amperage of ", 
     amperage_of_breaker_panel, 
     ". There are ", 
     number_of_unused_breaker_spaces, 
     " unused breaker spaces. ", 
-    comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage))|>
+    comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage
+  )) |>
   
-  mutate('Appliance 1:' = paste0(
-            "The ", 
-            `name_1`,
-            " runs on ",
-            `fuel_type_1`,
-            " . It is located in the ",
-            `location_1`,
-            " and has ",
-            `ventilation_1`,
-            " ventilation.")
-         ) |>
+  mutate(`Appliance 1:` = ifelse(
+    could_you_perform_combustion_safety_tests_in_worst_case_scenario_1 == "Yes",
+    paste0(
+      "The ", name_1, " runs on ", fuel_type_1, 
+      ". It is located in the ", location_1, 
+      " and has ", ventilation_1, " ventilation. ",
+      "We performed combustion safety tests on this appliance. ",
+      "The appliance ", worst_case_did_the_appliance_pass_spillage_test_1, " the backdrafting test. ",
+      "The backdrafting test verifies that combustion gasses are properly venting to the outside and not entering the living space. ",
+      "The appliance had an efficiency of ", efficiency_percent_1, 
+      "% and an air free carbon monoxide reading of ", air_free_co_reading_ppm_1, " parts per million. ",
+      "MAKE COMMENTS ABOUT EFFICIENCY AND CO READING."
+    ),
+    paste0(
+      "The ", name_1, " runs on ", fuel_type_1, 
+      ". It is located in the ", location_1, 
+      " and has ", ventilation_1, " ventilation."
+    )
+  )) |>
   
-  mutate('Appliance 2:' = `name_2`) |>
+  mutate(`Appliance 2:` = ifelse(
+    could_you_perform_combustion_safety_tests_in_worst_case_scenario_2 == "Yes",
+    paste0(
+      "The ", name_2, " runs on ", fuel_type_2, 
+      ". It is located in the ", location_2, 
+      " and has ", ventilation_2, " ventilation. ",
+      "We performed combustion safety tests on this appliance. ",
+      "The appliance ", worst_case_did_the_appliance_pass_spillage_test_2, " the backdrafting test. ",
+      "The backdrafting test verifies that combustion gasses are properly venting to the outside and not entering the living space. ",
+      "The appliance had an efficiency of ", efficiency_percent_2, 
+      "% and an air free carbon monoxide reading of ", air_free_co_reading_ppm_2, " parts per million. ",
+      "MAKE COMMENTS ABOUT EFFICIENCY AND CO READING."
+    ),
+    paste0(
+      "The ", name_2, " runs on ", fuel_type_2, 
+      ". It is located in the ", location_2, 
+      " and has ", ventilation_2, " ventilation."
+    )
+  )) |>
   
-  mutate('Appliance 3:' = `name_3`) |>
+  mutate(`Appliance 3:` = ifelse(
+    could_you_perform_combustion_safety_tests_in_worst_case_scenario_3 == "Yes",
+    paste0(
+      "The ", name_3, " runs on ", fuel_type_3, 
+      ". It is located in the ", location_3, 
+      " and has ", ventilation_3, " ventilation. ",
+      "We performed combustion safety tests on this appliance. ",
+      "The appliance ", worst_case_did_the_appliance_pass_spillage_test_3, " the backdrafting test. ",
+      "The backdrafting test verifies that combustion gasses are properly venting to the outside and not entering the living space. ",
+      "The appliance had an efficiency of ", efficiency_percent_3, 
+      "% and an air free carbon monoxide reading of ", air_free_co_reading_ppm_3, " parts per million. ",
+      "MAKE COMMENTS ABOUT EFFICIENCY AND CO READING."
+    ),
+    paste0(
+      "The ", name_3, " runs on ", fuel_type_3, 
+      ". It is located in the ", location_3, 
+      " and has ", ventilation_3, " ventilation."
+    )
+  )) |>
   
-  mutate('Other Combustion Appliances:' = `write_everything_about_other_appliances`) |>
+  mutate(`Other Combustion Appliances:` = write_everything_about_other_appliances) |>
   
-  mutate('Other:' = paste0("**Make rows for all other appliances including fridges, freezers, any combustion appliances that are not included above, electric heating, AC units, ...**")) |>
+  mutate(`Other:` = paste0("**Make rows for all other appliances including fridges, freezers, any combustion appliances that are not included above, electric heating, AC units, ...**")) |>
   
-# select columns
-select(
-  `Electrical Panel:`,
-  `Appliance 1:`,
-  `Appliance 2:`,
-  `Appliance 3:`,
-  `Other Combustion Appliances:`,
-  `Other:`
-  )|>
+  # select columns
+  select(
+    `Electrical Panel:`,
+    `Appliance 1:`,
+    `Appliance 2:`,
+    `Appliance 3:`,
+    `Other Combustion Appliances:`,
+    `Other:`
+  ) |>
   
-# pivot
+  # pivot
   pivot_longer(
-    cols = everything() ,
-    names_to = "Info" ,
-    values_to = "Values") |>
+    cols = everything(),
+    names_to = "Info",
+    values_to = "Values"
+  ) |>
   
-# arrange
+  # arrange
   arrange(factor(Info, levels = c(
     "Electrical Panel:",
     "Appliance 1:",
@@ -1254,13 +1308,14 @@ select(
     "Other Combustion Appliances:",
     "Other:"
   )))
-  
+
+# Build GT table
 gt_all_electrical_mechanical <- gt(all_electrical_mechanical) |>
-  tab_options(table.width = pct(100))|>
+  tab_options(table.width = pct(100)) |>
   cols_width(
     Info ~ px(200),
-    Values ~ px(450),
-  )|>
+    Values ~ px(450)
+  ) |>
   tab_options(column_labels.hidden = TRUE)
 
 gt_all_electrical_mechanical
