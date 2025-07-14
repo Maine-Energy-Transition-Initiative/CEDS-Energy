@@ -816,24 +816,8 @@ We recommend the following upgrades for your home. Detailed information about th
 #| eval: true
 #| echo: false
 #| warning: false
-#gt_ranked_recommendations <- gt(ranked_clean_recommendations) |>
-#  tab_options(table.width = pct(100),
-#              table.font.size = 12,)|>
-#  cols_width(
-#    Recommendations ~ px(200),
-#    Description ~ px(450)
-#  )|>
-#  opt_table_font(
-#  font = list("Arial"),
-#  size = 12,
-  
-#)
 
-#gt_ranked_recommendations
-
-library(flextable)
-
-flextable_table <- flextable(ranked_clean_recommendations) |>
+ft_summary_recs <- flextable(ranked_clean_recommendations) |>
   set_table_properties(width = 0.8, layout = "fixed") |> 
   
   # Set font and size
@@ -854,8 +838,7 @@ flextable_table <- flextable(ranked_clean_recommendations) |>
           padding.left = 4,
           padding.right = 4)
 
-flextable_table
-
+ft_summary_recs
 
 ```
 
@@ -869,21 +852,29 @@ flextable_table
 #| label: 3.1 basics table
 #| eval: true
 #| echo: false
-gt_all_basics <- gt(all_basics) |>
-  tab_options(table.width = pct(100),
-              table.font.size = 12,)|>
-  cols_width(
-    Info ~ px(200),
-    Values ~ px(450)
-  )|>
-  tab_options(column_labels.hidden = TRUE)
-  #cols_label(
-  #  Info = "",
- #   Values = ""
- # )
-  
 
-gt_all_basics
+ft_all_basics <- flextable(all_basics) |>
+  set_table_properties(width = 0.8, layout = "fixed") |> 
+  
+  # Set font and size
+  fontsize(size = 11, part = "all") |>
+  font(fontname = "Arial", part = "all") |>
+  
+  # Align text left and top
+  align(align = "left", part = "all") |>
+  valign(valign = "top", part = "all") |>
+  
+  # Column widths
+  width(j = ~Info, width = 2) |>
+  width(j = ~Values, width = 4) |>
+  
+  # Enable padding (in pts)
+  padding(padding.top = 4,
+          padding.bottom = 4,
+          padding.left = 4,
+          padding.right = 4)
+
+ft_all_basics
 ```
 
 ### Exterior
@@ -920,8 +911,6 @@ exterior_3.2 <- clean_audit_data|>
   
   #bind rows with the exterior doors and windows
   rbind(exterior_doors, exterior_windows)
-
-  
 
 ```
 
