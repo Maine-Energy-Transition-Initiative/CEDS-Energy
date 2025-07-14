@@ -55,7 +55,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[25, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[33, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -951,13 +951,12 @@ Air leaks are a big source of heat gain in warm weather and heat loss in cold we
 
 # Calculate blower door metrics
 table_3_4 <- clean_audit_data |>
-  select(`cfm50`, `comments_about_air_leakage`, `volume_of_conditioned_space_cubic_feet`) |>
+  select(`cfm50`, `volume_of_conditioned_space_cubic_feet`) |>
   
   transmute(
     CFM50 = as.numeric(cfm50),
     ACH50 = CFM50 * 60 / as.numeric(volume_of_conditioned_space_cubic_feet),
-    EquivalentLeakageArea = CFM50 / 10,
-    commentsairleaks = comments_about_air_leakage
+    EquivalentLeakageArea = CFM50 / 10
   )
 
 # Calculate N-factor
@@ -989,13 +988,12 @@ table_3_4 <- table_3_4 |>
     CFM50 = round(CFM50, 0),
     ACH50 = round(ACH50, 0),
     EquivalentLeakageArea = round(EquivalentLeakageArea, 0),
-    ACHnatural = round(ACHnatural, 1),
-    commentsairleaks = commentsairleaks
+    ACHnatural = round(ACHnatural, 1)
   )
 
 # Pivot longer
 table_3_4 <- table_3_4 |>
-  select(CFM50, ACH50, EquivalentLeakageArea, ACHnatural, commentsairleaks) |>
+  select(CFM50, ACH50, EquivalentLeakageArea, ACHnatural) |>
   mutate(across(everything(), as.character)) |>
   pivot_longer(
     cols = everything(),
@@ -1021,10 +1019,14 @@ table_3_4 <- table_3_4 |>
       CFM50 = "CFM50:",
       ACH50 = "ACH50:",
       EquivalentLeakageArea = "Equivalent leakage area:",
-      ACHnatural = "ACHnatural:",
-      commentsairleaks = "Comments About Air Leakage:"
+      ACHnatural = "ACHnatural:"
     ),
-    Info = factor(Info, levels = c("CFM50:", "ACH50:", "Equivalent leakage area:", "ACHnatural:", "Comments About Air Leakage:"))
+    Info = factor(Info, levels = c(
+      "CFM50:", 
+      "ACH50:", 
+      "Equivalent leakage area:", 
+      "ACHnatural:"
+      ))
   )
 
 # Add the description vector with the dynamic percentage
@@ -1037,14 +1039,12 @@ table_3_4$Description <- c(
     percentage, 
     "% of its air every hour. Over one day, the house goes through ", 
     round(ACHnatural * 24, 0), 
-    " complete air changes."),
-  "Move somewhere else in this section, just putting it here for now so it makes it into the report."
+    " complete air changes.")
   )
 
 
 
 ```
-
 
 ```{r}
 #| label: 3.5 blower door table display
@@ -1127,7 +1127,20 @@ ggsave("achnatural_ggplot1.png", width=15, height=5)
 
 Using a thermal imaging camera, we looked for major air leakage locations and thermal bridging. Thermal bridging occurs when heat enters or leaves a house through material that lets heat through more easily than the house’s insulation. This often occurs with wall studs and ceiling joists.
 
-We conducted the audit in the summer, when the air outside the house is hotter than inside the house. Therefore, the warmer (red, orange, and yellow) areas in the thermal pictures below show where air leakage and thermal bridgin are taking place, as these are the areas where hot air and heat from the outside are being pulled into the cooler house.
+We conducted the audit in the summer, when the air outside the house is hotter than inside the house. Therefore, the warmer (red, orange, and yellow) areas in the thermal pictures below show where air leakage and thermal bridging are taking place, as these are the areas where hot air and heat from the outside are being pulled into the cooler house.
+
+ADD INFRARED IMAGES TABLE
+
+```{r}
+#| label: air leak comments
+#| eval: true
+#| echo: false
+#| results: asis
+
+airleaks_comments <- clean_audit_data$comments_about_air_leakage
+cat(airleaks_comments)
+
+```
 
 ### Attic
 
