@@ -1199,19 +1199,61 @@ gt_all_basement
 
 all_electrical_mechanical <- clean_audit_data|>
   
-  #select only needed columns
-  select(amperage_of_breaker_panel, number_of_unused_breaker_spaces, comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage)|>
+# select only needed columns
+  select(
+    amperage_of_breaker_panel, 
+    number_of_unused_breaker_spaces, 
+    comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage, 
+    name_1,
+    name_2,
+    name_3,
+    write_everything_about_other_appliances
+    )|>
   
-  #join information into one column for breaker panel in 3.7
-  mutate('Electrical panel:'= paste0("The electrical panel has and  amperage of ", amperage_of_breaker_panel, ". There are ", number_of_unused_breaker_spaces, " unused breaker spaces. ", comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage))|>
+# join information into one column for breaker panel in 3.7
+  mutate('Electrical Panel:'= paste0(
+    "The electrical panel has and  amperage of ", 
+    amperage_of_breaker_panel, 
+    ". There are ", 
+    number_of_unused_breaker_spaces, 
+    " unused breaker spaces. ", 
+    comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage))|>
   
-  #delete unwanted columns, the once that were used to create joined columns
-  select(-c(1:3))|>
+  mutate('Appliance 1:' = `name_1`) |>
   
-  #pivot horizontal columns to be displayed vertical in the rows
-  pivot_longer(cols = everything() ,
+  mutate('Appliance 2:' = `name_2`) |>
+  
+  mutate('Appliance 3:' = `name_3`) |>
+  
+  mutate('Other Combustion Appliances:' = `write_everything_about_other_appliances`) |>
+  
+  mutate('Other:' = paste0("**Make rows for all other appliances including fridges, freezers, any combustion appliances that are not included above, electric heating, AC units, ...**")) |>
+  
+# select columns
+select(
+  `Electrical Panel:`,
+  `Appliance 1:`,
+  `Appliance 2:`,
+  `Appliance 3:`,
+  `Other Combustion Appliances:`,
+  `Other:`
+  )|>
+  
+# pivot
+  pivot_longer(
+    cols = everything() ,
     names_to = "Info" ,
-    values_to = "Values")
+    values_to = "Values") |>
+  
+# arrange
+  arrange(factor(Info, levels = c(
+    "Electrical Panel:",
+    "Appliance 1:",
+    "Appliance 2:",
+    "Appliance 3:",
+    "Other Combustion Appliances:",
+    "Other:"
+  )))
   
 gt_all_electrical_mechanical <- gt(all_electrical_mechanical) |>
   tab_options(table.width = pct(100))|>
@@ -1222,6 +1264,7 @@ gt_all_electrical_mechanical <- gt(all_electrical_mechanical) |>
   tab_options(column_labels.hidden = TRUE)
 
 gt_all_electrical_mechanical
+
 
 ```
 
