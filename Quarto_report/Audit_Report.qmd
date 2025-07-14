@@ -1232,30 +1232,38 @@ cat(airleaks_comments)
 #| label: 3.5 attic table
 #| eval: true
 #| echo: false
-gt_all_attic <- gt(all_attic) |>
-  tab_options(table.width = pct(100))|>
-  cols_width(
-    Info ~ px(200),
-    Values ~ px(450),
-  )|>
-  tab_options(column_labels.hidden = TRUE)|>
-  tab_options(table.font.size = 12)|>
-  tab_style(
-    style = list(
-      cell_borders(
-        sides = "all",
-        color = "#000",
-        weight = px(2)
-      )),
-    locations = cells_body()
-  )
-  #use it in all table to get rid of the column labels
-  #cols_label(
-   # Info = "",
-   # Values = ""
-  #)
 
-gt_all_attic
+my_border <- fp_border(color = "black", width = 1)
+
+ft_attic <- flextable(all_attic) |>
+  delete_part(part = "header") |>
+  set_table_properties(width = 0.8, layout = "fixed") |> 
+  
+  # Set font and size
+  fontsize(size = 11, part = "all") |>
+  font(fontname = "Arial", part = "all") |>
+  
+  # Align text left and top
+  align(align = "left", part = "all") |>
+  valign(valign = "top", part = "all") |>
+  
+  # Column widths
+  width(j = ~Info, width = 2) |>
+  width(j = ~Values, width = 4 )|>
+  
+  # Enable padding (in pts)
+  padding(padding.top = 4,
+          padding.bottom = 4,
+          padding.left = 4,
+          padding.right = 4) |>
+
+  border_remove() |>
+  border_outer(border = my_border) |> 
+  border_inner_h(border = my_border) |>
+  border_inner_v(border = my_border)
+
+ft_attic
+
 ```
 
 ### Basement
@@ -1265,15 +1273,36 @@ gt_all_attic
 #| eval: true
 #| echo: false
 
-gt_all_basement <- gt(all_basement) |>
-  tab_options(table.width = pct(100))|>
-  cols_width(
-    Info ~ px(200),
-    Values ~ px(450),
-  )|>
-  tab_options(column_labels.hidden = TRUE)
+my_border <- fp_border(color = "black", width = 1)
 
-gt_all_basement
+ft_basement <- flextable(all_basement) |>
+  delete_part(part = "header") |>
+  set_table_properties(width = 0.8, layout = "fixed") |> 
+  
+  # Set font and size
+  fontsize(size = 11, part = "all") |>
+  font(fontname = "Arial", part = "all") |>
+  
+  # Align text left and top
+  align(align = "left", part = "all") |>
+  valign(valign = "top", part = "all") |>
+  
+  # Column widths
+  width(j = ~Info, width = 2) |>
+  width(j = ~Values, width = 4 )|>
+  
+  # Enable padding (in pts)
+  padding(padding.top = 4,
+          padding.bottom = 4,
+          padding.left = 4,
+          padding.right = 4) |>
+
+  border_remove() |>
+  border_outer(border = my_border) |> 
+  border_inner_h(border = my_border) |>
+  border_inner_v(border = my_border)
+
+ft_basement
 ```
 
 ### Electrical and Mechanical Systems
@@ -1406,16 +1435,38 @@ all_electrical_mechanical <- clean_audit_data |>
     "Other:"
   )))
 
-# Build GT table
-gt_all_electrical_mechanical <- gt(all_electrical_mechanical) |>
-  tab_options(table.width = pct(100)) |>
-  cols_width(
-    Info ~ px(200),
-    Values ~ px(450)
-  ) |>
-  tab_options(column_labels.hidden = TRUE)
+# build table
 
-gt_all_electrical_mechanical
+my_border <- fp_border(color = "black", width = 1)
+
+ft_mechanic <- flextable(all_electrical_mechanical) |>
+  delete_part(part = "header") |>
+  set_table_properties(width = 0.8, layout = "fixed") |> 
+  
+  # Set font and size
+  fontsize(size = 11, part = "all") |>
+  font(fontname = "Arial", part = "all") |>
+  
+  # Align text left and top
+  align(align = "left", part = "all") |>
+  valign(valign = "top", part = "all") |>
+  
+  # Column widths
+  width(j = ~Info, width = 2) |>
+  width(j = ~Values, width = 4 )|>
+  
+  # Enable padding (in pts)
+  padding(padding.top = 4,
+          padding.bottom = 4,
+          padding.left = 4,
+          padding.right = 4) |>
+
+  border_remove() |>
+  border_outer(border = my_border) |> 
+  border_inner_h(border = my_border) |>
+  border_inner_v(border = my_border)
+
+ft_mechanic
 
 
 ```
@@ -1492,21 +1543,38 @@ all_energy_bills <- left_join(quantity_energy_bills, cost_energy_bills, by = "Ty
     Cost = dollar(round(as.numeric(Cost), 0))
   )
 
-# 4. Format final GT table
-gt_all_energy_bills <- gt(all_energy_bills) |>
-  cols_label(
-    Type = "Type",
-    Amount = "Amount",
-    Cost = "Cost"
-  ) |>
-  cols_width(
-    Type ~ px(220),
-    Amount ~ px(220),
-    Cost ~ px(220)
-  ) |>
-  tab_options(table.width = pct(100))
+# make table
 
-gt_all_energy_bills
+my_border <- fp_border(color = "black", width = 1)
+
+ft_energy <- flextable(all_energy_bills) |>
+  set_table_properties(width = 0.8, layout = "fixed") |> 
+  
+  # Set font and size
+  fontsize(size = 11, part = "all") |>
+  font(fontname = "Arial", part = "all") |>
+  
+  # Align text left and top
+  align(align = "left", part = "all") |>
+  valign(valign = "top", part = "all") |>
+  
+  # Column widths
+  width(j = ~Type, width = 2) |>
+  width(j = ~Amount, width = 2 )|>
+  width(j = ~Cost, width = 2 )|>
+  
+  # Enable padding (in pts)
+  padding(padding.top = 4,
+          padding.bottom = 4,
+          padding.left = 4,
+          padding.right = 4) |>
+
+  border_remove() |>
+  border_outer(border = my_border) |> 
+  border_inner_h(border = my_border) |>
+  border_inner_v(border = my_border)
+
+ft_energy
   
 ```
 
