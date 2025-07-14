@@ -3336,7 +3336,9 @@ if( duct_air_sealing_and_insulation == TRUE){
 }
 
 if(duct_air_sealing_and_insulation == TRUE){
-  cat("*Estimated Costs/Benefits/Incentives*
+  cat("
+  
+  *Estimated Costs/Benefits/Incentives*
 
 ", auto_duct_air_sealing_insulation_estimates$Description )
 }else{
