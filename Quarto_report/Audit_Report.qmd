@@ -801,19 +801,6 @@ if(energy_sources_googlesheets$combustion_propane == TRUE){
 
 ```
 
-```{r}
-#| label: gas option in 1.5 chapter
-#| echo: false
-#| results: asis
-#| eval: false
-
-if(energy_sources_googlesheets$combustion_propane == TRUE){
-  cat("We also performed gas leak detection tests on your propane appliance(s).")
-}else{
-  cat("")
-  }
-```
-
 {{< pagebreak >}}
 
 ## Summary of Recommendations
@@ -1207,6 +1194,9 @@ all_electrical_mechanical <- clean_audit_data|>
     name_1,
     name_2,
     name_3,
+    fuel_type_1,
+    location_1,
+    ventilation_1,
     write_everything_about_other_appliances
     )|>
   
@@ -1219,7 +1209,17 @@ all_electrical_mechanical <- clean_audit_data|>
     " unused breaker spaces. ", 
     comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage))|>
   
-  mutate('Appliance 1:' = `name_1`) |>
+  mutate('Appliance 1:' = paste0(
+            "The ", 
+            `name_1`,
+            " runs on ",
+            `fuel_type_1`,
+            " . It is located in the ",
+            `location_1`,
+            " and has ",
+            `ventilation_1`,
+            " ventilation.")
+         ) |>
   
   mutate('Appliance 2:' = `name_2`) |>
   
