@@ -7,7 +7,7 @@ format:
     number-sections: true
     number-depth: 3
     number-offset: 0
-    reference-doc: custom-reference-doc.docx
+    reference-doc: custom-reference-2.docx
     results: asis
     
 css: styles.css
@@ -55,7 +55,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[33, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[32, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -819,8 +819,8 @@ gt_ranked_recommendations <- gt(ranked_clean_recommendations) |>
     Description ~ px(450)
   )|>
   opt_table_font(
-  font = list("Aptos"),
-  size = 16,
+  font = list("Arial"),
+  size = 12,
   
 )
 
@@ -1339,41 +1339,88 @@ gt_all_electrical_mechanical
 ### Energy Bills
 
 ```{r}
-#| label: setup section 3.8
+#| label: setup-3-8-energy-bills
 #| echo: false
 
-quantity_energy_bills <- clean_audit_data|>
-  
-  #select all the columns that will be used
-  select(gallons_of_heating_oil, gallons_of_kerosene, gallons_of_propane, k_wh_of_electricity, cords_of_firewood,  tons_of_pellets, write_the_quantity_and_measuring_unit)|>
-  
-   #pivot horizontal columns to be displayed vertical in the rows
-  pivot_longer(cols = c(gallons_of_heating_oil, gallons_of_kerosene, gallons_of_propane, k_wh_of_electricity, cords_of_firewood,  tons_of_pellets, write_the_quantity_and_measuring_unit),
-    names_to = "Type" ,
-    values_to = "kWh/gallons/cords/tonns")|>
-  mutate(Type = recode(Type, gallons_of_heating_oil = "Heating oil", gallons_of_kerosene = "Kerosene" , gallons_of_propane = "Propane", k_wh_of_electricity = "Electricity", cords_of_firewood = "Firewood",  tons_of_pellets = "Pellets", write_the_quantity_and_measuring_unit = "Type the name of other energy source"))
-  
+# 1. Select and reshape quantity data
+quantity_energy_bills <- clean_audit_data |>
+  select(
+    gallons_of_heating_oil,
+    gallons_of_kerosene,
+    gallons_of_propane,
+    k_wh_of_electricity,
+    cords_of_firewood,
+    tons_of_pellets,
+    write_the_quantity_and_measuring_unit
+  ) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Type",
+    values_to = "Amount"
+  ) |>
+  mutate(
+    Type = recode(
+      Type,
+      gallons_of_heating_oil = "Heating Oil",
+      gallons_of_kerosene = "Kerosene",
+      gallons_of_propane = "Propane",
+      k_wh_of_electricity = "Electricity",
+      cords_of_firewood = "Firewood",
+      tons_of_pellets = "Pellets",
+      write_the_quantity_and_measuring_unit = "Other"
+    )
+  )
 
-cost_energy_bills <- clean_audit_data|>
-  select(cost_in_dollars_heating_oil, cost_in_dollars_kerosene, cost_in_dollars_propane, cost_in_dollars_electricity, cost_in_dollars_firewood, cost_in_dollars_pellets, cost_in_dollars_other)|>
-  
-  #pivot horizontal columns to be displayed vertical in the rows
-  pivot_longer(cols = c(cost_in_dollars_heating_oil, cost_in_dollars_kerosene, cost_in_dollars_propane, cost_in_dollars_electricity, cost_in_dollars_firewood, cost_in_dollars_pellets, cost_in_dollars_other),
-    names_to = "Type2" ,
-    values_to = "Cost (USD)")
+# 2. Select and reshape cost data
+cost_energy_bills <- clean_audit_data |>
+  select(
+    cost_in_dollars_heating_oil,
+    cost_in_dollars_kerosene,
+    cost_in_dollars_propane,
+    cost_in_dollars_electricity,
+    cost_in_dollars_firewood,
+    cost_in_dollars_pellets,
+    cost_in_dollars_other
+  ) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Type",
+    values_to = "Cost"
+  ) |>
+  mutate(
+    Type = recode(
+      Type,
+      cost_in_dollars_heating_oil = "Heating Oil",
+      cost_in_dollars_kerosene = "Kerosene",
+      cost_in_dollars_propane = "Propane",
+      cost_in_dollars_electricity = "Electricity",
+      cost_in_dollars_firewood = "Firewood",
+      cost_in_dollars_pellets = "Pellets",
+      cost_in_dollars_other = "Other"
+    )
+  )
 
-all_energy_bills <- quantity_energy_bills|>
-  cbind(cost_energy_bills)|>
-   filter(`Cost (USD)` != is.na(NA))#|>
-   #select(-3)
+# 3. Combine quantity and cost into one table and clean up
+all_energy_bills <- left_join(quantity_energy_bills, cost_energy_bills, by = "Type") |>
+  filter(!is.na(Amount) | !is.na(Cost)) |>
+  mutate(
+    Amount = comma(round(as.numeric(Amount), 0)),
+    Cost = dollar(round(as.numeric(Cost), 0))
+  )
 
+# 4. Format final GT table
 gt_all_energy_bills <- gt(all_energy_bills) |>
-  tab_options(table.width = pct(100))|>
+  cols_label(
+    Type = "Type",
+    Amount = "Amount",
+    Cost = "Cost"
+  ) |>
   cols_width(
     Type ~ px(220),
-    `kWh/gallons/cords/tonns` ~ px(220),
-    `Cost (USD)` ~ px(220)
-  )
+    Amount ~ px(220),
+    Cost ~ px(220)
+  ) |>
+  tab_options(table.width = pct(100))
 
 gt_all_energy_bills
   
