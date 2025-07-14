@@ -24,6 +24,10 @@ params:
 #| warning: false
 
 # load packages
+if (!requireNamespace("flextable", quietly = TRUE)) {
+  install.packages("flextable")
+}
+library(flextable)
 library(readr)
 library(here)
 library(dplyr)
@@ -811,20 +815,48 @@ We recommend the following upgrades for your home. Detailed information about th
 #| label: 2. summery table
 #| eval: true
 #| echo: false
-gt_ranked_recommendations <- gt(ranked_clean_recommendations) |>
-  tab_options(table.width = pct(100),
-              table.font.size = 12,)|>
-  cols_width(
-    Recommendations ~ px(200),
-    Description ~ px(450)
-  )|>
-  opt_table_font(
-  font = list("Arial"),
-  size = 12,
+#| warning: false
+#gt_ranked_recommendations <- gt(ranked_clean_recommendations) |>
+#  tab_options(table.width = pct(100),
+#              table.font.size = 12,)|>
+#  cols_width(
+#    Recommendations ~ px(200),
+#    Description ~ px(450)
+#  )|>
+#  opt_table_font(
+#  font = list("Arial"),
+#  size = 12,
   
-)
+#)
 
-gt_ranked_recommendations
+#gt_ranked_recommendations
+
+library(flextable)
+
+flextable_table <- flextable(ranked_clean_recommendations) |>
+  set_table_properties(width = 0.8, layout = "fixed") |> 
+  
+  # Set font and size
+  fontsize(size = 11, part = "all") |>
+  font(fontname = "Arial", part = "all") |>
+  
+  # Align text left and top
+  align(align = "left", part = "all") |>
+  valign(valign = "top", part = "all") |>
+  
+  # Column widths
+  width(j = ~Recommendations, width = 2) |>
+  width(j = ~Description, width = 4) |>
+  
+  # Enable padding (in pts)
+  padding(padding.top = 4,
+          padding.bottom = 4,
+          padding.left = 4,
+          padding.right = 4)
+
+flextable_table
+
+
 ```
 
 {{< pagebreak >}}
