@@ -308,6 +308,7 @@ annual_totals_cords <- annual_totals_cords[, -c(2,3,4)]
 ```{r}
 #| label: energy sources tons setup
 #| echo: false
+
 tons_sources <- energy_cost_quantity |>
   select('Tons of pellets')|>
     pivot_longer(cols = c('Tons of pellets'),
@@ -518,9 +519,6 @@ exterior_3.2 <- clean_audit_data|>
          comment_about_condition_of_the_siding, 
          condition_of_the_siding)|>
   
-  #remove values with N/A
-  #mutate(select() str_detect(`Energy Sources`, pattern = #"[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))
-  
   #join information into one column for roof type in 3.2
   mutate('Roof type:'= paste0('The house has a ', roof_type, ' roof.', 'The roof is in ',  condition_of_the_roof ,' condition. ', comment_about_condition_of_the_roof))|>
   
@@ -571,34 +569,34 @@ all_interior <- clean_audit_data|>
          which_appliance_did_you_measure_1, which_appliance_did_you_measure_2
          )|>
   
-  #make conditional stock framing description
+# make conditional stock framing description
 mutate(stock_framing = case_when(
   framing_type == "Balloon" ~ 'The house has balloon framing, which means the wall cavities extend the full height of the building (from the foundation to the roof). These wall cavities are often interconnected with the floor and ceiling cavities. This framing type can create connected passageways for air to leave the house and rodents to enter the house. ', 
   framing_type == "Platform" ~ 'The house has platform framing, which means that wall cavities do not extend the full height of the building, but are instead separated by floors. ', TRUE ~ 'NA'
   ))|>
 
- #join information into one column for stud insulation in 3.3
+ # join information into one column for stud insulation in 3.3
   mutate('Walls:'= paste0( stock_framing, "The exterior walls are insulated with ", wall_stud_insulation_type, " insulation. This insulation is ", thickness_of_the_wall_stud_insulation, " inches thick and in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, " condition. ", "This gives the exterior walls an R-value of around CALCULATE. A material’s R-value tells us how good it is at stopping heat flow, the bigger the number, the better. For comparison, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. ", any_additional_comments_on_wall_stud_insulation
   ))|>
   
-  #join information into one column for kitchen in 3.3
+# join information into one column for kitchen in 3.3
   mutate('Kitchen:'= paste0('During the audit we measured the electricity consumption of the ',which_appliance_did_you_measure_1, ". It used ", k_wh_reading_1, " kWh in ", time_passed_since_installation_of_kilowatt_meter_1, " hours. We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. The ", which_appliance_did_you_measure_2, " used ", k_wh_reading_2, " kWh in ", time_passed_since_installation_of_kilowatt_meter_2, " hours.  We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. ", general_comment_about_the_kitchen ))|>
   
-  #delete unwanted columns, the once that were used to create joined columns
+# delete unwanted columns, the once that were used to create joined columns
   select(-c(1:9, 12:19))|>
   
-  #pivot horizontal columns to be displayed vertical in the rows
+# pivot horizontal columns to be displayed vertical in the rows
   pivot_longer(cols = everything() ,
     names_to = "Info" ,
     values_to = "Values")|>
   
-  #rename the columns as they need to be displayed
+# rename the columns as they need to be displayed
   mutate(Info = recode(Info,  
                        general_comment_about_the_living_room = 'Living room:', 
                        general_comment_about_the_bathroom_s = 'Bathroom(s):'
                        ))|>
   
-  #arrange the rows in wanted order
+# arrange the rows in wanted order
   arrange(factor(Info, levels = c('Walls:')))
 
 ```
@@ -688,7 +686,7 @@ table_3_4 <- table_3_4 |>
       ))
   )
 
-# Add the description vector with the dynamic percentage
+# Add the description vector with dynamic percentage and number of air changes per day
 table_3_4$Description <- c(
   "CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.",
   "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.",
@@ -914,7 +912,7 @@ all_basement <- clean_audit_data |>
 
 all_electrical_mechanical <- clean_audit_data |>
   
-  # select only needed columns
+# select only needed columns
   select(
     amperage_of_breaker_panel, 
     number_of_unused_breaker_spaces, 
@@ -934,7 +932,7 @@ all_electrical_mechanical <- clean_audit_data |>
     write_everything_about_other_appliances
   ) |>
   
-  # join information into one column for breaker panel in 3.7
+# join information into one column for breaker panel in 3.7
   mutate(`Electrical Panel:` = paste0(
     "The electrical panel has an amperage of ", 
     amperage_of_breaker_panel, 
@@ -1190,11 +1188,6 @@ energy_sources_googlesheets <- clean_audit_data |>
 
 clean_audit_data <- clean_audit_data|>
   mutate(combustionst1 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1, pattern = "Yes")) |>
-
-#I will have to add this later
-##|>
- ## mutate(combustionst2 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_2, ##pattern = "Yes"))|>
- ## mutate(combustionst3 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_3, pattern = "Yes"))
 
   mutate(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1 = ifelse(is.na(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1), 0, could_you_perform_combustion_safety_tests_in_worst_case_scenario_1))|>
   mutate(combustionst1 = str_detect(could_you_perform_combustion_safety_tests_in_worst_case_scenario_1, pattern = "Yes"))|>
@@ -1457,48 +1450,81 @@ ft_blower_door
 ```
 
 ```{r}
-#| label: ACHnatural ggplot chart
+#| label: blower door ACHnatural diagram
 #| eval: true
 #| echo: false
-#| warning: false
 #| output: false
 
-#make ACH natural separated from other values
+# Subset table to get just ACHnatural info
+ACHnatural_ggplot <- table_3_4 |>
+  filter(Info == "ACHnatural:") |>
+  mutate(Values = as.numeric(Values))
 
-ACHnatural_ggplot <- table_3_4[-c(1:3),]
-ACHnatural_ggplot$Values<- as.numeric(ACHnatural_ggplot$Values)
+# Define reference ACHn thresholds and their labels
+thresholds <- c(0, 0.04, 0.35, 0.41, 0.6, 1)
+labels <- c(
+  "0" = "0",
+  "0.04" = "Passive House",
+  "0.35" = "Very Tight Mechanical\nVentilation Needed",
+  "0.41" = "Tight",
+  "0.6" = "Leaky",
+  "1" = "Very Leaky"
+)
 
-ggplot(ACHnatural_ggplot, aes(y=1))+
-  geom_bar(width=0.5, fill ="#F5F5DC")+ #add8e6
-  #scale_fill_gradient(low="#FF8888",high="#FF0000")+ #it should be working idk why it doesn't
-   geom_vline(xintercept = ACHnatural_ggplot$Values, #move this to before previous x intercepts
-                linetype=1, colour="#59D2FE", size= 3)+ #(maybe have coditional color? red if ACHn is to big blue if it's ok)
-  #scale_x_reverse()+
-  geom_vline(xintercept= c(0, 0.04, 0.35, 0.41, 0.6,1), size= 1.3, ylim)+
- 
-  
-#The vline text lables
-  geom_text(aes(x=ACHnatural_ggplot$Values, label="Your Home", y=1.15), nudge_x= -0.03, colour="#59D2FE", angle=90, size = 5, ) + #move this to the legend
-  geom_text(aes(x=0, label="", y=1), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
-  geom_text(aes(x=0.04, label="Passive House", y=1), nudge_x= -0.02, colour="black", angle=90, size = 5, fontface="bold") +
-  geom_text(aes(x=0.35, label="Very Tight Mechanical \nVentilation Needed", y=1), nudge_x= -0.05, colour="black", angle=90, size = 5, fontface="bold") +
-  geom_text(aes(x=0.41, label="Tight", y=1), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
-  geom_text(aes(x=0.6, label="Leaky", y=1), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
-  geom_text(aes(x=1, label="Very Leaky", y=1), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
-  
-#The vline text values 
-  geom_text(aes(x=ACHnatural_ggplot$Values, label=ACHnatural_ggplot$Values, y=0.85), nudge_x= -0.03, colour="#59D2FE", angle=90, size = 5) + #move this to the legend
-  geom_text(aes(x=0, label="0", y=0.8), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
-  geom_text(aes(x=0.04, label="0.04", y=0.8), nudge_x= -0.02, colour="black", angle=90, size = 5, fontface="bold") +
-  geom_text(aes(x=0.35, label="0.35", y=0.8), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
-  geom_text(aes(x=0.41, label="0.41", y=0.8), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
-  geom_text(aes(x=0.6, label="0.6", y=0.8), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
-  geom_text(aes(x=1, label="1", y=0.8), nudge_x= -0.03, colour="black", angle=90, size = 5, fontface="bold") +
-  theme_void() 
+# Base plot with empty bar for context
+ggplot(ACHnatural_ggplot, aes(y = 1)) +
+  # Background bar
+  geom_bar(width = 0.5, fill = "#EDEDED") +
 
-ggsave("achnatural_ggplot1.png", width=15, height=5)
+  # Your home's ACHn value line
+  geom_vline(xintercept = ACHnatural_ggplot$Values, 
+             linetype = 1, colour = "#1B9E77", size = 3) +
 
+  # Reference threshold lines
+  geom_vline(xintercept = thresholds, size = 1.3) +
 
+  # Labels for "Your Home" and value
+  geom_text(aes(x = Values, label = "Your Home", y = 1.15), 
+            nudge_x = -0.03, colour = "#1B9E77", angle = 90, size = 5) +
+  geom_text(aes(x = Values, label = round(Values, 2), y = 0.85), 
+            nudge_x = -0.03, colour = "#1B9E77", angle = 90, size = 5) +
+
+  # Labels for each reference line (description and numeric)
+  geom_text(aes(x = 0, y = 1, label = labels["0"]), 
+            nudge_x = -0.03, angle = 90, size = 5, fontface = "bold") +
+  geom_text(aes(x = 0, y = 0.8, label = "0"), 
+            nudge_x = -0.03, angle = 90, size = 5, fontface = "bold") +
+
+  geom_text(aes(x = 0.04, y = 1, label = labels["0.04"]), 
+            nudge_x = -0.02, angle = 90, size = 5, fontface = "bold") +
+  geom_text(aes(x = 0.04, y = 0.8, label = "0.04"), 
+            nudge_x = -0.02, angle = 90, size = 5, fontface = "bold") +
+
+  geom_text(aes(x = 0.35, y = 1, label = labels["0.35"]), 
+            nudge_x = -0.05, angle = 90, size = 5, fontface = "bold") +
+  geom_text(aes(x = 0.35, y = 0.8, label = "0.35"), 
+            nudge_x = -0.03, angle = 90, size = 5, fontface = "bold") +
+
+  geom_text(aes(x = 0.41, y = 1, label = labels["0.41"]), 
+            nudge_x = -0.03, angle = 90, size = 5, fontface = "bold") +
+  geom_text(aes(x = 0.41, y = 0.8, label = "0.41"), 
+            nudge_x = -0.03, angle = 90, size = 5, fontface = "bold") +
+
+  geom_text(aes(x = 0.6, y = 1, label = labels["0.6"]), 
+            nudge_x = -0.03, angle = 90, size = 5, fontface = "bold") +
+  geom_text(aes(x = 0.6, y = 0.8, label = "0.6"), 
+            nudge_x = -0.03, angle = 90, size = 5, fontface = "bold") +
+
+  geom_text(aes(x = 1, y = 1, label = labels["1"]), 
+            nudge_x = -0.03, angle = 90, size = 5, fontface = "bold") +
+  geom_text(aes(x = 1, y = 0.8, label = "1"), 
+            nudge_x = -0.03, angle = 90, size = 5, fontface = "bold") +
+
+  # Minimal clean theme
+  theme_void()
+
+# Save as image
+ggsave("achnatural_ggplot1.png", width = 15, height = 5)
 
 ```
 
