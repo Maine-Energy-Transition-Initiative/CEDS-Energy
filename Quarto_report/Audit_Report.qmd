@@ -118,7 +118,37 @@ ranked_sect_4_problem_text <- sect_4_problem_text_googlesheets |>
 ```
 
 ```{r}
-#| label: Setup basics data
+#| label: attic data for basics setup
+#| echo: false
+  
+#select all attic data for basics
+attic_basics <- energy_test_googlesheets |>
+  select( `Attic insulation type`, 
+          `Quality of attic insulation's installation? Assess worst part of installation.`, 
+          `Thickness of the attic insulation (inches), at the thinnest location`)|>
+
+#join the data into one row
+    mutate(Attic_all = paste0(
+      "Insulated with ",
+      `Attic insulation type`,
+      " insulation, ",
+      `Thickness of the attic insulation (inches), at the thinnest location`,
+      " inches thick."
+      ))|>
+  
+      mutate(Info = 'Attic:',
+          .before =`Attic insulation type`)
+
+#remove unwanted rows
+attic_basics <- attic_basics[,-c(2,3,4)]
+  
+#rename the column heading
+names(attic_basics) <- c('Info', 'Values')
+  
+```
+
+```{r}
+#| label: basics setup
 #| echo: false
 #| warning: false
 #| eval: true
@@ -186,36 +216,7 @@ double_other <- clean_audit_data |>
 ```
 
 ```{r}
-#| label: attic data for basics
-#| echo: false
-  
-#select all attic data for basics
-attic_basics <- energy_test_googlesheets |>
-  select( `Attic insulation type`, 
-          `Quality of attic insulation's installation? Assess worst part of installation.`, 
-          `Thickness of the attic insulation (inches), at the thinnest location`)|>
-
-#join the data into one row
-    mutate(Attic_all = paste(
-      `Attic insulation type`,
-      ",",
-      `Thickness of the attic insulation (inches), at the thinnest location`,
-      "inches"
-      ))|>
-  
-      mutate(Info = 'Attic:',
-          .before =`Attic insulation type`)
-
-#remove unwanted rows
-attic_basics <- attic_basics[,-c(2,3,4)]
-  
-#rename the column heading
-names(attic_basics) <- c('Info', 'Values')
-  
-```
-
-```{r}
-#| label: setup energy sources gallons
+#| label: energy sources gallons setup
 #| echo: false
 
 #select amount and pivot the energy sources using gallons 
@@ -251,7 +252,7 @@ annual_totals_gallon <- annual_totals_gallon[, -c(2,3,4)]
 ```
 
 ```{r}
-#| label: setup energy sources kWh
+#| label: energy sources kWh setup
 #| echo: false
 
 kWh_sources <- energy_cost_quantity |>
@@ -278,7 +279,7 @@ annual_totals_kWh <- annual_totals_kWh[, -c(2,3,4)]
 ```
 
 ```{r}
-#| label: setup energy sources cords
+#| label: energy sources cords setup
 #| echo: false
 
 cords_sources <- energy_cost_quantity |>
@@ -305,7 +306,7 @@ annual_totals_cords <- annual_totals_cords[, -c(2,3,4)]
 ```
 
 ```{r}
-#| label: setup energy sources tons
+#| label: energy sources tons setup
 #| echo: false
 tons_sources <- energy_cost_quantity |>
   select('Tons of pellets')|>
@@ -331,7 +332,7 @@ annual_totals_tons <- annual_totals_tons[, -c(2,3,4)]
 ```
 
 ```{r}
-#| label: setup energy sources other
+#| label: energy sources other setup
 #| echo: false
 
 other_sources <- energy_cost_quantity |>
@@ -358,7 +359,7 @@ annual_totals_other <- annual_totals_other[, -c(2,3,4)]
 ```
 
 ```{r}
-#| label: annual totals for energy sources chapter 3
+#| label: annual totals for energy sources chapter 3 setup
 #| echo: false
 annual_totals <- annual_totals_kWh|>
   rbind(annual_totals_gallon, annual_totals_cords, annual_totals_tons )
@@ -368,7 +369,7 @@ names(annual_totals) <- c('Info', 'Values')
 ```
 
 ```{r}
-#| label: all basics
+#| label: basics table setup
 #| echo: false
 
 # set up basics table
@@ -386,64 +387,7 @@ all_basics <- double_other |>
 ```
 
 ```{r}
-#| label: setup interior/living spaces for 3.3
-#| echo: false
-
-all_interior <- clean_audit_data|>
-  
-#select all columns that have information about interior/living spaces
-  select(wall_stud_insulation_type, 
-         thickness_of_the_wall_stud_insulation, 
-         quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, 
-         any_additional_comments_on_wall_stud_insulation, wall_continuous_insulation_type, 
-         thickness_of_the_wall_continuous_insulation, 
-         quality_of_wall_continuous_insulations_installation_assess_worst_part_of_installation, 
-         any_additional_comments_on_wall_continuous_insulation, 
-         framing_type, 
-         general_comment_about_the_living_room, 
-         general_comment_about_the_bathroom_s, 
-         general_comment_about_the_kitchen, 
-         k_wh_reading_1, 
-         k_wh_reading_2, 
-         time_passed_since_installation_of_kilowatt_meter_1, 
-         time_passed_since_installation_of_kilowatt_meter_2, 
-         which_appliance_did_you_measure_1, which_appliance_did_you_measure_2
-         )|>
-  
-  #make conditional stock framing description
-mutate(stock_framing = case_when(
-  framing_type == "Balloon" ~ 'The house has balloon framing, which means the wall cavities extend the full height of the building (from the foundation to the roof). These wall cavities are often interconnected with the floor and ceiling cavities. This framing type can create connected passageways for air to leave the house and rodents to enter the house. ', 
-  framing_type == "Platform" ~ 'The house has platform framing, which means that wall cavities do not extend the full height of the building, but are instead separated by floors. ', TRUE ~ 'NA'
-  ))|>
-
- #join information into one column for stud insulation in 3.3
-  mutate('Walls:'= paste0( stock_framing, "The exterior walls are insulated with ", wall_stud_insulation_type, " insulation. This insulation is ", thickness_of_the_wall_stud_insulation, " inches thick and in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, " condition. ", "This gives the exterior walls an R-value of around CALCULATE. A material’s R-value tells us how good it is at stopping heat flow, the bigger the number, the better. For comparison, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. ", any_additional_comments_on_wall_stud_insulation
-  ))|>
-  
-  #join information into one column for kitchen in 3.3
-  mutate('Kitchen:'= paste0('During the audit we measured the electricity consumption of the ',which_appliance_did_you_measure_1, ". It used ", k_wh_reading_1, " kWh in ", time_passed_since_installation_of_kilowatt_meter_1, " hours. We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. The ", which_appliance_did_you_measure_2, " used ", k_wh_reading_2, " kWh in ", time_passed_since_installation_of_kilowatt_meter_2, " hours.  We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. ", general_comment_about_the_kitchen ))|>
-  
-  #delete unwanted columns, the once that were used to create joined columns
-  select(-c(1:9, 12:19))|>
-  
-  #pivot horizontal columns to be displayed vertical in the rows
-  pivot_longer(cols = everything() ,
-    names_to = "Info" ,
-    values_to = "Values")|>
-  
-  #rename the columns as they need to be displayed
-  mutate(Info = recode(Info,  
-                       general_comment_about_the_living_room = 'Living room:', 
-                       general_comment_about_the_bathroom_s = 'Bathroom(s):'
-                       ))|>
-  
-  #arrange the rows in wanted order
-  arrange(factor(Info, levels = c('Walls:')))
-
-```
-
-```{r}
-#| label: setup exterior doors
+#| label: exterior doors setup
 #| echo: false
 #| eval: true
 
@@ -559,7 +503,207 @@ exterior_windows <- exterior_windows|>
 ```
 
 ```{r}
-#| label: attic data for 3.5
+#| label: exterior setup
+#| echo: false
+
+exterior_3.2 <- clean_audit_data|>
+  select(roof_type, 
+         roof_age, 
+         condition_of_the_roof, 
+         orientation_of_the_primary_roof_faces, 
+         comment_about_condition_of_the_roof, 
+         existing_moisture_control_strategies, 
+         condition_of_moisture_control_strategies, 
+         comments_about_existing_moisture_control_strategies,siding_type, 
+         comment_about_condition_of_the_siding, 
+         condition_of_the_siding)|>
+  
+  #remove values with N/A
+  #mutate(select() str_detect(`Energy Sources`, pattern = #"[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))
+  
+  #join information into one column for roof type in 3.2
+  mutate('Roof type:'= paste0('The house has a ', roof_type, ' roof.', 'The roof is in ',  condition_of_the_roof ,' condition. ', comment_about_condition_of_the_roof))|>
+  
+#join information into one column for moisture control in 3.2
+  mutate('Moisture control:' = paste0("The house has the following moisture control strategies: ", existing_moisture_control_strategies,'.  These were in ',condition_of_moisture_control_strategies, ' condition. ',comments_about_existing_moisture_control_strategies))|>
+  
+#join information into one column for siding in 3.2
+  mutate('Siding:' = paste0('The house has ', siding_type,'. The siding is in ', condition_of_the_siding, ' condition. ', comment_about_condition_of_the_siding))|>
+  
+#delete unwanted columns, the once that were used to create joined columns
+  select(-c(1,3,5:11))|>
+  
+#pivot horizontal columns to be displayed vertical in the rows
+  pivot_longer(cols = everything() ,
+    names_to = "Info" ,
+    values_to = "Values")|>
+  
+#rename the columns as they need to be displayed
+  mutate(Info = recode(Info,  roof_age = 'Roof age:', orientation_of_the_primary_roof_faces = 'Orientation:'))|>
+  
+  #bind rows with the exterior doors and windows
+  rbind(exterior_doors, exterior_windows)
+
+```
+
+```{r}
+#| label: interior setup
+#| echo: false
+
+all_interior <- clean_audit_data|>
+  
+#select all columns that have information about interior/living spaces
+  select(wall_stud_insulation_type, 
+         thickness_of_the_wall_stud_insulation, 
+         quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, 
+         any_additional_comments_on_wall_stud_insulation, wall_continuous_insulation_type, 
+         thickness_of_the_wall_continuous_insulation, 
+         quality_of_wall_continuous_insulations_installation_assess_worst_part_of_installation, 
+         any_additional_comments_on_wall_continuous_insulation, 
+         framing_type, 
+         general_comment_about_the_living_room, 
+         general_comment_about_the_bathroom_s, 
+         general_comment_about_the_kitchen, 
+         k_wh_reading_1, 
+         k_wh_reading_2, 
+         time_passed_since_installation_of_kilowatt_meter_1, 
+         time_passed_since_installation_of_kilowatt_meter_2, 
+         which_appliance_did_you_measure_1, which_appliance_did_you_measure_2
+         )|>
+  
+  #make conditional stock framing description
+mutate(stock_framing = case_when(
+  framing_type == "Balloon" ~ 'The house has balloon framing, which means the wall cavities extend the full height of the building (from the foundation to the roof). These wall cavities are often interconnected with the floor and ceiling cavities. This framing type can create connected passageways for air to leave the house and rodents to enter the house. ', 
+  framing_type == "Platform" ~ 'The house has platform framing, which means that wall cavities do not extend the full height of the building, but are instead separated by floors. ', TRUE ~ 'NA'
+  ))|>
+
+ #join information into one column for stud insulation in 3.3
+  mutate('Walls:'= paste0( stock_framing, "The exterior walls are insulated with ", wall_stud_insulation_type, " insulation. This insulation is ", thickness_of_the_wall_stud_insulation, " inches thick and in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, " condition. ", "This gives the exterior walls an R-value of around CALCULATE. A material’s R-value tells us how good it is at stopping heat flow, the bigger the number, the better. For comparison, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. ", any_additional_comments_on_wall_stud_insulation
+  ))|>
+  
+  #join information into one column for kitchen in 3.3
+  mutate('Kitchen:'= paste0('During the audit we measured the electricity consumption of the ',which_appliance_did_you_measure_1, ". It used ", k_wh_reading_1, " kWh in ", time_passed_since_installation_of_kilowatt_meter_1, " hours. We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. The ", which_appliance_did_you_measure_2, " used ", k_wh_reading_2, " kWh in ", time_passed_since_installation_of_kilowatt_meter_2, " hours.  We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. ", general_comment_about_the_kitchen ))|>
+  
+  #delete unwanted columns, the once that were used to create joined columns
+  select(-c(1:9, 12:19))|>
+  
+  #pivot horizontal columns to be displayed vertical in the rows
+  pivot_longer(cols = everything() ,
+    names_to = "Info" ,
+    values_to = "Values")|>
+  
+  #rename the columns as they need to be displayed
+  mutate(Info = recode(Info,  
+                       general_comment_about_the_living_room = 'Living room:', 
+                       general_comment_about_the_bathroom_s = 'Bathroom(s):'
+                       ))|>
+  
+  #arrange the rows in wanted order
+  arrange(factor(Info, levels = c('Walls:')))
+
+```
+
+```{r}
+#| label: blower door setup
+#| eval: true
+#| echo: false
+
+# Calculate blower door metrics
+table_3_4 <- clean_audit_data |>
+  select(`cfm50`, `volume_of_conditioned_space_cubic_feet`) |>
+  
+  transmute(
+    CFM50 = as.numeric(cfm50),
+    ACH50 = CFM50 * 60 / as.numeric(volume_of_conditioned_space_cubic_feet),
+    EquivalentLeakageArea = CFM50 / 10
+  )
+
+# Calculate N-factor
+n_factor_calculated <- clean_audit_data |>
+  transmute(
+    exposure_of_the_house,
+    number_of_floors,
+    NFactor = case_when(
+      exposure_of_the_house == "Low" & number_of_floors == 1 ~ 22.2,
+      exposure_of_the_house == "Low" & number_of_floors == 1.5 ~ 20.0,
+      exposure_of_the_house == "Low" & number_of_floors == 2 ~ 17.8,
+      exposure_of_the_house == "Low" & number_of_floors == 3 ~ 15.5,
+      exposure_of_the_house == "Moderate" & number_of_floors == 1 ~ 18.5,
+      exposure_of_the_house == "Moderate" & number_of_floors == 1.5 ~ 16.7,
+      exposure_of_the_house == "Moderate" & number_of_floors == 2 ~ 14.8,
+      exposure_of_the_house == "Moderate" & number_of_floors == 3 ~ 13.0,
+      exposure_of_the_house == "High" & number_of_floors == 1 ~ 16.7,
+      exposure_of_the_house == "High" & number_of_floors == 1.5 ~ 15.0,
+      exposure_of_the_house == "High" & number_of_floors == 2 ~ 13.3,
+      exposure_of_the_house == "High" & number_of_floors == 3 ~ 11.7
+    )
+  )
+
+# Combine and calculate ACHnatural
+table_3_4 <- table_3_4 |>
+  bind_cols(n_factor_calculated["NFactor"]) |>
+  mutate(
+    ACHnatural = ACH50 / NFactor,
+    CFM50 = round(CFM50, 0),
+    ACH50 = round(ACH50, 0),
+    EquivalentLeakageArea = round(EquivalentLeakageArea, 0),
+    ACHnatural = round(ACHnatural, 1)
+  )
+
+# Pivot longer
+table_3_4 <- table_3_4 |>
+  select(CFM50, ACH50, EquivalentLeakageArea, ACHnatural) |>
+  mutate(across(everything(), as.character)) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Info",
+    values_to = "Values"
+  )
+
+# Extract numeric ACHnatural value
+ACHnatural <- as.numeric(table_3_4$Values[table_3_4$Info == "ACHnatural"])
+
+# Calculate percentage
+percentage <- round(ACHnatural * 100, 1)
+
+# Format 'Values' column and relabel
+table_3_4 <- table_3_4 |>
+  mutate(
+    Values = case_when(
+      Info == "EquivalentLeakageArea" ~ paste0(Values, " in²"),
+      TRUE ~ as.character(Values)
+    ),
+    Info = recode(
+      Info,
+      CFM50 = "CFM50:",
+      ACH50 = "ACH50:",
+      EquivalentLeakageArea = "Equivalent leakage area:",
+      ACHnatural = "ACHnatural:"
+    ),
+    Info = factor(Info, levels = c(
+      "CFM50:", 
+      "ACH50:", 
+      "Equivalent leakage area:", 
+      "ACHnatural:"
+      ))
+  )
+
+# Add the description vector with the dynamic percentage
+table_3_4$Description <- c(
+  "CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.",
+  "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.",
+  "This is the area equivalent to all of the air leaks in the house combined.",
+  paste0(
+    "Accounting for the volume of the home, this means that the house exchanges ",
+    percentage, 
+    "% of its air every hour. Over one day, the house goes through ", 
+    round(ACHnatural * 24, 0), 
+    " complete air changes.")
+  )
+```
+
+```{r}
+#| label: attic setup
 #| echo: false
 
 # pivot
@@ -571,31 +715,50 @@ attic_double <- energy_test_googlesheets|>
 
 # select all attic questions
 attic_character <- energy_test_googlesheets|>
-  select(`Attic Area`, `Does attic have air sealing?`, `Comment about air sealing`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Is there ductwork in the attic?`, `Comment about condition of the ductwork in the attic`,`Are bathroom and kitchen exhaust fans being vented to outside?`,`Attic ventilation type?`, `Quality of attic insulation's installation? Assess worst part of installation.`,`Attic insulation type`, `Thickness of the attic insulation (inches), at the thinnest location`, `Attic hatch insulation type`, `Thickness of the attic hatch insulation (inches), at the thinnest location`, `Quality of attic hatch insulation's installation? Assess worst part of installation.`, `Are there any interior features?`, `Quality of attic insulation's installation? Assess worst part of installation.`, `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, `Pitch of primary roof face (degrees)`, `Are bathroom and kitchen exhaust fans being vented to outside?`)|>
-  
+  select(`Attic Area`, 
+         `Does attic have air sealing?`, 
+         `Comment about air sealing`, 
+         `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, 
+         `Any hazards or mold/moisture/asbestos present in the attic?`, 
+         `Describe the hazards or mold/moisture in the attic`, 
+         `Is there ductwork in the attic?`, 
+         `Comment about condition of the ductwork in the attic`,
+         `Are bathroom and kitchen exhaust fans being vented to outside?`,
+         `Attic ventilation type?`, 
+         `Quality of attic insulation's installation? Assess worst part of installation.`,
+         `Attic insulation type`, 
+         `Thickness of the attic insulation (inches), at the thinnest location`, 
+         `Attic hatch insulation type`, 
+         `Thickness of the attic hatch insulation (inches), at the thinnest location`, 
+         `Quality of attic hatch insulation's installation? Assess worst part of installation.`, 
+         `Are there any interior features?`, 
+         `Quality of attic insulation's installation? Assess worst part of installation.`, 
+         `Any additional comments on attic insulation, e.g., is the entire attic insulated?`, 
+         `Pitch of primary roof face (degrees)`, 
+         `Are bathroom and kitchen exhaust fans being vented to outside?`)|>
   
 # create all rows for table
     mutate(`Area:` = paste0(`Attic Area`, " ft²")) |>
   
       mutate(`Insulation Type:` = paste0("The attic is insulated with ", `Attic insulation type`, " insulation. The insulation is ", `Thickness of the attic insulation (inches), at the thinnest location`, " inches thick.")) |>
   
-        mutate(`Insulation Condition:` = paste0("The insulation is in ", `Quality of attic insulation's installation? Assess worst part of installation.`, " condition. ", `Any additional comments on attic insulation, e.g., is the entire attic insulated?`)) |>
+      mutate(`Insulation Condition:` = paste0("The insulation is in ", `Quality of attic insulation's installation? Assess worst part of installation.`, " condition. ", `Any additional comments on attic insulation, e.g., is the entire attic insulated?`)) |>
   
-          mutate(`Pitch of Primary Roof Face:` = paste0("The pitch of the primary roof face is ", `Pitch of primary roof face (degrees)`, " degrees.")) |>
+      mutate(`Pitch of Primary Roof Face:` = paste0("The pitch of the primary roof face is ", `Pitch of primary roof face (degrees)`, " degrees.")) |>
   
-            mutate(`Exhaust Ducts:` = paste0("Exhaust ducts from bathroom and kitchen fans are ", `Are bathroom and kitchen exhaust fans being vented to outside?`, ". Venting exhaust fans to outside is important so that they do not add potentially harmful moisture into the attic space and so they can function properly.")) |>
+      mutate(`Exhaust Ducts:` = paste0("Exhaust ducts from bathroom and kitchen fans are ", `Are bathroom and kitchen exhaust fans being vented to outside?`, ". Venting exhaust fans to outside is important so that they do not add potentially harmful moisture into the attic space and so they can function properly.")) |>
   
-              mutate(`R-Value:` = paste0("The thickness and condition of the insulation give the insulation an R-value of R-DECIDE per inch. This gives the attic a total R-value of R-CALCULATE. For comparison, current Maine building code requires an attic R-value of R-60, and we typically recommend at least R-80 in attics to keep the house warm in the winter and cool in the summer.")) |>
+      mutate(`R-Value:` = paste0("The thickness and condition of the insulation give the insulation an R-value of R-DECIDE per inch. This gives the attic a total R-value of R-CALCULATE. For comparison, current Maine building code requires an attic R-value of R-60, and we typically recommend at least R-80 in attics to keep the house warm in the winter and cool in the summer.")) |>
   
-                mutate(`Air Sealing:` = paste0("The attic is ",`Does attic have air sealing?`,". ",`Comment about air sealing`))|>
+      mutate(`Air Sealing:` = paste0("The attic is ",`Does attic have air sealing?`,". ",`Comment about air sealing`))|>
   
-                  mutate(`Attic Hatch:` = paste0("The attic hatch is insulated with ", `Attic hatch insulation type`, " insulation that is ", `Thickness of the attic hatch insulation (inches), at the thinnest location`, " inches thick. The insulation is in ", `Quality of attic hatch insulation's installation? Assess worst part of installation.`, " condition and the hatch is **air sealed / not air sealed**.")) |>
+      mutate(`Attic Hatch:` = paste0("The attic hatch is insulated with ", `Attic hatch insulation type`, " insulation that is ", `Thickness of the attic hatch insulation (inches), at the thinnest location`, " inches thick. The insulation is in ", `Quality of attic hatch insulation's installation? Assess worst part of installation.`, " condition and the hatch is **air sealed / not air sealed**.")) |>
   
-                    mutate(`Other observations:` = paste(`Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Are there any interior features?`))|>
+      mutate(`Other observations:` = paste(`Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Are there any interior features?`))|>
   
-                      mutate(`Ventilation:` = paste0("The attic is ventilated by ", `Attic ventilation type?`, ". Attic ventilation is important to keep the attic space and insulation dry and in good condition."))|>
+      mutate(`Ventilation:` = paste0("The attic is ventilated by ", `Attic ventilation type?`, ". Attic ventilation is important to keep the attic space and insulation dry and in good condition."))|>
   
-                        mutate(`Ducts:` = paste0(`Is there ductwork in the attic?`, ". ", `Comment about condition of the ductwork in the attic`))
+      mutate(`Ducts:` = paste0(`Is there ductwork in the attic?`, ". ", `Comment about condition of the ductwork in the attic`))
 
 
 # format table
@@ -631,7 +794,7 @@ all_attic <- bind_rows(attic_double, attic_character) |>
 ```
 
 ```{r}
-#| label: basement data for 3.6
+#| label: basement setup
 #| echo: false
 
 all_basement <- clean_audit_data |>
@@ -742,6 +905,207 @@ all_basement <- clean_audit_data |>
     "Other Observations:"
   )))
 
+```
+
+```{r}
+#| label: mechanical systems setup
+#| eval: true
+#| echo: false
+
+all_electrical_mechanical <- clean_audit_data |>
+  
+  # select only needed columns
+  select(
+    amperage_of_breaker_panel, 
+    number_of_unused_breaker_spaces, 
+    comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage, 
+    name_1, name_2, name_3,
+    fuel_type_1, fuel_type_2, fuel_type_3,
+    location_1, location_2, location_3,
+    ventilation_1, ventilation_2, ventilation_3,
+    worst_case_did_the_appliance_pass_spillage_test_1,
+    worst_case_did_the_appliance_pass_spillage_test_2,
+    worst_case_did_the_appliance_pass_spillage_test_3,
+    efficiency_percent_1, efficiency_percent_2, efficiency_percent_3,
+    air_free_co_reading_ppm_1, air_free_co_reading_ppm_2, air_free_co_reading_ppm_3,
+    could_you_perform_combustion_safety_tests_in_worst_case_scenario_1,
+    could_you_perform_combustion_safety_tests_in_worst_case_scenario_2,
+    could_you_perform_combustion_safety_tests_in_worst_case_scenario_3,
+    write_everything_about_other_appliances
+  ) |>
+  
+  # join information into one column for breaker panel in 3.7
+  mutate(`Electrical Panel:` = paste0(
+    "The electrical panel has an amperage of ", 
+    amperage_of_breaker_panel, 
+    ". There are ", 
+    number_of_unused_breaker_spaces, 
+    " unused breaker spaces. ", 
+    comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage
+  )) |>
+  
+  mutate(`Appliance 1:` = ifelse(
+    could_you_perform_combustion_safety_tests_in_worst_case_scenario_1 == "Yes",
+    paste0(
+      "The ", name_1, " runs on ", fuel_type_1, 
+      ". It is located in the ", location_1, 
+      " and has ", ventilation_1, " ventilation. ",
+      "We performed combustion safety tests on this appliance. ",
+      "The appliance ", worst_case_did_the_appliance_pass_spillage_test_1, " the backdrafting test. ",
+      "The backdrafting test verifies that combustion gasses are properly venting to the outside and not entering the living space. ",
+      "The appliance had an efficiency of ", efficiency_percent_1, 
+      "% and an air free carbon monoxide reading of ", air_free_co_reading_ppm_1, " parts per million. ",
+      "MAKE COMMENTS ABOUT EFFICIENCY AND CO READING."
+    ),
+    paste0(
+      "The ", name_1, " runs on ", fuel_type_1, 
+      ". It is located in the ", location_1, 
+      " and has ", ventilation_1, " ventilation."
+    )
+  )) |>
+  
+  mutate(`Appliance 2:` = ifelse(
+    could_you_perform_combustion_safety_tests_in_worst_case_scenario_2 == "Yes",
+    paste0(
+      "The ", name_2, " runs on ", fuel_type_2, 
+      ". It is located in the ", location_2, 
+      " and has ", ventilation_2, " ventilation. ",
+      "We performed combustion safety tests on this appliance. ",
+      "The appliance ", worst_case_did_the_appliance_pass_spillage_test_2, " the backdrafting test. ",
+      "The backdrafting test verifies that combustion gasses are properly venting to the outside and not entering the living space. ",
+      "The appliance had an efficiency of ", efficiency_percent_2, 
+      "% and an air free carbon monoxide reading of ", air_free_co_reading_ppm_2, " parts per million. ",
+      "MAKE COMMENTS ABOUT EFFICIENCY AND CO READING."
+    ),
+    paste0(
+      "The ", name_2, " runs on ", fuel_type_2, 
+      ". It is located in the ", location_2, 
+      " and has ", ventilation_2, " ventilation."
+    )
+  )) |>
+  
+  mutate(`Appliance 3:` = ifelse(
+    could_you_perform_combustion_safety_tests_in_worst_case_scenario_3 == "Yes",
+    paste0(
+      "The ", name_3, " runs on ", fuel_type_3, 
+      ". It is located in the ", location_3, 
+      " and has ", ventilation_3, " ventilation. ",
+      "We performed combustion safety tests on this appliance. ",
+      "The appliance ", worst_case_did_the_appliance_pass_spillage_test_3, " the backdrafting test. ",
+      "The backdrafting test verifies that combustion gasses are properly venting to the outside and not entering the living space. ",
+      "The appliance had an efficiency of ", efficiency_percent_3, 
+      "% and an air free carbon monoxide reading of ", air_free_co_reading_ppm_3, " parts per million. ",
+      "MAKE COMMENTS ABOUT EFFICIENCY AND CO READING."
+    ),
+    paste0(
+      "The ", name_3, " runs on ", fuel_type_3, 
+      ". It is located in the ", location_3, 
+      " and has ", ventilation_3, " ventilation."
+    )
+  )) |>
+  
+  mutate(`Other Combustion Appliances:` = write_everything_about_other_appliances) |>
+  
+  mutate(`Other:` = paste0("**Make rows for all other appliances including fridges, freezers, any combustion appliances that are not included above, electric heating, AC units, ...**")) |>
+  
+  # select columns
+  select(
+    `Electrical Panel:`,
+    `Appliance 1:`,
+    `Appliance 2:`,
+    `Appliance 3:`,
+    `Other Combustion Appliances:`,
+    `Other:`
+  ) |>
+  
+  # pivot
+  pivot_longer(
+    cols = everything(),
+    names_to = "Info",
+    values_to = "Values"
+  ) |>
+  
+  # arrange
+  arrange(factor(Info, levels = c(
+    "Electrical Panel:",
+    "Appliance 1:",
+    "Appliance 2:",
+    "Appliance 3:",
+    "Other Combustion Appliances:",
+    "Other:"
+  )))
+
+```
+
+```{r}
+#| label: energy setup
+#| echo: false
+
+# 1. Select and reshape quantity data
+quantity_energy_bills <- clean_audit_data |>
+  select(
+    gallons_of_heating_oil,
+    gallons_of_kerosene,
+    gallons_of_propane,
+    k_wh_of_electricity,
+    cords_of_firewood,
+    tons_of_pellets,
+    write_the_quantity_and_measuring_unit
+  ) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Type",
+    values_to = "Amount"
+  ) |>
+  mutate(
+    Type = recode(
+      Type,
+      gallons_of_heating_oil = "Heating Oil",
+      gallons_of_kerosene = "Kerosene",
+      gallons_of_propane = "Propane",
+      k_wh_of_electricity = "Electricity",
+      cords_of_firewood = "Firewood",
+      tons_of_pellets = "Pellets",
+      write_the_quantity_and_measuring_unit = "Other"
+    )
+  )
+
+# 2. Select and reshape cost data
+cost_energy_bills <- clean_audit_data |>
+  select(
+    cost_in_dollars_heating_oil,
+    cost_in_dollars_kerosene,
+    cost_in_dollars_propane,
+    cost_in_dollars_electricity,
+    cost_in_dollars_firewood,
+    cost_in_dollars_pellets,
+    cost_in_dollars_other
+  ) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "Type",
+    values_to = "Cost"
+  ) |>
+  mutate(
+    Type = recode(
+      Type,
+      cost_in_dollars_heating_oil = "Heating Oil",
+      cost_in_dollars_kerosene = "Kerosene",
+      cost_in_dollars_propane = "Propane",
+      cost_in_dollars_electricity = "Electricity",
+      cost_in_dollars_firewood = "Firewood",
+      cost_in_dollars_pellets = "Pellets",
+      cost_in_dollars_other = "Other"
+    )
+  )
+
+# 3. Combine quantity and cost into one table and clean up
+all_energy_bills <- left_join(quantity_energy_bills, cost_energy_bills, by = "Type") |>
+  filter(!is.na(Amount) | !is.na(Cost)) |>
+  mutate(
+    Amount = comma(round(as.numeric(Amount), 0)),
+    Cost = dollar(round(as.numeric(Cost), 0))
+  )
 ```
 
 ```{r}
@@ -881,7 +1245,7 @@ if(energy_sources_googlesheets$combustion_propane == TRUE){
 We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report. These are organized from the least expensive/most cost-effective and easiest interventions to ones that are more challenging to implement.
 
 ```{r}
-#| label: 2. summery table
+#| label: summary of recs table
 #| eval: true
 #| echo: false
 #| warning: false
@@ -925,7 +1289,7 @@ ft_summary_recs
 ### Basics
 
 ```{r}
-#| label: 3.1 basics table
+#| label: basics table
 #| eval: true
 #| echo: false
 
@@ -963,43 +1327,9 @@ ft_all_basics
 
 ### Exterior
 
-```{r}
-#| label: setup exterior data 3.2
-#| echo: false
-
-exterior_3.2 <- clean_audit_data|>
-  select(roof_type, roof_age, condition_of_the_roof, orientation_of_the_primary_roof_faces, comment_about_condition_of_the_roof, existing_moisture_control_strategies, condition_of_moisture_control_strategies, comments_about_existing_moisture_control_strategies,siding_type, comment_about_condition_of_the_siding, condition_of_the_siding)|>
-  
-  #remove values with N/A
-  #mutate(select() str_detect(`Energy Sources`, pattern = #"[Hh]eat|Kerosene|Propane|Firewood|Pellets|Other"))
-  
-  #join information into one column for roof type in 3.2
-  mutate('Roof type:'= paste0('The house has a ', roof_type, ' roof.', 'The roof is in ',  condition_of_the_roof ,' condition. ', comment_about_condition_of_the_roof))|>
-  
-#join information into one column for moisture control in 3.2
-  mutate('Moisture control:' = paste0("The house has the following moisture control strategies: ", existing_moisture_control_strategies,'.  These were in ',condition_of_moisture_control_strategies, ' condition. ',comments_about_existing_moisture_control_strategies))|>
-  
-#join information into one column for siding in 3.2
-  mutate('Siding:' = paste0('The house has ', siding_type,'. The siding is in ', condition_of_the_siding, ' condition. ', comment_about_condition_of_the_siding))|>
-  
-#delete unwanted columns, the once that were used to create joined columns
-  select(-c(1,3,5:11))|>
-  
-#pivot horizontal columns to be displayed vertical in the rows
-  pivot_longer(cols = everything() ,
-    names_to = "Info" ,
-    values_to = "Values")|>
-  
-#rename the columns as they need to be displayed
-  mutate(Info = recode(Info,  roof_age = 'Roof age:', orientation_of_the_primary_roof_faces = 'Orientation:'))|>
-  
-  #bind rows with the exterior doors and windows
-  rbind(exterior_doors, exterior_windows)
-
-```
 
 ```{r}
-#| label: 3.2 Exterior table
+#| label: exterior table
 #| eval: true
 #| echo: false
 
@@ -1040,7 +1370,7 @@ ft_exterior
 ### Interior/Living space
 
 ```{r}
-#| label: 3.3 interior
+#| label: interior table
 #| eval: true
 #| echo: false
 
@@ -1086,110 +1416,9 @@ To find leaks, we used an infrared camera to check for unusually hot and cold sp
 
 Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.
 
-```{r}
-#| label: 3.4 blower door table set up
-#| eval: true
-#| echo: false
-
-# Calculate blower door metrics
-table_3_4 <- clean_audit_data |>
-  select(`cfm50`, `volume_of_conditioned_space_cubic_feet`) |>
-  
-  transmute(
-    CFM50 = as.numeric(cfm50),
-    ACH50 = CFM50 * 60 / as.numeric(volume_of_conditioned_space_cubic_feet),
-    EquivalentLeakageArea = CFM50 / 10
-  )
-
-# Calculate N-factor
-n_factor_calculated <- clean_audit_data |>
-  transmute(
-    exposure_of_the_house,
-    number_of_floors,
-    NFactor = case_when(
-      exposure_of_the_house == "Low" & number_of_floors == 1 ~ 22.2,
-      exposure_of_the_house == "Low" & number_of_floors == 1.5 ~ 20.0,
-      exposure_of_the_house == "Low" & number_of_floors == 2 ~ 17.8,
-      exposure_of_the_house == "Low" & number_of_floors == 3 ~ 15.5,
-      exposure_of_the_house == "Moderate" & number_of_floors == 1 ~ 18.5,
-      exposure_of_the_house == "Moderate" & number_of_floors == 1.5 ~ 16.7,
-      exposure_of_the_house == "Moderate" & number_of_floors == 2 ~ 14.8,
-      exposure_of_the_house == "Moderate" & number_of_floors == 3 ~ 13.0,
-      exposure_of_the_house == "High" & number_of_floors == 1 ~ 16.7,
-      exposure_of_the_house == "High" & number_of_floors == 1.5 ~ 15.0,
-      exposure_of_the_house == "High" & number_of_floors == 2 ~ 13.3,
-      exposure_of_the_house == "High" & number_of_floors == 3 ~ 11.7
-    )
-  )
-
-# Combine and calculate ACHnatural
-table_3_4 <- table_3_4 |>
-  bind_cols(n_factor_calculated["NFactor"]) |>
-  mutate(
-    ACHnatural = ACH50 / NFactor,
-    CFM50 = round(CFM50, 0),
-    ACH50 = round(ACH50, 0),
-    EquivalentLeakageArea = round(EquivalentLeakageArea, 0),
-    ACHnatural = round(ACHnatural, 1)
-  )
-
-# Pivot longer
-table_3_4 <- table_3_4 |>
-  select(CFM50, ACH50, EquivalentLeakageArea, ACHnatural) |>
-  mutate(across(everything(), as.character)) |>
-  pivot_longer(
-    cols = everything(),
-    names_to = "Info",
-    values_to = "Values"
-  )
-
-# Extract numeric ACHnatural value
-ACHnatural <- as.numeric(table_3_4$Values[table_3_4$Info == "ACHnatural"])
-
-# Calculate percentage
-percentage <- round(ACHnatural * 100, 1)
-
-# Format 'Values' column and relabel
-table_3_4 <- table_3_4 |>
-  mutate(
-    Values = case_when(
-      Info == "EquivalentLeakageArea" ~ paste0(Values, " in²"),
-      TRUE ~ as.character(Values)
-    ),
-    Info = recode(
-      Info,
-      CFM50 = "CFM50:",
-      ACH50 = "ACH50:",
-      EquivalentLeakageArea = "Equivalent leakage area:",
-      ACHnatural = "ACHnatural:"
-    ),
-    Info = factor(Info, levels = c(
-      "CFM50:", 
-      "ACH50:", 
-      "Equivalent leakage area:", 
-      "ACHnatural:"
-      ))
-  )
-
-# Add the description vector with the dynamic percentage
-table_3_4$Description <- c(
-  "CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.",
-  "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.",
-  "This is the area equivalent to all of the air leaks in the house combined.",
-  paste0(
-    "Accounting for the volume of the home, this means that the house exchanges ",
-    percentage, 
-    "% of its air every hour. Over one day, the house goes through ", 
-    round(ACHnatural * 24, 0), 
-    " complete air changes.")
-  )
-
-
-
-```
 
 ```{r}
-#| label: 3.5 blower door table display
+#| label: 3.5 blower door table
 #| eval: true
 #| echo: false
 
@@ -1375,135 +1604,11 @@ ft_basement
 
 ### Electrical and Mechanical Systems
 
+
 ```{r}
-#| label: setup 3.7 table
+#| label: mechanical systems table
 #| eval: true
 #| echo: false
-
-all_electrical_mechanical <- clean_audit_data |>
-  
-  # select only needed columns
-  select(
-    amperage_of_breaker_panel, 
-    number_of_unused_breaker_spaces, 
-    comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage, 
-    name_1, name_2, name_3,
-    fuel_type_1, fuel_type_2, fuel_type_3,
-    location_1, location_2, location_3,
-    ventilation_1, ventilation_2, ventilation_3,
-    worst_case_did_the_appliance_pass_spillage_test_1,
-    worst_case_did_the_appliance_pass_spillage_test_2,
-    worst_case_did_the_appliance_pass_spillage_test_3,
-    efficiency_percent_1, efficiency_percent_2, efficiency_percent_3,
-    air_free_co_reading_ppm_1, air_free_co_reading_ppm_2, air_free_co_reading_ppm_3,
-    could_you_perform_combustion_safety_tests_in_worst_case_scenario_1,
-    could_you_perform_combustion_safety_tests_in_worst_case_scenario_2,
-    could_you_perform_combustion_safety_tests_in_worst_case_scenario_3,
-    write_everything_about_other_appliances
-  ) |>
-  
-  # join information into one column for breaker panel in 3.7
-  mutate(`Electrical Panel:` = paste0(
-    "The electrical panel has an amperage of ", 
-    amperage_of_breaker_panel, 
-    ". There are ", 
-    number_of_unused_breaker_spaces, 
-    " unused breaker spaces. ", 
-    comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage
-  )) |>
-  
-  mutate(`Appliance 1:` = ifelse(
-    could_you_perform_combustion_safety_tests_in_worst_case_scenario_1 == "Yes",
-    paste0(
-      "The ", name_1, " runs on ", fuel_type_1, 
-      ". It is located in the ", location_1, 
-      " and has ", ventilation_1, " ventilation. ",
-      "We performed combustion safety tests on this appliance. ",
-      "The appliance ", worst_case_did_the_appliance_pass_spillage_test_1, " the backdrafting test. ",
-      "The backdrafting test verifies that combustion gasses are properly venting to the outside and not entering the living space. ",
-      "The appliance had an efficiency of ", efficiency_percent_1, 
-      "% and an air free carbon monoxide reading of ", air_free_co_reading_ppm_1, " parts per million. ",
-      "MAKE COMMENTS ABOUT EFFICIENCY AND CO READING."
-    ),
-    paste0(
-      "The ", name_1, " runs on ", fuel_type_1, 
-      ". It is located in the ", location_1, 
-      " and has ", ventilation_1, " ventilation."
-    )
-  )) |>
-  
-  mutate(`Appliance 2:` = ifelse(
-    could_you_perform_combustion_safety_tests_in_worst_case_scenario_2 == "Yes",
-    paste0(
-      "The ", name_2, " runs on ", fuel_type_2, 
-      ". It is located in the ", location_2, 
-      " and has ", ventilation_2, " ventilation. ",
-      "We performed combustion safety tests on this appliance. ",
-      "The appliance ", worst_case_did_the_appliance_pass_spillage_test_2, " the backdrafting test. ",
-      "The backdrafting test verifies that combustion gasses are properly venting to the outside and not entering the living space. ",
-      "The appliance had an efficiency of ", efficiency_percent_2, 
-      "% and an air free carbon monoxide reading of ", air_free_co_reading_ppm_2, " parts per million. ",
-      "MAKE COMMENTS ABOUT EFFICIENCY AND CO READING."
-    ),
-    paste0(
-      "The ", name_2, " runs on ", fuel_type_2, 
-      ". It is located in the ", location_2, 
-      " and has ", ventilation_2, " ventilation."
-    )
-  )) |>
-  
-  mutate(`Appliance 3:` = ifelse(
-    could_you_perform_combustion_safety_tests_in_worst_case_scenario_3 == "Yes",
-    paste0(
-      "The ", name_3, " runs on ", fuel_type_3, 
-      ". It is located in the ", location_3, 
-      " and has ", ventilation_3, " ventilation. ",
-      "We performed combustion safety tests on this appliance. ",
-      "The appliance ", worst_case_did_the_appliance_pass_spillage_test_3, " the backdrafting test. ",
-      "The backdrafting test verifies that combustion gasses are properly venting to the outside and not entering the living space. ",
-      "The appliance had an efficiency of ", efficiency_percent_3, 
-      "% and an air free carbon monoxide reading of ", air_free_co_reading_ppm_3, " parts per million. ",
-      "MAKE COMMENTS ABOUT EFFICIENCY AND CO READING."
-    ),
-    paste0(
-      "The ", name_3, " runs on ", fuel_type_3, 
-      ". It is located in the ", location_3, 
-      " and has ", ventilation_3, " ventilation."
-    )
-  )) |>
-  
-  mutate(`Other Combustion Appliances:` = write_everything_about_other_appliances) |>
-  
-  mutate(`Other:` = paste0("**Make rows for all other appliances including fridges, freezers, any combustion appliances that are not included above, electric heating, AC units, ...**")) |>
-  
-  # select columns
-  select(
-    `Electrical Panel:`,
-    `Appliance 1:`,
-    `Appliance 2:`,
-    `Appliance 3:`,
-    `Other Combustion Appliances:`,
-    `Other:`
-  ) |>
-  
-  # pivot
-  pivot_longer(
-    cols = everything(),
-    names_to = "Info",
-    values_to = "Values"
-  ) |>
-  
-  # arrange
-  arrange(factor(Info, levels = c(
-    "Electrical Panel:",
-    "Appliance 1:",
-    "Appliance 2:",
-    "Appliance 3:",
-    "Other Combustion Appliances:",
-    "Other:"
-  )))
-
-# build table
 
 my_border <- fp_border(color = "black", width = 1)
 
@@ -1535,83 +1640,16 @@ ft_mechanic <- flextable(all_electrical_mechanical) |>
   border_inner_v(border = my_border)
 
 ft_mechanic
-
-
 ```
+
 
 ### Energy Bills
 
+
 ```{r}
-#| label: setup-3-8-energy-bills
+#| label: energy table
+#| eval: true
 #| echo: false
-
-# 1. Select and reshape quantity data
-quantity_energy_bills <- clean_audit_data |>
-  select(
-    gallons_of_heating_oil,
-    gallons_of_kerosene,
-    gallons_of_propane,
-    k_wh_of_electricity,
-    cords_of_firewood,
-    tons_of_pellets,
-    write_the_quantity_and_measuring_unit
-  ) |>
-  pivot_longer(
-    cols = everything(),
-    names_to = "Type",
-    values_to = "Amount"
-  ) |>
-  mutate(
-    Type = recode(
-      Type,
-      gallons_of_heating_oil = "Heating Oil",
-      gallons_of_kerosene = "Kerosene",
-      gallons_of_propane = "Propane",
-      k_wh_of_electricity = "Electricity",
-      cords_of_firewood = "Firewood",
-      tons_of_pellets = "Pellets",
-      write_the_quantity_and_measuring_unit = "Other"
-    )
-  )
-
-# 2. Select and reshape cost data
-cost_energy_bills <- clean_audit_data |>
-  select(
-    cost_in_dollars_heating_oil,
-    cost_in_dollars_kerosene,
-    cost_in_dollars_propane,
-    cost_in_dollars_electricity,
-    cost_in_dollars_firewood,
-    cost_in_dollars_pellets,
-    cost_in_dollars_other
-  ) |>
-  pivot_longer(
-    cols = everything(),
-    names_to = "Type",
-    values_to = "Cost"
-  ) |>
-  mutate(
-    Type = recode(
-      Type,
-      cost_in_dollars_heating_oil = "Heating Oil",
-      cost_in_dollars_kerosene = "Kerosene",
-      cost_in_dollars_propane = "Propane",
-      cost_in_dollars_electricity = "Electricity",
-      cost_in_dollars_firewood = "Firewood",
-      cost_in_dollars_pellets = "Pellets",
-      cost_in_dollars_other = "Other"
-    )
-  )
-
-# 3. Combine quantity and cost into one table and clean up
-all_energy_bills <- left_join(quantity_energy_bills, cost_energy_bills, by = "Type") |>
-  filter(!is.na(Amount) | !is.na(Cost)) |>
-  mutate(
-    Amount = comma(round(as.numeric(Amount), 0)),
-    Cost = dollar(round(as.numeric(Cost), 0))
-  )
-
-# make table
 
 my_border <- fp_border(color = "black", width = 1)
 
@@ -1643,8 +1681,9 @@ ft_energy <- flextable(all_energy_bills) |>
   border_inner_v(border = my_border)
 
 ft_energy
-  
+
 ```
+
 
 {{< pagebreak >}}
 
