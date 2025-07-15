@@ -24,9 +24,8 @@ params:
 #| warning: false
 
 # load packages
-if (!requireNamespace("flextable", quietly = TRUE)) {
-  install.packages("flextable")
-}
+if (!requireNamespace("flextable", quietly = TRUE)) {install.packages("flextable")}
+
 library(flextable)
 library(officer)
 library(readr)
@@ -126,7 +125,20 @@ ranked_sect_4_problem_text <- sect_4_problem_text_googlesheets |>
 
 # select only numerical basic data
 energy_cost_quantity <- energy_test_googlesheets |>
-  select(`Gallons of Heating Oil`,`Cost in Dollars (Heating Oil)`,`Gallons of Kerosene`,`Cost in Dollars (Kerosene)`,`Gallons of Propane`,`Cost in Dollars (Propane)`,`kWh of Electricity`,`Cost in Dollars (Electricity)`,`Cords of Firewood`,`Cost in Dollars (Firewood)`,`Tons of pellets`,`Cost in Dollars (Pellets)`,`Write the quantity and measuring unit`, `Cost in Dollars (Other)` )
+  select(`Gallons of Heating Oil`,
+         `Cost in Dollars (Heating Oil)`,
+         `Gallons of Kerosene`,
+         `Cost in Dollars (Kerosene)`,
+         `Gallons of Propane`,
+         `Cost in Dollars (Propane)`,
+         `kWh of Electricity`,
+         `Cost in Dollars (Electricity)`,
+         `Cords of Firewood`,
+         `Cost in Dollars (Firewood)`,
+         `Tons of pellets`,
+         `Cost in Dollars (Pellets)`,
+         `Write the quantity and measuring unit`, 
+         `Cost in Dollars (Other)` )
 
   # select other numerical data
 double_other <- clean_audit_data |>
@@ -155,6 +167,7 @@ double_other <- clean_audit_data |>
           ambient_carbon_monoxide_reading = 'Ambient Carbon Monoxide reading:',
           foundation_type = 'Foundation Type:'
     ),
+    
         Info = factor(Info, levels = c(
           'Date Built:',
           'Foundation Type:',
@@ -163,6 +176,7 @@ double_other <- clean_audit_data |>
           'Volume of conditioned space:',
           'Ambient Carbon Monoxide reading:'
     )),
+    
         Values = case_when(
           Info == 'Square footage of conditioned space:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft²"),
           Info == 'Volume of conditioned space:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft³"),
@@ -177,10 +191,17 @@ double_other <- clean_audit_data |>
   
 #select all attic data for basics
 attic_basics <- energy_test_googlesheets |>
-  select( `Attic insulation type`, `Quality of attic insulation's installation? Assess worst part of installation.`, `Thickness of the attic insulation (inches), at the thinnest location`)|>
+  select( `Attic insulation type`, 
+          `Quality of attic insulation's installation? Assess worst part of installation.`, 
+          `Thickness of the attic insulation (inches), at the thinnest location`)|>
 
 #join the data into one row
-    mutate(Attic_all = paste(`Attic insulation type`, ",", `Thickness of the attic insulation (inches), at the thinnest location`, "inches"))|>
+    mutate(Attic_all = paste(
+      `Attic insulation type`,
+      ",",
+      `Thickness of the attic insulation (inches), at the thinnest location`,
+      "inches"
+      ))|>
   
       mutate(Info = 'Attic:',
           .before =`Attic insulation type`)
@@ -191,7 +212,6 @@ attic_basics <- attic_basics[,-c(2,3,4)]
 #rename the column heading
 names(attic_basics) <- c('Info', 'Values')
   
-
 ```
 
 ```{r}
@@ -220,7 +240,10 @@ annual_totals_gallon <- gallon_sources |>
 
 # make rows
 annual_totals_gallon <- annual_totals_gallon |>
-  mutate(Source = recode(Source,  'Gallons of Heating Oil' = 'Annual heating oil usage from bills:', 'Gallons of Propane' = 'Annual propane usage from bills:', 'Gallons of Kerosene' = 'Annual kerosene usage from the bills:'))
+  mutate(Source = recode(Source,
+                         'Gallons of Heating Oil' = 'Annual heating oil usage from bills:',
+                         'Gallons of Propane' = 'Annual propane usage from bills:',
+                         'Gallons of Kerosene' = 'Annual kerosene usage from the bills:'))
 
 # remove unwanted rows
 annual_totals_gallon <- annual_totals_gallon[, -c(2,3,4)]
@@ -247,7 +270,7 @@ annual_totals_kWh <- kWh_sources |>
   cbind(gallon_cost) |>
     filter(Amount != is.na(NA))|>
       mutate(Anual_Totals = paste(`Amount`, " kWh,", `Dollars`, "USD"))|>
-        mutate(Source = recode(Source,  'kWh of Electricity' = 'Annual electricity usage from bills:',))
+        mutate(Source = recode(Source, 'kWh of Electricity' = 'Annual electricity usage from bills:',))
 
 #remove unwanted rows
 annual_totals_kWh <- annual_totals_kWh[, -c(2,3,4)]
@@ -351,7 +374,14 @@ names(annual_totals) <- c('Info', 'Values')
 # set up basics table
 all_basics <- double_other |>
   rbind(attic_basics )|>
-    arrange(factor(Info, levels = c('Date Built:', 'Foundation Type:', 'Attic:', 'Number of floors:', 'Square footage of conditioned space:', 'Volume of conditioned space:','Ambient Carbon Monoxide reading:')))
+    arrange(factor(Info, levels = c(
+      'Date Built:', 
+      'Foundation Type:', 
+      'Attic:', 
+      'Number of floors:', 
+      'Square footage of conditioned space:', 
+      'Volume of conditioned space:',
+      'Ambient Carbon Monoxide reading:')))
 
 ```
 
@@ -362,15 +392,33 @@ all_basics <- double_other |>
 all_interior <- clean_audit_data|>
   
 #select all columns that have information about interior/living spaces
-  select(wall_stud_insulation_type, thickness_of_the_wall_stud_insulation, quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, any_additional_comments_on_wall_stud_insulation, wall_continuous_insulation_type, thickness_of_the_wall_continuous_insulation, quality_of_wall_continuous_insulations_installation_assess_worst_part_of_installation, any_additional_comments_on_wall_continuous_insulation, framing_type, general_comment_about_the_living_room, general_comment_about_the_bathroom_s, general_comment_about_the_kitchen, k_wh_reading_1, k_wh_reading_2, time_passed_since_installation_of_kilowatt_meter_1, time_passed_since_installation_of_kilowatt_meter_2, which_appliance_did_you_measure_1, which_appliance_did_you_measure_2)|>
+  select(wall_stud_insulation_type, 
+         thickness_of_the_wall_stud_insulation, 
+         quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, 
+         any_additional_comments_on_wall_stud_insulation, wall_continuous_insulation_type, 
+         thickness_of_the_wall_continuous_insulation, 
+         quality_of_wall_continuous_insulations_installation_assess_worst_part_of_installation, 
+         any_additional_comments_on_wall_continuous_insulation, 
+         framing_type, 
+         general_comment_about_the_living_room, 
+         general_comment_about_the_bathroom_s, 
+         general_comment_about_the_kitchen, 
+         k_wh_reading_1, 
+         k_wh_reading_2, 
+         time_passed_since_installation_of_kilowatt_meter_1, 
+         time_passed_since_installation_of_kilowatt_meter_2, 
+         which_appliance_did_you_measure_1, which_appliance_did_you_measure_2
+         )|>
   
   #make conditional stock framing description
-mutate(stock_framing = case_when( framing_type == "Balloon" ~ 'The house has balloon framing, which means the wall cavities extend the full height of the building (from the foundation to the roof). These wall cavities are often interconnected with the floor and ceiling cavities. This framing type can create connected passageways for air to leave the house and rodents to enter the house. ', framing_type == "Platform" ~ 'The house has platform framing, which means that wall cavities do not extend the full height of the building, but are instead separated by floors. ', TRUE ~ 'NA'))|>
+mutate(stock_framing = case_when(
+  framing_type == "Balloon" ~ 'The house has balloon framing, which means the wall cavities extend the full height of the building (from the foundation to the roof). These wall cavities are often interconnected with the floor and ceiling cavities. This framing type can create connected passageways for air to leave the house and rodents to enter the house. ', 
+  framing_type == "Platform" ~ 'The house has platform framing, which means that wall cavities do not extend the full height of the building, but are instead separated by floors. ', TRUE ~ 'NA'
+  ))|>
 
  #join information into one column for stud insulation in 3.3
-  mutate('Walls:'= paste0( stock_framing, "The exterior walls are insulated with ", wall_stud_insulation_type, " insulation. This insulation is ", thickness_of_the_wall_stud_insulation, " inches thick and in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, " condition. ", "This gives the exterior walls an R-value of around CALCULATE. A material’s R-value tells us how good it is at stopping heat flow, the bigger the number, the better. For comparison, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. ", any_additional_comments_on_wall_stud_insulation))|>
-   
-
+  mutate('Walls:'= paste0( stock_framing, "The exterior walls are insulated with ", wall_stud_insulation_type, " insulation. This insulation is ", thickness_of_the_wall_stud_insulation, " inches thick and in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, " condition. ", "This gives the exterior walls an R-value of around CALCULATE. A material’s R-value tells us how good it is at stopping heat flow, the bigger the number, the better. For comparison, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. ", any_additional_comments_on_wall_stud_insulation
+  ))|>
   
   #join information into one column for kitchen in 3.3
   mutate('Kitchen:'= paste0('During the audit we measured the electricity consumption of the ',which_appliance_did_you_measure_1, ". It used ", k_wh_reading_1, " kWh in ", time_passed_since_installation_of_kilowatt_meter_1, " hours. We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. The ", which_appliance_did_you_measure_2, " used ", k_wh_reading_2, " kWh in ", time_passed_since_installation_of_kilowatt_meter_2, " hours.  We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. ", general_comment_about_the_kitchen ))|>
@@ -384,10 +432,14 @@ mutate(stock_framing = case_when( framing_type == "Balloon" ~ 'The house has bal
     values_to = "Values")|>
   
   #rename the columns as they need to be displayed
-  mutate(Info = recode(Info,  general_comment_about_the_living_room = 'Living room:', general_comment_about_the_bathroom_s = 'Bathroom(s):'))|>
+  mutate(Info = recode(Info,  
+                       general_comment_about_the_living_room = 'Living room:', 
+                       general_comment_about_the_bathroom_s = 'Bathroom(s):'
+                       ))|>
   
   #arrange the rows in wanted order
   arrange(factor(Info, levels = c('Walls:')))
+
 ```
 
 ```{r}
@@ -397,19 +449,34 @@ mutate(stock_framing = case_when( framing_type == "Balloon" ~ 'The house has bal
 
 
 exterior_doors <-clean_audit_data|>
-  select(door_s_type_1, door_s_type_2, door_s_type_3, door_s_material_1, door_s_material_2, door_s_material_3, number_of_doors_of_this_type_1, number_of_doors_of_this_type_2, number_of_doors_of_this_type_3, total_door_area_of_this_type_1, total_door_area_of_this_type_2, total_door_area_of_this_type_3, condition_fit_of_the_doors_of_this_type_1, condition_fit_of_the_doors_of_this_type_2, condition_fit_of_the_doors_of_this_type_3)
-
-
+  select(door_s_type_1, 
+         door_s_type_2, 
+         door_s_type_3, 
+         door_s_material_1, 
+         door_s_material_2, 
+         door_s_material_3, 
+         number_of_doors_of_this_type_1, 
+         number_of_doors_of_this_type_2, 
+         number_of_doors_of_this_type_3, 
+         total_door_area_of_this_type_1, 
+         total_door_area_of_this_type_2, 
+         total_door_area_of_this_type_3, 
+         condition_fit_of_the_doors_of_this_type_1, 
+         condition_fit_of_the_doors_of_this_type_2, 
+         condition_fit_of_the_doors_of_this_type_3)
 
 exterior_doors <- exterior_doors|>
   mutate_all(~replace(., is.na(.), 0))
 
-exterior_doors <- if (exterior_doors$number_of_doors_of_this_type_3 >= 1) {
-  mutate(exterior_doors, Values = paste0("There are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. These are in ", condition_fit_of_the_doors_of_this_type_1, " condition, they have a total area of ", total_door_area_of_this_type_1, " ft². ", "There are ",number_of_doors_of_this_type_2, " ",door_s_type_2," ", door_s_material_2, " exterior doors. These are in ", condition_fit_of_the_doors_of_this_type_2, " condition, they have a total area of ", total_door_area_of_this_type_2, " ft². There are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. These are in ", condition_fit_of_the_doors_of_this_type_1, " condition, they have a total area of ", total_door_area_of_this_type_1, " ft²."))
-} else if (exterior_doors$number_of_doors_of_this_type_2 >= 1) {
-  mutate(exterior_doors, Values = paste0("There are ",number_of_doors_of_this_type_2, " ",door_s_type_2," ", door_s_material_2, " exterior doors. These are in ", condition_fit_of_the_doors_of_this_type_2, " condition, they have a total area of ", total_door_area_of_this_type_2, " ft². There are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. These are in ", condition_fit_of_the_doors_of_this_type_1, " condition, they have a total area of ", total_door_area_of_this_type_1, " ft²."))
-} else if (exterior_doors$number_of_doors_of_this_type_1 >= 1) {
-  mutate(exterior_doors, Values = paste0("There are ",number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. These are in ", condition_fit_of_the_doors_of_this_type_1, " condition, they have a total area of ", total_door_area_of_this_type_1, " ft²."))
+exterior_doors <- if (
+  exterior_doors$number_of_doors_of_this_type_3 >= 1) {
+    mutate(exterior_doors, Values = paste0("There are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. These are in ", condition_fit_of_the_doors_of_this_type_1, " condition, they have a total area of ", total_door_area_of_this_type_1, " ft². ", "There are ",number_of_doors_of_this_type_2, " ",door_s_type_2," ", door_s_material_2, " exterior doors. These are in ", condition_fit_of_the_doors_of_this_type_2, " condition, they have a total area of ", total_door_area_of_this_type_2, " ft². There are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. These are in ", condition_fit_of_the_doors_of_this_type_1, " condition, they have a total area of ", total_door_area_of_this_type_1, " ft²."))
+} else if (
+  exterior_doors$number_of_doors_of_this_type_2 >= 1) {
+    mutate(exterior_doors, Values = paste0("There are ",number_of_doors_of_this_type_2, " ",door_s_type_2," ", door_s_material_2, " exterior doors. These are in ", condition_fit_of_the_doors_of_this_type_2, " condition, they have a total area of ", total_door_area_of_this_type_2, " ft². There are ", number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. These are in ", condition_fit_of_the_doors_of_this_type_1, " condition, they have a total area of ", total_door_area_of_this_type_1, " ft²."))
+} else if (
+  exterior_doors$number_of_doors_of_this_type_1 >= 1) {
+    mutate(exterior_doors, Values = paste0("There are ",number_of_doors_of_this_type_1, " ",door_s_type_1," ", door_s_material_1, " exterior doors. These are in ", condition_fit_of_the_doors_of_this_type_1, " condition, they have a total area of ", total_door_area_of_this_type_1, " ft²."))
 } else {
   mutate(exterior_doors, Values = paste0("There are no exterior doors??"))
 }
@@ -422,6 +489,7 @@ exterior_doors <- exterior_doors|>
     names_to = "Info" ,
     values_to = "Values")|>
   mutate(Info = recode(Info,  'Values' = 'Exterior doors:',))
+
 ```
 
 ```{r}
@@ -431,21 +499,50 @@ exterior_doors <- exterior_doors|>
 
 
 exterior_windows <-clean_audit_data|>
-  select(how_many_windows_of_this_type_there_are_1, how_many_windows_of_this_type_there_are_2, how_many_windows_of_this_type_there_are_3, how_many_windows_of_this_type_there_are_4, how_many_windows_of_this_type_there_are_5, number_of_panes_1, number_of_panes_2, number_of_panes_3, number_of_panes_4, number_of_panes_5, material_of_the_windows_1, material_of_the_windows_2, material_of_the_windows_3, material_of_the_windows_4, material_of_the_windows_5, condition_of_the_windows_of_this_type_1, condition_of_the_windows_this_type_2, condition_of_the_windows_this_type_3, condition_of_the_windows_this_type_4, condition_of_the_windows_this_type_5, total_windows_areas_of_this_type_1, total_windows_areas_of_this_type_2, total_windows_areas_of_this_type_3, total_windows_areas_of_this_type_4, total_windows_areas_of_this_type_5)
+  select(how_many_windows_of_this_type_there_are_1, 
+         how_many_windows_of_this_type_there_are_2, 
+         how_many_windows_of_this_type_there_are_3, 
+         how_many_windows_of_this_type_there_are_4, 
+         how_many_windows_of_this_type_there_are_5, 
+         number_of_panes_1, 
+         number_of_panes_2, 
+         number_of_panes_3, 
+         number_of_panes_4, 
+         number_of_panes_5, 
+         material_of_the_windows_1, 
+         material_of_the_windows_2, 
+         material_of_the_windows_3, 
+         material_of_the_windows_4, 
+         material_of_the_windows_5, 
+         condition_of_the_windows_of_this_type_1, 
+         condition_of_the_windows_this_type_2, 
+         condition_of_the_windows_this_type_3, 
+         condition_of_the_windows_this_type_4, 
+         condition_of_the_windows_this_type_5, 
+         total_windows_areas_of_this_type_1, 
+         total_windows_areas_of_this_type_2, 
+         total_windows_areas_of_this_type_3, 
+         total_windows_areas_of_this_type_4, 
+         total_windows_areas_of_this_type_5)
 
 exterior_windows <- exterior_windows|>
   mutate_all(~replace(., is.na(.), 0))
 
-exterior_windows <- if (exterior_windows$how_many_windows_of_this_type_there_are_5 >= 1) {
-  mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " ft². Furthermore there are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. These are in ", condition_of_the_windows_this_type_3, " condition, they have a total area of ", total_windows_areas_of_this_type_3, " ft². There are ", , how_many_windows_of_this_type_there_are_4, " ", number_of_panes_4, " paned ", material_of_the_windows_4, " windows. These are in ", condition_of_the_windows_this_type_4, " condition, they have a total area of ", total_windows_areas_of_this_type_4, " ft². There are " , how_many_windows_of_this_type_there_are_5, " ", number_of_panes_5, " paned ", material_of_the_windows_5, " windows. These are in ", condition_of_the_windows_this_type_5, " condition, they have a total area of ", total_windows_areas_of_this_type_5, " ft²."))
-} else if (exterior_windows$how_many_windows_of_this_type_there_are_4 >= 1) {
-  mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " square feet. Furthermore there are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. These are in ", condition_of_the_windows_this_type_3, " condition, they have a total area of ", total_windows_areas_of_this_type_3, " ft². Also there are ", , how_many_windows_of_this_type_there_are_4, " ", number_of_panes_4, " paned ", material_of_the_windows_4, " windows. These are in ", condition_of_the_windows_this_type_4, " condition, they have a total area of ", total_windows_areas_of_this_type_4, " ft²."))
-} else if (exterior_windows$how_many_windows_of_this_type_there_are_3 >= 1) {
-  mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " ft². Furthermore there are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. These are in ", condition_of_the_windows_this_type_3, " condition, they have a total area of ", total_windows_areas_of_this_type_3, " ft²."))
-} else if (exterior_windows$how_many_windows_of_this_type_there_are_2 >= 1) {
-  mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " ft²."))
-} else if (exterior_windows$how_many_windows_of_this_type_there_are_1 >= 1) {
-  mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft²."))
+exterior_windows <- if (
+  exterior_windows$how_many_windows_of_this_type_there_are_5 >= 1) {
+    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " ft². Furthermore there are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. These are in ", condition_of_the_windows_this_type_3, " condition, they have a total area of ", total_windows_areas_of_this_type_3, " ft². There are ", , how_many_windows_of_this_type_there_are_4, " ", number_of_panes_4, " paned ", material_of_the_windows_4, " windows. These are in ", condition_of_the_windows_this_type_4, " condition, they have a total area of ", total_windows_areas_of_this_type_4, " ft². There are " , how_many_windows_of_this_type_there_are_5, " ", number_of_panes_5, " paned ", material_of_the_windows_5, " windows. These are in ", condition_of_the_windows_this_type_5, " condition, they have a total area of ", total_windows_areas_of_this_type_5, " ft²."))
+} else if (
+  exterior_windows$how_many_windows_of_this_type_there_are_4 >= 1) {
+    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " square feet. Furthermore there are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. These are in ", condition_of_the_windows_this_type_3, " condition, they have a total area of ", total_windows_areas_of_this_type_3, " ft². Also there are ", , how_many_windows_of_this_type_there_are_4, " ", number_of_panes_4, " paned ", material_of_the_windows_4, " windows. These are in ", condition_of_the_windows_this_type_4, " condition, they have a total area of ", total_windows_areas_of_this_type_4, " ft²."))
+} else if (
+  exterior_windows$how_many_windows_of_this_type_there_are_3 >= 1) {
+    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " ft². Furthermore there are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. These are in ", condition_of_the_windows_this_type_3, " condition, they have a total area of ", total_windows_areas_of_this_type_3, " ft²."))
+} else if (
+  exterior_windows$how_many_windows_of_this_type_there_are_2 >= 1) {
+    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " ft²."))
+} else if (
+  exterior_windows$how_many_windows_of_this_type_there_are_1 >= 1) {
+    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft²."))
 } else {
   mutate(exterior_windows, Values = paste0("There are no exterior windows"))
 }
@@ -458,36 +555,7 @@ exterior_windows <- exterior_windows|>
     names_to = "Info" ,
     values_to = "Values")|>
   mutate(Info = recode(Info,  'Values' = 'Exterior windows:',))
-```
 
-```{r}
-#| label: 3.4 data set up old 
-#| echo: false
-#| eval: false
-
-
-blower_door_leakage <- energy_test_googlesheets|>
-  select( "Equivalent leakage area")|>
-    mutate("Equivalent leakage area" = paste0("Equivalent leakage area", ' in².'))
-
-
-blower_door_leakage <-blower_door_leakage|>
-  pivot_longer(c("Equivalent leakage area"),
-    names_to = "Info", 
-    values_to = "Values")
-
-blower_door <- energy_test_googlesheets|>
-  select(c("CFM50", "ACH50","ACHn", "Comments about air leakage" ))|> #there is another column "Comments about air leakage"
-  pivot_longer(c("CFM50", "ACH50","ACHn", , "Comments about air leakage"),
-    names_to = "Info", 
-    values_to = "Values")
-
-all_blower_door <- blower_door|>
-  rbind(blower_door_leakage)|>
-  mutate(Info = recode(Info,  "CFM50" = "CFM50:", "ACH50" = "ACH50:","Equivalent leakage area" = "Equivalent leakage area:","ACHn" = "ACHnatural:", "Comments about air leakage" = "Comments About Air Leakge:" ))|>
-  arrange(factor(Info, levels = c('CFM50:', 'ACH50:', 'Equivalent leakage area:', 'ACHnatural:')))
-
-all_blower_door['Description'] <- c("CFM50 describes how many cubic feet per minute of air are leaving the house at 50 pascals of pressure difference (while the blower door is running). For every cubic foot of air that leaves the house, a cubic foot of air enters the house as well. The higher the number, the leakier the house.", "ACH50 tells us how many air changes per hour are taking place in the house at 50 pascals of pressure difference. This value is normalized for the volume of the house and thus allows for comparison between different houses. The higher the number, the leakier the house.","This is the area equivalent to all of the air leaks in the house combined.","Accounting for the volume of the home, this means that the house exchanges –% of its air every hour. Over one day, the house goes through – complete air changes.")
 ```
 
 ```{r}
