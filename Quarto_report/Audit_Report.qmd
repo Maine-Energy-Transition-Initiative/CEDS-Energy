@@ -515,7 +515,7 @@ attic_character <- energy_test_googlesheets|>
   
           mutate(`Pitch of Primary Roof Face:` = paste0("The pitch of the primary roof face is ", `Pitch of primary roof face (degrees)`, " degrees.")) |>
   
-            mutate(`Exhaust Ducts:` = paste0("Exhaust ducts from bathroom and kitchen fans are ", `Are bathroom and kitchen exhaust fans being vented to outside?`, " . Venting exhaust fans to outside is important so that they do not add potentially harmful moisture into the attic space and so they can function properly.")) |>
+            mutate(`Exhaust Ducts:` = paste0("Exhaust ducts from bathroom and kitchen fans are ", `Are bathroom and kitchen exhaust fans being vented to outside?`, ". Venting exhaust fans to outside is important so that they do not add potentially harmful moisture into the attic space and so they can function properly.")) |>
   
               mutate(`R-Value:` = paste0("The thickness and condition of the insulation give the insulation an R-value of R-DECIDE per inch. This gives the attic a total R-value of R-CALCULATE. For comparison, current Maine building code requires an attic R-value of R-60, and we typically recommend at least R-80 in attics to keep the house warm in the winter and cool in the summer.")) |>
   
