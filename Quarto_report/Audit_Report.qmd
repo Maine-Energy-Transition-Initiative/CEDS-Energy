@@ -60,7 +60,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[32, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[34, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -2735,7 +2735,7 @@ if( vapor_barrier == TRUE){
   
 *Problem*
 
-There is excess moisture in the basement/crawlspace, which is evaporating out of the ground. This moisture can enter the house and cause mold, mildew, rot, and air quality issues.
+There is excess moisture in the basement/crawlspace, which is moving from the ground into your home through porous materials like wood and concrete. This moisture can enter the house and cause mold, mildew, rot, and air quality issues.
 
 *Recommendation*
 
@@ -3291,7 +3291,7 @@ if( other_3 == TRUE){
 }
 
 if(other_3 == TRUE){
-  cat(a_other_3$Description
+  cat(other_3$Description
     
   )
 }else{
