@@ -1235,7 +1235,7 @@ if(energy_sources_googlesheets$combustion_propane == TRUE){
 
 ## Summary of Recommendations
 
-We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report. These are organized from the least expensive/most cost-effective and easiest interventions to ones that are more challenging to implement.
+We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report. These are organized from the most important/easiest interventions to ones that are more challenging to implement.
 
 ```{r}
 #| label: summary of recs table
