@@ -2039,7 +2039,7 @@ auto_air_source_heat_pump <- sect_4_rec_text_googlesheets[18, ]
 
 auto_ev_and_charger <- sect_4_rec_text_googlesheets[19, ]
 
-auto_other_1 <- sect_4_rec_text_googlesheets[21, ]
+auto_other_1 <- sect_4_rec_text_googlesheets[24, ]
 
 auto_leds <- sect_4_rec_text_googlesheets[3, ]
 
@@ -2059,11 +2059,11 @@ auto_kitchen_fan <- sect_4_rec_text_googlesheets[11, ]
 
 auto_solar <- sect_4_rec_text_googlesheets[20, ]
 
-auto_pipe_insulation <- sect_4_rec_text_googlesheets[22, ]
+auto_pipe_insulation <- sect_4_rec_text_googlesheets[21, ]
 
 auto_whole_house_surge_protection <- sect_4_rec_text_googlesheets[23, ]
 
-auto_diy_air_sealing <- sect_4_rec_text_googlesheets[24, ]
+auto_diy_air_sealing <- sect_4_rec_text_googlesheets[22, ]
 
 auto_duct_air_sealing <- sect_4_rec_text_googlesheets[27,]
 
@@ -2795,6 +2795,44 @@ if(freezer == TRUE){
 ```
 
 ```{r}
+#| label: whole house surge protection recommendation
+#| echo: false
+#| results: asis
+
+
+if( whole_house_surge_protection == TRUE){
+  cat("### Whole House Surge Protection
+  
+*Problem*
+
+Your house does not have whole-house surge protection. This will protect your large electrical appliances from damage in the case of an electrical surge. Heat pumps, heat pump water heaters, and other electronics are particularly sensitive to electrical surges. 
+
+*Recommendation*
+
+")
+}else{
+  cat("")
+}
+
+if(whole_house_surge_protection == TRUE){
+  cat(auto_whole_house_surge_protection$Description
+    
+  )
+}else{
+  cat("")
+  }
+
+if(whole_house_surge_protection == TRUE){
+  cat("
+*Estimated Cost/Benefits/Incentives*
+
+", auto_whole_house_surge_protection_estimates$Description)
+}else{
+  cat("")
+  } 
+```
+
+```{r}
 #| label: induction stove recommendation
 #| echo: false
 #| results: asis
@@ -3392,43 +3430,6 @@ if(pipe_insulation == TRUE){
   } 
 ```
 
-```{r}
-#| label: whole house surge protection recommendation
-#| echo: false
-#| results: asis
-
-
-if( whole_house_surge_protection == TRUE){
-  cat("### Whole House Surge Protection
-  
-*Problem*
-
-Your house does not have whole-house surge protection. This will protect your large electrical appliances from damage in the case of an electrical surge. Heat pumps, heat pump water heaters, and other electronics are particularly sensitive to electrical surges. 
-
-*Recommendation*
-
-")
-}else{
-  cat("")
-}
-
-if(whole_house_surge_protection == TRUE){
-  cat(auto_whole_house_surge_protection$Description
-    
-  )
-}else{
-  cat("")
-  }
-
-if(whole_house_surge_protection == TRUE){
-  cat("
-*Estimated Cost/Benefits/Incentives*
-
-", auto_whole_house_surge_protection_estimates$Description)
-}else{
-  cat("")
-  } 
-```
 
 ```{r}
 #| label: diy air sealing recommendation
