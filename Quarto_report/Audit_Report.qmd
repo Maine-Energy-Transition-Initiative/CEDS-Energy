@@ -60,7 +60,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[33, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[23, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -179,40 +179,42 @@ double_other <- clean_audit_data |>
     volume_of_conditioned_space_cubic_feet,
     square_footage_of_conditioned_space,
     ambient_carbon_monoxide_reading,
-    foundation_type
+    foundation_type,
+    net_wall_area_square_feet
   ) |>
   
-    pivot_longer(
-    cols = everything(),
-    names_to = "Info", 
-    values_to = "Values"
-  ) |>
-  
-      mutate(
-        Info = recode(
-         Info,
-          date_built = 'Date Built:',
-          number_of_floors = 'Number of floors:',
-          square_footage_of_conditioned_space = 'Square footage of conditioned space:',
-          volume_of_conditioned_space_cubic_feet = 'Volume of conditioned space:',
-          ambient_carbon_monoxide_reading = 'Ambient Carbon Monoxide reading:',
-          foundation_type = 'Foundation Type:'
-    ),
-    
-        Info = factor(Info, levels = c(
-          'Date Built:',
-          'Foundation Type:',
-          'Number of floors:',
-          'Square footage of conditioned space:',
-          'Volume of conditioned space:',
-          'Ambient Carbon Monoxide reading:'
-    )),
-    
-        Values = case_when(
-          Info == 'Square footage of conditioned space:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft²"),
-          Info == 'Volume of conditioned space:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft³"),
-          TRUE ~ as.character(Values)
-    ))
+pivot_longer(
+  cols = everything(),
+  names_to = "Info", 
+  values_to = "Values"
+) |> 
+mutate(
+  Info = recode(
+    Info,
+    date_built = 'Date Built:',
+    number_of_floors = 'Number of floors:',
+    square_footage_of_conditioned_space = 'Square footage of conditioned space:',
+    volume_of_conditioned_space_cubic_feet = 'Volume of conditioned space:',
+    net_wall_area_square_feet = 'Net Wall Area:',
+    ambient_carbon_monoxide_reading = 'Ambient Carbon Monoxide reading:',
+    foundation_type = 'Foundation Type:'
+  ),
+  Info = factor(Info, levels = c(
+    'Date Built:',
+    'Foundation Type:',
+    'Number of floors:',
+    'Square footage of conditioned space:',
+    'Volume of conditioned space:',
+    'Net Wall Area:',
+    'Ambient Carbon Monoxide reading:'
+  )),
+  Values = case_when(
+    Info == 'Square footage of conditioned space:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft²"),
+    Info == 'Volume of conditioned space:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft³"),
+    Info == 'Net Wall Area:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft²"),
+    TRUE ~ as.character(Values)
+  )
+)
 
 ```
 
@@ -384,6 +386,7 @@ all_basics <- double_other |>
       'Number of floors:', 
       'Square footage of conditioned space:', 
       'Volume of conditioned space:',
+      'Net Wall Area:',
       'Ambient Carbon Monoxide reading:')))
 
 ```
@@ -1543,12 +1546,6 @@ ggsave("achnatural_ggplot1.png", width = 15, height = 5)
 
 *Your house compared to standards*
 
-Using a thermal imaging camera, we looked for major air leakage locations and thermal bridging. Thermal bridging occurs when heat enters or leaves a house through material that lets heat through more easily than the house’s insulation. This often occurs with wall studs and ceiling joists.
-
-We conducted the audit in the summer, when the air outside the house is hotter than inside the house. Therefore, the warmer (red, orange, and yellow) areas in the thermal pictures below show where air leakage and thermal bridging are taking place, as these are the areas where hot air and heat from the outside are being pulled into the cooler house.
-
-ADD INFRARED IMAGES TABLE
-
 ```{r}
 #| label: air leak comments
 #| eval: true
@@ -1559,6 +1556,44 @@ airleaks_comments <- clean_audit_data$comments_about_air_leakage
 cat(airleaks_comments)
 
 ```
+
+```{r}
+#| label: pressure differences
+#| eval: true
+#| echo: false
+#| results: asis
+
+pressure_pan <- clean_audit_data$pressure_pan_recordings
+zonal_pressure <- clean_audit_data$zonal_pressure_difference
+cat(paste0(
+  "To test how leaky things like outlets and ductboots are, we measure the pressure difference between them and the house using a pressure pan. We measured ",
+  pressure_pan,
+  ". By measuring the pressure difference between different rooms, we can test how leaky individual rooms are. Any room that has a pressure difference over 5 pascals has significant air leakage occuring in it. We measured ",
+  zonal_pressure))
+
+```
+
+```{r}
+#| label: basement blower door
+#| eval: true
+#| echo: false
+#| results: asis
+
+b_ACHnat <- clean_audit_data$ac_hn_basement
+b_comments <- clean_audit_data$comments_about_air_leakage_with_the_basement_door_open
+cat(paste0(
+  "To test how well the basement is air sealed, we open the interior door to the basement and record how leaky the house and basement are together. With the basement door open, your house had an ACHnatural value of ",
+  b_ACHnat,
+  ". ",
+  b_comments))
+
+```
+
+Using a thermal imaging camera, we looked for major air leakage locations and thermal bridging. Thermal bridging occurs when heat enters or leaves a house through material that lets heat through more easily than the house’s insulation. This often occurs with wall studs and ceiling joists.
+
+We conducted the audit in the summer, when the air outside the house is hotter than inside the house. Therefore, the warmer (red, orange, and yellow) areas in the thermal pictures below show where air leakage and thermal bridging are taking place, as these are the areas where hot air and heat from the outside are being pulled into the cooler house.
+
+ADD INFRARED IMAGES TABLE
 
 ### Attic
 
