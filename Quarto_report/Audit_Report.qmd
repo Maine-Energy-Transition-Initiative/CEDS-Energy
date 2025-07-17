@@ -2598,7 +2598,7 @@ if(furnace_boiler_tune_up == TRUE){
 
 
 if( high_efficiency_shower_heads == TRUE){
-  cat("### High efficiency shower head(s)
+  cat("### High Efficiency Shower Heads
   
 *Problem*
 
@@ -2678,7 +2678,7 @@ if(led == TRUE){
 
 
 if( window_dressers == TRUE){
-  cat("### Window Dressers
+  cat("### WindowDressers
   
 *Problem*
 
@@ -2924,7 +2924,7 @@ if(gutters == TRUE){
 
 
 if( bathroom_exhaust_fan == TRUE){
-  cat("### Bathroom exhaust fan(s)
+  cat("### Bathroom Exhaust Fan(s)
   
 *Problem*
 
@@ -2965,7 +2965,7 @@ if(bathroom_exhaust_fan == TRUE){
 
 
 if( kitchen_exhaust_fan == TRUE){
-  cat("### Kitchen exhaust fan(s)
+  cat("### Kitchen Exhaust Fan(s)
   
 *Problem*
 
@@ -3047,7 +3047,7 @@ if(vapor_barrier == TRUE){
 
 
 if( spray_foam == TRUE){
-  cat("### Spray foam Basement Walls
+  cat("### Spray Foam Basement Walls
   
 *Problem*
 
@@ -3129,7 +3129,7 @@ if(attic_air_sealing_and_insulation == TRUE){
 
 
 if( wall_stud_insulation== TRUE){
-  cat("### Blow-in cellulose wall insulation
+  cat("### Blow-In Cellulose Wall Insulation
   
 *Problem*
 
@@ -3167,7 +3167,7 @@ if(wall_stud_insulation == TRUE){
 
 
 if( continuous_wall_insulation== TRUE){
-  cat("### Continuous exterior wall insulation
+  cat("### Continuous Exterior Wall Insulation
   
 *Problem*
 
@@ -3245,7 +3245,7 @@ if(electrical_panel == TRUE){
 
 
 if( airsource_hp == TRUE){
-  cat("### Air Source Heat Pump
+  cat("### Air Source Heat Pumps
   
 *Problem*
 
@@ -3284,7 +3284,7 @@ if(airsource_hp == TRUE){
 
 
 if( ev == TRUE){
-  cat("### Electric Vehicle and charger
+  cat("### Electric Vehicle and Charger
   
 *Problem*
 
