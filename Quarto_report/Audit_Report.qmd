@@ -98,7 +98,6 @@ pivot_recommendations <- pivot_recommendations |>
 ranked_clean_recommendations <- recommendations_googlesheets |>
   bind_cols(pivot_recommendations)|>
   select(-c(Rec_from_google_form))|>
-  arrange(as.numeric(Rank))|>
   filter(Rank != 0)|>
   select(-Rank)
 
@@ -112,7 +111,6 @@ ranked_clean_recommendations <- recommendations_googlesheets |>
 ranked_sect_4_problem_text <- sect_4_problem_text_googlesheets |>
   bind_cols(pivot_recommendations)|>
   select(-c(Rec_from_google_form))|>
-  arrange(as.numeric(Rank))|>
   filter(Rank != 0)|>
   select(-Rank)
 
