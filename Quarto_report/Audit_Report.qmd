@@ -60,7 +60,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[30, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[33, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -1539,7 +1539,6 @@ ggplot(ACHnatural_ggplot, aes(y = 1)) +
 ggsave("achnatural_ggplot1.png", width = 15, height = 5)
 
 ```
-
 ![](achnatural_ggplot1.png)
 
 *Your house compared to standards*
@@ -1574,9 +1573,9 @@ ggplot(ACHnatural_ggplot, aes(y = 1)) +
   geom_vline(xintercept = thresholds, size = 1.3) +
 
   # Labels for "Your Home" and value
-  geom_text(aes(x = Values, label = "Basement Open", y = 1.15), 
+  geom_text(aes(x = ACHnaturalBasement, label = "Basement Open", y = 1.15), 
             nudge_x = -0.03, colour = "#1B9E77", angle = 90, size = 5) +
-  geom_text(aes(x = Values, label = round(Values, 2), y = 0.85), 
+  geom_text(aes(x = ACHnaturalBasement, label = round(ACHnaturalBasement, 2), y = 0.85), 
             nudge_x = -0.03, colour = "#1B9E77", angle = 90, size = 5) +
 
   # Labels for each reference line (description and numeric)
@@ -1616,6 +1615,23 @@ ggplot(ACHnatural_ggplot, aes(y = 1)) +
 # Save as image
 ggsave("achnatural_ggplot1_basement.png", width = 15, height = 5)
 
+```
+![](achnatural_ggplot1_basement.png)
+```{r}
+#|label: ACHNatural basement diagram caption
+#|eval: ACHNaturalBasement != NA
+#|echo: false
+#|output: false
+
+cat("This is the ACH Natural value for your home while the interior basement door is open. ")
+if(ACHnaturalBasement/ACHnatural > 0.9){
+  cat("This number is significantly higher than the home's ACHNatural, indicating that the basement is poorly sealed. This is not ideal, as this is allowing moisture and unconditioned air from the outside to freely enter the basement, where it can then travel into the living space through other air leaks in the home.")
+}else{
+  cat("This number is fairly close to the home's ACHNatural, which could either be the result of your basement being well air sealed, or there being significant air transfer between the basement and the living space.")
+  if(clean_audit_data$basement_crawlspace_insulation_type == "Uninsulated"){
+    cat("Since your basement is uninsulated, it is also most likely not air sealed, so the latter scenario is more plausible.")
+  }else{cat("")}
+}
 ```
 
 
