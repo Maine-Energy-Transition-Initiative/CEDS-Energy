@@ -60,7 +60,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[34, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[28, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -586,56 +586,83 @@ exterior_3.2 <- clean_audit_data|>
 #| label: interior setup
 #| echo: false
 
-all_interior <- clean_audit_data|>
-  
-#select all columns that have information about interior/living spaces
-  select(wall_stud_insulation_type, 
-         thickness_of_the_wall_stud_insulation, 
-         quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, 
-         any_additional_comments_on_wall_stud_insulation, wall_continuous_insulation_type, 
-         thickness_of_the_wall_continuous_insulation, 
-         quality_of_wall_continuous_insulations_installation_assess_worst_part_of_installation, 
-         any_additional_comments_on_wall_continuous_insulation, 
-         framing_type, 
-         general_comment_about_the_living_room, 
-         general_comment_about_the_bathroom_s, 
-         general_comment_about_the_kitchen, 
-         k_wh_reading_1, 
-         k_wh_reading_2, 
-         time_passed_since_installation_of_kilowatt_meter_1, 
-         time_passed_since_installation_of_kilowatt_meter_2, 
-         which_appliance_did_you_measure_1, which_appliance_did_you_measure_2
-         )|>
-  
-# make conditional stock framing description
-mutate(stock_framing = case_when(
-  framing_type == "Balloon" ~ 'The house has balloon framing, which means the wall cavities extend the full height of the building (from the foundation to the roof). These wall cavities are often interconnected with the floor and ceiling cavities. This framing type can create connected passageways for air to leave the house and rodents to enter the house. ', 
-  framing_type == "Platform" ~ 'The house has platform framing, which means that wall cavities do not extend the full height of the building, but are instead separated by floors. ', TRUE ~ 'NA'
-  ))|>
+all_interior <- clean_audit_data |>
 
- # join information into one column for stud insulation in 3.3
-  mutate('Walls:'= paste0( stock_framing, "The exterior walls are insulated with ", wall_stud_insulation_type, " insulation. This insulation is ", thickness_of_the_wall_stud_insulation, " inches thick and in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, " condition. ", "This gives the exterior walls an R-value of around CALCULATE. A material’s R-value tells us how good it is at stopping heat flow, the bigger the number, the better. For comparison, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. ", any_additional_comments_on_wall_stud_insulation
-  ))|>
-  
-# join information into one column for kitchen in 3.3
-  mutate('Kitchen:'= paste0('During the audit we measured the electricity consumption of the ',which_appliance_did_you_measure_1, ". It used ", k_wh_reading_1, " kWh in ", time_passed_since_installation_of_kilowatt_meter_1, " hours. We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. The ", which_appliance_did_you_measure_2, " used ", k_wh_reading_2, " kWh in ", time_passed_since_installation_of_kilowatt_meter_2, " hours.  We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. ", general_comment_about_the_kitchen ))|>
-  
-# delete unwanted columns, the once that were used to create joined columns
-  select(-c(1:9, 12:19))|>
-  
-# pivot horizontal columns to be displayed vertical in the rows
-  pivot_longer(cols = everything() ,
-    names_to = "Info" ,
-    values_to = "Values")|>
-  
-# rename the columns as they need to be displayed
-  mutate(Info = recode(Info,  
-                       general_comment_about_the_living_room = 'Living room:', 
-                       general_comment_about_the_bathroom_s = 'Bathroom(s):'
-                       ))|>
-  
-# arrange the rows in wanted order
-  arrange(factor(Info, levels = c('Walls:')))
+  select(
+    wall_stud_insulation_type, 
+    thickness_of_the_wall_stud_insulation, 
+    quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, 
+    any_additional_comments_on_wall_stud_insulation, 
+    wall_continuous_insulation_type, 
+    thickness_of_the_wall_continuous_insulation, 
+    quality_of_wall_continuous_insulations_installation_assess_worst_part_of_installation, 
+    any_additional_comments_on_wall_continuous_insulation, 
+    framing_type, 
+    bathroom_fan_flow_box_readings,
+    kitchen_fan_flow_box_readings,
+    k_wh_reading_1, 
+    k_wh_reading_2, 
+    time_passed_since_installation_of_kilowatt_meter_1, 
+    time_passed_since_installation_of_kilowatt_meter_2, 
+    which_appliance_did_you_measure_1, 
+    which_appliance_did_you_measure_2,
+    general_comment_about_the_living_room, 
+    general_comment_about_the_bathroom_s,
+    general_comment_about_the_kitchen
+  ) |>
+
+  mutate(stock_framing = case_when(
+    framing_type == "Balloon" ~ 'The house has balloon framing, which means the wall cavities extend the full height of the building (from the foundation to the roof). These wall cavities are often interconnected with the floor and ceiling cavities. This framing type can create connected passageways for air to leave the house and rodents to enter the house. ', 
+    framing_type == "Platform" ~ 'The house has platform framing, which means that wall cavities do not extend the full height of the building, but are instead separated by floors. ', 
+    TRUE ~ 'NA'
+  )) |>
+
+  mutate(`Walls:` = paste0(
+    stock_framing, 
+    "The exterior walls are insulated with ", wall_stud_insulation_type, 
+    " insulation. This insulation is ", thickness_of_the_wall_stud_insulation, 
+    " inches thick and in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, 
+    " condition. This gives the exterior walls an R-value of around CALCULATE. A material’s R-value tells us how good it is at stopping heat flow, the bigger the number, the better. For comparison, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. ", 
+    any_additional_comments_on_wall_stud_insulation
+  )) |>
+
+  # Join information into one column for kitchen in 3.3
+  mutate(`Kitchen:` = ifelse(
+    is.na(kitchen_fan_flow_box_readings),
+    paste0(
+      'During the audit we measured the electricity consumption of the ', which_appliance_did_you_measure_1, 
+      ". It used ", k_wh_reading_1, " kWh in ", time_passed_since_installation_of_kilowatt_meter_1, 
+      " hours. We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. The ", 
+      which_appliance_did_you_measure_2, " used ", k_wh_reading_2, " kWh in ", 
+      time_passed_since_installation_of_kilowatt_meter_2, 
+      " hours.  We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. ", 
+      general_comment_about_the_kitchen
+    ),
+    paste0(
+      'During the audit we measured the electricity consumption of the ', which_appliance_did_you_measure_1, 
+      ". It used ", k_wh_reading_1, " kWh in ", time_passed_since_installation_of_kilowatt_meter_1, 
+      " hours. We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. The ", 
+      which_appliance_did_you_measure_2, " used ", k_wh_reading_2, " kWh in ", 
+      time_passed_since_installation_of_kilowatt_meter_2, 
+      " hours.  We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. We also measured the flow speed of your kitchen exhaust fans. Kitchen exhaust fans should have a flow of at least 100 cubic feet per minute (CFM). Your kitchen exhaust fan had a flow speed of ", 
+      kitchen_fan_flow_box_readings, ". ", general_comment_about_the_kitchen
+    )
+  )) |>
+
+  select(`Walls:`, `Kitchen:`, general_comment_about_the_living_room, general_comment_about_the_bathroom_s) |>
+
+  pivot_longer(cols = everything(),
+               names_to = "Info",
+               values_to = "Values") |>
+
+  mutate(Info = recode(
+    Info,
+    general_comment_about_the_living_room = 'Living room:',
+    general_comment_about_the_bathroom_s = 'Bathroom(s):'
+  )) |>
+
+  arrange(factor(Info, levels = c('Walls:', 'Living room:', 'Bathroom(s):', 'Kitchen:')))
+
 
 ```
 
