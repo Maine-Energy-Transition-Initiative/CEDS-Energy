@@ -484,32 +484,54 @@ exterior_windows <-clean_audit_data|>
          total_windows_areas_of_this_type_2, 
          total_windows_areas_of_this_type_3, 
          total_windows_areas_of_this_type_4, 
-         total_windows_areas_of_this_type_5)
+         total_windows_areas_of_this_type_5,
+         more_about_condition_of_the_windows_of_this_type_1,
+         more_about_condition_of_the_windows_this_type_2,
+         more_about_condition_of_the_windows_this_type_3,
+         more_about_condition_of_the_windows_this_type_4,
+         more_about_condition_of_the_windows_this_type_5)
 
-exterior_windows <- exterior_windows|>
-  mutate_all(~replace(., is.na(.), 0))
+exterior_windows <- exterior_windows |>
+  mutate(across(c(
+    how_many_windows_of_this_type_there_are_1,
+    how_many_windows_of_this_type_there_are_2,
+    how_many_windows_of_this_type_there_are_3,
+    how_many_windows_of_this_type_there_are_4,
+    how_many_windows_of_this_type_there_are_5,
+    number_of_panes_1,
+    number_of_panes_2,
+    number_of_panes_3,
+    number_of_panes_4,
+    number_of_panes_5,
+    total_windows_areas_of_this_type_1,
+    total_windows_areas_of_this_type_2,
+    total_windows_areas_of_this_type_3,
+    total_windows_areas_of_this_type_4,
+    total_windows_areas_of_this_type_5
+  ), ~replace(., is.na(.), 0)))
+
 
 exterior_windows <- if (
   exterior_windows$how_many_windows_of_this_type_there_are_5 >= 1) {
-    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " ft². Furthermore there are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. These are in ", condition_of_the_windows_this_type_3, " condition, they have a total area of ", total_windows_areas_of_this_type_3, " ft². There are ", , how_many_windows_of_this_type_there_are_4, " ", number_of_panes_4, " paned ", material_of_the_windows_4, " windows. These are in ", condition_of_the_windows_this_type_4, " condition, they have a total area of ", total_windows_areas_of_this_type_4, " ft². There are " , how_many_windows_of_this_type_there_are_5, " ", number_of_panes_5, " paned ", material_of_the_windows_5, " windows. These are in ", condition_of_the_windows_this_type_5, " condition, they have a total area of ", total_windows_areas_of_this_type_5, " ft²."))
+    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². ", more_about_condition_of_the_windows_of_this_type_1, ". There are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " ft². ", more_about_condition_of_the_windows_this_type_2, ". There are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. These are in ", condition_of_the_windows_this_type_3, " condition, they have a total area of ", total_windows_areas_of_this_type_3, " ft². ", more_about_condition_of_the_windows_this_type_3, ". There are ", , how_many_windows_of_this_type_there_are_4, " ", number_of_panes_4, " paned ", material_of_the_windows_4, " windows. These are in ", condition_of_the_windows_this_type_4, " condition, they have a total area of ", total_windows_areas_of_this_type_4, " ft². ", more_about_condition_of_the_windows_this_type_4, ". There are " , how_many_windows_of_this_type_there_are_5, " ", number_of_panes_5, " paned ", material_of_the_windows_5, " windows. These are in ", condition_of_the_windows_this_type_5, " condition, they have a total area of ", total_windows_areas_of_this_type_5, " ft². ", more_about_condition_of_the_windows_this_type_5, "."))
 } else if (
   exterior_windows$how_many_windows_of_this_type_there_are_4 >= 1) {
-    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " square feet. Furthermore there are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. These are in ", condition_of_the_windows_this_type_3, " condition, they have a total area of ", total_windows_areas_of_this_type_3, " ft². Also there are ", , how_many_windows_of_this_type_there_are_4, " ", number_of_panes_4, " paned ", material_of_the_windows_4, " windows. These are in ", condition_of_the_windows_this_type_4, " condition, they have a total area of ", total_windows_areas_of_this_type_4, " ft²."))
+    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². ", more_about_condition_of_the_windows_of_this_type_1, ". There are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " ft². ", more_about_condition_of_the_windows_this_type_2, ". There are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. These are in ", condition_of_the_windows_this_type_3, " condition, they have a total area of ", total_windows_areas_of_this_type_3, " ft². ", more_about_condition_of_the_windows_this_type_3, ". There are ", , how_many_windows_of_this_type_there_are_4, " ", number_of_panes_4, " paned ", material_of_the_windows_4, " windows. These are in ", condition_of_the_windows_this_type_4, " condition, they have a total area of ", total_windows_areas_of_this_type_4, " ft². ", more_about_condition_of_the_windows_this_type_4, "."))
 } else if (
   exterior_windows$how_many_windows_of_this_type_there_are_3 >= 1) {
-    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " ft². Furthermore there are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. These are in ", condition_of_the_windows_this_type_3, " condition, they have a total area of ", total_windows_areas_of_this_type_3, " ft²."))
+    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². ", more_about_condition_of_the_windows_of_this_type_1, ". There are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " ft². ", more_about_condition_of_the_windows_this_type_2, ". There are " , how_many_windows_of_this_type_there_are_3, " ", number_of_panes_3, " paned ", material_of_the_windows_3, " windows. These are in ", condition_of_the_windows_this_type_3, " condition, they have a total area of ", total_windows_areas_of_this_type_3, " ft². ", more_about_condition_of_the_windows_this_type_3, "."))
 } else if (
   exterior_windows$how_many_windows_of_this_type_there_are_2 >= 1) {
-    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². Moreover there are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " ft²."))
+    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². ", more_about_condition_of_the_windows_of_this_type_1, ". There are ", how_many_windows_of_this_type_there_are_2, " ", number_of_panes_2, " paned ", material_of_the_windows_2, " windows. These are in ", condition_of_the_windows_this_type_2, " condition, they have a total area of ", total_windows_areas_of_this_type_2, " ft². ", more_about_condition_of_the_windows_this_type_2, "."))
 } else if (
   exterior_windows$how_many_windows_of_this_type_there_are_1 >= 1) {
-    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft²."))
+    mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². ", more_about_condition_of_the_windows_of_this_type_1, "."))
 } else {
   mutate(exterior_windows, Values = paste0("There are no exterior windows"))
 }
 
 exterior_windows <- exterior_windows|>
-  select(-c(1:25))
+  select(-c(1:30))
 
 exterior_windows <- exterior_windows|>
   pivot_longer(cols = Values ,
