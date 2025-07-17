@@ -60,7 +60,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[28, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[33, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -626,7 +626,6 @@ all_interior <- clean_audit_data |>
     any_additional_comments_on_wall_stud_insulation
   )) |>
 
-  # Join information into one column for kitchen in 3.3
   mutate(`Kitchen:` = ifelse(
     is.na(kitchen_fan_flow_box_readings),
     paste0(
@@ -645,11 +644,22 @@ all_interior <- clean_audit_data |>
       which_appliance_did_you_measure_2, " used ", k_wh_reading_2, " kWh in ", 
       time_passed_since_installation_of_kilowatt_meter_2, 
       " hours.  We thus estimate that it is costing you around $CALCULATE a month to run. This is **comparable to / more expensive than** newer, efficient models. We also measured the flow speed of your kitchen exhaust fans. Kitchen exhaust fans should have a flow of at least 100 cubic feet per minute (CFM). Your kitchen exhaust fan had a flow speed of ", 
-      kitchen_fan_flow_box_readings, ". ", general_comment_about_the_kitchen
+      kitchen_fan_flow_box_readings, 
+      ". ", 
+      general_comment_about_the_kitchen
     )
   )) |>
+  
+  mutate(`Bathroom(s):` = ifelse(
+    is.na(bathroom_fan_flow_box_readings),
+    paste0(general_comment_about_the_bathroom_s),
+    paste0("We measured the flow speed of the bathroom exhaust fan(s). When there is a shower, bathroom exhaust fans should have a flow of at least 80 cubic feet per minute (CFM). Your fan(s) had a flow speed of ",
+           bathroom_fan_flow_box_readings,
+           ". ",
+           general_comment_about_the_bathroom_s)
+  )) |>
 
-  select(`Walls:`, `Kitchen:`, general_comment_about_the_living_room, general_comment_about_the_bathroom_s) |>
+  select(`Walls:`, `Kitchen:`, general_comment_about_the_living_room, `Bathroom(s):`) |>
 
   pivot_longer(cols = everything(),
                names_to = "Info",
@@ -657,11 +667,10 @@ all_interior <- clean_audit_data |>
 
   mutate(Info = recode(
     Info,
-    general_comment_about_the_living_room = 'Living room:',
-    general_comment_about_the_bathroom_s = 'Bathroom(s):'
+    general_comment_about_the_living_room = 'Living room:'
   )) |>
 
-  arrange(factor(Info, levels = c('Walls:', 'Living room:', 'Bathroom(s):', 'Kitchen:')))
+  arrange(factor(Info, levels = c('Walls:', 'Bathroom(s):', 'Kitchen:', 'Living room:')))
 
 
 ```
