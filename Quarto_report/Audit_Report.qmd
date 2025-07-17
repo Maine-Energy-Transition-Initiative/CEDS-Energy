@@ -60,7 +60,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[23, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[34, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -180,7 +180,10 @@ double_other <- clean_audit_data |>
     square_footage_of_conditioned_space,
     ambient_carbon_monoxide_reading,
     foundation_type,
-    net_wall_area_square_feet
+    net_wall_area_square_feet,
+    homeowners_concerns,
+    homeowners_comment_about_existing_insulation_air_sealing_when_was_it_done,
+    any_additions_recent_renovations_construction
   ) |>
   
 pivot_longer(
@@ -197,7 +200,10 @@ mutate(
     volume_of_conditioned_space_cubic_feet = 'Volume of conditioned space:',
     net_wall_area_square_feet = 'Net Wall Area:',
     ambient_carbon_monoxide_reading = 'Ambient Carbon Monoxide reading:',
-    foundation_type = 'Foundation Type:'
+    foundation_type = 'Foundation Type:',
+    homeowners_concerns = 'Homeowner Concerns:',
+    homeowners_comment_about_existing_insulation_air_sealing_when_was_it_done = 'Homeowner Comments:',
+    any_additions_recent_renovations_construction = 'Recent Construction:'
   ),
   Info = factor(Info, levels = c(
     'Date Built:',
@@ -206,7 +212,10 @@ mutate(
     'Square footage of conditioned space:',
     'Volume of conditioned space:',
     'Net Wall Area:',
-    'Ambient Carbon Monoxide reading:'
+    'Ambient Carbon Monoxide reading:',
+    'Homeowner Concerns:',
+    'Homeowner Comments:',
+    'Recent Construction:'
   )),
   Values = case_when(
     Info == 'Square footage of conditioned space:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft²"),
@@ -387,7 +396,10 @@ all_basics <- double_other |>
       'Square footage of conditioned space:', 
       'Volume of conditioned space:',
       'Net Wall Area:',
-      'Ambient Carbon Monoxide reading:')))
+      'Ambient Carbon Monoxide reading:',
+      'Homeowner Concerns:',
+      'Homeowner Comments:',
+      'Recent Construction:')))
 
 ```
 
@@ -944,7 +956,9 @@ all_electrical_mechanical <- clean_audit_data |>
     could_you_perform_combustion_safety_tests_in_worst_case_scenario_1,
     could_you_perform_combustion_safety_tests_in_worst_case_scenario_2,
     could_you_perform_combustion_safety_tests_in_worst_case_scenario_3,
-    write_everything_about_other_appliances
+    write_everything_about_other_appliances,
+    is_a_c_used_in_the_building,
+    how_frequently_is_a_c_used
   ) |>
   
 # join information into one column for breaker panel in 3.7
@@ -1019,6 +1033,13 @@ all_electrical_mechanical <- clean_audit_data |>
   
   mutate(`Other Combustion Appliances:` = write_everything_about_other_appliances) |>
   
+  mutate(`Air Conditioning:` = paste0(
+    "The house is air conditioned using ",
+    is_a_c_used_in_the_building,
+    ". These are used ",
+    how_frequently_is_a_c_used,
+    ".")) |>
+  
   mutate(`Other:` = paste0("**Make rows for all other appliances including fridges, freezers, any combustion appliances that are not included above, electric heating, AC units, ...**")) |>
   
   # select columns
@@ -1028,6 +1049,7 @@ all_electrical_mechanical <- clean_audit_data |>
     `Appliance 2:`,
     `Appliance 3:`,
     `Other Combustion Appliances:`,
+    `Air Conditioning:`,
     `Other:`
   ) |>
   
@@ -1045,6 +1067,7 @@ all_electrical_mechanical <- clean_audit_data |>
     "Appliance 2:",
     "Appliance 3:",
     "Other Combustion Appliances:",
+    "Air Conditioning:",
     "Other:"
   )))
 
