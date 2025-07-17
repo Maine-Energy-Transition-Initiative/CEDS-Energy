@@ -60,7 +60,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[33, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[34, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -617,14 +617,29 @@ all_interior <- clean_audit_data |>
     TRUE ~ 'NA'
   )) |>
 
-  mutate(`Walls:` = paste0(
-    stock_framing, 
-    "The exterior walls are insulated with ", wall_stud_insulation_type, 
-    " insulation. This insulation is ", thickness_of_the_wall_stud_insulation, 
-    " inches thick and in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, 
-    " condition. This gives the exterior walls an R-value of around CALCULATE. A material’s R-value tells us how good it is at stopping heat flow, the bigger the number, the better. For comparison, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. ", 
-    any_additional_comments_on_wall_stud_insulation
-  )) |>
+  mutate(`Walls:` = ifelse(
+    wall_continuous_insulation_type == "NONE",
+    paste0(
+      stock_framing, 
+      "The exterior wall stud cavities are insulated with ", wall_stud_insulation_type, 
+      " insulation. This insulation is ", thickness_of_the_wall_stud_insulation, 
+      " inches thick and in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, 
+      " condition. This gives the exterior walls an R-value of around CALCULATE. A material’s R-value tells us how good it is at stopping heat flow, the bigger the number, the better. For comparison, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. ", 
+      any_additional_comments_on_wall_stud_insulation),
+    paste0(
+      stock_framing, 
+      "The exterior wall stud cavities are insulated with ", wall_stud_insulation_type, 
+      " insulation. This insulation is ", thickness_of_the_wall_stud_insulation, 
+      " inches thick and in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, 
+      " condition. This insulation has an R-value of R-CALCULATE. A material’s R-value tells us how good it is at stopping heat flow, the bigger the number, the better. The exterior walls also have a layer of continuous insulation. This is made up of ",
+      wall_continuous_insulation_type,
+      " that is ",
+      thickness_of_the_wall_continuous_insulation,
+      " inches thick and in ",
+      quality_of_wall_continuous_insulations_installation_assess_worst_part_of_installation,
+      " condition. This insulation adds an R-value of around CALCULATE to the walls.  For comparison, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. ", 
+      any_additional_comments_on_wall_stud_insulation, any_additional_comments_on_wall_continuous_insulation
+    ))) |>
 
   mutate(`Kitchen:` = ifelse(
     is.na(kitchen_fan_flow_box_readings),
