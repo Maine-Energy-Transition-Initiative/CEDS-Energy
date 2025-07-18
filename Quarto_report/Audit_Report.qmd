@@ -1040,17 +1040,17 @@ all_electrical_mechanical <- clean_audit_data |>
     how_frequently_is_a_c_used
   ) |>
   
-# join information into one column for breaker panel in 3.7
-  mutate(`Electrical Panel:` = paste0(
+mutate(
+  `Electrical Panel:` = paste0(
     "The electrical panel has an amperage of ", 
     amperage_of_breaker_panel, 
     ". There are ", 
     number_of_unused_breaker_spaces, 
     " unused breaker spaces. ", 
     comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage
-  )) |>
-  
-  mutate(`Appliance 1:` = ifelse(
+  ),
+
+  `Appliance 1:` = ifelse(
     could_you_perform_combustion_safety_tests_in_worst_case_scenario_1 == "Yes",
     paste0(
       "The ", name_1, " runs on ", fuel_type_1, 
@@ -1068,9 +1068,9 @@ all_electrical_mechanical <- clean_audit_data |>
       ". It is located in the ", location_1, 
       " and has ", ventilation_1, " ventilation."
     )
-  )) |>
-  
-  mutate(`Appliance 2:` = ifelse(
+  ),
+
+  `Appliance 2:` = ifelse(
     could_you_perform_combustion_safety_tests_in_worst_case_scenario_2 == "Yes",
     paste0(
       "The ", name_2, " runs on ", fuel_type_2, 
@@ -1088,9 +1088,9 @@ all_electrical_mechanical <- clean_audit_data |>
       ". It is located in the ", location_2, 
       " and has ", ventilation_2, " ventilation."
     )
-  )) |>
-  
-  mutate(`Appliance 3:` = ifelse(
+  ),
+
+  `Appliance 3:` = ifelse(
     could_you_perform_combustion_safety_tests_in_worst_case_scenario_3 == "Yes",
     paste0(
       "The ", name_3, " runs on ", fuel_type_3, 
@@ -1108,18 +1108,20 @@ all_electrical_mechanical <- clean_audit_data |>
       ". It is located in the ", location_3, 
       " and has ", ventilation_3, " ventilation."
     )
-  )) |>
-  
-  mutate(`Other Combustion Appliances:` = write_everything_about_other_appliances) |>
-  
-  mutate(`Air Conditioning:` = paste0(
-    "The house is air conditioned using ",
-    is_a_c_used_in_the_building,
-    ". These are used ",
-    how_frequently_is_a_c_used,
-    ".")) |>
-  
-  mutate(`Other:` = paste0("**Make rows for all other appliances including fridges, freezers, any combustion appliances that are not included above, electric heating, AC units, ...**")) |>
+  ),
+
+  `Other Combustion Appliances:` = write_everything_about_other_appliances,
+
+  `Air Conditioning:` = paste0(
+    ifelse(is_a_c_used_in_the_building == "None",
+           paste0(""),
+           paste0("The house is air conditioned using ", is_a_c_used_in_the_building, ". ",(ifelse(!is.na(how_frequently_is_a_c_used),  paste0("These are used ", how_frequently_is_a_c_used, ".")))))),
+
+
+  `Other:` = paste0(
+    "**Make rows for all other appliances including fridges, freezers, any combustion appliances that are not included above, electric heating, AC units, ...**"
+  )
+)|>
   
   # select columns
   select(
