@@ -60,7 +60,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[34, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[35, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -961,12 +961,14 @@ all_basement <- clean_audit_data |>
       comment_about_ductwork_condition_in_the_basement_crawlspace
     ),
     
-    `Other Observations:` = paste0(
+    `Other Observations:` = ifelse(any_hazards_or_mold_moisture_asbestos_present_in_the_basement_crawlspace == "Yes",
+      paste0(
       "There is ",
       hazards_basement_crawlspace,
-      describe_the_hazards_or_mold_moisture_in_basement_crawlspace
-    )
-  ) |>
+      describe_the_hazards_or_mold_moisture_in_basement_crawlspace),
+      paste0(" ")
+  )) |>
+  
   
 # select columns
   select(
@@ -1850,6 +1852,28 @@ ft_energy
 
 ```
 
+```{r}
+#| label: last comments
+#| eval: true
+#| echo: false
+#| results: asis
+
+last_comments <- clean_audit_data$last_comments
+last_questions <- clean_audit_data$last_questions_from_homeowners
+
+output <- ""
+
+if (!is.na(last_comments)) {
+  output <- paste0(output, last_comments, ". ")
+}
+
+if (!is.na(last_questions)) {
+  output <- paste0(output, last_questions)
+}
+
+cat(output)
+
+```
 
 {{< pagebreak >}}
 
