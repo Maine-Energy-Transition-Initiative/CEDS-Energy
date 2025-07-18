@@ -918,7 +918,8 @@ all_basement <- clean_audit_data |>
   mutate(
     `Area:` = paste0(area_of_basement_crawlspace_ground_square_feet, " ft²"),
     
-    `Wall Area:` = paste0(basement_crawlspace_net_wall_area, " ft²"),
+    `Wall Area:` = paste0(
+      ifelse(!is.na(basement_crawlspace_net_wall_area), paste0(basement_crawlspace_net_wall_area, " ft²"), "")),
     
     `Insulation Type:` = paste0(
       "The **basement / crawlspace** is insulated with ",
