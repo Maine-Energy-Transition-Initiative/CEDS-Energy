@@ -916,60 +916,65 @@ all_basement <- clean_audit_data |>
   
 # create rows
   mutate(
-    `Area:` = paste0(area_of_basement_crawlspace_ground_square_feet, " ft²"),
+    `Area:` = ifelse(!is.na(area_of_basement_crawlspace_ground_square_feet), 
+                     paste0(area_of_basement_crawlspace_ground_square_feet, " ft²"), 
+                     paste0("")),
     
-    `Wall Area:` = paste0(
-      ifelse(!is.na(basement_crawlspace_net_wall_area), paste0(basement_crawlspace_net_wall_area, " ft²"), "")),
+    `Wall Area:` = ifelse(!is.na(basement_crawlspace_net_wall_area), 
+                          paste0(basement_crawlspace_net_wall_area, " ft²"), 
+                          paste0("")),
     
-    `Insulation Type:` = paste0(
-      "The **basement / crawlspace** is insulated with ",
-      basement_crawlspace_insulation_type,
-      " insulation. The insulation is ",
-      thickness_of_basement_crawlspace_insulation,
-      " inches thick."
-    ),
+    `Insulation Type:` = ifelse(basement_crawlspace_insulation_type == "NONE", 
+                                paste0(""),
+                                paste0(
+                                  "The **basement / crawlspace** is insulated with ",
+                                  basement_crawlspace_insulation_type,
+                                  " insulation. The insulation is ",
+                                  thickness_of_basement_crawlspace_insulation," inches thick.")),
     
-    `Insulation Condition:` = paste0(
-      "The insulation is in ",
-      quality_of_the_basement_crawlspace_insulations_installation_assess_worst_part_of_installation,
-      " condition. ",
-      comment_about_the_basement_crawlspace_insulation
-    ),
+    `Insulation Condition:` = ifelse(basement_crawlspace_insulation_type == "NONE", 
+                                     paste0(""),
+                                     paste0(
+                                       "The insulation is in ",
+                                       quality_of_the_basement_crawlspace_insulations_installation_assess_worst_part_of_installation,
+                                       " condition. ",
+                                       comment_about_the_basement_crawlspace_insulation)),
     
-    `R-Value:` = paste0(
-      "The thickness and condition of the insulation gives the insulation an R-value of R-DECIDE per inch. This gives the **basement / crawlspace** a total R-value of R-CALCULATE."
-    ),
+    `R-Value:` = ifelse(basement_crawlspace_insulation_type == "NONE", 
+                                     paste0(""),
+                        paste0(
+                          "The thickness and condition of the insulation gives the insulation an R-value of R-DECIDE per inch. This gives the **basement / crawlspace** a total R-value of R-CALCULATE.")),
     
-    `Moisture Control:` = paste0(
-      "There is ",
-      moisture_and_mold_control_strategies,
-      " to control moisture. These are in ",
-      condition_of_moisture_control_strategies_in_the_basement_crawlspace,
-      " condition. ",
-      comments_about_existing_moisture_control_strategies,
-      ". Moisture control is important as moisture in the **basement / crawlspace** evaporates into the house where it can cause moisture damage such as mold. It is also important to protect appliances in the **basement / crawlspace**."
-    ),
+    `Moisture Control:` = ifelse(moisture_and_mold_control_strategies == "NONE",
+                                 paste0("There are no moisture control strategies. Moisture control is important as moisture in the **basement / crawlspace** evaporates into the house where it can cause moisture damage such as mold. It is also important to protect appliances in the **basement / crawlspace**."),
+                                  paste0(
+                                   "There is ",
+                                   moisture_and_mold_control_strategies,
+                                   " to control moisture. These are in ",
+                                   condition_of_moisture_control_strategies_in_the_basement_crawlspace,
+                                   " condition. ",
+                                   comments_about_existing_moisture_control_strategies,
+                                   ". Moisture control is important as moisture in the **basement / crawlspace** evaporates into the house where it can cause moisture damage such as mold. It is also important to protect appliances in the **basement / crawlspace**.")),
     
-    `Appliance Insulation:` = paste0(
-      "The ",
-      insulation_of_appliances_in_basement_crawlspace,
-      " DELETE WHAT DOESN'T APPLY. Insulating ductwork is important to prevent the air from losing heat as it travels through it. Insulating both hot and cold water pipes is important to stop the water from losing heat as it travels through the pipes and to prevent condensation. Uninsulated **ductwork / pipes** increase your heating bill."
-    ),
+    `Appliance Insulation:` = ifelse(insulation_of_appliances_in_basement_crawlspace == "NO DUCTWORK OR PIPES",
+                                     paste0(""),
+                                     paste0("The ",
+                                            insulation_of_appliances_in_basement_crawlspace,
+                                            ". DELETE WHAT DOESN'T APPLY. Insulating ductwork is important to prevent the air from losing heat as it travels through it. Insulating both hot and cold water pipes is important to stop the water from losing heat as it travels through the pipes and to prevent condensation. Uninsulated **ductwork / pipes** increase your heating bill.")),
+
     
-    `Ducts:` = paste0(
-      is_there_ductwork_in_the_basement_crawlspace,
-      " in the **basement / crawlspace**. ",
-      comment_about_ductwork_condition_in_the_basement_crawlspace
-    ),
+    `Ducts:` = ifelse(is_there_ductwork_in_the_basement_crawlspace == "NONE",
+                      paste0(""),
+                      paste0(is_there_ductwork_in_the_basement_crawlspace,
+                             " in the **basement / crawlspace**. ",
+                             comment_about_ductwork_condition_in_the_basement_crawlspace)),
     
     `Other Observations:` = ifelse(any_hazards_or_mold_moisture_asbestos_present_in_the_basement_crawlspace == "Yes",
       paste0(
       "There is ",
       hazards_basement_crawlspace,
       describe_the_hazards_or_mold_moisture_in_basement_crawlspace),
-      paste0(" ")
-  )) |>
-  
+      paste0(" "))) |>
   
 # select columns
   select(
