@@ -1077,8 +1077,9 @@ mutate(
     ". There are ", 
     number_of_unused_breaker_spaces, 
     " unused breaker spaces. ", 
-    comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage
-  ),
+    ifelse(is.na(comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage),
+           "",
+           comment_about_condition_of_the_panel_breakers_e_g_are_there_fuses_water_damage)),
 
   `Appliance 1:` = ifelse(
     could_you_perform_combustion_safety_tests_in_worst_case_scenario_1 == "Yes",
@@ -1150,8 +1151,7 @@ mutate(
 
   `Other:` = paste0(
     "**Make rows for all other appliances including fridges, freezers, any combustion appliances that are not included above, electric heating, AC units, ...**"
-  )
-)|>
+  ))|>
   
   # select columns
   select(
