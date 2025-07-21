@@ -941,7 +941,7 @@ all_basement <- clean_audit_data |>
     thickness_of_basement_crawlspace_insulation,
     basement_crawlspace_net_wall_area,
     condition_of_moisture_control_strategies_in_the_basement_crawlspace,
-    comments_about_existing_moisture_control_strategies
+    comments_about_existing_moisture_control_strategies,
   ) |>
   
 # create rows
@@ -2710,6 +2710,7 @@ if(high_efficiency_shower_heads == TRUE){
 
 if(high_efficiency_shower_heads == TRUE){
   cat("
+  
 *Estimated Cost/Benefits/Incentives*
 
 ", auto_shower_heads_estimates$Description)
