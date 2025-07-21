@@ -1731,12 +1731,12 @@ ADD INFRARED IMAGES TABLE
 
 ### Attic
 
-*If the house does not have an attic space, change this section to be about roof insulation and air sealing.*
-
 ```{r}
 #| label: 3.5 attic table
 #| eval: true
 #| echo: false
+#| results: asis 
+
 
 my_border <- fp_border(color = "black", width = 1)
 
@@ -1767,7 +1767,32 @@ ft_attic <- flextable(all_attic) |>
   border_inner_h(border = my_border) |>
   border_inner_v(border = my_border)
 
-ft_attic
+attic_q <- clean_audit_data$is_there_attic_space
+
+#| echo: false
+#| results: asis
+
+#| echo: false
+#| results: asis
+
+attic_q <- clean_audit_data$is_there_attic_space
+
+attic_text <- if (attic_q == "No") {
+  "The house has no attic space. ADD COMMENTS ABOUT IF ROOF IS INSULATED AND SEALED OR NOT"
+} else if (attic_q == "Yes, there are multiple attics") {
+  "The house has multiple attic spaces. DESCRIBE WHERE AND WHICH ONES THE INFORMATION BELOW IS ABOUT"
+} else {
+  ""
+}
+
+cat(attic_text, "\n\n")
+
+
+
+if (attic_q != "No") {
+  ft_attic
+}
+
 
 ```
 
