@@ -116,35 +116,6 @@ ranked_sect_4_problem_text <- sect_4_problem_text_googlesheets |>
 
 ```
 
-```{r}
-#| label: attic data for basics setup
-#| echo: false
-  
-#select all attic data for basics
-attic_basics <- energy_test_googlesheets |>
-  select( `Attic insulation type`, 
-          `Quality of attic insulation's installation? Assess worst part of installation.`, 
-          `Thickness of the attic insulation (inches), at the thinnest location`)|>
-
-#join the data into one row
-    mutate(Attic_all = paste0(
-      "Insulated with ",
-      `Attic insulation type`,
-      " insulation, ",
-      `Thickness of the attic insulation (inches), at the thinnest location`,
-      " inches thick."
-      ))|>
-  
-      mutate(Info = 'Attic:',
-          .before =`Attic insulation type`)
-
-#remove unwanted rows
-attic_basics <- attic_basics[,-c(2,3,4)]
-  
-#rename the column heading
-names(attic_basics) <- c('Info', 'Values')
-  
-```
 
 ```{r}
 #| label: basics setup
@@ -168,60 +139,6 @@ energy_cost_quantity <- energy_test_googlesheets |>
          `Cost in Dollars (Pellets)`,
          `Write the quantity and measuring unit`, 
          `Cost in Dollars (Other)` )
-
-  # select other numerical data
-double_other <- clean_audit_data |>
-  select(
-    date_built,
-    number_of_floors,
-    volume_of_conditioned_space_cubic_feet,
-    square_footage_of_conditioned_space,
-    ambient_carbon_monoxide_reading,
-    foundation_type,
-    net_wall_area_square_feet,
-    homeowners_concerns,
-    homeowners_comment_about_existing_insulation_air_sealing_when_was_it_done,
-    any_additions_recent_renovations_construction
-  ) |>
-  
-pivot_longer(
-  cols = everything(),
-  names_to = "Info", 
-  values_to = "Values"
-) |> 
-mutate(
-  Info = recode(
-    Info,
-    date_built = 'Date Built:',
-    number_of_floors = 'Number of floors:',
-    square_footage_of_conditioned_space = 'Square footage of conditioned space:',
-    volume_of_conditioned_space_cubic_feet = 'Volume of conditioned space:',
-    net_wall_area_square_feet = 'Net Wall Area:',
-    ambient_carbon_monoxide_reading = 'Ambient Carbon Monoxide reading:',
-    foundation_type = 'Foundation Type:',
-    homeowners_concerns = 'Homeowner Concerns:',
-    homeowners_comment_about_existing_insulation_air_sealing_when_was_it_done = 'Homeowner Comments:',
-    any_additions_recent_renovations_construction = 'Recent Construction:'
-  ),
-  Info = factor(Info, levels = c(
-    'Date Built:',
-    'Foundation Type:',
-    'Number of floors:',
-    'Square footage of conditioned space:',
-    'Volume of conditioned space:',
-    'Net Wall Area:',
-    'Ambient Carbon Monoxide reading:',
-    'Homeowner Concerns:',
-    'Homeowner Comments:',
-    'Recent Construction:'
-  )),
-  Values = case_when(
-    Info == 'Square footage of conditioned space:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft²"),
-    Info == 'Volume of conditioned space:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft³"),
-    Info == 'Net Wall Area:' ~ paste0(comma(as.numeric(Values), accuracy = 1), " ft²"),
-    TRUE ~ as.character(Values)
-  )
-)
 
 ```
 
@@ -383,21 +300,94 @@ names(annual_totals) <- c('Info', 'Values')
 #| label: basics table setup
 #| echo: false
 
-# set up basics table
-all_basics <- double_other |>
-  rbind(attic_basics )|>
-    arrange(factor(Info, levels = c(
+all_basics <- clean_audit_data |>
+  
+  select(
+    date_built,
+    number_of_floors,
+    volume_of_conditioned_space_cubic_feet,
+    square_footage_of_conditioned_space,
+    ambient_carbon_monoxide_reading,
+    foundation_type,
+    net_wall_area_square_feet,
+    homeowners_concerns,
+    homeowners_comment_about_existing_insulation_air_sealing_when_was_it_done,
+    any_additions_recent_renovations_construction,
+    attic_insulation_type,
+    thickness_of_the_attic_insulation_inches_at_the_thinnest_location) |>
+  
+  mutate(
+    
+    'Date Built:' = date_built,
+    
+    'Foundation Type:' = foundation_type,
+    
+    'Attic:' = ifelse(attic_insulation_type == "NONE",
+                      paste0("The attic is uninsulated."),
+                      paste0("Insulated with ",
+                             attic_insulation_type,
+                             " insulation, ",
+                             thickness_of_the_attic_insulation_inches_at_the_thinnest_location,
+                             " inches thick.")),
+    
+    'Number of Floors:' = number_of_floors,
+    
+    'Square Footage of Conditioned Space:' = paste0(comma(as.numeric(square_footage_of_conditioned_space), accuracy = 1), " ft²"),
+    
+    'Volume of Conditioned Space:' = paste0(comma(as.numeric(volume_of_conditioned_space_cubic_feet), accuracy = 1), " ft³"),
+    
+    'Net Wall Area:' = ifelse(is.na(net_wall_area_square_feet),
+                              paste0(""),
+                              paste0(comma(as.numeric(net_wall_area_square_feet), accuracy = 1), " ft²")),
+    
+    'Ambient Carbon Monoxide Reading:' = paste0(ambient_carbon_monoxide_reading, " parts per million."),
+    
+    'Homeowner Concerns:' = ifelse(is.na(homeowners_concerns),
+                                   paste0(""),
+                                   paste0(homeowners_concerns)),
+    
+    'Homeowner Comments:' = ifelse(is.na(homeowners_comment_about_existing_insulation_air_sealing_when_was_it_done),
+                                   paste0(""),
+                                   paste0(homeowners_comment_about_existing_insulation_air_sealing_when_was_it_done)),
+    
+    'Recent Construction:' = ifelse(is.na(any_additions_recent_renovations_construction),
+                                    paste0(""),
+                                    paste0(any_additions_recent_renovations_construction))
+    
+    ) |>
+  
+  
+  select(
       'Date Built:', 
       'Foundation Type:', 
+      'Number of Floors:', 
       'Attic:', 
-      'Number of floors:', 
-      'Square footage of conditioned space:', 
-      'Volume of conditioned space:',
+      'Square Footage of Conditioned Space:', 
+      'Volume of Conditioned Space:',
       'Net Wall Area:',
-      'Ambient Carbon Monoxide reading:',
+      'Ambient Carbon Monoxide Reading:',
       'Homeowner Concerns:',
       'Homeowner Comments:',
-      'Recent Construction:')))
+      'Recent Construction:') |>
+
+pivot_longer(cols = everything(),
+             names_to = "Info",
+             values_to = "Values") |>
+mutate(
+  Info = factor(Info, levels = c(
+    'Date Built:', 
+    'Foundation Type:', 
+    'Number of Floors:', 
+    'Attic:', 
+    'Square Footage of Conditioned Space:', 
+    'Volume of Conditioned Space:',
+    'Net Wall Area:',
+    'Ambient Carbon Monoxide Reading:',
+    'Homeowner Concerns:',
+    'Homeowner Comments:',
+    'Recent Construction:'))) |>
+  
+arrange(Info)
 
 ```
 
@@ -525,7 +515,7 @@ exterior_windows <- if (
   exterior_windows$how_many_windows_of_this_type_there_are_1 >= 1) {
     mutate(exterior_windows, Values = paste0("There are ", how_many_windows_of_this_type_there_are_1 , " ", number_of_panes_1 ," paned ", material_of_the_windows_1, " windows. These are in ", condition_of_the_windows_of_this_type_1, " condition, they have a total area of ", total_windows_areas_of_this_type_1, " ft². ", more_about_condition_of_the_windows_of_this_type_1, "."))
 } else {
-  mutate(exterior_windows, Values = paste0("There are no exterior windows"))
+  mutate(exterior_windows, Values = paste0("There are no exterior windows."))
 }
 
 exterior_windows <- exterior_windows|>
