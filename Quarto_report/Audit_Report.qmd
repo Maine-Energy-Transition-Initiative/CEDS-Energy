@@ -834,27 +834,49 @@ attic_character <- energy_test_googlesheets|>
          `Are bathroom and kitchen exhaust fans being vented to outside?`)|>
   
 # create all rows for table
-    mutate(`Area:` = paste0(`Attic Area`, " ft²")) |>
+    mutate(
+      `Area:` = ifelse(is.na(`Attic Area`),
+                       paste0(""),
+                       paste0(`Attic Area`, " ft²")),
   
-      mutate(`Insulation Type:` = paste0("The attic is insulated with ", `Attic insulation type`, " insulation. The insulation is ", `Thickness of the attic insulation (inches), at the thinnest location`, " inches thick.")) |>
+      `Insulation Type:` = ifelse(`Attic insulation type` == "NONE",
+                                  paste0("The attic is uninsulated. Attic insulation is important to keep your house cool in the summer and warm in the winter."),
+                                  paste0("The attic is insulated with ", `Attic insulation type`, " insulation. The insulation is ", `Thickness of the attic insulation (inches), at the thinnest location`, " inches thick.")),
   
-      mutate(`Insulation Condition:` = paste0("The insulation is in ", `Quality of attic insulation's installation? Assess worst part of installation.`, " condition. ", `Any additional comments on attic insulation, e.g., is the entire attic insulated?`)) |>
+      `Insulation Condition:` = ifelse(is.na(`Quality of attic insulation's installation? Assess worst part of installation.`),
+                                       paste0(""),
+                                       paste0("The insulation is in ", `Quality of attic insulation's installation? Assess worst part of installation.`, " condition. ", `Any additional comments on attic insulation, e.g., is the entire attic insulated?`)),
+        
   
-      mutate(`Pitch of Primary Roof Face:` = paste0("The pitch of the primary roof face is ", `Pitch of primary roof face (degrees)`, " degrees.")) |>
+      `Pitch of Primary Roof Face:` = ifelse(is.na(`Pitch of primary roof face (degrees)`),
+                                             paste0(""),
+                                             paste0("The pitch of the primary roof face is ", `Pitch of primary roof face (degrees)`, " degrees.")),
   
-      mutate(`Exhaust Ducts:` = paste0("Exhaust ducts from bathroom and kitchen fans are ", `Are bathroom and kitchen exhaust fans being vented to outside?`, ". Venting exhaust fans to outside is important so that they do not add potentially harmful moisture into the attic space and so they can function properly.")) |>
+      `Exhaust Ducts:` = ifelse(is.na(`Are bathroom and kitchen exhaust fans being vented to outside?`),
+                                paste0(""),
+                                paste0("Exhaust ducts from bathroom and kitchen fans are ", `Are bathroom and kitchen exhaust fans being vented to outside?`, ". Venting exhaust fans to outside is important so that they do not add potentially harmful moisture into the attic space and so they can function properly.")),
   
-      mutate(`R-Value:` = paste0("The thickness and condition of the insulation give the insulation an R-value of R-DECIDE per inch. This gives the attic a total R-value of R-CALCULATE. For comparison, current Maine building code requires an attic R-value of R-60, and we typically recommend at least R-80 in attics to keep the house warm in the winter and cool in the summer.")) |>
+      `R-Value:` = ifelse(`Attic insulation type` == "NONE",
+                          paste0(""),
+                          paste0("The thickness and condition of the insulation give the insulation an R-value of R-DECIDE per inch. This gives the attic a total R-value of R-CALCULATE. For comparison, current Maine building code requires an attic R-value of R-60, and we typically recommend at least R-80 in attics to keep the house warm in the winter and cool in the summer.")),
   
-      mutate(`Air Sealing:` = paste0("The attic is ",`Does attic have air sealing?`,". ",`Comment about air sealing`))|>
+      `Air Sealing:` = ifelse(`Does attic have air sealing?` == "there is no attic space",
+                              paste0(""),
+                              paste0("The attic is ",`Does attic have air sealing?`,". ",`Comment about air sealing`)),
+
+      `Attic Hatch:` = ifelse(`Attic hatch insulation type` == "NONE",
+                              paste0("The attic hatch is uninsulated."),
+                              paste0("The attic hatch is insulated with ", `Attic hatch insulation type`, " insulation that is ", `Thickness of the attic hatch insulation (inches), at the thinnest location`, " inches thick. The insulation is in ", `Quality of attic hatch insulation's installation? Assess worst part of installation.`, " condition and the hatch is **air sealed / not air sealed**.")),
   
-      mutate(`Attic Hatch:` = paste0("The attic hatch is insulated with ", `Attic hatch insulation type`, " insulation that is ", `Thickness of the attic hatch insulation (inches), at the thinnest location`, " inches thick. The insulation is in ", `Quality of attic hatch insulation's installation? Assess worst part of installation.`, " condition and the hatch is **air sealed / not air sealed**.")) |>
+      `Other observations:` = paste(`Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Are there any interior features?`),
   
-      mutate(`Other observations:` = paste(`Any hazards or mold/moisture/asbestos present in the attic?`, `Describe the hazards or mold/moisture in the attic`, `Are there any interior features?`))|>
+      `Ventilation:` = ifelse(`Attic ventilation type?` == "NONE",
+                              paste0("The attic space is not ventilated. Attic ventilation is important to keep the attic space and insulation dry and in good condition."),
+                              paste0("The attic is ventilated by ", `Attic ventilation type?`, ". Attic ventilation is important to keep the attic space and insulation dry and in good condition.")),
   
-      mutate(`Ventilation:` = paste0("The attic is ventilated by ", `Attic ventilation type?`, ". Attic ventilation is important to keep the attic space and insulation dry and in good condition."))|>
-  
-      mutate(`Ducts:` = paste0(`Is there ductwork in the attic?`, ". ", `Comment about condition of the ductwork in the attic`))
+     `Ducts:` = ifelse(`Is there ductwork in the attic?` == "NONE",
+                       paste0(""),
+                       paste0(`Is there ductwork in the attic?`, ". ", `Comment about condition of the ductwork in the attic`)))
 
 
 # format table
