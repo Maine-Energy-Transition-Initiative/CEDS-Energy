@@ -340,7 +340,7 @@ all_basics <- clean_audit_data |>
                               paste0(""),
                               paste0(comma(as.numeric(net_wall_area_square_feet), accuracy = 1), " ft²")),
     
-    'Ambient Carbon Monoxide Reading:' = paste0(ambient_carbon_monoxide_reading, " parts per million."),
+    'Ambient Carbon Monoxide Reading:' = paste0(ambient_carbon_monoxide_reading, " parts per million"),
     
     'Homeowner Concerns:' = ifelse(is.na(homeowners_concerns),
                                    paste0(""),
