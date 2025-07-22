@@ -105,10 +105,11 @@ ranked_clean_recommendations <- recommendations_googlesheets |>
 ```
 
 ```{r}
-#| label: arrange section 4 text
+#| label: arrange section 2 text
 #| echo: false
 #| warning: false
 
+# bind problem descriptions for summary of recs to summary of recs table
 ranked_sect_4_problem_text <- sect_4_problem_text_googlesheets |>
   bind_cols(pivot_recommendations)|>
   select(-c(Rec_from_google_form))|>
