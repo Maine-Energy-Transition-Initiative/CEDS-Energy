@@ -60,7 +60,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[35, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[37, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -1768,14 +1768,6 @@ ft_attic <- flextable(all_attic) |>
   border_outer(border = my_border) |> 
   border_inner_h(border = my_border) |>
   border_inner_v(border = my_border)
-
-attic_q <- clean_audit_data$is_there_attic_space
-
-#| echo: false
-#| results: asis
-
-#| echo: false
-#| results: asis
 
 attic_q <- clean_audit_data$is_there_attic_space
 
