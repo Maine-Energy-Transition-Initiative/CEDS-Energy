@@ -1715,7 +1715,7 @@ cat(paste0(
 #| echo: false
 #| results: asis
 
-b_ACHnat <- clean_audit_data$ac_hn_basement
+b_ACHnat <- ACHnaturalBasement
 b_comments <- clean_audit_data$comments_about_air_leakage_with_the_basement_door_open
 cat(paste0(
   "To test how well the basement is air sealed, we open the interior door to the basement and record how leaky the house and basement are together. With the basement door open, your house had an ACHnatural value of ",
