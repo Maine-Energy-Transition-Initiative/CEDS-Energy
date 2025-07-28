@@ -1702,7 +1702,11 @@ ggsave("achnatural_ggplot1.png", width = 15, height = 5)
 #| results: asis
 
 airleaks_comments <- clean_audit_data$comments_about_air_leakage
-cat(airleaks_comments)
+
+airleaks_text <- ifelse(is.na(airleaks_comments), " ", airleaks_comments)
+
+cat(airleaks_text)
+
 
 ```
 
@@ -1714,11 +1718,23 @@ cat(airleaks_comments)
 
 pressure_pan <- clean_audit_data$pressure_pan_recordings
 zonal_pressure <- clean_audit_data$zonal_pressure_difference
+
+pressure_pan_text <- if (!is.na(pressure_pan)) {
+  paste0("To test how leaky things like outlets and ductboots are, we measure the pressure difference between them and the house using a pressure pan. We measured ", pressure_pan, ". ")
+} else {
+  ""
+}
+
+zonal_pressure_text <- if (!is.na(zonal_pressure)) {
+  paste0("By measuring the pressure difference between different rooms, we can test how leaky individual rooms are. Any room that has a pressure difference over 5 pascals has significant air leakage occuring in it. We measured ", zonal_pressure, ".")
+} else {
+  ""
+}
+
 cat(paste0(
-  "To test how leaky things like outlets and ductboots are, we measure the pressure difference between them and the house using a pressure pan. We measured ",
-  pressure_pan,
-  ". By measuring the pressure difference between different rooms, we can test how leaky individual rooms are. Any room that has a pressure difference over 5 pascals has significant air leakage occuring in it. We measured ",
-  zonal_pressure))
+  pressure_pan_text,
+  zonal_pressure_text
+))
 
 ```
 
@@ -1730,11 +1746,23 @@ cat(paste0(
 
 b_ACHnat <- ACHnaturalBasement
 b_comments <- clean_audit_data$comments_about_air_leakage_with_the_basement_door_open
-cat(paste0(
-  "To test how well the basement is air sealed, we open the interior door to the basement and record how leaky the house and basement are together. With the basement door open, your house had an ACHnatural value of ",
-  b_ACHnat,
-  ". ",
-  b_comments))
+
+if (!is.na(b_ACHnat)) {
+  
+  b_comments_text <- if (!is.na(b_comments)) {
+    paste0(b_comments)
+  } else {
+    ""
+  }
+  
+  cat(paste0(
+    "To test how well the basement is air sealed, we open the interior door to the basement and record how leaky the house and basement are together. With the basement door open, your house had an ACHnatural value of ",
+    b_ACHnat,
+    ". ",
+    b_comments_text
+  ))
+}
+
 
 ```
 
