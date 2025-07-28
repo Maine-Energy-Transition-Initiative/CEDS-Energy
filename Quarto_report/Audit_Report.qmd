@@ -885,7 +885,7 @@ attic_character <- energy_test_googlesheets|>
   
       `Air Sealing:` = ifelse(`Does attic have air sealing?` == "there is no attic space",
                               paste0(""),
-                              paste0("The attic is ",`Does attic have air sealing?`,". ",`Comment about air sealing`)),
+                              paste0("The attic is ",`Does attic have air sealing?`,". ", ifelse(is.na(`Comment about air sealing`), "", `Comment about air sealing`))),
 
       `Attic Hatch:` = ifelse(`Attic hatch insulation type` == "NONE",
                               paste0("The attic hatch is uninsulated."),
