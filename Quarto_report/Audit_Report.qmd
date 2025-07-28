@@ -60,7 +60,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[38, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[37, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -551,7 +551,7 @@ exterior_3.2 <- clean_audit_data|>
   mutate(
     'Roof:'= paste0('The house has a ', roof_type, ' roof. ', 
                     ifelse(is.na(roof_age),
-                           paste0('The age of the roof is unknown.'),
+                           paste0('The age of the roof is unknown. '),
                            paste0('The roof is ', roof_age, ' years old. ')),
                     'It is in ', condition_of_the_roof ,' condition. ',
                     ifelse(is.na(comment_about_condition_of_the_roof),
@@ -572,10 +572,13 @@ exterior_3.2 <- clean_audit_data|>
     
     'Moisture Control:' = ifelse(are_there_moisture_control_strategies == "No",
                                  paste0("There are no moisture control strategies. Moisture control is important to protect the exterior of the house and to limit the amount of moisture seeping into the foundation."),
-                                 paste0("The house has the following moisture control strategies: ", existing_moisture_control_strategies,'.  These were in ', condition_of_moisture_control_strategies, ' condition. ',
-                                        ifelse(is.na(comments_about_existing_moisture_control_strategies),
+                                 (ifelse(is.na(condition_of_moisture_control_strategies),
+                                        paste0("The house has the following moisture control strategies: ", existing_moisture_control_strategies,".", (ifelse(is.na(comments_about_existing_moisture_control_strategies),
                                                paste0(""),
-                                               paste0(comments_about_existing_moisture_control_strategies))))) |>
+                                               paste0(comments_about_existing_moisture_control_strategies)))),
+                                        paste0("The house has the following moisture control strategies: ", existing_moisture_control_strategies,'.  These were in ', condition_of_moisture_control_strategies, ' condition. ', (ifelse(is.na(comments_about_existing_moisture_control_strategies),
+                                               paste0(""),
+                                               paste0(comments_about_existing_moisture_control_strategies)))))))) |>
 
   select(`Roof:`,
          `Roof Orientation:`,
