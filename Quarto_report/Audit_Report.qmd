@@ -629,13 +629,21 @@ all_interior <- clean_audit_data |>
 
   `Walls:` = ifelse(wall_stud_insulation_type == "NONE",
                     paste0(stock_framing, "The exterior walls are uninsulated. For reference, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. A material’s R-value tells us how good it is at stopping heat flow, the bigger the number, the better."),
-                    paste0(stock_framing, 
-                      "The exterior wall stud cavities are insulated with ", wall_stud_insulation_type, 
-                      " insulation. This insulation is ", thickness_of_the_wall_stud_insulation, 
-                      " inches thick and in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, 
-                      " condition. This gives the exterior walls an R-value of around CALCULATE. A material’s R-value tells us how good it is at stopping heat flow, the bigger the number, the better. For comparison, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. ", 
-                      any_additional_comments_on_wall_stud_insulation,
-                      (ifelse(wall_continuous_insulation_type == "NONE",
+                    paste0(
+                          stock_framing, 
+                          "The exterior wall stud cavities are insulated with ", wall_stud_insulation_type, 
+                          " insulation. ",
+                          (ifelse(is.na(thickness_of_the_wall_stud_insulation),
+                                 paste0("The thickness of the insulation is unknown, but we estimate that it is around DECIDE inches thick."),
+                                 paste0("This insulation is ", thickness_of_the_wall_stud_insulation, 
+                                   " inches thick and in ", quality_of_wall_stud_insulations_installation_assess_worst_part_of_installation, 
+                                   " condition. "))),
+                          "This gives the exterior walls an R-value of around CALCULATE. A material’s R-value tells us how good it is at stopping heat flow—the bigger the number, the better. For comparison, current Maine building code requires an R-value of at least R-13 with additional continuous insulation of R-10 for exterior walls or R-20 with additional continuous insulation of R-5. ",
+                          (ifelse(is.na(any_additional_comments_on_wall_stud_insulation),
+                           paste0(""),
+                           paste0(any_additional_comments_on_wall_stud_insulation))),
+                        
+                          (ifelse(wall_continuous_insulation_type == "NONE",
                               paste0(""),
                               paste0("The exterior walls also have a layer of continuous insulation. This is made up of ",
       wall_continuous_insulation_type,
@@ -683,7 +691,9 @@ all_interior <- clean_audit_data |>
     paste0("We measured the flow speed of the bathroom exhaust fan(s). When there is a shower, bathroom exhaust fans should have a flow of at least 80 cubic feet per minute (CFM). Your fan(s) had a flow speed of ",
            bathroom_fan_flow_box_readings,
            ". ",
-           general_comment_about_the_bathroom_s))) |>
+           ifelse(is.na(general_comment_about_the_bathroom_s),
+                  "",
+                  general_comment_about_the_bathroom_s)))) |>
 
   select(`Walls:`, `Kitchen:`, general_comment_about_the_living_room, `Bathroom(s):`) |>
 
