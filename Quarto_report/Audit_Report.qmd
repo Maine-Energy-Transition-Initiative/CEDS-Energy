@@ -60,7 +60,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[36, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[39, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
@@ -860,7 +860,7 @@ attic_character <- energy_test_googlesheets|>
     mutate(
       `Area:` = ifelse(is.na(`Attic Area`),
                        paste0(""),
-                       paste0(`Attic Area`, " ft²")),
+                       paste0(comma(as.numeric(`Attic Area`), accuracy = 1), " ft²")),
   
       `Insulation Type:` = ifelse(`Attic insulation type` == "NONE",
                                   paste0("The attic is uninsulated. Attic insulation is important to keep your house cool in the summer and warm in the winter."),
@@ -962,11 +962,11 @@ all_basement <- clean_audit_data |>
 # create rows
   mutate(
     `Area:` = ifelse(!is.na(area_of_basement_crawlspace_ground_square_feet), 
-                     paste0(area_of_basement_crawlspace_ground_square_feet, " ft²"), 
+                     paste0(comma(as.numeric(area_of_basement_crawlspace_ground_square_feet), accuracy = 1), " ft²"), 
                      paste0("")),
     
     `Wall Area:` = ifelse(!is.na(basement_crawlspace_net_wall_area), 
-                          paste0(basement_crawlspace_net_wall_area, " ft²"), 
+                          paste0(comma(as.numeric(basement_crawlspace_net_wall_area), accuracy = 1), " ft²"), 
                           paste0("")),
     
     `Insulation Type:` = ifelse(basement_crawlspace_insulation_type == "NONE", 
@@ -3131,9 +3131,11 @@ if( kitchen_exhaust_fan == TRUE){
   cat("### Kitchen Exhaust Fan(s)
   
 *Problem*
+
 Currently, there is no kitchen exhaust fan, so fumes, smoke, and moisture from cooking stay in the house which can cause health concerns.
 
 *Recommendation*
+
 ")
 }else{
   cat("")
@@ -3151,6 +3153,7 @@ if(kitchen_exhaust_fan == TRUE){
   cat("
 
 *Estimated Cost/Benefits/Incentives*
+
 ", auto_kitchen_fan_estimates$Description)
 }else{
   cat("")
