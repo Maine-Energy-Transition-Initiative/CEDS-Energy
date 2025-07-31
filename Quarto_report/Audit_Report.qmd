@@ -3131,11 +3131,9 @@ if( kitchen_exhaust_fan == TRUE){
   cat("### Kitchen Exhaust Fan(s)
   
 *Problem*
-
 Currently, there is no kitchen exhaust fan, so fumes, smoke, and moisture from cooking stay in the house which can cause health concerns.
 
 *Recommendation*
-
 ")
 }else{
   cat("")
@@ -3153,7 +3151,6 @@ if(kitchen_exhaust_fan == TRUE){
   cat("
 
 *Estimated Cost/Benefits/Incentives*
-
 ", auto_kitchen_fan_estimates$Description)
 }else{
   cat("")
