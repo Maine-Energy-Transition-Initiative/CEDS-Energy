@@ -60,8 +60,9 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[40, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[41, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
+rm(all_energy_test_googlesheets)
 
 clean_audit_data <- janitor::clean_names(energy_test_googlesheets)
 
