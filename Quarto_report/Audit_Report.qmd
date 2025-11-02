@@ -129,7 +129,6 @@ ranked_sect_4_problem_text <- sect_4_problem_text_googlesheets |>
 
 ```
 
-
 ```{r}
 #| label: basics setup
 #| echo: false
@@ -1312,17 +1311,21 @@ knitr::include_graphics(image_path,)
 **Contact:** David Gibson, dgibson\@coa.edu, (802) 266-0301  
 **Report Date:** `r format(Sys.time(), '%B %e, %Y')`  
 
-------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------ <br>
 
-We conducted an energy assessment of your home on `r clean_audit_data$date_of_audit`. This report will tell you what we did, what we found, and what we suggest for your home. These suggestions include information on incentives and financing to make improvements more affordable.
+*Add picture of home* <br>
 
-------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------<br>
+
+We conducted an energy assessment of your home on `r clean_audit_data$date_of_audit`. This report will tell you what we did, what we found, and what we suggest for your home. These suggestions include information on incentives and financing to make improvements more affordable.<br>
+
+------------------------------------------------------------------------------------------------------------<br>
 
 ![](images/Logos-together.png){fig-align="center"}
 
 {{< pagebreak >}}
 
-**Add here the table of content: in Word go to references and add table of content, in Docs go to the insert and on the bottom add the table of context**
+**Add the table of contents: in Word go to REFERENCES and add table of contents, in Docs go to INSERT and add the table of contents**
 
 {{< pagebreak >}}
 
@@ -1490,7 +1493,6 @@ ft_all_basics
 
 ### Exterior
 
-
 ```{r}
 #| label: exterior table
 #| eval: true
@@ -1578,7 +1580,6 @@ To run the test, we used a large fan in an exterior door to depressurize your ho
 To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.
 
 Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.
-
 
 ```{r}
 #| label: 3.5 blower door table
@@ -1697,6 +1698,7 @@ ggplot(ACHnatural_ggplot, aes(y = 1)) +
 ggsave("achnatural_ggplot1.png", width = 15, height = 5)
 
 ```
+
 ![](achnatural_ggplot1.png)
 
 *Your house compared to standards*
@@ -1880,7 +1882,6 @@ ft_basement
 
 ### Electrical and Mechanical Systems
 
-
 ```{r}
 #| label: mechanical systems table
 #| eval: true
@@ -1918,9 +1919,7 @@ ft_mechanic <- flextable(all_electrical_mechanical) |>
 ft_mechanic
 ```
 
-
 ### Energy Bills
-
 
 ```{r}
 #| label: energy table
@@ -3562,7 +3561,6 @@ if(pipe_insulation == TRUE){
   cat("")
   } 
 ```
-
 
 ```{r}
 #| label: diy air sealing recommendation
