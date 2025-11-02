@@ -19,6 +19,16 @@ params:
 ---
 
 ```{r}
+#| label: enter row number
+#| echo: false
+#| eval: true
+
+row_number <- 41 #enter row number from spreadsheet
+report_number <- (row_number - 1)
+
+```
+
+```{r}
 #| label: load packages
 #| echo: false
 #| warning: false
@@ -60,7 +70,7 @@ library(tidyr)
 # load audit data
 all_energy_test_googlesheets <- read_sheet("https://docs.google.com/spreadsheets/d/15TDUFfLuH6vbe5jwQaCYobvu17emCVfBTGN9KCwLEHk/edit?usp=sharing", col_types = "c")
 
-energy_test_googlesheets <- all_energy_test_googlesheets[45, ] 
+energy_test_googlesheets <- all_energy_test_googlesheets[report_number, ] 
 #to load the correct house subtract 1 from the row number in Google sheet
 rm(all_energy_test_googlesheets)
 
