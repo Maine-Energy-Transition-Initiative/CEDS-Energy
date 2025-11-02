@@ -1304,12 +1304,12 @@ image_path <- paste0("", image_id, ".png")
 knitr::include_graphics(image_path,)
 ```
 
-**Homeowner(s):** `r clean_audit_data$homeowner_s`  
-**Address:** `r clean_audit_data$home_address`  
-**Owner Contact:** `r clean_audit_data$homeowner_s_contact`  
-**Auditors:** `r clean_audit_data$names_of_the_auditors`  
-**Contact:** David Gibson, dgibson\@coa.edu, (802) 266-0301  
-**Report Date:** `r format(Sys.time(), '%B %e, %Y')`  
+**Homeowner(s):** `r clean_audit_data$homeowner_s`\
+**Address:** `r clean_audit_data$home_address`\
+**Owner Contact:** `r clean_audit_data$homeowner_s_contact`\
+**Auditors:** `r clean_audit_data$names_of_the_auditors`\
+**Contact:** David Gibson, dgibson\@coa.edu, (802) 266-0301\
+**Report Date:** `r format(Sys.time(), '%B %e, %Y')`
 
 ------------------------------------------------------------------------------------------------------------ <br>
 
@@ -1408,7 +1408,8 @@ if(energy_sources_googlesheets$combustion_propane == TRUE){
 
 ## Summary of Recommendations
 
-We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report. These are organized from the most important/easiest interventions to ones that are more challenging to implement.
+We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report. These are organized from the most important/easiest interventions to ones that are more challenging to implement.\
+<br>
 
 ```{r}
 #| label: summary of recs table
@@ -1579,7 +1580,8 @@ To run the test, we used a large fan in an exterior door to depressurize your ho
 
 To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.
 
-Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.
+Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.\
+<br>
 
 ```{r}
 #| label: 3.5 blower door table
@@ -1619,6 +1621,9 @@ ft_blower_door <- flextable(table_3_4) |>
 ft_blower_door
 
 ```
+
+\
+<br>
 
 ```{r}
 #| label: blower door ACHnatural diagram
@@ -1700,8 +1705,8 @@ ggsave("achnatural_ggplot1.png", width = 15, height = 5)
 ```
 
 ![](achnatural_ggplot1.png)
-
-*Your house compared to standards*
+\
+<br>
 
 ```{r}
 #| label: air leak comments
@@ -1841,7 +1846,8 @@ if (attic_q != "No") {
 
 ### Basement / Crawlspace
 
-*If the house does not have a basement or crawlspace, change this section to be about foundation insulation and sealing, or get rid of it.*
+*If the house does not have a basement or crawlspace, change this section to be about foundation insulation and sealing, or get rid of it.*\
+<br>
 
 ```{r}
 #| label: 3.6 basement/crawlspace table
@@ -3982,3 +3988,5 @@ for (i in 1: nrow(ranked_sect_4_problem_text)) {
 #   
 # "*Problem*", i ,"\n")
 ```
+
+:::
