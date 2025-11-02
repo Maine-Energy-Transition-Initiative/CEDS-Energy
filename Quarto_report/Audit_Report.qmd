@@ -1695,9 +1695,21 @@ ggplot(ACHnatural_ggplot, aes(y = 1)) +
             nudge_x = -0.03, angle = 90, size = 5, fontface = "bold") +
   geom_text(aes(x = 1, y = 0.8, label = "1"), 
             nudge_x = -0.03, angle = 90, size = 5, fontface = "bold") +
-
-  # Minimal clean theme
-  theme_void()
+  
+  ggtitle("Your House Compared to Standards") +
+  
+  theme_void() +
+  theme(
+  plot.title = element_text(
+    hjust = 0.5,
+    face = "bold",
+    size = 18,
+    margin = margin(b = 15)),
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks = element_blank())
 
 # Save as image
 ggsave("achnatural_ggplot1.png", width = 15, height = 5)
