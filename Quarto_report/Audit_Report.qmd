@@ -1305,17 +1305,12 @@ image_path <- paste0("", image_id, ".png")
 knitr::include_graphics(image_path,)
 ```
 
-**Homeowner(s):** `r clean_audit_data$homeowner_s`
-
-**Address:** `r clean_audit_data$home_address`
-
-**Owner Contact:** `r clean_audit_data$homeowner_s_contact`
-
-**Auditors:** `r clean_audit_data$names_of_the_auditors`
-
-**Contact:** David Gibson, dgibson\@coa.edu, (802) 266-0301
-
-**Report Date:** `r format(Sys.time(), '%B %e, %Y')`
+**Homeowner(s):** `r clean_audit_data$homeowner_s`  
+**Address:** `r clean_audit_data$home_address`  
+**Owner Contact:** `r clean_audit_data$homeowner_s_contact`  
+**Auditors:** `r clean_audit_data$names_of_the_auditors`  
+**Contact:** David Gibson, dgibson\@coa.edu, (802) 266-0301  
+**Report Date:** `r format(Sys.time(), '%B %e, %Y')`  
 
 ------------------------------------------------------------------------
 
