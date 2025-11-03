@@ -2004,7 +2004,8 @@ cat(output)
 
 ## Recommendations
 
-These recommendations are organized from the most effective and easiest interventions to ones that are more challenging to implement.
+These recommendations are organized from the most effective and easiest interventions to ones that are more challenging to implement.\
+<br>
 
 ```{r}
 #| label: setup data for recommendations 4.0
@@ -2703,35 +2704,22 @@ auto_replace_doors_estimates <- auto_replace_doors_estimates |>
 #| echo: false
 #| results: asis
 
+if (furnace_boiler_tune_up==TRUE) {
+  cat(
+"### Furnace/Boiler Tune up
 
-if(furnace_boiler_tune_up == TRUE){
-  cat("### Furnace/Boiler Tune up
-  
 *Problem*
 
 **Auditor to describe**
 
 *Recommendation*
 
-")
-
-}else{
-  cat("")
-}
-
-if(furnace_boiler_tune_up == TRUE){
-  cat(auto_furnace_boiler_tune_up$Description
-  )
-}else{
-  cat("")
-  }
-
-if(furnace_boiler_tune_up == TRUE){
-  cat("
+", auto_furnace_boiler_tune_up$Description, "
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_furnace_boiler_tune_estimates$Description)
+", auto_furnace_boiler_tune_estimates$Description
+  )
 }else{
   cat("")
   }
@@ -4000,5 +3988,3 @@ for (i in 1: nrow(ranked_sect_4_problem_text)) {
 #   
 # "*Problem*", i ,"\n")
 ```
-
-:::
