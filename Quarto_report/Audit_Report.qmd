@@ -23,7 +23,7 @@ params:
 #| echo: false
 #| eval: true
 
-row_number <- 41 #enter row number from spreadsheet
+row_number <- 48 #enter row number from spreadsheet
 report_number <- (row_number - 1)
 
 ```
@@ -1408,8 +1408,7 @@ if(energy_sources_googlesheets$combustion_propane == TRUE){
 
 ## Summary of Recommendations
 
-We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report. These are organized from the most important/easiest interventions to ones that are more challenging to implement.\
-<br>
+We recommend the following upgrades for your home. Detailed information about these recommendations and financial resources can be found in other sections of this report. These are organized from the most important/easiest interventions to ones that are more challenging to implement.
 
 ```{r}
 #| label: summary of recs table
@@ -1580,8 +1579,7 @@ To run the test, we used a large fan in an exterior door to depressurize your ho
 
 To find leaks, we used an infrared camera to check for unusually hot and cold spots. We also checked the pressure differences of the rooms to help determine major air leak locations.
 
-Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.\
-<br>
+Air leaks are a big source of heat gain in warm weather and heat loss in cold weather. They also allow moisture to get into the home. Below are some numbers, pictures, and descriptions explaining what we found.
 
 ```{r}
 #| label: 3.5 blower door table
@@ -1858,8 +1856,7 @@ if (attic_q != "No") {
 
 ### Basement / Crawlspace
 
-*If the house does not have a basement or crawlspace, change this section to be about foundation insulation and sealing, or get rid of it.*\
-<br>
+*If the house does not have a basement or crawlspace, change this section to be about foundation insulation and sealing, or get rid of it.*
 
 ```{r}
 #| label: 3.6 basement/crawlspace table
@@ -2004,8 +2001,7 @@ cat(output)
 
 ## Recommendations
 
-These recommendations are organized from the most effective and easiest interventions to ones that are more challenging to implement.\
-<br>
+These recommendations are organized from the most effective and easiest interventions to ones that are more challenging to implement.
 
 ```{r}
 #| label: setup data for recommendations 4.0
@@ -2712,9 +2708,9 @@ if (furnace_boiler_tune_up==TRUE) {
 
 **Auditor to describe**
 
-*Recommendation*
+*Recommendation*",
 
-", auto_furnace_boiler_tune_up$Description, "
+auto_furnace_boiler_tune_up$Description, "
 
 *Estimated Cost/Benefits/Incentives*
 
