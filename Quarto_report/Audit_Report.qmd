@@ -23,7 +23,7 @@ params:
 #| echo: false
 #| eval: true
 
-row_number <- 41 #enter row number from spreadsheet
+row_number <- 51 #enter row number from spreadsheet
 report_number <- (row_number - 1)
 
 ```
@@ -3019,25 +3019,18 @@ The house has no gutters, so water runs off your roof and directly onto the grou
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(gutters == TRUE){
-  cat(auto_gutters$Description
-    
-  )
-}else{
-  cat("")
-  }
+auto_gutters$Description,
 
-if(gutters == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_gutters_estimates$Description )
+",
+
+auto_gutters_estimates$Description
+)
 }else{
   cat("")
 }
@@ -3059,29 +3052,21 @@ Currently, there is no bathroom exhaust fan, so moisture from the shower, toilet
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(bathroom_exhaust_fan == TRUE){
-  cat(auto_bathroom_fan$Description
-    
-  )
-}else{
-  cat("")
-  }
+auto_bathroom_fan$Description,
 
-if(bathroom_exhaust_fan == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_bathroom_fan_estimates$Description)
+",
+
+auto_bathroom_fan_estimates$Description
+)
 }else{
   cat("")
 }
-
 
 ```
 
@@ -3100,29 +3085,21 @@ Currently, there is no kitchen exhaust fan, so fumes, smoke, and moisture from c
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(kitchen_exhaust_fan == TRUE){
-  cat(auto_kitchen_fan$Description
-    
-  )
-}else{
-  cat("")
-  }
+auto_kitchen_fan$Description,
 
-if(kitchen_exhaust_fan == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_kitchen_fan_estimates$Description)
+",
+
+auto_kitchen_fan_estimates$Description
+)
 }else{
   cat("")
 }
-
 
 ```
 
@@ -3141,29 +3118,21 @@ There is excess moisture in the basement/crawlspace, which is moving from the gr
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(vapor_barrier == TRUE){
-  cat(auto_vapor_barrier$Description
-    
-  )
-}else{
-  cat("")
-  }
+auto_vapor_barrier$Description,
 
-if(vapor_barrier == TRUE){
-  cat(" 
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_vapor_barrier_estimates$Description)
+",
+
+auto_vapor_barrier_estimates$Description
+)
 }else{
   cat("")
 }
-
 
 ```
 
@@ -3182,29 +3151,21 @@ The basement/crawlspace is uninsulated and used for mechanical equipment and plu
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(spray_foam == TRUE){
-  cat(auto_spray_foam$Description
-    
-  )
-}else{
-  cat("")
-  }
+auto_spray_foam$Description,
 
-if(spray_foam == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_spray_foam_estimates$Description)
+",
+
+auto_spray_foam_estimates$Description
+)
 }else{
   cat("")
 }
-
 
 ```
 
@@ -3246,7 +3207,6 @@ if(attic_air_sealing_and_insulation == TRUE){
   cat("")
 }
 
-
 ```
 
 ```{r}
@@ -3264,27 +3224,22 @@ The walls of the house are uninsulated, which is a significant source of heat lo
 
 *Recommendation*
 
-")
+",
+
+auto_blow_in_cellulose$Description,
+
+"
+
+*Estimated Cost/Benefits/Incentives*
+
+",
+
+auto_blow_in_cellulose_estimates$Description
+)
 }else{
   cat("")
 }
 
-if(wall_stud_insulation == TRUE){
-  cat(auto_blow_in_cellulose$Description
-    
-  )
-}else{
-  cat("")
-  }
-
-if(wall_stud_insulation == TRUE){
-  cat(" 
-*Estimated Cost/Benefits/Incentives*
-
-", auto_blow_in_cellulose_estimates$Description)
-}else{
-  cat("")
-  } 
 ```
 
 ```{r}
@@ -3302,28 +3257,22 @@ There isn’t continuous insulation between the siding and the exterior walls of
 
 *Recommendation*
 
-")
+",
+
+auto_continuous_exterior_insulation$Description,
+
+"
+
+*Estimated Cost/Benefits/Incentives*
+
+",
+
+auto_continuous_exterior_insulation_estimates$Description
+)
 }else{
   cat("")
 }
 
-if(continuous_wall_insulation == TRUE){
-  cat(auto_continuous_exterior_insulation$Description
-    
-  )
-}else{
-  cat("")
-  }
-
-if(continuous_wall_insulation == TRUE){
-  cat("
-
-*Estimated Cost/Benefits/Incentives*
-
-", auto_continuous_exterior_insulation_estimates$Description)
-}else{
-  cat("")
-  } 
 ```
 
 ```{r}
@@ -3341,25 +3290,17 @@ if( electrical_panel == TRUE){
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(electrical_panel == TRUE){
-  cat(auto_electrical_panel_upgrade$Description
-    
-    )
-}else{
-  cat("")
-  }
+auto_electrical_panel_upgrade$Description,
 
-if(electrical_panel == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_electrical_panel_upgrade_estimates$Description)
+", 
+
+auto_electrical_panel_upgrade_estimates$Description)
 }else{
   cat("")
   } 
@@ -3380,25 +3321,17 @@ Combustion heating equipment is expensive, inefficient, and has the potential to
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(airsource_hp == TRUE){
-  cat(auto_air_source_heat_pump$Description
+auto_air_source_heat_pump$Description,
     
-  )
-}else{
-  cat("")
-  }
-
-if(airsource_hp == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_air_source_heat_pump_estimates$Description)
+", 
+
+auto_air_source_heat_pump_estimates$Description)
 }else{
   cat("")
   } 
@@ -3419,25 +3352,17 @@ Transportation, and particularly personal vehicles, are the leading cause of emi
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(ev == TRUE){
-  cat(auto_ev_and_charger$Description
-    
-  )
-}else{
-  cat("")
-  }
+auto_ev_and_charger$Description,
 
-if( ev == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_ev_and_charger_estimates$Description)
+", 
+
+auto_ev_and_charger_estimates$Description)
 }else{
   cat("")
   } 
@@ -3458,25 +3383,17 @@ if( solar == TRUE){
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(solar == TRUE){
-  cat(auto_solar$Description
+auto_solar$Description,
     
-  )
-}else{
-  cat("")
-  }
-
-if(solar == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_solar_estimates$Description)
+", 
+
+auto_solar_estimates$Description)
 }else{
   cat("")
   } 
@@ -3497,25 +3414,17 @@ Uninsulated water pipes are responsible for heat loss and excess moisture (from 
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(pipe_insulation == TRUE){
-  cat(auto_pipe_insulation$Description
+auto_pipe_insulation$Description,
     
-  )
-}else{
-  cat("")
-  }
-
-if(pipe_insulation == TRUE){
-  cat("
+"
   
 *Estimated Cost/Benefits/Incentives*
 
-", auto_pipe_insulation_estimates$Description)
+", 
+
+auto_pipe_insulation_estimates$Description)
 }else{
   cat("")
   } 
@@ -3538,25 +3447,17 @@ During the blower door test, we noted sources of air leakage in the living areas
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(diy_air_sealing == TRUE){
-  cat(auto_diy_air_sealing$Description
+auto_diy_air_sealing$Description,
     
-  )
-}else{
-  cat("")
-  }
-
-if(diy_air_sealing == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_duct_air_sealing_insulation_estimates$Description )
+", 
+
+auto_duct_air_sealing_insulation_estimates$Description )
 }else{
   cat("")
   } 
@@ -3575,25 +3476,17 @@ if( other_1 == TRUE){
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(other_1 == TRUE){
-  cat(auto_other_1$Description
+auto_other_1$Description,
     
-  )
-}else{
-  cat("")
-  }
-
-if(other_1 == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-",auto_other_1_estimates$Description )
+",
+
+auto_other_1_estimates$Description )
 }else{
   cat("")
   } 
@@ -3612,25 +3505,17 @@ if( other_2 == TRUE){
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(other_2 == TRUE){
-  cat(auto_other_2$Description
+auto_other_2$Description,
     
-  )
-}else{
-  cat("")
-  }
-
-if(other_2 == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_other_2_estimates$Description )
+", 
+
+auto_other_2_estimates$Description )
 }else{
   cat("")
   } 
@@ -3649,25 +3534,17 @@ if( other_3 == TRUE){
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(other_3 == TRUE){
-  cat(other_3$Description
+auto_other_3$Description,
     
-  )
-}else{
-  cat("")
-  }
-
-if(other_3 == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_other_3_estimates$Description)
+", 
+
+auto_other_3_estimates$Description)
 }else{
   cat("")
   } 
@@ -3688,23 +3565,17 @@ The furnace supply ductwork running through the basement would be more efficient
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if( duct_air_sealing_and_insulation == TRUE){
-  cat(auto_duct_air_sealing$Description)
-}else{
-  cat("")
-}
+auto_duct_air_sealing$Description,
 
-if(duct_air_sealing_and_insulation == TRUE){
-  cat("
+"
   
   *Estimated Costs/Benefits/Incentives*
 
-", auto_duct_air_sealing_insulation_estimates$Description )
+", 
+
+auto_duct_air_sealing_insulation_estimates$Description )
 }else{
   cat("")
   } 
@@ -3725,21 +3596,17 @@ if( misc_air_sealing_insulation == TRUE){
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if( misc_air_sealing_insulation == TRUE){
-  cat(auto_misc_air_sealing_insulation$Description)
-}else{
-  cat("")
-}
+auto_misc_air_sealing_insulation$Description,
 
-if(misc_air_sealing_insulation == TRUE){
-  cat("*Estimated Costs/Benefits/Incentives*
+"
 
-", auto_misc_air_sealing_insulation_estimates$Description )
+*Estimated Costs/Benefits/Incentives*
+
+", 
+
+auto_misc_air_sealing_insulation_estimates$Description )
 }else{
   cat("")
   } 
@@ -3761,21 +3628,17 @@ if( replace_windows == TRUE){
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if( replace_windows == TRUE){
-  cat(auto_replace_windows$Description)
-}else{
-  cat("")
-}
+auto_replace_windows$Description,
 
-if(replace_windows == TRUE){
-  cat("*Estimated Costs/Benefits/Incentives*
+"
 
-", auto_replace_windows_estimates$Description )
+*Estimated Costs/Benefits/Incentives*
+
+", 
+
+auto_replace_windows_estimates$Description )
 }else{
   cat("")
   } 
@@ -3795,21 +3658,17 @@ if( replace_doors == TRUE){
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if( replace_doors == TRUE){
-  cat(auto_replace_doors$Description)
-}else{
-  cat("")
-}
+auto_replace_doors$Description,
 
-if(replace_doors == TRUE){
-  cat("*Estimated Costs/Benefits/Incentives*
+"
 
-", auto_replace_doors_estimates$Description )
+*Estimated Costs/Benefits/Incentives*
+
+", 
+
+auto_replace_doors_estimates$Description )
 }else{
   cat("")
   } 
