@@ -23,7 +23,7 @@ params:
 #| echo: false
 #| eval: true
 
-row_number <- 50 #enter row number from spreadsheet
+row_number <- 41 #enter row number from spreadsheet
 report_number <- (row_number - 1)
 
 ```
@@ -2708,13 +2708,19 @@ if (furnace_boiler_tune_up==TRUE) {
 
 **Auditor to describe**
 
-*Recommendation*",
+*Recommendation*
 
-auto_furnace_boiler_tune_up$Description, "
+",
+
+auto_furnace_boiler_tune_up$Description,
+
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_furnace_boiler_tune_estimates$Description
+",
+
+auto_furnace_boiler_tune_estimates$Description
   )
 }else{
   cat("")
@@ -2729,38 +2735,30 @@ auto_furnace_boiler_tune_up$Description, "
 
 
 if( high_efficiency_shower_heads == TRUE){
-  cat("### High Efficiency Shower Heads
-  
+  cat(
+"### High Efficiency Shower Heads
+
 *Problem*
 
 Your shower heads use more water and energy than high-efficiency shower heads, thus costing you more money than necessary. Older shower heads use 2.5 gallons or more every minute, which wastes thousands of gallons of water each year and costs you money for every extra gallon of water heated. 
 
 *Recommendation* 
 
-")
-}else{
-  cat("")
-  }
+",
 
-if(high_efficiency_shower_heads == TRUE){
-  cat(auto_shower_heads$Description
-    
-  )
-}else{
-  cat("")
-  }
+auto_shower_heads$Description,
 
-if(high_efficiency_shower_heads == TRUE){
-  cat("
-  
+"
+
 *Estimated Cost/Benefits/Incentives*
 
-", auto_shower_heads_estimates$Description)
+",
+
+auto_shower_heads_estimates$Description
+)
 }else{
   cat("")
-}
-
-
+  }
 ```
 
 ```{r}
@@ -2770,33 +2768,27 @@ if(high_efficiency_shower_heads == TRUE){
 
 
 if( led == TRUE){
-  cat("### LEDs
-  
+  cat(
+"### LEDs
+
 *Problem*
 
 Your lighting uses more energy than LED bulbs would. Halogen and incandescent light bulbs use 5-8x more energy than LEDs. This requires significantly more electricity and costs a lot.
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(led == TRUE){
-  cat(auto_leds$Description
-    
-  )
-}else{
-  cat("")
-  }
+auto_leds$Description,
 
-if(led == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_LED_s_estimates$Description)
+",
+
+auto_LED_s_estimates$Description
+)
 }else{
   cat("")
   }
@@ -2818,28 +2810,21 @@ Your windows are a source of heat loss, reduce your comfort due to cold surface 
 
 *Recommendation*
 
+",
+
+auto_window_dressers$Description,
+
 "
+
+*Estimated Cost/Benefits/Incentives*
+
+",
+
+auto_window_dressers_estimates$Description
 )
 }else{
   cat("")
 }
-
-if(window_dressers == TRUE){
-  cat(auto_window_dressers$Description
-    
-  )
-}else{
-  cat("")
-  }
-
-if(window_dressers == TRUE){
-  cat("
-*Estimated Cost/Benefits/Incentives*
-
-",auto_window_dressers_estimates$Description)
-}else{
-  cat("")
-  }
 
 ```
 
@@ -2860,25 +2845,18 @@ Your refrigerator uses more energy than newer models.
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(refrigerator == TRUE){
-  cat(auto_refrigerator$Description
-    
-  )
-}else{
-  cat("")
-  }
+auto_refrigerator$Description,
 
-if(refrigerator == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_refrigerator_estimates$Description)
+",
+
+auto_refrigerator_estimates$Description
+)
 }else{
   cat("")
 }
@@ -2902,29 +2880,21 @@ Your freezer uses more energy than newer models. Consider how the cost of runnin
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(freezer == TRUE){
-  cat(auto_freezer$Description
-    
-  )
-}else{
-  cat("")
-  }
+auto_freezer$Description,
 
-if(freezer == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_freezer_estimates$Description)
+",
+
+auto_freezer_estimates$Description
+)
 }else{
   cat("")
 }
-
 
 ```
 
@@ -2943,27 +2913,21 @@ Your house does not have whole-house surge protection. This will protect your la
 
 *Recommendation*
 
-")
+",
+
+auto_whole_house_surge_protection$Description,
+
+"
+
+*Estimated Cost/Benefits/Incentives*
+
+",
+
+auto_whole_house_surge_protection_estimates$Description
+)
 }else{
   cat("")
 }
-
-if(whole_house_surge_protection == TRUE){
-  cat(auto_whole_house_surge_protection$Description
-    
-  )
-}else{
-  cat("")
-  }
-
-if(whole_house_surge_protection == TRUE){
-  cat("
-*Estimated Cost/Benefits/Incentives*
-
-", auto_whole_house_surge_protection_estimates$Description)
-}else{
-  cat("")
-  } 
 ```
 
 ```{r}
@@ -2981,25 +2945,18 @@ Your gas range has the potential to release propane, carbon monoxide, and combus
 
 *Recommendation*
 
-")
-}else{
-  cat("")
-}
+",
 
-if(induction_stove == TRUE){
-  cat(auto_induction_stove$Description
-    
-  )
-}else{
-  cat("")
-  }
+auto_induction_stove$Description,
 
-if(induction_stove == TRUE){
-  cat("
+"
 
 *Estimated Cost/Benefits/Incentives*
 
-", auto_induction_stove_estimates$Description)
+",
+
+auto_induction_stove_estimates$Description
+)
 }else{
   cat("")
 }
