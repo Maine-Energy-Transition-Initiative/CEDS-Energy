@@ -23,7 +23,7 @@ params:
 #| echo: false
 #| eval: true
 
-row_number <- 52 #enter row number from spreadsheet
+row_number <- 53 #enter row number from spreadsheet
 report_number <- (row_number - 1)
 
 ```
@@ -1171,7 +1171,10 @@ mutate(
   `Air Conditioning:` = paste0(
     ifelse(is_a_c_used_in_the_building == "None",
            paste0(""),
-           paste0("The house is air conditioned using ", is_a_c_used_in_the_building, ". ",(ifelse(!is.na(how_frequently_is_a_c_used),  paste0("These are used ", how_frequently_is_a_c_used, ".")))))),
+           paste0("The house is air conditioned using ", is_a_c_used_in_the_building, ". ",
+    (ifelse(is.na(how_frequently_is_a_c_used),
+            paste0(""),
+            paste0("These are used ", how_frequently_is_a_c_used, ".")))))),
 
 
   `Other:` = paste0(
