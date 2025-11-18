@@ -1764,6 +1764,33 @@ cat(paste0(
 
 ```
 
+```{r}
+#| label: basement blower door
+#| eval: true
+#| echo: false
+#| results: asis
+
+b_ACHnat <- ACHnaturalBasement
+b_comments <- clean_audit_data$comments_about_air_leakage_with_the_basement_door_open
+
+if (!is.na(b_ACHnat)) {
+  
+  b_comments_text <- if (!is.na(b_comments)) {
+    paste0(b_comments)
+  } else {
+    ""
+  }
+  
+  cat(paste0(
+    "To test how well the basement is air sealed, we open the interior door to the basement and record how leaky the house and basement are together. With the basement door open, your house had an ACHnatural value of ",
+    b_ACHnat,
+    ". ",
+    b_comments_text
+  ))
+}
+
+
+```
 
 Using a thermal imaging camera, we looked for major air leakage locations and thermal bridging. Thermal bridging occurs when heat enters or leaves a house through material that lets heat through more easily than the house’s insulation. This often occurs with wall studs and ceiling joists.
 
