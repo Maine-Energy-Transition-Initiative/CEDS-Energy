@@ -1717,8 +1717,7 @@ ggsave("achnatural_ggplot1.png", width = 15, height = 5)
 
 ```
 
-![](achnatural_ggplot1.png)
-\
+![](achnatural_ggplot1.png)\
 <br>
 
 ```{r}
